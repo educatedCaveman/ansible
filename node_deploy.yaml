@@ -1,0 +1,154 @@
+---
+
+#some commands taken from:
+#https://www.cyberciti.biz/faq/ansible-apt-update-all-packages-on-ubuntu-debian-linux/
+
+- name: configure node packages
+  hosts: labnodes
+  tasks:
+
+    - name: update packages
+      apt:
+        update_cache=yes
+        force_apt_get=yes
+        cache_valid_time=3600
+
+    - name: upgrade packages
+      apt:
+        upgrade=dist
+        force_apt_get=yes
+
+    #this is where to list all packages needed
+    - name: install core packages
+      apt:
+        pkg:
+        - neovim
+        - neofetch
+        - zsh
+        - tmux
+        - git
+        - htop
+        state: latest
+      register: packages
+
+    #deploy dotfiles repo
+    - git:
+        repo: 'https://github.com/educatedCaveman/dotfiles.git'
+        dest: /home/drake/dotfiles
+
+    #Vundle installation
+    - name: Vundle directory
+      file:
+        path: /home/drake/.config/nvim/bundle
+        state: directory
+        recurse: yes
+        owner: drake
+        group: drake
+
+    - name: verify Vundle directory exists
+      stat:
+        path: /home/drake/.config/nvim/bundle
+      register: stat_nvim_bundle
+
+    - name: cloning Vundle
+      git:
+        repo: 'https://github.com/VundleVim/Vundle.vim.git'
+        dest: /home/drake/.config/nvim/bundle
+      when: stat_nvim_bundle.stat.exists
+
+    #oh-my-zsh
+    #clone the repo 
+    - name: Check if .oh-my-zsh exists
+      stat:
+        path: /home/drake/.oh-my-zsh
+      register: stat_oh_my_zsh_result
+
+    - name: Cloning  oh-my-zsh
+      git:
+        repo: https://github.com/robbyrussell/oh-my-zsh
+        dest: /home/drake/.oh-my-zsh
+      when: not stat_oh_my_zsh_result.stat.exists
+
+    #check if .zshrc exists:
+    - name: checking for .zshrc
+      stat: 
+        path: /home/drake/.zshrc
+      register: stat_zshrc
+
+    - name: link .zshrc
+      file:
+        src: /home/drake/dotfiles/zsh/zshrc
+        dest: /home/drake/.zshrc
+        state: link
+      when: (not stat_zshrc.stat.exists) and stat_oh_my_zsh_result.stat.exists  
+    
+    #check if .zsh_aliases exists:
+    - name: checking for .zsh_aliases
+      stat: 
+        path: /home/drake/.zsh_aliases
+      register: stat_zsh_aliases
+
+    - name: link .zsh_aliases
+      file:
+        src: /home/drake/dotfiles/zsh/zsh_aliases
+        dest: /home/drake/.zsh_aliases
+        state: link
+      when: stat_zsh_aliases.stat.exists
+
+    #check if .zsh-theme exists:
+    - name: checking for .zsh-theme
+      stat: 
+        path: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
+      register: stat_zsh_theme
+
+    - name: link .zsh-theme
+      file:
+        src: /home/drake/dotfiles/zsh/less-fishy.zsh-theme
+        dest: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
+        state: link
+      when: (not stat_zsh_theme.stat.exists) and stat_oh_my_zsh_result.stat.exists
+
+    #neovim
+    - name: checking for init.vim
+      stat: 
+        path: /home/drake/.config/nvim/init.vim
+      register: stat_nvim
+
+    - name: link init.vim
+      file:
+        src: /home/drake/dotfiles/init.vim
+        dest: /home/drake/.config/nvim/init.vim
+        state: link
+      when: not stat_nvim.stat.exists
+
+    #set home directory permissions
+    - name: set home permissions
+      file:
+        path: /home/drake
+        state: directory
+        recurse: yes
+        owner: drake
+        group: drake
+
+    #change shell
+    - name: change to ZSH
+      user:
+        name: drake
+        shell: /usr/bin/zsh
+
+    #reboot, if needed
+    - name: check if a reboot is needed
+      register: reboot_required_file
+      stat: 
+        path=/var/run/reboot-required 
+        get_md5=no
+
+    - name: reboot the node
+      reboot:
+        msg: "Reboot initiated by Ansible due to kernel updates"
+        connect_timeout: 5
+        reboot_timeout: 300
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: uptime
+      when: reboot_required_file.stat.exists
