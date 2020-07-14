@@ -1,0 +1,19 @@
+---
+
+#some commands taken from:
+#https://www.cyberciti.biz/faq/ansible-apt-update-all-packages-on-ubuntu-debian-linux/
+
+#TODO: update this to not reboot.  just shut down.  maybe run a shell command
+
+- name: shutdown nodes
+  hosts: labnodes
+  tasks:
+
+    - name: shutdown the nodes
+      reboot:
+        msg: "shutdown initiated by Ansible"
+        connect_timeout: 5
+        reboot_timeout: 120
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: shutdown
