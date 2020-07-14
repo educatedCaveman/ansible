@@ -1,5 +1,4 @@
 ---
-
 #some commands taken from:
 #https://www.cyberciti.biz/faq/ansible-apt-update-all-packages-on-ubuntu-debian-linux/
 
@@ -43,15 +42,7 @@
         repo: 'https://github.com/educatedCaveman/dotfiles.git'
         dest: /home/drake/dotfiles
 
-    #Vundle installation
-    #- name: Vundle directory
-    #  file:
-    #    path: /home/drake/.config/nvim/bundle
-    #    state: directory
-    #    recurse: yes
-    #    owner: drake
-    #    group: drake
-
+    #Vundle
     - name: verify Vundle directory exists
       stat:
         path: /home/drake/.config/nvim/bundle
