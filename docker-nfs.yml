@@ -1,0 +1,26 @@
+---
+- name: configure NFS mounts for docker
+  hosts: labnodes
+  tasks:
+
+    - name: make sure we have the nfs-utils...
+      yum:
+        name: nfs-utils
+        state: latest
+
+    - name: Mount the Backup share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/Backup
+        path: /mnt/mobius/Backup
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+
+    - name: Mount the staging share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/staging
+        path: /mnt/mobius/staging
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+
