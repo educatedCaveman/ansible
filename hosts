@@ -44,6 +44,7 @@
 
 [labnodes]
 192.168.13.16   ansible_ssh_user=root
+#192.168.13.4   ansible_ssh_user=root
 #192.168.13.17   ansible_ssh_user=root
 #192.168.13.18   ansible_ssh_user=root
 #192.168.13.19   ansible_ssh_user=root
@@ -55,4 +56,10 @@
 192.168.13.17
 192.168.13.18
 192.168.13.19
+
+[sevastopol]
+192.168.12.16   ansible_ssh_user=root
+
+[lv-426]
+192.168.13.16   ansible_ssh_user=root
 

@@ -1,10 +1,6 @@
 ---
-#some commands taken from:
-#https://www.cyberciti.biz/faq/ansible-apt-update-all-packages-on-ubuntu-debian-linux/
-
-- name: configure node packages
-  #hosts: labnodes
-  hosts: sevastopol
+- name: configure LV-426 Docker host
+  hosts: lv-426
   tasks:
 
     - name: update packages

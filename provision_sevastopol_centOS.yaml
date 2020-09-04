@@ -1,9 +1,5 @@
 ---
-#some commands taken from:
-#https://www.cyberciti.biz/faq/ansible-apt-update-all-packages-on-ubuntu-debian-linux/
-
-- name: configure node packages
-  #hosts: labnodes
+- name: configure Sevastopol Docker host
   hosts: sevastopol
   tasks:
 
