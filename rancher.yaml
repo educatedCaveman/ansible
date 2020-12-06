@@ -1,5 +1,0 @@
-#server node
-sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
-
-#worker nodes
-sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.4.5 --server https://192.168.13.16 --token tlgn8gw7shs6j6sx42w9tlp56bsl8fjdxhzlsb7gnknxsqcnh2f47j --ca-checksum 5794176ecf3896a381ac4b3ccee433614e1574121415a9bccf7b3650068f1328 --etcd --controlplane --worker
