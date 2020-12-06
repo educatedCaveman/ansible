@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         SLACK_WEBHOOK_URL = credentials('slack_webhook_url_dev_sec_ops')
-        JENKINS_SCRIPTS = '/var/lib/jenkins/workspace/Jenkins_self_deploy_main'
+        JENKINS_SCRIPTS = '/var/lib/jenkins/workspace/Jenkins_self_deploy'
         ANSIBLE_REPO = '/var/lib/jenkins/workspace/Ansible_pipeline_master'
     }
 
