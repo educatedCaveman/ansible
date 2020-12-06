@@ -19,7 +19,7 @@ pipeline {
         stage('deploy') {
             steps {
                 // // use this to pass the branch/env to any helper scripts
-                sh './${ANSIBLE_REPO}/link_ansible.sh'
+                sh '.${ANSIBLE_REPO}/link_ansible.sh'
             }
         }
     }
