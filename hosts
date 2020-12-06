@@ -7,3 +7,13 @@
 [lv-426]
 192.168.13.16   ansible_ssh_user=root
 
+[centOS_hosts]
+192.168.12.16
+192.168.13.2
+192.168.13.16
+
+[ubuntu_hosts]
+192.168.12.7
+
+[self]
+127.0.0.1       ansible_ssh_user=root
