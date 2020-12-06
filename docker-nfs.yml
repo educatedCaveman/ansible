@@ -18,8 +18,16 @@
 
     - name: Mount the staging share... 
       mount:
-        src: 192.168.11.2:/mnt/storage_node/staging
+        src: 192.168.11.2:/mnt/storage_node/staging/docker/dev
         path: /mnt/mobius/staging
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+
+    - name: Mount the Docker share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/Docker/dev
+        path: /mnt/mobius/docker
         fstype: nfs 
         opts: rw,nolock,tcp
         state: mounted
