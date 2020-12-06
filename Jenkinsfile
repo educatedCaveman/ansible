@@ -15,25 +15,35 @@ pipeline {
             }
         }
 
-        // link ansible files
-        stage('deploy') {
+        // remove existing hosts link
+        stage('remove old hosts') {
             steps {
-                // remove existing hosts link
+                
                 echo 'removing existing hosts link...'
                 sh 'sudo rm /etc/ansible/hosts'
             }
+        }
+
+        // set new hosts link
+        stage('link new hosts') {
             steps {
-                // set new hosts link
+                
                 echo 'creating new hosts link...'
                 sh 'sudo ln -s ${ANSIBLE_REPO}/hosts /etc/ansible/hosts'
             }
+        }
+
+        // remove existing ansible.cfg link
+        stage('remove old ansible.cfg') {
             steps {
-                // remove existing ansible.cfg link
                 echo 'removing existing ansible.cfg link...'
                 sh 'sudo rm /etc/ansible/ansible.cfg'
             }
+        }
+
+        // set new ansible.cfg link
+        stage('link new ansible.cfg') {
             steps {
-                // set new ansible.cfg link
                 echo 'creating new ansible.cfg link...'
                 sh 'sudo ln -s ${ANSIBLE_REPO}/hosts /etc/ansible/ansible.cfg'
             }
