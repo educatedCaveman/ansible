@@ -18,8 +18,24 @@ pipeline {
         // link ansible files
         stage('deploy') {
             steps {
-                // // use this to pass the branch/env to any helper scripts
-                sh 'sh ${ANSIBLE_REPO}/link_ansible.sh'
+                // remove existing hosts link
+                echo 'removing existing hosts link...'
+                sh 'sudo rm /etc/ansible/hosts'
+            }
+            steps {
+                // set new hosts link
+                echo 'creating new hosts link...'
+                sh 'sudo ln -s ${ANSIBLE_REPO}/hosts /etc/ansible/hosts'
+            }
+            steps {
+                // remove existing ansible.cfg link
+                echo 'removing existing ansible.cfg link...'
+                sh 'sudo rm /etc/ansible/ansible.cfg'
+            }
+            steps {
+                // set new ansible.cfg link
+                echo 'creating new ansible.cfg link...'
+                sh 'sudo ln -s ${ANSIBLE_REPO}/hosts /etc/ansible/ansible.cfg'
             }
         }
     }
