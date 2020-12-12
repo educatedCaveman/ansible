@@ -1,6 +1,6 @@
 ---
 - name: deploy docker code to DEV portainer instance
-  hosts: lv_426
+  hosts: labnodes
   tasks:
 
     - name: deploy dev_test branch to LV-426.lab
