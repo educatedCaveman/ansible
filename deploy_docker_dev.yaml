@@ -8,3 +8,4 @@
         repo: "https://github.com/educatedCaveman/docker-lab"
         dest: /mnt/mobius/docker
         version:  dev_test
+        force:  yes
