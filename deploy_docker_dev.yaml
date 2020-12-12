@@ -7,4 +7,4 @@
       git:
         repo: "https://github.com/educatedCaveman/docker-lab"
         dest: /mnt/mobius/docker
-        version:  refs/heads/dev_test
+        version:  dev_test
