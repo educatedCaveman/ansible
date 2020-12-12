@@ -45,7 +45,7 @@ pipeline {
         stage('link new ansible.cfg') {
             steps {
                 echo 'creating new ansible.cfg link...'
-                sh 'sudo ln -s ${ANSIBLE_REPO}/hosts /etc/ansible/ansible.cfg'
+                sh 'sudo ln -s ${ANSIBLE_REPO}/ansible.cfg /etc/ansible/ansible.cfg'
             }
         }
     }
