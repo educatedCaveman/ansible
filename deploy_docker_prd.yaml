@@ -1,0 +1,51 @@
+---
+- name: deploy docker code to PRD portainer instance
+  hosts: sevastopol
+  tasks:
+
+    - name: deploy master branch to sevastopol.vm
+      git:
+        repo: "https://github.com/educatedCaveman/docker-lab"
+        dest: /mnt/mobius/docker
+        version:  master
+        force:  yes
+
+    - name: set permissions in the directory
+      file:
+        path: /mnt/mobius/docker
+        state:  directory
+        recurse:  yes
+        owner:  drake
+        group:  drake
+
+- name: deploy docker dev code to drake's home directory
+  hosts:  portainer
+  tasks:
+    
+    - name: create the docker directory
+      file:
+        path: /home/drake/docker
+        state:  directory
+        recurse:  yes
+
+    - name: make sure directory exists
+      stat:
+        path: /home/drake/docker
+      register: docker_code
+
+
+    - name: deploy dev_test branch to self
+      git:  
+        repo: "https://github.com/educatedCaveman/docker-lab"
+        dest: /home/drake/docker
+        version:  master
+        force:  yes
+      when: docker_code.stat.exists
+
+    - name: set permissions on directory
+      file:
+        path: /home/drake/docker
+        state:  directory
+        recurse:  yes
+        owner:  drake
+        group:  drake

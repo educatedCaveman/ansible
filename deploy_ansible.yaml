@@ -1,0 +1,31 @@
+---
+- name: deploy ansible repo to itself
+  hosts:  self
+  tasks:
+
+    - name: create the ansible/ directory
+      file:
+        path: /home/drake/ansible
+        state:  directory
+        recurse:  yes
+
+    - name: make sure directory exists
+      stat:
+        path: /home/drake/ansible
+      register: ansible_dir
+
+    - name: deploy ansible repo
+      git:
+        repo: https://github.com/educatedCaveman/ansible
+        dest: /home/drake/ansible
+        version:  master
+        force:  yes
+      when: ansible_dir.stat.exists
+
+    - name: set permissions on directory
+      file:
+        path: /home/drake/ansible
+        state:  directory
+        recurse:  yes
+        owner:  drake
+        group:  drake

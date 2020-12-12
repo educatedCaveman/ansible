@@ -50,7 +50,12 @@ pipeline {
         }
 
         // make new ansible code available to drake
-        //TODO:
+        stage('deploy ansible playbooks') {
+            steps {
+                echo 'deploying ansible playbooks to /home/drake/ansible/'
+                sh 'ansible-playbook ${ANSIBLE_REPO}/deploy_ansible.yaml'
+            }
+        }
     }
 
     // notify on complete
