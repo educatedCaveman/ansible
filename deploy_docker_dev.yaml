@@ -31,7 +31,7 @@
     - name: make sure directory exists
       stat:
         path: /home/drake/dev_code
-      register: dev_code_exists
+      register: dev_code
 
 
     - name: deploy dev_test branch to self
@@ -40,7 +40,7 @@
         dest: /home/drake/dev_code/docker
         version:  dev_test
         force:  yes
-      when: dev_code_exists
+      when: dev_code.stat.exists
 
     - name: set permissions on directory
       file:
