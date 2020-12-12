@@ -1,6 +1,6 @@
 ---
 - name: configure LV-426 Docker host
-  hosts: lv-426
+  hosts: lv_426
   tasks:
 
     - name: update packages

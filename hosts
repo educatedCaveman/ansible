@@ -4,7 +4,7 @@
 [sevastopol]
 192.168.12.16   ansible_ssh_user=root
 
-[lv-426]
+[lv_426]
 192.168.13.16   ansible_ssh_user=root
 
 [centOS_hosts]
