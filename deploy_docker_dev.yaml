@@ -9,3 +9,11 @@
         dest: /mnt/mobius/docker
         version:  dev_test
         force:  yes
+
+    - name: set permissions in the directory
+      file:
+        path: /mnt/mobius/docker
+        state:  directory
+        recurse:  yes
+        owner:  drake
+        group:  drake
