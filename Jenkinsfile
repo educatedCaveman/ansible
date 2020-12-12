@@ -48,6 +48,9 @@ pipeline {
                 sh 'sudo ln -s ${ANSIBLE_REPO}/ansible.cfg /etc/ansible/ansible.cfg'
             }
         }
+
+        // make new ansible code available to drake
+        //TODO:
     }
 
     // notify on complete
