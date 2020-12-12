@@ -1,0 +1,10 @@
+---
+- name: deploy docker code to DEV portainer instance
+  hosts: lv-426
+  tasks:
+
+    - name: deploy dev_test branch
+      git:
+        repo: "https://github.com/educatedCaveman/docker-lab"
+        dest: /mnt/mobius/docker
+        version:  refs/heads/dev_test
