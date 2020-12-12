@@ -3,7 +3,7 @@
   hosts: lv-426
   tasks:
 
-    - name: deploy dev_test branch
+    - name: deploy dev_test branch to LV-426.lab
       git:
         repo: "https://github.com/educatedCaveman/docker-lab"
         dest: /mnt/mobius/docker
@@ -13,6 +13,38 @@
     - name: set permissions in the directory
       file:
         path: /mnt/mobius/docker
+        state:  directory
+        recurse:  yes
+        owner:  drake
+        group:  drake
+
+- name: deploy docker dev code to drake's home directory
+  hosts:  self
+  tasks:
+    
+    - name: create the dev_code/docker directory
+      file:
+        path: /home/drake/dev_code/docker
+        state:  directory
+        recurse:  yes
+
+    - name: make sure directory exists
+      stat:
+        path: /home/drake/dev_code
+      register: dev_code_exists
+
+
+    - name: deploy dev_test branch to self
+      git:  
+        repo: "https://github.com/educatedCaveman/docker-lab"
+        dest: /home/drake/dev_code/docker
+        version:  dev_test
+        force:  yes
+      when: dev_code_exists
+
+    - name: set permissions on directory
+      file:
+        path: /home/drake/dev_code/docker
         state:  directory
         recurse:  yes
         owner:  drake
