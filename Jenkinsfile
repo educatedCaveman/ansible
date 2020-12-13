@@ -8,13 +8,6 @@ pipeline {
     }
 
     stages {
-        // notify
-        // stage('notify_start') {
-        //     steps {
-        //         sh 'python3 ${JENKINS_SCRIPTS}/slack.py ${SLACK_WEBHOOK_URL} start'
-        //     }
-        // }
-
         // remove existing hosts link
         stage('remove old hosts') {
             steps {
@@ -57,22 +50,7 @@ pipeline {
             }
         }
 
-        // get all environment variables
-        stage('info') {
-            steps {
-                sh 'printenv'
-            }
-        }
     }
 
-    // notify on complete
-    // post {
-    //     success {
-    //         sh 'python3 ${JENKINS_SCRIPTS}/slack.py ${SLACK_WEBHOOK_URL} end'
-    //     }
-    //     failure {
-    //         sh 'python3 ${JENKINS_SCRIPTS}/slack.py ${SLACK_WEBHOOK_URL} error'
-    //     }
-    // }
 }
 
