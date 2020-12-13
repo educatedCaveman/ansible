@@ -9,11 +9,11 @@ pipeline {
 
     stages {
         // notify
-        stage('notify_start') {
-            steps {
-                sh 'python3 ${JENKINS_SCRIPTS}/slack.py ${SLACK_WEBHOOK_URL} start'
-            }
-        }
+        // stage('notify_start') {
+        //     steps {
+        //         sh 'python3 ${JENKINS_SCRIPTS}/slack.py ${SLACK_WEBHOOK_URL} start'
+        //     }
+        // }
 
         // remove existing hosts link
         stage('remove old hosts') {
@@ -59,13 +59,13 @@ pipeline {
     }
 
     // notify on complete
-    post {
-        success {
-            sh 'python3 ${JENKINS_SCRIPTS}/slack.py ${SLACK_WEBHOOK_URL} end'
-        }
-        failure {
-            sh 'python3 ${JENKINS_SCRIPTS}/slack.py ${SLACK_WEBHOOK_URL} error'
-        }
-    }
+    // post {
+    //     success {
+    //         sh 'python3 ${JENKINS_SCRIPTS}/slack.py ${SLACK_WEBHOOK_URL} end'
+    //     }
+    //     failure {
+    //         sh 'python3 ${JENKINS_SCRIPTS}/slack.py ${SLACK_WEBHOOK_URL} error'
+    //     }
+    // }
 }
 
