@@ -56,6 +56,13 @@ pipeline {
                 sh 'ansible-playbook ${ANSIBLE_REPO}/deploy_ansible.yaml'
             }
         }
+
+        // get all environment variables
+        stage('info') {
+            steps {
+                sh 'printenv'
+            }
+        }
     }
 
     // notify on complete
