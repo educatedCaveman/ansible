@@ -37,6 +37,10 @@ singularity
 event_horizon
 wormhole
 
+[linux:children]
+centOS_hosts
+ubuntu_debian_hosts
+
 [trueNAS:children]
 mobius
 tesseract
