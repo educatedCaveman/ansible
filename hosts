@@ -51,7 +51,7 @@ ubuntu_debian_hosts
 mobius
 tesseract
 
-[manjaro]
+[manjaro:children]
 theseus
 carbon
 
