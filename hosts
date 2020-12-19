@@ -26,6 +26,12 @@
 [wormhole]
 192.168.200.2   ansible_ssh_user=root
 
+[theseus]
+192.168.10.8    ansible_ssh_user=drake
+
+[carbon]
+192.168.10.6    ansible_ssh_user=drake
+
 # OS groups
 [centOS_hosts:children]
 sevastopol
@@ -44,6 +50,10 @@ ubuntu_debian_hosts
 [trueNAS:children]
 mobius
 tesseract
+
+[manjaro]
+theseus
+carbon
 
 # application groups
 [portainer:children]

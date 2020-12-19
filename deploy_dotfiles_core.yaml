@@ -7,39 +7,7 @@
     - git:
         repo: 'https://github.com/educatedCaveman/dotfiles.git'
         dest: /home/drake/dotfiles
-
-    #create Vundle directory, which also creates the nvim directory
-    - name: create NeoVim and Vundle directories
-      file:
-        path: /home/drake/.config/nvim/bundle
-        state: directory
-        recurse: yes
-    
-    #Vundle
-    - name: verify Vundle directory exists
-      stat:
-        path: /home/drake/.config/nvim/bundle
-      register: stat_nvim_bundle
-    
-    - name: cloning Vundle
-      git:
-        repo: 'https://github.com/VundleVim/Vundle.vim.git'
-        dest: /home/drake/.config/nvim/bundle/Vundle.vim
-      when: stat_nvim_bundle.stat.exists
-    
-    #oh-my-zsh
-    #clone the repo 
-    - name: Cloning  oh-my-zsh
-      git:
-        repo: https://github.com/robbyrussell/oh-my-zsh
-        dest: /home/drake/.oh-my-zsh
-      #when: not stat_oh_my_zsh_result.stat.exists
-
-    - name: Check if .oh-my-zsh exists
-      stat:
-        path: /home/drake/.oh-my-zsh
-      register: stat_oh_my_zsh_result
-    
+        
     #check if .zshrc exists:
     - name: checking for .zshrc
       stat: 
@@ -51,7 +19,7 @@
         src: /home/drake/dotfiles/zsh/zshrc
         dest: /home/drake/.zshrc
         state: link
-      when: (not stat_zshrc.stat.exists) and stat_oh_my_zsh_result.stat.exists  
+      when: (not stat_zshrc.stat.exists)
     
     #check if .zsh_aliases exists:
     - name: checking for .zsh_aliases
@@ -64,7 +32,7 @@
         src: /home/drake/dotfiles/zsh/zsh_aliases
         dest: /home/drake/.zsh_aliases
         state: link
-      when: (not stat_zsh_aliases.stat.exists) and stat_oh_my_zsh_result.stat.exists
+      when: (not stat_zsh_aliases.stat.exists)
     
     #check if .zsh-theme exists:
     - name: checking for .zsh-theme
@@ -77,14 +45,7 @@
         src: /home/drake/dotfiles/zsh/less-fishy.zsh-theme
         dest: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
         state: link
-      when: (not stat_zsh_theme.stat.exists) and stat_oh_my_zsh_result.stat.exists
-
-    #zsh plugin from git:
-    - name: cloning zsh-autosuggestions
-      git:
-        repo: 'https://github.com/zsh-users/zsh-autosuggestions'
-        dest: /home/drake/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-      when: stat_oh_my_zsh_result.stat.exists
+      when: (not stat_zsh_theme.stat.exists)
 
     #neovim
     - name: checking for init.vim
