@@ -17,7 +17,6 @@
           - tmux
           - git
           - htop
-          - nfs-utils
 
     #change shell
     - name: change to ZSH
