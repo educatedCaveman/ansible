@@ -1,23 +1,51 @@
-[labnodes]
-192.168.13.16   ansible_ssh_user=root
-
+# individual named hosts:
 [sevastopol]
 192.168.12.16   ansible_ssh_user=root
 
 [lv_426]
 192.168.13.16   ansible_ssh_user=root
 
-[centOS_hosts]
-192.168.12.16
-192.168.13.2
-192.168.13.16
+[singularity]
+192.168.12.7    ansible_ssh_user=root
 
-[ubuntu_hosts]
-192.168.12.7
+[event_horizon]
+192.168.11.4    ansible_ssh_user=root
+
+[jenkins_CICD]
+192.168.13.2    ansible_ssh_user=root
 
 [self]
 127.0.0.1       ansible_ssh_user=root
 
-[portainer]
-192.168.12.16   ansible_ssh_user=root
-192.168.13.16   ansible_ssh_user=root
+[mobius]
+192.168.11.2    ansible_ssh_user=drake
+
+[tesseract]
+192.168.11.3    ansible_ssh_user=drake
+
+[wormhole]
+192.168.200.2   ansible_ssh_user=root
+
+# OS groups
+[centOS_hosts:children]
+sevastopol
+jenkins_CICD
+lv_426
+
+[ubuntu_debian_hosts:children]
+singularity
+event_horizon
+wormhole
+
+[trueNAS:children]
+mobius
+tesseract
+
+# application groups
+[portainer:children]
+sevastopol
+lv_426
+
+[pihole:children]
+singularity
+event_horizon
