@@ -10,6 +10,12 @@
         repo: 'https://github.com/educatedCaveman/dotfiles.git'
         dest: /home/drake/dotfiles
 
+    # remove file or unlink link
+    - name: remove existing adlists.list
+      file:
+        path: /etc/pihole/adlists.list
+        state:  absent
+
     # /etc/pihole/adlists.list
     - name: link adlists.list
       file:
@@ -18,6 +24,12 @@
         owner:  root
         group:  root
         state:  link
+
+    # remove file or unlink link
+    - name: remove existing blacklist.txt
+      file:
+        path: /etc/pihole/blacklist.txt
+        state:  absent
 
     # /etc/pihole/blacklist.txt
     - name: link blacklist.txt
@@ -28,6 +40,12 @@
         group:  root
         state:  link
 
+    # remove file or unlink link
+    - name: remove existing whitelist.txt
+      file:
+        path: /etc/pihole/whitelist.txt
+        state:  absent
+
     # /etc/pihole/whitelist.txt
     - name: link whitelist.txt
       file:
@@ -37,6 +55,12 @@
         group:  root
         state:  link
             
+    # remove file or unlink link
+    - name: remove existing pihole-FTL.conf
+      file:
+        path: /etc/pihole/pihole-FTL.conf
+        state:  absent
+
     # /etc/pihole/pihole-FTL.conf
     - name: link pihole-FTL.conf
       file:
@@ -46,7 +70,12 @@
         group:  root
         state:  link
         
-    
+    # remove file or unlink link
+    - name: remove existing regex.list
+      file:
+        path: /etc/pihole/regex.list
+        state:  absent
+
     # /etc/pihole/regex.list
     - name: link regex.list
       file:
@@ -55,6 +84,12 @@
         owner:  root
         group:  root
         state:  link
+
+    # remove file or unlink link
+    - name: remove existing hosts file
+      file:
+        path: /etc/hosts
+        state:  absent
 
 # these are serial in order to prevent DNS from being down 
 # hostfiles links (host-specific)
