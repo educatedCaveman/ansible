@@ -1,0 +1,19 @@
+---
+- name: deploy dotfiles 
+  hosts:  singularity
+  tasks:
+
+    - name: deploy dotfiles repo
+      git:
+        repo: https://github.com/educatedCaveman/dotfiles
+        dest: /home/drake/dotfiles
+        version:  master
+        force:  yes
+
+    - name: set permissions on directory
+      file:
+        path: /home/drake/dotfiles
+        state:  directory
+        recurse:  yes
+        owner:  drake
+        group:  drake
