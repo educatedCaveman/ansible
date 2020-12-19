@@ -1,0 +1,91 @@
+---
+# main dotfiles linking
+- name: deploy pihole dotfiles
+  hosts: pihole
+  tasks:
+    # assumes the dotfiles already exist on host
+
+    # /etc/pihole/adlists.list
+    - name: link adlists.list
+      file:
+        src:  /home/drake/dotfiles/pihole/adlists.list
+        dest: /etc/pihole/adlists.list
+        owner:  root
+        group:  root
+        state:  link
+
+    # /etc/pihole/blacklist.txt
+    - name: link blacklist.txt
+      file:
+        src:  /home/drake/dotfiles/pihole/blacklist.txt
+        dest: /etc/pihole/blacklist.txt
+        owner:  root
+        group:  root
+        state:  link
+
+    # /etc/pihole/whitelist.txt
+    - name: link whitelist.txt
+      file:
+        src:  /home/drake/dotfiles/pihole/whitelist.txt
+        dest: /etc/pihole/whitelist.txt
+        owner:  root
+        group:  root
+        state:  link
+            
+    # /etc/pihole/pihole-FTL.conf
+    - name: link pihole-FTL.conf
+      file:
+        src:  /home/drake/dotfiles/pihole/pihole-FTL.conf
+        dest: /etc/pihole/pihole-FTL.conf
+        owner:  root
+        group:  root
+        state:  link
+        
+    
+    # /etc/pihole/regex.list
+    - name: link regex.list
+      file:
+        src:  /home/drake/dotfiles/pihole/regex.list
+        dest: /etc/pihole/regex.list
+        owner:  root
+        group:  root
+        state:  link
+
+# these are serial in order to prevent DNS from being down 
+# hostfiles links (host-specific)
+- name: link hostsfile, restart DNS, and update gravity (singularity)
+  hosts:  singularity
+  tasks:
+
+    - name: link singularty hostsfile
+      file:
+        src:  /home/drake/dotfiles/pihole/singularity.hosts
+        dest: /etc/hosts
+        owner:  root
+        group:  root
+        state:  link
+
+    - name: restart DNS
+      shell:  pihole restartdns
+
+    - name: update gravity
+      shell:  pihole -g
+
+# hostfiles links (host-specific)
+- name: link hostsfile, restart DNS, and update gravity (event-horizon)
+  hosts:  event_horizon
+  tasks:
+
+    - name: link event_horizon hostsfile
+      file:
+        src:  /home/drake/dotfiles/pihole/event-horizon.hosts
+        dest: /etc/hosts
+        owner:  root
+        group:  root
+        state:  link
+
+    - name: restart DNS
+      shell:  pihole restartdns
+
+    - name: update gravity
+      shell:  pihole -g
