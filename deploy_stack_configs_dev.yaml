@@ -1,6 +1,6 @@
 ---
 - name: deploy stack config files
-  hosts:  labnodes
+  hosts:  lv_426
   tasks:
 
     - git: deploy github repo (dev_test branch)

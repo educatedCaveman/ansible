@@ -1,6 +1,6 @@
 ---
 - name: configure NFS mounts for docker
-  hosts: labnodes
+  hosts: portainer
   tasks:
 
     - name: make sure we have the nfs-utils...
