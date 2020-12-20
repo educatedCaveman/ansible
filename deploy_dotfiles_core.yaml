@@ -7,6 +7,7 @@
     - git:
         repo: 'https://github.com/educatedCaveman/dotfiles.git'
         dest: /home/drake/dotfiles
+        force:  yes
         
     #check if .zshrc exists:
     - name: checking for .zshrc
