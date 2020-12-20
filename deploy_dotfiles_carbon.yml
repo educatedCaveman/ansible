@@ -1,6 +1,6 @@
 ---
 - name: deploy dotfiles 
-  hosts:  theseus
+  hosts:  carbon
   tasks:
 
     #deploy dotfiles repo
@@ -68,21 +68,6 @@
         group: drake
       when: not stat_nvim.stat.exists
 
-    #i3status
-    - name: checking for .i3status.conf
-      stat:
-        path: /home/drake/.i3status.conf
-      register: stat_i3status
-
-    - name: link .i3status.conf
-      file:
-        src:  /home/drake/dotfiles/Theseus/i3status.conf
-        dest: /home/drake/.i3status.conf
-        state:  link
-        owner: drake
-        group: drake
-      when: not stat_i3status.stat.exists
-
     #py3status
     - name: checking for .py3status.conf
       stat:
@@ -91,7 +76,7 @@
 
     - name: link .py3status.conf
       file:
-        src:  /home/drake/dotfiles/Theseus/py3status.conf
+        src:  /home/drake/dotfiles/access-terminal/py3status.conf
         dest: /home/drake/.py3status.conf
         state:  link
         owner: drake
@@ -121,27 +106,12 @@
 
     - name: link swayconfig
       file:
-        src:  /home/drake/dotfiles/Theseus/swayconfig
+        src:  /home/drake/dotfiles/access-terminal/swayConfig
         dest: /home/drake/.config/sway/config
         state:  link
         owner: drake
         group: drake
       when: not stat_swayconfig.stat.exists
-
-    #terminator
-    - name: checking for terminator
-      stat:
-        path: /home/drake/.config/terminator/config
-      register: stat_terminator
-
-    - name: link terminator
-      file:
-        src:  /home/drake/dotfiles/Theseus/termintor.config
-        dest: /home/drake/.config/terminator/config
-        state:  link
-        owner: drake
-        group: drake
-      when: not stat_terminator.stat.exists
 
     #mako
     - name: checking for mako
@@ -151,7 +121,7 @@
 
     - name: link mako
       file:
-        src:  /home/drake/dotfiles/Theseus/mako.conf
+        src:  /home/drake/dotfiles/access-terminal/mako.conf
         dest: /home/drake/.config/mako/config
         state:  link
         owner: drake
