@@ -1,6 +1,6 @@
 ---
 - name: configure ubuntu hosts
-  hosts: singularity
+  hosts: linux
   tasks:
 
     - name: update packages

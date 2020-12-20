@@ -35,6 +35,9 @@
 [carbon]
 192.168.10.6    ansible_ssh_user=drake
 
+[nextcloud]
+192.168.12.10   ansible_ssh_user=root
+
 # OS groups
 [centOS_hosts:children]
 sevastopol
@@ -45,6 +48,7 @@ lv_426
 singularity
 event_horizon
 wormhole
+nextcloud
 
 [linux:children]
 centOS_hosts
