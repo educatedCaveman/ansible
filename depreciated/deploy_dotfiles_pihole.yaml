@@ -1,7 +1,7 @@
 ---
 # main dotfiles linking
 - name: deploy pihole dotfiles
-  hosts: pihole
+  hosts: event_horizon
   tasks:
     # assumes the dotfiles already exist on host
     # eventually remove this:
@@ -10,122 +10,69 @@
         repo: 'https://github.com/educatedCaveman/dotfiles.git'
         dest: /home/drake/dotfiles
 
-    # remove file or unlink link
-    - name: remove existing adlists.list
+    # gravity.db
+    - name: link gravity.db
       file:
-        path: /etc/pihole/adlists.list
-        state:  absent
-
-    # /etc/pihole/adlists.list
-    - name: link adlists.list
-      file:
-        src:  /home/drake/dotfiles/pihole/adlists.list
-        dest: /etc/pihole/adlists.list
+        src:  /home/drake/dotfiles/pihole/gravity.db
+        dest: /etc/pihole/gravity.db
         owner:  root
         group:  root
         state:  link
 
-    # remove file or unlink link
-    - name: remove existing blacklist.txt
+    # custom.list
+    - name: link custom.list (local DNS entries)
       file:
-        path: /etc/pihole/blacklist.txt
-        state:  absent
-
-    # /etc/pihole/blacklist.txt
-    - name: link blacklist.txt
-      file:
-        src:  /home/drake/dotfiles/pihole/blacklist.txt
-        dest: /etc/pihole/blacklist.txt
+        src:  /home/drake/dotfiles/pihole/custom.list
+        dest: /etc/pihole/custom.list
         owner:  root
         group:  root
         state:  link
 
-    # remove file or unlink link
-    - name: remove existing whitelist.txt
+    # dnsmasq (CNAME)
+    - name: link dnsmasq CNAMEs
       file:
-        path: /etc/pihole/whitelist.txt
-        state:  absent
-
-    # /etc/pihole/whitelist.txt
-    - name: link whitelist.txt
-      file:
-        src:  /home/drake/dotfiles/pihole/whitelist.txt
-        dest: /etc/pihole/whitelist.txt
+        src:  /home/drake/dotfiles/pihole/05-pihole-custom-cname.conf
+        dest: /etc/dnsmasq.d/05-pihole-custom-cname.conf
         owner:  root
         group:  root
         state:  link
             
-    # remove file or unlink link
-    - name: remove existing pihole-FTL.conf
-      file:
-        path: /etc/pihole/pihole-FTL.conf
-        state:  absent
 
-    # /etc/pihole/pihole-FTL.conf
-    - name: link pihole-FTL.conf
-      file:
-        src:  /home/drake/dotfiles/pihole/pihole-FTL.conf
-        dest: /etc/pihole/pihole-FTL.conf
-        owner:  root
-        group:  root
-        state:  link
-        
-    # remove file or unlink link
-    - name: remove existing regex.list
-      file:
-        path: /etc/pihole/regex.list
-        state:  absent
+# # these are serial in order to prevent DNS from being down 
+# # hostfiles links (host-specific)
+# - name: link hostsfile, restart DNS, and update gravity (singularity)
+#   hosts:  singularity
+#   tasks:
 
-    # /etc/pihole/regex.list
-    - name: link regex.list
-      file:
-        src:  /home/drake/dotfiles/pihole/regex.list
-        dest: /etc/pihole/regex.list
-        owner:  root
-        group:  root
-        state:  link
+#     - name: link singularty hostsfile
+#       file:
+#         src:  /home/drake/dotfiles/pihole/singularity.hosts
+#         dest: /etc/hosts
+#         owner:  root
+#         group:  root
+#         state:  link
 
-    # remove file or unlink link
-    - name: remove existing hosts file
-      file:
-        path: /etc/hosts
-        state:  absent
+#     - name: restart DNS
+#       shell:  pihole restartdns
 
-# these are serial in order to prevent DNS from being down 
-# hostfiles links (host-specific)
-- name: link hostsfile, restart DNS, and update gravity (singularity)
-  hosts:  singularity
-  tasks:
+#     - name: update gravity
+#       shell:  pihole -g
 
-    - name: link singularty hostsfile
-      file:
-        src:  /home/drake/dotfiles/pihole/singularity.hosts
-        dest: /etc/hosts
-        owner:  root
-        group:  root
-        state:  link
+# # hostfiles links (host-specific)
+# - name: link hostsfile, restart DNS, and update gravity (event-horizon)
+#   hosts:  event_horizon
+#   tasks:
 
-    - name: restart DNS
-      shell:  pihole restartdns
+#     - name: link event_horizon hostsfile
+#       file:
+#         src:  /home/drake/dotfiles/pihole/event-horizon.hosts
+#         dest: /etc/hosts
+#         owner:  root
+#         group:  root
+#         state:  link
 
-    - name: update gravity
-      shell:  pihole -g
+#     - name: restart DNS
+#       shell:  pihole restartdns
 
-# hostfiles links (host-specific)
-- name: link hostsfile, restart DNS, and update gravity (event-horizon)
-  hosts:  event_horizon
-  tasks:
-
-    - name: link event_horizon hostsfile
-      file:
-        src:  /home/drake/dotfiles/pihole/event-horizon.hosts
-        dest: /etc/hosts
-        owner:  root
-        group:  root
-        state:  link
-
-    - name: restart DNS
-      shell:  pihole restartdns
-
-    - name: update gravity
-      shell:  pihole -g
+#     - name: update gravity
+#       shell:  pihole -g
