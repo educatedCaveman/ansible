@@ -1,0 +1,22 @@
+---
+# main dotfiles linking
+- name: deploy pihole dotfiles
+  hosts: pihole
+  tasks:
+
+    #deploy dotfiles repo
+    - git:
+        repo: 'https://github.com/educatedCaveman/dotfiles.git'
+        dest: /home/drake/dotfiles
+        force:  yes
+
+    # note: will use gravity sync to sync the rest
+    # TODO: create pihole backup script to mobius
+    # dnsmasq (CNAME)
+    - name: link dnsmasq CNAMEs
+      file:
+        src:  /home/drake/dotfiles/pihole/cname.conf
+        dest: /etc/dnsmasq.d/05-pihole-custom-cname.conf
+        owner:  root
+        group:  root
+        state:  link
