@@ -18,7 +18,6 @@
       stat:
         path: /mnt/mobius
       register: mobius
-
     - fail: fail if /mnt/mobius doesn't exist
       when: not mobius.stat.exists
 
@@ -42,6 +41,5 @@
       stat:
         path: /mnt/mobius/Backup/pihole
       register: pihole
-
     - fail: fail if /mnt/mobius doesn't exist
       when: not pihole.stat.exists
