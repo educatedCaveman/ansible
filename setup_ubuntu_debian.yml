@@ -1,6 +1,6 @@
 ---
 - name: configure ubuntu hosts
-  hosts: linux
+  hosts: ubuntu_debian_hosts
   tasks:
 
     - name: update packages
