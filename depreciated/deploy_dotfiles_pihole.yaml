@@ -13,7 +13,7 @@
     # dnsmasq (CNAME)
     - name: link dnsmasq CNAMEs
       file:
-        src:  /home/drake/dotfiles/pihole/05-pihole-custom-cname.conf
+        src:  /home/drake/dotfiles/pihole/cname.conf
         dest: /etc/dnsmasq.d/05-pihole-custom-cname.conf
         owner:  root
         group:  root
