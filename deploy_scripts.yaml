@@ -1,5 +1,5 @@
 ---
-- name: deploy scripts repo to drake's /home
+- name: deploy scripts repo to jenkins' /home
   hosts:  self
   tasks:
 
@@ -29,3 +29,18 @@
         recurse:  yes
         owner:  drake
         group:  drake
+
+- name: deploy scripts repo to singularity's /home
+  hosts:  singularity
+  tasks:
+
+    - name: create the scripts/ directory
+      file:
+        path: /home/drake/scripts
+        state:  directory
+        recurse:  yes
+
+    - name: make sure directory exists
+      stat:
+        path: /home/drake/scripts
+      register: scripts_dir
