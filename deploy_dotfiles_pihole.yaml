@@ -20,3 +20,12 @@
         owner:  root
         group:  root
         state:  link
+    
+    # FTL conf
+    - name: pihole-FTL.conf
+      file:
+        src:  /home/drake/dotfiles/pihole/pihole-FTL.conf
+        dest: /etc/pihole/pihole-FTL.conf
+        owner:  root
+        group:  root
+        state:  link
