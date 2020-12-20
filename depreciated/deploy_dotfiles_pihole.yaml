@@ -10,24 +10,6 @@
         repo: 'https://github.com/educatedCaveman/dotfiles.git'
         dest: /home/drake/dotfiles
 
-    # gravity.db
-    - name: link gravity.db
-      file:
-        src:  /home/drake/dotfiles/pihole/gravity.db
-        dest: /etc/pihole/gravity.db
-        owner:  root
-        group:  root
-        state:  link
-
-    # custom.list
-    - name: link custom.list (local DNS entries)
-      file:
-        src:  /home/drake/dotfiles/pihole/custom.list
-        dest: /etc/pihole/custom.list
-        owner:  root
-        group:  root
-        state:  link
-
     # dnsmasq (CNAME)
     - name: link dnsmasq CNAMEs
       file:
