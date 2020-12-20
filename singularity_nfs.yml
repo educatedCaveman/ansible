@@ -18,8 +18,6 @@
       stat:
         path: /mnt/mobius
       register: mobius
-    - fail: fail if /mnt/mobius doesn't exist
-      when: not mobius.stat.exists
 
     #mount the NFS share
     - name: Mount the Backup share... 
@@ -29,17 +27,10 @@
         fstype: nfs 
         opts: rw,nolock,tcp
         state: mounted
-      when: nfs_dir.stat.exists
+      when: mobius.stat.exists
 
     #check for directory in the share
     - name: create pihole backup folder
       file:
         path: /mnt/mobius/Backup/pihole
         state:  directory
-
-    - name: check for NFS folder
-      stat:
-        path: /mnt/mobius/Backup/pihole
-      register: pihole
-    - fail: fail if /mnt/mobius doesn't exist
-      when: not pihole.stat.exists
