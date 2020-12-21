@@ -8,18 +8,7 @@
         name: nfs-common
         state: latest
 
-    #initial NFS check
-    - name: create NFS folder
-      file:
-        path: /mnt/mobius
-        state:  directory
-
-    - name: check for NFS folder
-      stat:
-        path: /mnt/mobius
-      register: mobius
-
-    #initial NFS check
+    #NFS path check
     - name: create NFS folder
       file:
         path: /var/snap/nextcloud/common/nextcloud/data
@@ -44,9 +33,9 @@
     - name: Mount the Backup share... 
       mount:
         src: 192.168.11.2:/mnt/storage_node/Pictures
-        path: /mnt/mobius/Pictures
+        path: /var/snap/nextcloud/common/nextcloud/data/Pictures
         fstype: nfs 
         opts: rw,nolock,tcp
         state: mounted
-      when: mobius.stat.exists
+      when: nextcloud.stat.exists
       
