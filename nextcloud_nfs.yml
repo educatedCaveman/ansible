@@ -20,7 +20,7 @@
       register: nextcloud
 
     #mount the Documents share
-    - name: Mount the Backup share... 
+    - name: Mount the Documents share... 
       mount:
         src: 192.168.11.2:/mnt/storage_node/Documents
         path: /var/snap/nextcloud/common/nextcloud/data/Documents
@@ -30,7 +30,7 @@
       when: nextcloud.stat.exists
 
     #mount the Pictures share
-    - name: Mount the Backup share... 
+    - name: Mount the Pictures share... 
       mount:
         src: 192.168.11.2:/mnt/storage_node/Pictures
         path: /var/snap/nextcloud/common/nextcloud/data/Pictures
