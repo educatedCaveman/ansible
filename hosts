@@ -26,8 +26,8 @@
 [rura_penthe]
 192.168.12.8    ansible_ssh_user=drake
 
-[wormhole]
-192.168.200.2   ansible_ssh_user=root
+#[wormhole]
+#192.168.200.2   ansible_ssh_user=root
 
 [theseus]
 192.168.10.8    ansible_ssh_user=drake
@@ -47,7 +47,7 @@ lv_426
 [ubuntu_debian_hosts:children]
 singularity
 event_horizon
-wormhole
+#wormhole
 nextcloud
 
 [linux:children]
