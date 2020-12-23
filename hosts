@@ -35,6 +35,9 @@
 [carbon]
 192.168.10.6    ansible_ssh_user=drake
 
+[fluorine]
+192.168.10.9    ansible_ssh_user=root
+
 [nextcloud]
 192.168.12.10   ansible_ssh_user=root
 
@@ -49,6 +52,7 @@ singularity
 event_horizon
 #wormhole
 nextcloud
+fluorine
 
 [linux:children]
 centOS_hosts
