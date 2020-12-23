@@ -28,6 +28,7 @@
     - git:
         repo: 'https://github.com/educatedCaveman/dotfiles.git'
         dest: /home/drake/dotfiles
+        force:  yes
 
     #create Vundle directory, which also creates the nvim directory
     - name: create NeoVim and Vundle directories
