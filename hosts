@@ -48,7 +48,7 @@ lv_426
 singularity
 event_horizon
 nextcloud
-fluorine
+#fluorine
 
 [linux:children]
 centOS_hosts
