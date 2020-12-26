@@ -11,18 +11,41 @@
         force:  yes
 
     # note: will use gravity sync to sync the rest
-    # TODO: create pihole backup script to mobius
     # dnsmasq (CNAME)
-    - name: link dnsmasq CNAMEs
+    - name: remove existing cname.conf
+      file:
+        path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
+        state:  absent
+
+    - name: link new cname.conf
       file:
         src:  /home/drake/dotfiles/pihole/cname.conf
         dest: /etc/dnsmasq.d/05-pihole-custom-cname.conf
         owner:  root
         group:  root
         state:  link
+
+    # custom.list
+    - name: remove existing custom.list
+      file:
+        path: /etc/pihole/custom.list
+        state:  absent
+
+    - name: link new custom.list
+      file:
+        src:  /home/drake/dotfiles/pihole/custom.list
+        dest: /etc/pihole/custom.list
+        owner:  root
+        group:  root
+        state:  link
     
     # FTL conf
-    - name: pihole-FTL.conf
+    - name: remove existing pihole-FTL.conf
+      file:
+        path: /etc/pihole/pihole-FTL.conf
+        state:  absent
+
+    - name: link new pihole-FTL.conf
       file:
         src:  /home/drake/dotfiles/pihole/pihole-FTL.conf
         dest: /etc/pihole/pihole-FTL.conf
