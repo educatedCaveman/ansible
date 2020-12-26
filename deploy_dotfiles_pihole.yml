@@ -52,3 +52,8 @@
         owner:  root
         group:  root
         state:  link
+
+    #restart DNS
+    - name: restart DNS
+      shell:
+        cmd:  pihole restartdns
