@@ -38,6 +38,9 @@
 [nextcloud]
 192.168.12.10   ansible_ssh_user=root
 
+[dilithium]
+192.168.11.6    ansible_ssh_user=root
+
 # OS groups
 [centOS_hosts:children]
 sevastopol
@@ -48,7 +51,7 @@ lv_426
 singularity
 event_horizon
 nextcloud
-#fluorine
+dilithium
 
 [linux:children]
 centOS_hosts
