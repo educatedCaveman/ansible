@@ -51,7 +51,7 @@ lv_426
 singularity
 event_horizon
 nextcloud
-dilithium
+#dilithium
 
 [linux:children]
 centOS_hosts
