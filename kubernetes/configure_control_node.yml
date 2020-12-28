@@ -23,9 +23,41 @@
         state:  started
         enabled:  yes
 
+    # pull the dotfiles repo for the nginx config
+    - git:
+      repo: 'https://github.com/educatedCaveman/dotfiles.git'
+      dest: /home/drake/dotfiles
+      force:  yes
+
+    # make sure the default site is disabled
+    - name: make sure the default nginx site is disabled
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state:  absent
+
+    # handle the load balancer nginx config
+    # remove the existing config, if present
+    - name:
+      file:
+        path: /etc/nginx/sites-available/k3s_lb.conf
+        state:  absent
+
+    # copy the config to the nginx directory
+    - name: copy the load-balancer nginx config to the available sites
+      copy:
+        src:  /home/drake/dotfiles/kubernetes/nginx.conf
+        dest: /etc/nginx/sites-available/k3s_lb.conf
+
+    # ensure the link from available to enabled is set
+    - name: link the previous config to the enabled sites 
+      file:
+        src:  /etc/nginx/sites-available/k3s_lb.conf
+        dest: /etc/nginx/sites-enabled/k3s_lb.conf
+        state:  link
+
     # make sure nginx is running
     - name: ensure nginx is running and enabled
       systemd:
         name: nginx
-        state:  started
+        state:  restarted
         enabled:  yes
