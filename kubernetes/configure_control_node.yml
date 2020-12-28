@@ -3,20 +3,22 @@
   hosts: k3s_control_node
   tasks:
 
+    # make sure all packages are up to date
     - name: update packages
       apt:
         name: '*'
         state: latest
 
+    # make sure all the required packages are installed
     - name: ensure a list of packages installed
       apt:
         name: 
           - mariadb-server
           - nginx
 
-    #make sure mariadb is running
+    # make sure mariadb is running
     - name: ensure mariadb is running and enabled
       systemd:
         name: mariadb
-        state:  running
+        state:  started
         enabled:  yes
