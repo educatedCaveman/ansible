@@ -17,6 +17,7 @@
           - tmux
           - git
           - htop
+          - tree
 
     #change shell
     - name: change to ZSH

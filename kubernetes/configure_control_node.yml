@@ -40,20 +40,14 @@
     # remove the existing config, if present
     - name:
       file:
-        path: /etc/nginx/sites-available/k3s_lb.conf
+        path: /etc/nginx/nginx.conf
         state:  absent
-
-    # copy the config to the nginx directory
-    - name: copy the load-balancer nginx config to the available sites
-      copy:
-        src:  /home/drake/dotfiles/kubernetes/nginx.conf
-        dest: /etc/nginx/sites-available/k3s_lb.conf
 
     # ensure the link from available to enabled is set
     - name: link the previous config to the enabled sites 
       file:
-        src:  /etc/nginx/sites-available/k3s_lb.conf
-        dest: /etc/nginx/sites-enabled/k3s_lb.conf
+        src:  /home/drake/dotfiles/kubernetes/nginx.conf
+        dest: /etc/nginx/nginx.conf
         state:  link
 
     # make sure nginx is running
