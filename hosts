@@ -44,6 +44,16 @@
 [k3s_control_node]
 192.168.13.20   ansible_ssh_user=root
 
+[k3s_server_nodes]
+192.168.13.25   ansible_ssh_user=root
+192.168.13.26   ansible_ssh_user=root
+
+[k3s_worker_nodes]
+192.168.13.30   ansible_ssh_user=root
+192.168.13.31   ansible_ssh_user=root
+192.168.13.32   ansible_ssh_user=root
+192.168.13.33   ansible_ssh_user=root
+
 # OS groups
 [centOS_hosts:children]
 sevastopol
@@ -56,6 +66,8 @@ event_horizon
 nextcloud
 #dilithium
 k3s_control_node
+k3s_server_nodes
+k3s_worker_nodes
 
 [linux:children]
 centOS_hosts
