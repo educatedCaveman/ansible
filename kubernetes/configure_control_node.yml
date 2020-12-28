@@ -22,3 +22,10 @@
         name: mariadb
         state:  started
         enabled:  yes
+
+    # make sure nginx is running
+    - name: ensure nginx is running and enabled
+      systemd:
+        name: nginx
+        state:  started
+        enabled:  yes
