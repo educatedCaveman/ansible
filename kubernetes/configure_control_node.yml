@@ -13,3 +13,10 @@
         name: 
           - mariadb-server
           - nginx
+
+    #make sure mariadb is running
+    - name: ensure mariadb is running and enabled
+      systemd:
+        name: mariadb
+        state:  running
+        enabled:  yes
