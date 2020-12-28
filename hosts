@@ -41,6 +41,9 @@
 [dilithium]
 192.168.11.6    ansible_ssh_user=root
 
+[k3s_control_node]
+192.168.13.20   ansible_ssh_user=root
+
 # OS groups
 [centOS_hosts:children]
 sevastopol
@@ -52,6 +55,7 @@ singularity
 event_horizon
 nextcloud
 #dilithium
+k3s_control_node
 
 [linux:children]
 centOS_hosts
@@ -74,3 +78,6 @@ lv_426
 [pihole:children]
 singularity
 event_horizon
+
+[k3s_dev:children]
+k3s_control_node
