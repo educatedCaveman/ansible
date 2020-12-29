@@ -61,6 +61,7 @@
       copy:
         src: /etc/mysql/mariadb.conf.d/50-server.cnf
         dest: /etc/mysql/mariadb.conf.d/50-server.cnf.backup
+        remote_src: yes
       when: not backup_db_conf.stat.exists
 
     # remove the original
