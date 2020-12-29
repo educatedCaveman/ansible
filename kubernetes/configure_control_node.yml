@@ -67,7 +67,7 @@
     # remove the original
     - name: remove the original config file
       file:
-        src: /etc/mysql/mariadb.conf.d/50-server.cnf
+        path: /etc/mysql/mariadb.conf.d/50-server.cnf
         state: absent
 
     # link the custom one
