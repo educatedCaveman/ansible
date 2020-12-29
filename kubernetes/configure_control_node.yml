@@ -2,58 +2,83 @@
 - name: configure k3s control node
   hosts: k3s_control_node
   tasks:
-
     # make sure all packages are up to date
     - name: update packages
       apt:
-        name: '*'
+        name: "*"
         state: latest
 
     # make sure all the required packages are installed
     - name: ensure a list of packages installed
       apt:
-        name: 
+        name:
           - mariadb-server
           - nginx
 
-    # make sure mariadb is running
-    - name: ensure mariadb is running and enabled
-      systemd:
-        name: mariadb
-        state:  started
-        enabled:  yes
+    # TODO: manual running of the securing script
 
     # pull the dotfiles repo for the nginx config
     - name: pull the dotfiles repository
       git:
-        repo: 'https://github.com/educatedCaveman/dotfiles.git'
+        repo: "https://github.com/educatedCaveman/dotfiles.git"
         dest: /home/drake/dotfiles
-        force:  yes
+        force: yes
 
     # make sure the default site is disabled
     - name: make sure the default nginx site is disabled
       file:
         path: /etc/nginx/sites-enabled/default
-        state:  absent
+        state: absent
 
     # handle the load balancer nginx config
     # remove the existing config, if present
     - name:
       file:
         path: /etc/nginx/nginx.conf
-        state:  absent
+        state: absent
 
     # ensure the link from available to enabled is set
-    - name: link the previous config to the enabled sites 
+    - name: link the previous config to the enabled sites
       file:
-        src:  /home/drake/dotfiles/kubernetes/nginx.conf
+        src: /home/drake/dotfiles/kubernetes/nginx.conf
         dest: /etc/nginx/nginx.conf
-        state:  link
+        state: link
 
     # make sure nginx is running
     - name: ensure nginx is running and enabled
       systemd:
         name: nginx
-        state:  restarted
-        enabled:  yes
-        
+        state: restarted
+        enabled: yes
+
+    # copy the default config, if the backup doesn't exist
+    - name: check if backup config exists
+      stat:
+        path: /etc/mysql/mariadb.conf.d/50-server.cnf.backup
+      register: backup_db_conf
+
+    - name: copy the default config, if the backup doesn't exist
+      copy:
+        src: /etc/mysql/mariadb.conf.d/50-server.cnf
+        dest: /etc/mysql/mariadb.conf.d/50-server.cnf.backup
+      when: not backup_db_conf.stat.exists
+
+    # remove the original
+    - name: remove the original config file
+      file:
+        src: /etc/mysql/mariadb.conf.d/50-server.cnf
+        state: absent
+
+    # link the custom one
+    - name: link the new custom config file
+      file:
+        src: /home/drake/dotfiles/kubernetes/mariadb/50-server.cnf
+        dest: /etc/mysql/mariadb.conf.d/50-server.cnf
+        state:  link
+
+    # make sure mariadb is enabled, and has been restarted
+    - name: ensure mariadb is running and enabled
+      systemd:
+        name: mariadb
+        state: restarted
+        enabled: yes
