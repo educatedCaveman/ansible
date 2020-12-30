@@ -65,9 +65,9 @@ singularity
 event_horizon
 nextcloud
 #dilithium
-k3s_control_node
-k3s_server_nodes
-k3s_worker_nodes
+#k3s_control_node
+#k3s_server_nodes
+#k3s_worker_nodes
 
 [linux:children]
 centOS_hosts
