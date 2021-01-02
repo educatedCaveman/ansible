@@ -58,7 +58,7 @@
 192.168.12.2    ansible_ssh_user=root
 
 [rtorrent]
-192.168.12.140  ansible_ssh_user=root
+192.168.12.15   ansible_ssh_user=root
 
 # OS groups
 [centOS_hosts:children]
@@ -69,7 +69,7 @@ lv_426
 [ubuntu_debian_hosts:children]
 singularity
 event_horizon
-nextcloud
+#nextcloud
 #dilithium
 #k3s_control_node
 #k3s_server_nodes

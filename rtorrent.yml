@@ -16,8 +16,10 @@
           - nodejs
           - curl
 
-    # rtorrent user:
-    - name: create the rtorrent user
-      shell:
-        cmd: adduser --disabled-password rtorrent
+    # # rtorrent user:
+    # - name: create the rtorrent user
+    #   shell:
+    #     cmd: adduser --disabled-password rtorrent
+
+    
         
