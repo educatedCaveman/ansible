@@ -1,6 +1,6 @@
 ---
 - name: configure NFS mounts for plex
-  hosts: ples
+  hosts: plex
   tasks:
 
     - name: make sure we have the nfs-utils...

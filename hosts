@@ -43,39 +43,22 @@
 192.168.12.15   ansible_ssh_user=root
 
 # OS groups
-#[centOS_hosts:children]
-#sevastopol
-#jenkins_CICD
-#lv_426
 
 [ubuntu_debian_hosts:children]
 singularity
 event_horizon
-#nextcloud
-#dilithium
-#k3s_control_node
-#k3s_server_nodes
-#k3s_worker_nodes
 plex
 rtorrent
 jenkins_CICD
 
 [linux:children]
-#centOS_hosts
 ubuntu_debian_hosts
 
 [trueNAS:children]
 mobius
 tesseract
 
-[manjaro:children]
-theseus
-carbon
-
 # application groups
-#[portainer:children]
-#sevastopol
-#lv_426
 
 [pihole:children]
 singularity
