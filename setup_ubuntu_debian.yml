@@ -158,4 +158,5 @@
     # tweak MOTD:
     - name: delete the raspbian MOTD file
       file: 
+        path: /etc/motd
         state:  absent
