@@ -30,29 +30,29 @@
         owner:  drake
         group:  drake
 
-    # deploy system-wide config and hosts file
-    # remove existing hosts file
-    - name: remove existing ansible hosts file
-      file:
-        path: /etc/ansible/hosts
-        state:  absent
+    # # deploy system-wide config and hosts file
+    # # remove existing hosts file
+    # - name: remove existing ansible hosts file
+    #   file:
+    #     path: /etc/ansible/hosts
+    #     state:  absent
 
-    # copy file to system location
-    - name: copy repository hosts file to system location
-      copy:
-        src:  /home/drake/ansible/hosts
-        dest: /etc/ansible/hosts
-        remote_src: yes
+    # # copy file to system location
+    # - name: copy repository hosts file to system location
+    #   copy:
+    #     src:  /home/drake/ansible/hosts
+    #     dest: /etc/ansible/hosts
+    #     remote_src: yes
 
-    # remove existing config file
-    - name: remove existing ansible.cfg file
-      file:
-        path: /etc/ansible/ansible.cfg
-        state:  absent
+    # # remove existing config file
+    # - name: remove existing ansible.cfg file
+    #   file:
+    #     path: /etc/ansible/ansible.cfg
+    #     state:  absent
 
-    # copy file to system location
-    - name: copy repository ansible.cfg file to system location
-      copy:
-        src:  /home/drake/ansible/ansible.cfg
-        dest: /etc/ansible/ansible.cfg
-        remote_src: yes
+    # # copy file to system location
+    # - name: copy repository ansible.cfg file to system location
+    #   copy:
+    #     src:  /home/drake/ansible/ansible.cfg
+    #     dest: /etc/ansible/ansible.cfg
+    #     remote_src: yes
