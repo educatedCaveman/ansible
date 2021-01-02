@@ -1,0 +1,23 @@
+---
+- name: configure rtorrent + flood
+  hosts: rtorrent
+  tasks:
+    # make sure all packages are up to date
+    - name: update packages
+      apt:
+        name: "*"
+        state: latest
+
+    # make sure all the required packages are installed
+    - name: ensure a list of packages installed
+      apt:
+        name:
+          - rtorrent
+          - nodejs
+          - curl
+
+    # rtorrent user:
+    - name: create the rtorrent user
+      shell:
+        cmd: adduser --disabled-password rtorrent
+        

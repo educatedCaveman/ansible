@@ -54,6 +54,12 @@
 192.168.13.32   ansible_ssh_user=root
 192.168.13.33   ansible_ssh_user=root
 
+[plex]
+192.168.12.2    ansible_ssh_user=root
+
+[rtorrent]
+192.168.12.140  ansible_ssh_user=root
+
 # OS groups
 [centOS_hosts:children]
 sevastopol
@@ -68,6 +74,8 @@ nextcloud
 #k3s_control_node
 #k3s_server_nodes
 #k3s_worker_nodes
+plex
+rtorrent
 
 [linux:children]
 centOS_hosts
