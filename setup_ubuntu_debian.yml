@@ -144,7 +144,7 @@
       when: help_text_file.stat.exists
 
     # tweak MOTD:
-    - name: test if first MOTD file is present
+    - name: test if news MOTD file is present
       stat:
         path: /etc/update-motd.d/50-motd-news
       register: news_text_file
@@ -154,3 +154,8 @@
         path: /etc/update-motd.d/50-motd-news
         mode: 0644
       when: news_text_file.stat.exists
+
+    # tweak MOTD:
+    - name: delete the raspbian MOTD file
+      file: 
+        state:  absent
