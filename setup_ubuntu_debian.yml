@@ -132,13 +132,25 @@
         group: drake
     
     # tweak MOTD:
+    - name: test if first MOTD file is present
+      stat:
+        path: /etc/update-motd.d/10-help-text
+      register: help_text_file
+    
     - name: disable the helper text in the MOTD
       file: 
         path: /etc/update-motd.d/10-help-text
         mode: 0644
+      when: help_text_file.stat.exists
 
     # tweak MOTD:
+    - name: test if first MOTD file is present
+      stat:
+        path: /etc/update-motd.d/50-motd-news
+      register: news_text_file
+    
     - name: disable the news text in the MOTD
       file: 
         path: /etc/update-motd.d/50-motd-news
         mode: 0644
+      when: news_text_file.stat.exists
