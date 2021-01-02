@@ -131,3 +131,14 @@
         owner: drake
         group: drake
     
+    # tweak MOTD:
+    - name: disable the helper text in the MOTD
+      file: 
+        path: /etc/update-motd.d/10-help-text
+        mode: 0644
+
+    # tweak MOTD:
+    - name: disable the news text in the MOTD
+      file: 
+        path: /etc/update-motd.d/50-motd-news
+        mode: 0644
