@@ -67,7 +67,6 @@ ubuntu_debian_hosts
 [trueNAS:children]
 mobius
 tesseract
-rura_penthe
 
 [manjaro:children]
 theseus
