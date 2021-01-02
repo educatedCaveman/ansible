@@ -1,12 +1,7 @@
 # individual named hosts:
-[sevastopol]
-192.168.12.16   ansible_ssh_user=root
 
-#[lv_426]
-#192.168.13.16   ansible_ssh_user=root
-
-#[singularity]
-#192.168.12.7    ansible_ssh_user=root
+[singularity]
+192.168.12.7    ansible_ssh_user=root
 
 [event_horizon]
 192.168.11.4    ansible_ssh_user=root
@@ -22,18 +17,6 @@
 
 [tesseract]
 192.168.11.3    ansible_ssh_user=drake
-
-[rura_penthe]
-192.168.12.8    ansible_ssh_user=drake
-
-[theseus]
-192.168.10.8    ansible_ssh_user=drake
-
-[carbon]
-192.168.10.6    ansible_ssh_user=drake
-
-[fluorine]
-192.168.10.9    ansible_ssh_user=root
 
 [nextcloud]
 192.168.12.10   ansible_ssh_user=root
@@ -61,10 +44,10 @@
 192.168.12.15   ansible_ssh_user=root
 
 # OS groups
-[centOS_hosts:children]
-sevastopol
-jenkins_CICD
-lv_426
+#[centOS_hosts:children]
+#sevastopol
+#jenkins_CICD
+#lv_426
 
 [ubuntu_debian_hosts:children]
 singularity

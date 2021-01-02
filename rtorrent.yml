@@ -26,7 +26,7 @@
     # make sure the /srv/rtorrent/downloads directory exists
     - name: make sure the '/srv/torrent/.session' folder exists
       file:
-        path: /srv/rtorrent/.session
+        path: /srv/torrent/.session
         state:  directory
         recurse:  yes
 
