@@ -1,5 +1,4 @@
 # individual named hosts:
-
 [singularity]
 192.168.12.7    ansible_ssh_user=root
 
@@ -59,6 +58,7 @@ event_horizon
 #k3s_worker_nodes
 plex
 rtorrent
+jenkins_CICD
 
 [linux:children]
 #centOS_hosts

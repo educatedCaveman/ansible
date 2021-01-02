@@ -1,0 +1,64 @@
+---
+- name: configure NFS mounts for plex
+  hosts: ples
+  tasks:
+
+    - name: make sure we have the nfs-utils...
+      yum:
+        name: nfs-utils
+        state: latest
+
+    # Hegre
+    - name: Mount the Hegre share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/Hegre
+        path: /mnt/mobius/Hegre
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+
+    # Music
+    - name: Mount the Music share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/Music/iTunes/iTunes Media/Music
+        path: /mnt/mobius/Music
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+        
+    # Pictures
+    - name: Mount the Pictures share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/Pictures
+        path: /mnt/mobius/Pictures
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+        
+    # pr0n
+    - name: Mount the pr0n share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/pr0n
+        path: /mnt/mobius/pr0n
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+        
+    # Movies
+    - name: Mount the Movies share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/Video/Movies
+        path: /mnt/mobius/Movies
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+        
+    # TV-shows
+    - name: Mount the TV-shows share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/Video/TV-shows
+        path: /mnt/mobius/TV-shows
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+        
