@@ -16,10 +16,49 @@
           - nodejs
           - curl
 
-    # # rtorrent user:
-    # - name: create the rtorrent user
-    #   shell:
-    #     cmd: adduser --disabled-password rtorrent
+    # make sure the /srv/torrent/downloads directory exists
+    - name: make sure the '/srv/torrent/downloads' folder exists
+      file:
+        path: /srv/torrent/downloads
+        state:  directory
+        recurse:  yes
 
+    # make sure the /srv/rtorrent/downloads directory exists
+    - name: make sure the '/srv/torrent/.session' folder exists
+      file:
+        path: /srv/rtorrent/.session
+        state:  directory
+        recurse:  yes
+
+    # set permissions
+    - name: set permissions on the '/srv/torrent' folder
+      file:
+        path: /srv/rtorrent
+        state:  directory
+        owner:  rtorrent
+        group:  rtorrent
+        mode: '0755'
+        recurse:  yes
+
+    # deploy dotfiles repo
+    - git:
+        repo: 'https://github.com/educatedCaveman/dotfiles.git'
+        dest: /home/drake/dotfiles
+        force:  yes
+
+    # link the config file
+    # remove the existing config, if present
+    - name:
+      file:
+        path: /home/rtorrent/.rtorrent.rc
+        state: absent
+
+    # ensure the link from dotfiles is set
+    - name: link the config
+      file:
+        src: /home/drake/dotfiles/rtorrent/rtorrent.conf
+        dest: /home/rtorrent/.rtorrent.rc
+        owner:  rtorrent
+        group:  rtorrent
+        state: link
     
-        
