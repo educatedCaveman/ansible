@@ -39,16 +39,12 @@
 [plex]
 192.168.12.2    ansible_ssh_user=root
 
-[rtorrent]
-192.168.12.15   ansible_ssh_user=root
-
 # OS groups
 
 [ubuntu_debian_hosts:children]
 singularity
 event_horizon
 plex
-rtorrent
 jenkins_CICD
 
 [linux:children]
@@ -63,6 +59,3 @@ tesseract
 [pihole:children]
 singularity
 event_horizon
-
-[k3s_dev:children]
-k3s_control_node
