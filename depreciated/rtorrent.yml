@@ -20,6 +20,8 @@
     - name: make sure the '/srv/torrent/downloads' folder exists
       file:
         path: /srv/torrent/downloads
+        owner:  rtorrent
+        group:  rtorrent
         state:  directory
         recurse:  yes
 
@@ -27,6 +29,8 @@
     - name: make sure the '/srv/torrent/.session' folder exists
       file:
         path: /srv/torrent/.session
+        owner:  rtorrent
+        group:  rtorrent
         state:  directory
         recurse:  yes
 
