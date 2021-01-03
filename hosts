@@ -39,6 +39,9 @@
 [plex]
 192.168.12.2    ansible_ssh_user=root
 
+[gitlab]
+192.168.12.18   ansible_ssh_user=root
+
 # OS groups
 
 [ubuntu_debian_hosts:children]
@@ -46,6 +49,7 @@ singularity
 event_horizon
 plex
 jenkins_CICD
+gitlab
 
 [linux:children]
 ubuntu_debian_hosts
