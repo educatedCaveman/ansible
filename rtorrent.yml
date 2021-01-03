@@ -62,3 +62,10 @@
         group:  rtorrent
         state: link
     
+    # systemd:
+    # /etc/systemd/system/rtorrent.service
+    - name: link the systemd file
+      file:
+        src: /home/drake/dotfiles/rtorrent/rtorrent.service
+        dest: /etc/systemd/system/rtorrent.service
+        state: link
