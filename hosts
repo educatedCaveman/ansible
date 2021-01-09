@@ -57,7 +57,7 @@ plex
 jenkins_CICD
 gitlab
 lv_426
-#sevastopol
+sevastopol
 
 [linux:children]
 ubuntu_debian_hosts

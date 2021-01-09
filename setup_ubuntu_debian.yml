@@ -1,6 +1,7 @@
 ---
 - name: configure ubuntu hosts
   hosts: ubuntu_debian_hosts
+  ignore_unreachable: yes
   tasks:
 
     - name: update packages
