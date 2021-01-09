@@ -1,6 +1,6 @@
 ---
 - name: configure ubuntu host for docker
-  host: portainer
+  hosts: portainer
   ignore_unreachable: yes
   tasks:
     
@@ -36,3 +36,10 @@
           - docker-ce-cli 
           - containerd.io
         state: latest
+
+    - name: add drake to the docker group
+      user:
+        name: drake
+        group:  docker
+        append: yes
+        
