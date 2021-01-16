@@ -58,7 +58,6 @@ jenkins_CICD
 gitlab
 lv_426
 sevastopol
-oxygen
 
 [linux:children]
 ubuntu_debian_hosts
