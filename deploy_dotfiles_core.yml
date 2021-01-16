@@ -1,6 +1,7 @@
 ---
 - name: deploy dotfiles 
   hosts:  linux
+  ignore_unreachable: yes
   tasks:
 
     #deploy dotfiles repo

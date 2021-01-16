@@ -20,6 +20,7 @@
 
 - name: deploy docker dev code to drake's home directory
   hosts:  portainer
+  ignore_unreachable: yes
   tasks:
     
     - name: create the docker directory

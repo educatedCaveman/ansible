@@ -1,6 +1,7 @@
 ---
 - name: configure NFS mounts for docker
   hosts: portainer
+  ignore_unreachable: yes
   tasks:
 
     - name: make sure we have the nfs-utils...
