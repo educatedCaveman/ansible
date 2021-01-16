@@ -48,9 +48,6 @@
 [sevastopol]
 192.168.12.16   ansible_ssh_user=root
 
-[oxygen]
-192.168.11.8    ansible_ssh_user=root
-
 # OS groups
 
 [ubuntu_debian_hosts:children]
