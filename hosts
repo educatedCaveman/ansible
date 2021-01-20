@@ -83,6 +83,8 @@ gitlab
 lv_426
 sevastopol
 oxygen
+swarm_managers
+swarm_workers
 
 [linux:children]
 ubuntu_debian_hosts
