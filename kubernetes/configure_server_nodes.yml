@@ -1,0 +1,16 @@
+---
+- name: configure k3s control node
+  hosts: k3s_control_node
+  tasks:
+    # make sure all packages are up to date
+    - name: update packages
+      apt:
+        name: "*"
+        state: latest
+
+    # make sure all the required packages are installed
+    - name: ensure a list of packages installed
+      apt:
+        name:
+          - mariadb-server
+          - nginx

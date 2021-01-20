@@ -23,19 +23,6 @@
 [dilithium]
 192.168.11.6    ansible_ssh_user=root
 
-[k3s_control_node]
-192.168.13.20   ansible_ssh_user=root
-
-[k3s_server_nodes]
-192.168.13.25   ansible_ssh_user=root
-192.168.13.26   ansible_ssh_user=root
-
-[k3s_worker_nodes]
-192.168.13.30   ansible_ssh_user=root
-192.168.13.31   ansible_ssh_user=root
-192.168.13.32   ansible_ssh_user=root
-192.168.13.33   ansible_ssh_user=root
-
 [plex]
 192.168.12.2    ansible_ssh_user=root
 
@@ -51,20 +38,9 @@
 [oxygen]
 192.168.11.8    ansible_ssh_user=root
 
-[k3s_control_node]
-192.168.13.20   ansible_ssh_user=root
-
-[k3s_server_nodes]
-192.168.13.25   ansible_ssh_user=root
-192.168.13.26   ansible_ssh_user=root
-
-[k3s_worker_nodes]
-192.168.13.30   ansible_ssh_user=root
-192.168.13.31   ansible_ssh_user=root
-192.168.13.32   ansible_ssh_user=root
-192.168.13.33   ansible_ssh_user=root
-
-# OS groups
+#############
+# OS groups #
+#############
 
 [ubuntu_debian_hosts:children]
 singularity
@@ -75,9 +51,6 @@ gitlab
 lv_426
 sevastopol
 oxygen
-k3s_control_node
-k3s_server_nodes
-k3s_worker_nodes
 
 [linux:children]
 ubuntu_debian_hosts
@@ -86,7 +59,9 @@ ubuntu_debian_hosts
 mobius
 tesseract
 
-# application groups
+######################
+# application groups #
+######################
 
 [pihole:children]
 singularity
@@ -97,7 +72,3 @@ lv_426
 sevastopol
 oxygen
 
-[k3s:children]
-k3s_control_node
-k3s_server_nodes
-k3s_worker_nodes
