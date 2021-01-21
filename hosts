@@ -38,37 +38,37 @@
 [oxygen]
 192.168.11.8    ansible_ssh_user=root
 
-[swarm_manager_01]
+[dev_swarm_manager_01]
 192.168.13.25   ansible_ssh_user=root
 
-[swarm_manager_02]
+[dev_swarm_manager_02]
 192.168.13.26   ansible_ssh_user=root
 
-[swarm_manager_03]
+[dev_swarm_manager_03]
 192.168.13.27   ansible_ssh_user=root
 
-[swarm_worker_01]
+[dev_swarm_worker_01]
 192.168.13.30   ansible_ssh_user=root
 
-[swarm_worker_02]
+[dev_swarm_worker_02]
 192.168.13.31   ansible_ssh_user=root
 
-[swarm_worker_03]
+[dev_swarm_worker_03]
 192.168.13.32   ansible_ssh_user=root
 
-[swarm_worker_04]
+[dev_swarm_worker_04]
 192.168.13.33   ansible_ssh_user=root
 
-[swarm_managers:children]
-swarm_manager_01
-swarm_manager_02
-swarm_manager_03
+[dev_swarm_managers:children]
+dev_swarm_manager_01
+dev_swarm_manager_02
+dev_swarm_manager_03
 
-[swarm_workers:children]
-swarm_worker_01
-swarm_worker_02
-swarm_worker_03
-swarm_worker_04
+[dev_swarm_workers:children]
+dev_swarm_worker_01
+dev_swarm_worker_02
+dev_swarm_worker_03
+dev_swarm_worker_04
 
 #############
 # OS groups #
@@ -83,8 +83,8 @@ gitlab
 lv_426
 sevastopol
 oxygen
-swarm_managers
-swarm_workers
+dev_swarm_managers
+dev_swarm_workers
 
 [linux:children]
 ubuntu_debian_hosts
@@ -105,5 +105,5 @@ event_horizon
 lv_426
 sevastopol
 oxygen
-swarm_managers
-swarm_workers
+dev_swarm_managers
+dev_swarm_workers

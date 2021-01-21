@@ -1,0 +1,19 @@
+---
+- name: configure NFS mounts for docker
+  hosts: dev_swarm_managers
+  ignore_unreachable: yes
+  tasks:
+
+    - name: make sure we have the nfs-utils...
+      yum:
+        name: nfs-utils
+        state: latest
+
+    - name: Mount the Docker share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/Docker/dev
+        path: /mnt/mobius/docker
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+
