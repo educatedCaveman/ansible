@@ -1,12 +1,13 @@
 ---
 - name: deploy docker code to DEV portainer instance
-  hosts: dev_swarm_workers
+  # only need to deploy once
+  hosts: self
   tasks:
 
     - name: deploy dev_test branch to dev_swarm_workers
       git:
         repo: "https://github.com/educatedCaveman/docker-lab"
-        dest: /mnt/mobius/docker
+        dest: /mnt/mobius/docker/dev
         version:  dev_test
         force:  yes
 
@@ -17,10 +18,6 @@
         recurse:  yes
         owner:  drake
         group:  drake
-
-- name: deploy docker dev code to drake's home directory
-  hosts:  self
-  tasks:
     
     - name: create the dev_code/docker directory
       file:
@@ -32,7 +29,6 @@
       stat:
         path: /home/drake/dev_code
       register: dev_code
-
 
     - name: deploy dev_test branch to self
       git:  
