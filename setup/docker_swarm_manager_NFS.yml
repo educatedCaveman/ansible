@@ -1,6 +1,6 @@
 ---
 - name: configure NFS mounts for docker
-  hosts: dev_swarm_managers
+  hosts: swarm_managers
   ignore_unreachable: yes
   tasks:
 

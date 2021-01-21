@@ -1,6 +1,6 @@
 ---
-- name: configure NFS mounts for docker
-  hosts: portainer
+- name: configure NFS mounts for DEV docker swarm
+  hosts: dev_swarm_workers
   ignore_unreachable: yes
   tasks:
 
@@ -33,3 +33,36 @@
         opts: rw,nolock,tcp
         state: mounted
 
+- name: configure NFS mounts for PRD docker swarm
+  hosts: prd_swarm_workers
+  ignore_unreachable: yes
+  tasks:
+
+    - name: make sure we have the nfs-utils...
+      yum:
+        name: nfs-utils
+        state: latest
+
+    - name: Mount the Backup share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/Backup
+        path: /mnt/mobius/Backup
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+
+    - name: Mount the staging share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/staging/docker/prd
+        path: /mnt/mobius/staging
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+
+    - name: Mount the Docker share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/Docker/prd
+        path: /mnt/mobius/docker
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
