@@ -5,8 +5,8 @@
   tasks:
 
     - name: make sure we have the nfs-utils...
-      yum:
-        name: nfs-utils
+      apt:
+        name: nfs-common
         state: latest
 
     - name: Mount the Backup share... 
@@ -39,8 +39,8 @@
   tasks:
 
     - name: make sure we have the nfs-utils...
-      yum:
-        name: nfs-utils
+      apt:
+        name: nfs-common
         state: latest
 
     - name: Mount the Backup share... 
