@@ -5,7 +5,7 @@
   tasks:
 
     - name: make sure we have the nfs-utils...
-      yum:
+      apt:
         name: nfs-utils
         state: latest
 
