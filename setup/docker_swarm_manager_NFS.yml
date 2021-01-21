@@ -6,7 +6,7 @@
 
     - name: make sure we have the nfs-utils...
       apt:
-        name: nfs-utils
+        name: nfs-common
         state: latest
 
     - name: Mount the Docker share... 
