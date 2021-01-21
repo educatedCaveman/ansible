@@ -1,6 +1,6 @@
 ---
 - name: deploy docker code to PRD portainer instance
-  hosts: sevastopol
+  hosts: prd_swarm_workers
   tasks:
 
     - name: deploy master branch to sevastopol.vm

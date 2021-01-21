@@ -1,9 +1,9 @@
 ---
 - name: deploy docker code to DEV portainer instance
-  hosts: lv_426
+  hosts: dev_swarm_workers
   tasks:
 
-    - name: deploy dev_test branch to LV-426.lab
+    - name: deploy dev_test branch to dev_swarm_workers
       git:
         repo: "https://github.com/educatedCaveman/docker-lab"
         dest: /mnt/mobius/docker
