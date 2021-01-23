@@ -2,26 +2,34 @@
 - name: deploy dotfiles 
   hosts:  linux
   ignore_unreachable: true
+  gather_facts: false
   tasks:
+
+    - name:  ping hosts to register if they're up
+      ping:
+        data: pong
+      register: host_up
 
     #deploy dotfiles repo
     - git:
         repo: 'https://github.com/educatedCaveman/dotfiles.git'
         dest: /home/drake/dotfiles
         force:  yes
+      when: host_up.ping is defined
         
     #check if .zshrc exists:
     - name: checking for .zshrc
       stat: 
         path: /home/drake/.zshrc
       register: stat_zshrc
+      when: host_up.ping is defined
     
     - name: link .zshrc
       file:
         src: /home/drake/dotfiles/zsh/zshrc
         dest: /home/drake/.zshrc
         state: link
-      when: (not stat_zshrc.stat.exists)
+      when: (not stat_zshrc.stat.exists) and (host_up.ping is defined)
     
     #check if .zsh_aliases exists:
     - name: checking for .zsh_aliases
