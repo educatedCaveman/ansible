@@ -4,63 +4,73 @@
   ignore_unreachable: yes
   tasks:
 
+    - name: ping hosts to see which are up
+      ping:
+        register: ping_result
+        ignore_unreachable: true
+
     #deploy dotfiles repo
     - git:
         repo: 'https://github.com/educatedCaveman/dotfiles.git'
         dest: /home/drake/dotfiles
         force:  yes
+      when: ping_result.unreachable is not defined
         
     #check if .zshrc exists:
     - name: checking for .zshrc
       stat: 
         path: /home/drake/.zshrc
       register: stat_zshrc
+      when: ping_result.unreachable is not defined
     
     - name: link .zshrc
       file:
         src: /home/drake/dotfiles/zsh/zshrc
         dest: /home/drake/.zshrc
         state: link
-      when: (not stat_zshrc.stat.exists)
+      when: (not stat_zshrc.stat.exists) and (ping_result.unreachable is not defined)
     
     #check if .zsh_aliases exists:
     - name: checking for .zsh_aliases
       stat: 
         path: /home/drake/.zsh_aliases
       register: stat_zsh_aliases
+      when: ping_result.unreachable is not defined
     
     - name: link .zsh_aliases
       file:
         src: /home/drake/dotfiles/zsh/zsh_aliases
         dest: /home/drake/.zsh_aliases
         state: link
-      when: (not stat_zsh_aliases.stat.exists)
+      when: (not stat_zsh_aliases.stat.exists) and (ping_result.unreachable is not defined)
     
     #check if .zsh-theme exists:
     - name: checking for .zsh-theme
       stat: 
         path: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
       register: stat_zsh_theme
+      when: ping_result.unreachable is not defined
     
     - name: link .zsh-theme
       file:
         src: /home/drake/dotfiles/zsh/less-fishy.zsh-theme
         dest: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
         state: link
-      when: (not stat_zsh_theme.stat.exists)
+      when: (not stat_zsh_theme.stat.exists) and (ping_result.unreachable is not defined)
 
     #neovim
     - name: checking for init.vim
       stat: 
         path: /home/drake/.config/nvim/init.vim
       register: stat_nvim
+      when: ping_result.unreachable is not defined
     
     - name: link init.vim
       file:
         src: /home/drake/dotfiles/init.vim
         dest: /home/drake/.config/nvim/init.vim
         state: link
-      when: not stat_nvim.stat.exists
+      when: (not stat_nvim.stat.exists) and (ping_result.unreachable is not defined)
     
     #set home directory permissions
     - name: set home permissions
