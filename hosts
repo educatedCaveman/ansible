@@ -140,6 +140,7 @@ dev_swarm_managers
 dev_swarm_workers
 prd_swarm_managers
 prd_swarm_workers
+pihole_LXC
 
 [linux:children]
 ubuntu_debian_hosts
