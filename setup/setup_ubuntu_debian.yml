@@ -19,6 +19,9 @@
           - git
           - htop
           - tree
+          - curl
+          - sqlite3
+          - git
 
     #change shell
     - name: change to ZSH
