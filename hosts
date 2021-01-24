@@ -29,12 +29,6 @@
 [gitlab]
 192.168.12.18   ansible_ssh_user=root
 
-# [lv_426]
-# 192.168.13.16   ansible_ssh_user=root
-
-# [sevastopol]
-# 192.168.12.16   ansible_ssh_user=root
-
 [oxygen]
 192.168.11.8    ansible_ssh_user=root
 
@@ -138,9 +132,6 @@ prd_swarm_worker_04
 event_horizon
 plex
 jenkins_CICD
-gitlab
-# lv_426
-# sevastopol
 oxygen
 dev_api_LB
 dev_swarm_managers
@@ -167,8 +158,6 @@ event_horizon
 pihole_LXC
 
 [portainer:children]
-# lv_426
-# sevastopol
 oxygen
 dev_swarm_managers
 dev_swarm_workers
