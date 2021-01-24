@@ -38,6 +38,9 @@
 [oxygen]
 192.168.11.8    ansible_ssh_user=root
 
+[dev_api_LB]
+192.168.13.20   ansible_ssh_user=root
+
 [dev_swarm_manager_01]
 192.168.13.25   ansible_ssh_user=root
 
@@ -136,6 +139,7 @@ gitlab
 # lv_426
 # sevastopol
 oxygen
+dev_api_LB
 dev_swarm_managers
 dev_swarm_workers
 prd_swarm_managers
