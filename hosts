@@ -145,6 +145,7 @@ oxygen
 dev_api_LB
 dev_swarm_managers
 dev_swarm_workers
+prd_api_LB
 prd_swarm_managers
 prd_swarm_workers
 pihole_LXC
