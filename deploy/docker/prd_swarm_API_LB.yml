@@ -1,6 +1,6 @@
 ---
 - name: configure k3s control node
-  hosts: dev_api_LB
+  hosts: prd_api_LB
   tasks:
     # make sure all packages are up to date
     - name: update packages
@@ -37,7 +37,7 @@
     # ensure the link from available to enabled is set
     - name: link the previous config to the enabled sites
       file:
-        src: /home/drake/dotfiles/docker_swarm/dev_lb_nginx.conf
+        src: /home/drake/dotfiles/docker_swarm/prd_lb_nginx.conf
         dest: /etc/nginx/nginx.conf
         state: link
 

@@ -73,6 +73,9 @@ dev_swarm_worker_02
 dev_swarm_worker_03
 dev_swarm_worker_04
 
+[prd_api_LB]
+192.168.12.20   ansible_ssh_user=root
+
 [prd_swarm_manager_01]
 192.168.12.25   ansible_ssh_user=root
 
