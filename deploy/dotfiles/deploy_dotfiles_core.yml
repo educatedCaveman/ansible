@@ -17,51 +17,26 @@
         force:  yes
       when: host_up.ping is defined
         
-    # #check if .zshrc exists:
-    # - name: checking for .zshrc
-    #   stat: 
-    #     path: /home/drake/.zshrc
-    #   register: stat_zshrc
-    #   when: host_up.ping is defined
-    
     - name: link .zshrc
       file:
         src: /home/drake/dotfiles/zsh/zshrc
         dest: /home/drake/.zshrc
         state: link
       when: host_up.ping is defined
-    
-    # #check if .zsh_aliases exists:
-    # - name: checking for .zsh_aliases
-    #   stat: 
-    #     path: /home/drake/.zsh_aliases
-    #   register: stat_zsh_aliases
-    
+        
     - name: link .zsh_aliases
       file:
         src: /home/drake/dotfiles/zsh/zsh_aliases
         dest: /home/drake/.zsh_aliases
         state: link
       when: host_up.ping is defined
-    
-    #check if .zsh-theme exists:
-    # - name: checking for .zsh-theme
-    #   stat: 
-    #     path: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
-    #   register: stat_zsh_theme
-    
+        
     - name: link .zsh-theme
       file:
         src: /home/drake/dotfiles/zsh/less-fishy.zsh-theme
         dest: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
         state: link
       when: host_up.ping is defined
-
-    #neovim
-    # - name: checking for init.vim
-    #   stat: 
-    #     path: /home/drake/.config/nvim/init.vim
-    #   register: stat_nvim
     
     - name: link init.vim
       file:

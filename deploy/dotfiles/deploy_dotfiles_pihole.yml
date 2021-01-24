@@ -1,7 +1,7 @@
 ---
 # main dotfiles linking
 - name: deploy pihole dotfiles
-  hosts: pihole
+  hosts: singularity
   tasks:
 
     #deploy dotfiles repo
