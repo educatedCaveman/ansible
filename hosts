@@ -1,6 +1,6 @@
 # individual named hosts:
-[singularity]
-192.168.12.7    ansible_ssh_user=root
+# [singularity]
+# 192.168.12.7    ansible_ssh_user=root
 
 [event_horizon]
 192.168.11.4    ansible_ssh_user=root
@@ -29,14 +29,11 @@
 [gitlab]
 192.168.12.18   ansible_ssh_user=root
 
-[lv_426]
-192.168.13.16   ansible_ssh_user=root
-
-[sevastopol]
-192.168.12.16   ansible_ssh_user=root
-
 [oxygen]
 192.168.11.8    ansible_ssh_user=root
+
+[dev_api_LB]
+192.168.13.20   ansible_ssh_user=root
 
 [dev_swarm_manager_01]
 192.168.13.25   ansible_ssh_user=root
@@ -69,6 +66,9 @@ dev_swarm_worker_01
 dev_swarm_worker_02
 dev_swarm_worker_03
 dev_swarm_worker_04
+
+[prd_api_LB]
+192.168.12.20   ansible_ssh_user=root
 
 [prd_swarm_manager_01]
 192.168.12.25   ansible_ssh_user=root
@@ -120,23 +120,26 @@ prd_swarm_worker_02
 prd_swarm_worker_03
 prd_swarm_worker_04
 
+[pihole_LXC]
+192.168.12.4    ansible_ssh_user=root
+
 #############
 # OS groups #
 #############
 
 [ubuntu_debian_hosts:children]
-singularity
+# singularity
 event_horizon
 plex
 jenkins_CICD
-gitlab
-lv_426
-sevastopol
 oxygen
+dev_api_LB
 dev_swarm_managers
 dev_swarm_workers
+prd_api_LB
 prd_swarm_managers
 prd_swarm_workers
+pihole_LXC
 
 [linux:children]
 ubuntu_debian_hosts
@@ -150,12 +153,11 @@ tesseract
 ######################
 
 [pihole:children]
-singularity
+# singularity
 event_horizon
+pihole_LXC
 
 [portainer:children]
-lv_426
-sevastopol
 oxygen
 dev_swarm_managers
 dev_swarm_workers

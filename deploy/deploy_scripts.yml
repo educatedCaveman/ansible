@@ -31,7 +31,7 @@
         group:  drake
 
 - name: deploy scripts repo to singularity's /home
-  hosts:  singularity
+  hosts:  pihole_LXC
   tasks:
 
     - name: create the scripts/ directory

@@ -19,7 +19,9 @@
           - git
           - htop
           - tree
-          - qemu-guest-agent
+          - curl
+          - sqlite3
+          - git
 
     #change shell
     - name: change to ZSH

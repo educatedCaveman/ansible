@@ -1,6 +1,6 @@
 ---
 - name: configure NFS mount for pihole
-  hosts: singularity
+  hosts: pihole_LXC
   tasks:
 
     - name: make sure we have the nfs-utils...

@@ -1,66 +1,49 @@
 ---
 - name: deploy dotfiles 
   hosts:  linux
-  ignore_unreachable: yes
+  ignore_unreachable: true
+  gather_facts: false
   tasks:
+
+    - name:  ping hosts to register if they're up
+      ping:
+        data: pong
+      register: host_up
 
     #deploy dotfiles repo
     - git:
         repo: 'https://github.com/educatedCaveman/dotfiles.git'
         dest: /home/drake/dotfiles
         force:  yes
+      when: host_up.ping is defined
         
-    #check if .zshrc exists:
-    - name: checking for .zshrc
-      stat: 
-        path: /home/drake/.zshrc
-      register: stat_zshrc
-    
     - name: link .zshrc
       file:
         src: /home/drake/dotfiles/zsh/zshrc
         dest: /home/drake/.zshrc
         state: link
-      when: (not stat_zshrc.stat.exists)
-    
-    #check if .zsh_aliases exists:
-    - name: checking for .zsh_aliases
-      stat: 
-        path: /home/drake/.zsh_aliases
-      register: stat_zsh_aliases
-    
+      when: host_up.ping is defined
+        
     - name: link .zsh_aliases
       file:
         src: /home/drake/dotfiles/zsh/zsh_aliases
         dest: /home/drake/.zsh_aliases
         state: link
-      when: (not stat_zsh_aliases.stat.exists)
-    
-    #check if .zsh-theme exists:
-    - name: checking for .zsh-theme
-      stat: 
-        path: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
-      register: stat_zsh_theme
-    
+      when: host_up.ping is defined
+        
     - name: link .zsh-theme
       file:
         src: /home/drake/dotfiles/zsh/less-fishy.zsh-theme
         dest: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
         state: link
-      when: (not stat_zsh_theme.stat.exists)
-
-    #neovim
-    - name: checking for init.vim
-      stat: 
-        path: /home/drake/.config/nvim/init.vim
-      register: stat_nvim
+      when: host_up.ping is defined
     
     - name: link init.vim
       file:
         src: /home/drake/dotfiles/init.vim
         dest: /home/drake/.config/nvim/init.vim
         state: link
-      when: not stat_nvim.stat.exists
+      when: host_up.ping is defined
     
     #set home directory permissions
     - name: set home permissions
@@ -70,4 +53,4 @@
         recurse: yes
         owner: drake
         group: drake
-    
+      when: host_up.ping is defined
