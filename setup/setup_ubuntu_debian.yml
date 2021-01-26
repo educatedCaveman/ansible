@@ -19,6 +19,7 @@
           - git
           - htop
           - tree
+          - qemu-guest-agent
 
     #change shell
     - name: change to ZSH
