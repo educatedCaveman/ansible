@@ -164,3 +164,13 @@
       file: 
         path: /etc/motd
         state:  absent
+
+- name: Install 'qemu-guest-agent' on VMs only (not LXC containers)
+  hosts: ubuntu_debian_VM
+  ignore_unreachable: yes
+  tasks:
+
+    - name: ensure a list of packages installed
+      apt:
+        name: 
+          - qemu-guest-agent
