@@ -179,14 +179,14 @@
     # netdata.conf
     - name: link netdata.conf
       file:
-        src:  /home/drake/netdata/netdata.conf
+        src:  /home/drake/dotfiles/netdata/netdata.conf
         dest: /etc/netdata/netdata.conf
         state:  link
 
     # health_alarm_notify.conf
     - name: link health_alarm_notify.conf.conf
       file:
-        src:  /home/drake/netdata/health_alarm_notify.conf.conf
+        src:  /home/drake/dotfiles/netdata/health_alarm_notify.conf.conf
         dest: /etc/netdata/health_alarm_notify.conf.conf
         state:  link
 
