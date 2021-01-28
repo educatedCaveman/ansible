@@ -189,6 +189,7 @@
         state:  link
 
     # health_alarm_notify.conf
+    # no longer set to send slack notifications, but doesnt hurt to keep this in place
     - name: remove the existing health_alarm_notify.conf
       file:
         path: /etc/netdata/health_alarm_notify.conf

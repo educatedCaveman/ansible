@@ -1,5 +1,5 @@
 ---
-- name: configure k3s control node
+- name: configure DEV docker swarm API load-balancer
   hosts: dev_api_LB
   tasks:
     # make sure all packages are up to date
