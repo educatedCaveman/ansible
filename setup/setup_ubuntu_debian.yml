@@ -208,6 +208,10 @@
         state:  restarted
         enabled:  yes
 
+    - name: install 'slack-webhook' pypi package
+      pip:
+        name: slack-webhook
+
 - name: Install 'qemu-guest-agent' on VMs only (not LXC containers)
   hosts: ubuntu_debian_VM
   ignore_unreachable: yes
