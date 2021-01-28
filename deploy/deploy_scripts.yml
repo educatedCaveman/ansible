@@ -8,7 +8,7 @@
     - name: install relevant packages
       apt:
         name:
-          - pip3
+          - python3-pip
 
     - name: install 'slack-webhook' pypi package
       pip:
