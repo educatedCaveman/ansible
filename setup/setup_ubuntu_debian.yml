@@ -177,6 +177,11 @@
 
     # link netdata dotfiles
     # netdata.conf
+    - name: remove the existing netdata.conf
+      file:
+        path: /etc/netdata/netdata.conf
+        state:  absent
+
     - name: link netdata.conf
       file:
         src:  /home/drake/dotfiles/netdata/netdata.conf
@@ -184,10 +189,15 @@
         state:  link
 
     # health_alarm_notify.conf
-    - name: link health_alarm_notify.conf.conf
+    - name: remove the existing health_alarm_notify.conf
       file:
-        src:  /home/drake/dotfiles/netdata/health_alarm_notify.conf.conf
-        dest: /etc/netdata/health_alarm_notify.conf.conf
+        path: /etc/netdata/health_alarm_notify.conf
+        state:  absent
+
+    - name: link health_alarm_notify.conf
+      file:
+        src:  /home/drake/dotfiles/netdata/health_alarm_notify.conf
+        dest: /etc/netdata/health_alarm_notify.conf
         state:  link
 
     # systemd restart and enable netdata
