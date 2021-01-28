@@ -22,6 +22,7 @@
           - curl
           - sqlite3
           - git
+          - netdata
 
     #change shell
     - name: change to ZSH
@@ -164,6 +165,37 @@
       file: 
         path: /etc/motd
         state:  absent
+
+    # copy over .zsh_secrets
+    - name: copy .zsh_secrets
+      copy:
+        src:  /home/drake/.zsh_secrets
+        dest: /home/drake/.zsh_secrets
+        owner:  drake
+        group:  drake
+        mode: '0644'
+
+    # link netdata dotfiles
+    # netdata.conf
+    - name: link netdata.conf
+      file:
+        src:  /home/drake/netdata/netdata.conf
+        dest: /etc/netdata/netdata.conf
+        state:  link
+
+    # health_alarm_notify.conf
+    - name: link health_alarm_notify.conf.conf
+      file:
+        src:  /home/drake/netdata/health_alarm_notify.conf.conf
+        dest: /etc/netdata/health_alarm_notify.conf.conf
+        state:  link
+
+    # systemd restart and enable netdata
+    - name: enable and restart netdata
+      systemd:
+        name: netdata
+        state:  restarted
+        enabled:  yes
 
 - name: Install 'qemu-guest-agent' on VMs only (not LXC containers)
   hosts: ubuntu_debian_VM
