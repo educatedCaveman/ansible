@@ -8,20 +8,20 @@
     #     name: '*'
     #     state: latest
 
-    - name: ensure a list of packages installed
-      apt:
-        name: 
-          - neovim
-          - neofetch
-          - zsh
-          - tmux
-          - git
-          - htop
-          - tree
-          - curl
-          - sqlite3
-          - git
-          - netdata
+    # - name: ensure a list of packages installed
+    #   apt:
+    #     name: 
+    #       - neovim
+    #       - neofetch
+    #       - zsh
+    #       - tmux
+    #       - git
+    #       - htop
+    #       - tree
+    #       - curl
+    #       - sqlite3
+    #       - git
+    #       - netdata
 
     #change shell
     - name: change to ZSH

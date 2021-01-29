@@ -21,7 +21,6 @@
           - tree
           - curl
           - sqlite3
-          - git
           - netdata
 
     #change shell
