@@ -138,8 +138,6 @@ prd_swarm_managers
 prd_swarm_workers
 
 [ubuntu_debian_VM:children]
-plex
-jenkins_CICD
 oxygen
 dev_swarm_managers
 dev_swarm_workers
