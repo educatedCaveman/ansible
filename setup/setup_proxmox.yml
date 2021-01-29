@@ -3,25 +3,24 @@
   hosts: tesseract
   tasks:
 
-    # - name: update packages
-    #   apt:
-    #     name: '*'
-    #     state: latest
+    - name: update packages
+      apt:
+        name: '*'
+        state: latest
 
-    # - name: ensure a list of packages installed
-    #   apt:
-    #     name: 
-    #       - neovim
-    #       - neofetch
-    #       - zsh
-    #       - tmux
-    #       - git
-    #       - htop
-    #       - tree
-    #       - curl
-    #       - sqlite3
-    #       - git
-    #       - netdata
+    - name: ensure a list of packages installed
+      apt:
+        name: 
+          - neovim
+          - neofetch
+          - zsh
+          - tmux
+          - git
+          - htop
+          - tree
+          - curl
+          - sqlite3
+          - netdata
 
     #change shell
     - name: change to ZSH
@@ -135,35 +134,35 @@
         owner: drake
         group: drake
     
-    # # tweak MOTD:
-    # - name: test if first MOTD file is present
-    #   stat:
-    #     path: /etc/update-motd.d/10-help-text
-    #   register: help_text_file
+    # tweak MOTD:
+    - name: test if first MOTD file is present
+      stat:
+        path: /etc/update-motd.d/10-help-text
+      register: help_text_file
     
-    # - name: disable the helper text in the MOTD
-    #   file: 
-    #     path: /etc/update-motd.d/10-help-text
-    #     mode: 0644
-    #   when: help_text_file.stat.exists
+    - name: disable the helper text in the MOTD
+      file: 
+        path: /etc/update-motd.d/10-help-text
+        mode: 0644
+      when: help_text_file.stat.exists
 
-    # # tweak MOTD:
-    # - name: test if news MOTD file is present
-    #   stat:
-    #     path: /etc/update-motd.d/50-motd-news
-    #   register: news_text_file
+    # tweak MOTD:
+    - name: test if news MOTD file is present
+      stat:
+        path: /etc/update-motd.d/50-motd-news
+      register: news_text_file
     
-    # - name: disable the news text in the MOTD
-    #   file: 
-    #     path: /etc/update-motd.d/50-motd-news
-    #     mode: 0644
-    #   when: news_text_file.stat.exists
+    - name: disable the news text in the MOTD
+      file: 
+        path: /etc/update-motd.d/50-motd-news
+        mode: 0644
+      when: news_text_file.stat.exists
 
-    # # tweak MOTD:
-    # - name: delete the raspbian MOTD file
-    #   file: 
-    #     path: /etc/motd
-    #     state:  absent
+    # tweak MOTD:
+    - name: delete the raspbian MOTD file
+      file: 
+        path: /etc/motd
+        state:  absent
 
     # copy over .zsh_secrets
     - name: copy .zsh_secrets
@@ -173,46 +172,3 @@
         owner:  drake
         group:  drake
         mode: '0644'
-
-    # link netdata dotfiles
-    # netdata.conf
-    - name: remove the existing netdata.conf
-      file:
-        path: /etc/netdata/netdata.conf
-        state:  absent
-
-    - name: link netdata.conf
-      file:
-        src:  /home/drake/dotfiles/netdata/netdata.conf
-        dest: /etc/netdata/netdata.conf
-        state:  link
-
-    # health_alarm_notify.conf
-    # no longer set to send slack notifications, but doesnt hurt to keep this in place
-    - name: remove the existing health_alarm_notify.conf
-      file:
-        path: /etc/netdata/health_alarm_notify.conf
-        state:  absent
-
-    - name: link health_alarm_notify.conf
-      file:
-        src:  /home/drake/dotfiles/netdata/health_alarm_notify.conf
-        dest: /etc/netdata/health_alarm_notify.conf
-        state:  link
-
-    # systemd restart and enable netdata
-    - name: enable and restart netdata
-      systemd:
-        name: netdata
-        state:  restarted
-        enabled:  yes
-
-- name: Install 'qemu-guest-agent' on VMs only (not LXC containers)
-  hosts: ubuntu_debian_VM
-  ignore_unreachable: yes
-  tasks:
-
-    - name: ensure a list of packages installed
-      apt:
-        name: 
-          - qemu-guest-agent
