@@ -120,7 +120,7 @@ prd_swarm_worker_02
 prd_swarm_worker_03
 prd_swarm_worker_04
 
-[pihole_LXC]
+[singularity]
 192.168.12.4    ansible_ssh_user=root
 
 #############
@@ -128,7 +128,7 @@ prd_swarm_worker_04
 #############
 
 [ubuntu_debian_hosts:children]
-# singularity
+singularity
 event_horizon
 plex
 jenkins_CICD
@@ -139,7 +139,6 @@ dev_swarm_workers
 prd_api_LB
 prd_swarm_managers
 prd_swarm_workers
-pihole_LXC
 
 [ubuntu_debian_VM:children]
 plex
