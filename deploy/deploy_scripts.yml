@@ -2,7 +2,7 @@
 - name: deploy scripts repo to drake's /home
   hosts:
     - self
-    - pihole_LXC
+    - singularity
   tasks:
 
     - name: install relevant packages
