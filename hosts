@@ -159,9 +159,8 @@ tesseract
 ######################
 
 [pihole:children]
-# singularity
+singularity
 event_horizon
-pihole_LXC
 
 [portainer:children]
 oxygen
