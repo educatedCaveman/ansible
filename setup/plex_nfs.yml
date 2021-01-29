@@ -62,3 +62,12 @@
         opts: rw,nolock,tcp
         state: mounted
         
+    # Backup
+    - name: Mount the Backup share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/Backup
+        path: /mnt/mobius/Backup
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+        
