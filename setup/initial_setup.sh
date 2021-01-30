@@ -72,12 +72,14 @@ HOSTNAMES=( \
 for (( n=0; n<${#LOGINS[@]}; n++ ))
 do
     PW=$(lpass show -p "${LOGINS[$n]}")
-    ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/initial_setup.yml" --extra-vars mypass="${PW}" hn="${HOSTNAMES[$n]}"
+    ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/initial_setup.yml" \
+        --extra-vars mypass="${PW}" --extra-vars hn="${HOSTNAMES[$n]}"
 done
 
 #handle root users, LCX containers only
 for (( n=0; n<${#LXC_LOGINS[@]}; n++ ))
 do
     PW=$(lpass show -p "${LXC_LOGINS[$n]}")
-    ansible-playbook -l "${LXC_HOSTS[$n]}" "${ANSIBLE_DIR}/setup/LXC_root_setup.yml" --extra-vars mypass="${PW}"
+    ansible-playbook -l "${LXC_HOSTS[$n]}" "${ANSIBLE_DIR}/setup/LXC_root_setup.yml" \
+        --extra-vars mypass="${PW}"
 done
