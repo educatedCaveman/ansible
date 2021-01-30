@@ -2,9 +2,6 @@
 [event_horizon]
 event-horizon.srv   ansible_ssh_user=root
 
-[jenkins_CICD]
-jenkins.lab         ansible_ssh_user=root
-
 [self]
 localhost           ansible_ssh_user=root ansible_connection=local
 
