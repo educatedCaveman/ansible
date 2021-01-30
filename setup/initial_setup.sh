@@ -49,11 +49,30 @@ LXC_LOGINS=( \
     "Homelab\ssh/swarm-api-lb.vm" \
 )
 
+HOSTNAMES=( \
+    "swarm-api-lb" \
+    "lv426-manager-01" \
+    "lv426-manager-02" \
+    "lv426-manager-03" \
+    "lv426-worker-01" \
+    "lv426-worker-02" \
+    "lv426-worker-03" \
+    "lv426-worker-04" \
+    "swarm-api-lb" \
+    "sevastopol-manager-01" \
+    "sevastopol-manager-02" \
+    "sevastopol-manager-03" \
+    "sevastopol-worker-01" \
+    "sevastopol-worker-02" \
+    "sevastopol-worker-03" \
+    "sevastopol-worker-04" \
+)
+
 #handle drake users
 for (( n=0; n<${#LOGINS[@]}; n++ ))
 do
     PW=$(lpass show -p "${LOGINS[$n]}")
-    ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/initial_setup.yml" --extra-vars mypass="${PW}"
+    ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/initial_setup.yml" --extra-vars mypass="${PW}" hn="${HOSTNAMES[$n]}"
 done
 
 #handle root users, LCX containers only

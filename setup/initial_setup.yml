@@ -2,8 +2,17 @@
 - hosts: all
   become: yes
   tasks:
-    - name: Change user password
+
+    # set user's password, and add to sudo group
+    - name: Change user password, and add to sudo
       user:
         name: drake
         update_password: always
         password: "{{ mypass|password_hash('sha512') }}"
+        append: yes
+        groups: sudo
+
+    # set hostname
+    - name: set the hostname
+      hostname:
+        name: "{{ hn }}"
