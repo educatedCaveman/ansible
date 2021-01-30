@@ -3,7 +3,7 @@
 event-horizon.srv   ansible_ssh_user=root
 
 [self]
-localhost           ansible_ssh_user=root ansible_connection=local
+localhost           ansible_ssh_user=root
 
 [mobius]
 mobius.srv          ansible_ssh_user=drake
