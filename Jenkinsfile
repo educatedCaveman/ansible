@@ -10,7 +10,7 @@ pipeline {
         stage('deploy ansible playbooks') {
             steps {
                 echo 'deploying ansible playbooks to /home/drake/ansible/'
-                sh 'ansible-playbook -v ${ANSIBLE_REPO}/deploy_ansible.yml --extra-vars jenkins_ansible=${ANSIBLE_REPO}'
+                sh 'ansible-playbook ${ANSIBLE_REPO}/deploy_ansible.yml --extra-vars jenkins_ansible=${ANSIBLE_REPO}'
             }
         }
 
