@@ -1,29 +1,31 @@
 #!/bin/bash
 ANSIBLE_DIR='/home/drake/ansible'
 
+# hosts for ansible
 HOSTS=( \
     dev_api_LB \
     dev_swarm_manager_01 \
-    dev_swarm_manager_01 \
-    dev_swarm_manager_01 \
+    dev_swarm_manager_02 \
+    dev_swarm_manager_03 \
     dev_swarm_worker_01 \
-    dev_swarm_worker_01 \
-    dev_swarm_worker_01 \
-    dev_swarm_worker_01 \
+    dev_swarm_worker_02 \
+    dev_swarm_worker_03 \
+    dev_swarm_worker_04 \
     prd_api_LB \
     prd_swarm_manager_01 \
-    prd_swarm_manager_01 \
-    prd_swarm_manager_01 \
+    prd_swarm_manager_02 \
+    prd_swarm_manager_03 \
     prd_swarm_worker_01 \
-    prd_swarm_worker_01 \
-    prd_swarm_worker_01 \
-    prd_swarm_worker_01 \
+    prd_swarm_worker_02 \
+    prd_swarm_worker_03 \
+    prd_swarm_worker_04 \
 )
 LXC_HOSTS=( \
     dev_api_LB \
     prd_api_LB \
 )
 
+# lastpass login paths
 LOGINS=( \
     "Homelab\ssh/swarm-api-lb.lab" \
     "Homelab\ssh/lv426-manager-01.lab" \
