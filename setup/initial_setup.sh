@@ -44,5 +44,5 @@ LOGINS=("Homelab\ssh/swarm-api-lb.lab")
 for (( n=0; n<${#LOGINS[@]}; n++ ))
 do
     PW=$(lpass show -p "${LOGINS[$n]}")
-    ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/LXC_setup.yml"
+    ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/LXC_setup.yml" --extra-vars mypass="${PW}"
 done
