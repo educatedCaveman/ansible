@@ -3,30 +3,6 @@
   hosts:  self
   tasks:
 
-    # remove hosts
-    - name: remove the existing hosts file
-      file:
-        path: /etc/ansible/hosts
-        state:  absent
-
-    # copy hosts
-    - name: copy jenkins hosts to system
-      copy:
-        src:  "{{ jenkins_ansible }}/hosts"
-        dest: /etc/ansible/hosts
-
-    # remove config
-    - name: remove the existing ansible.cfg
-      file:
-        path: /etc/ansible/ansible.cfg
-        state:  absent
-
-    # copy config
-    - name: copy jenkins ansible.cfg to system
-      copy:
-        src:  "{{ jenkins_ansible }}/ansible.cfg"
-        dest: /etc/ansible/ansible.cfg
-
     # make sure drake has the copybooks
     - name: create the ansible/ directory
       file:
