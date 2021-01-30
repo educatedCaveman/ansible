@@ -4,6 +4,10 @@
   ignore_unreachable: yes
   tasks:
 
+    - name: set timezone
+      timezone:
+        name: America/New_York
+
     - name: update packages
       apt:
         name: '*'

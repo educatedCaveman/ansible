@@ -12,7 +12,7 @@
 192.168.11.2    ansible_ssh_user=drake
 
 [tesseract]
-192.168.11.3    ansible_ssh_user=drake
+192.168.11.3    ansible_ssh_user=root
 
 [nextcloud]
 192.168.12.10   ansible_ssh_user=root
