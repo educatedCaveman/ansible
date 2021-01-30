@@ -1,7 +1,7 @@
 #!/bin/bash
 ANSIBLE_DIR='/home/drake/ansible'
 
-HOSTS=(dev_swarm_manager_01)
+HOSTS=(dev_api_LB)
 # HOSTS=( \
 #     dev_api_LB \
 #     dev_swarm_manager_01 \
