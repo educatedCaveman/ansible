@@ -1,57 +1,57 @@
 # individual named hosts:
 [event_horizon]
-192.168.11.4    ansible_ssh_user=root
+event-horizon.srv   ansible_ssh_user=root
 
 [jenkins_CICD]
-192.168.13.2    ansible_ssh_user=root
+jenkins.lab         ansible_ssh_user=root
 
 [self]
-127.0.0.1       ansible_ssh_user=root
+localhost           ansible_ssh_user=root ansible_connection=local
 
 [mobius]
-192.168.11.2    ansible_ssh_user=drake
+mobius.srv          ansible_ssh_user=drake
 
 [tesseract]
-192.168.11.3    ansible_ssh_user=root
+tesseract.srv       ansible_ssh_user=root
 
 [nextcloud]
-192.168.12.10   ansible_ssh_user=root
+nextcloud.vm        ansible_ssh_user=root
 
 [dilithium]
-192.168.11.6    ansible_ssh_user=root
+dilithium.srv       ansible_ssh_user=root
 
 [plex]
-192.168.12.2    ansible_ssh_user=root
+plex.vm             ansible_ssh_user=root
 
 [gitlab]
-192.168.12.18   ansible_ssh_user=root
+gitlab.vm           ansible_ssh_user=root
 
 [oxygen]
-192.168.11.8    ansible_ssh_user=root
+oxygen.vm           ansible_ssh_user=root
 
 [dev_api_LB]
-192.168.13.20   ansible_ssh_user=root
+swarm-api-lb.lab    ansible_ssh_user=root
 
 [dev_swarm_manager_01]
-192.168.13.25   ansible_ssh_user=root
+lv426-manager-01.lab    ansible_ssh_user=root
 
 [dev_swarm_manager_02]
-192.168.13.26   ansible_ssh_user=root
+lv426-manager-02.lab    ansible_ssh_user=root
 
 [dev_swarm_manager_03]
-192.168.13.27   ansible_ssh_user=root
+lv426-manager-03.lab    ansible_ssh_user=root
 
 [dev_swarm_worker_01]
-192.168.13.30   ansible_ssh_user=root
+lv426-worker-01.lab     ansible_ssh_user=root
 
 [dev_swarm_worker_02]
-192.168.13.31   ansible_ssh_user=root
+lv426-worker-02.lab     ansible_ssh_user=root
 
 [dev_swarm_worker_03]
-192.168.13.32   ansible_ssh_user=root
+lv426-worker-03.lab     ansible_ssh_user=root
 
 [dev_swarm_worker_04]
-192.168.13.33   ansible_ssh_user=root
+lv426-worker-04.lab     ansible_ssh_user=root
 
 [dev_swarm_managers:children]
 dev_swarm_manager_01
@@ -65,28 +65,28 @@ dev_swarm_worker_03
 dev_swarm_worker_04
 
 [prd_api_LB]
-192.168.12.20   ansible_ssh_user=root
+swarm-api-lb.vm ansible_ssh_user=root
 
 [prd_swarm_manager_01]
-192.168.12.25   ansible_ssh_user=root
+sevastopol-manager-01.vm    ansible_ssh_user=root
 
 [prd_swarm_manager_02]
-192.168.12.26   ansible_ssh_user=root
+sevastopol-manager-02.vm    ansible_ssh_user=root
 
 [prd_swarm_manager_03]
-192.168.12.27   ansible_ssh_user=root
+sevastopol-manager-03.vm    ansible_ssh_user=root
 
 [prd_swarm_worker_01]
-192.168.12.30   ansible_ssh_user=root
+sevastopol-worker-01.vm     ansible_ssh_user=root
 
 [prd_swarm_worker_02]
-192.168.12.31   ansible_ssh_user=root
+sevastopol-worker-02.vm     ansible_ssh_user=root
 
 [prd_swarm_worker_03]
-192.168.12.32   ansible_ssh_user=root
+sevastopol-worker-03.vm     ansible_ssh_user=root
 
 [prd_swarm_worker_04]
-192.168.12.33   ansible_ssh_user=root
+sevastopol-worker-04.vm     ansible_ssh_user=root
 
 [prd_swarm_managers:children]
 prd_swarm_manager_01
@@ -118,7 +118,7 @@ prd_swarm_worker_03
 prd_swarm_worker_04
 
 [singularity]
-192.168.12.4    ansible_ssh_user=root
+singularity.vm      ansible_ssh_user=root
 
 #############
 # OS groups #
