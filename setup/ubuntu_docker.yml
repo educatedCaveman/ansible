@@ -18,6 +18,7 @@
           - gnupg-agent
           - software-properties-common
           - nfs-common
+          - python3-pip
 
     - name: Add Docker GPG apt Key
       apt_key:
