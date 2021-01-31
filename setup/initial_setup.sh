@@ -19,10 +19,12 @@ HOSTS=( \
     prd_swarm_worker_02 \
     prd_swarm_worker_03 \
     prd_swarm_worker_04 \
+    gitlab \
 )
 LXC_HOSTS=( \
     dev_api_LB \
     prd_api_LB \
+    gitlab \
 )
 
 # lastpass login paths
@@ -43,10 +45,12 @@ LOGINS=( \
     "Homelab\ssh/sevastopol-worker-02.vm" \
     "Homelab\ssh/sevastopol-worker-03.vm" \
     "Homelab\ssh/sevastopol-worker-04.vm" \
+    "Homelab\ssh/gitlab.vm" \
 )
 LXC_LOGINS=( \
     "Homelab\ssh/swarm-api-lb.lab" \
     "Homelab\ssh/swarm-api-lb.vm" \
+    "Homelab\ssh/gitlab.vm" \
 )
 
 HOSTNAMES=( \
@@ -66,6 +70,7 @@ HOSTNAMES=( \
     "sevastopol-worker-02" \
     "sevastopol-worker-03" \
     "sevastopol-worker-04" \
+    "gitlab" \
 )
 
 #handle drake users
