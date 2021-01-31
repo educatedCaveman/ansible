@@ -24,7 +24,6 @@ HOSTS=( \
 LXC_HOSTS=( \
     dev_api_LB \
     prd_api_LB \
-    gitlab \
 )
 
 # lastpass login paths
@@ -50,7 +49,6 @@ LOGINS=( \
 LXC_LOGINS=( \
     "Homelab\ssh/swarm-api-lb.lab" \
     "Homelab\ssh/swarm-api-lb.vm" \
-    "Homelab\ssh/gitlab.vm" \
 )
 
 HOSTNAMES=( \
