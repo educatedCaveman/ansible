@@ -131,6 +131,7 @@ dev_swarm_workers
 prd_api_LB
 prd_swarm_managers
 prd_swarm_workers
+gitlab
 
 [ubuntu_debian_VM:children]
 oxygen
