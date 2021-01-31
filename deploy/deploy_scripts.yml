@@ -6,9 +6,10 @@
     - dilithium
   tasks:
 
-    - name: install 'slack-webhook' pypi package
-      pip:
-        name: slack-webhook
+    - name: install relevant packages
+      apt:
+        name:
+          - python3-pip
 
     - name: create the scripts/ directory
       file:
