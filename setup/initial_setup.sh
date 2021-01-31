@@ -20,6 +20,7 @@ HOSTS=( \
     prd_swarm_worker_03 \
     prd_swarm_worker_04 \
     gitlab \
+    oxygen \
 )
 LXC_HOSTS=( \
     dev_api_LB \
@@ -45,6 +46,7 @@ LOGINS=( \
     "Homelab\ssh/sevastopol-worker-03.vm" \
     "Homelab\ssh/sevastopol-worker-04.vm" \
     "Homelab\ssh/gitlab.vm" \
+    "Homelab\ssh/oxygen.vm" \
 )
 LXC_LOGINS=( \
     "Homelab\ssh/swarm-api-lb.lab" \
@@ -69,6 +71,7 @@ HOSTNAMES=( \
     "sevastopol-worker-03" \
     "sevastopol-worker-04" \
     "gitlab" \
+    "oxygen" \
 )
 
 #handle drake users
