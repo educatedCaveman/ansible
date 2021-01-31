@@ -26,6 +26,10 @@
           - curl
           - sqlite3
           - netdata
+          - python3
+          - python3-pip
+          - ansible
+          - lastpass-cli
 
     #change shell
     - name: change to ZSH

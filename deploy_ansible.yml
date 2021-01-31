@@ -1,6 +1,8 @@
 ---
 - name: deploy ansible repo to itself
-  hosts:  self
+  hosts:  
+    - self
+    - dilithium
   tasks:
 
     # make sure drake has the copybooks

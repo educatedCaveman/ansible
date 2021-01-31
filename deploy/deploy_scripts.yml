@@ -3,6 +3,7 @@
   hosts:
     - self
     - singularity
+    - dilithium
   tasks:
 
     - name: install relevant packages

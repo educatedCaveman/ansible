@@ -132,6 +132,7 @@ prd_api_LB
 prd_swarm_managers
 prd_swarm_workers
 gitlab
+dilithium
 
 [ubuntu_debian_VM:children]
 oxygen
