@@ -6,11 +6,6 @@
     - dilithium
   tasks:
 
-    - name: install relevant packages
-      apt:
-        name:
-          - python3-pip
-
     - name: install 'slack-webhook' pypi package
       pip:
         name: slack-webhook
@@ -50,3 +45,13 @@
         recurse:  yes
         owner:  drake
         group:  drake
+
+- name: deploy scripts repo to drake's /home
+  hosts:
+    - self
+    - singularity
+  tasks:
+    - name: install relevant packages
+      apt:
+        name:
+          - python3-pip
