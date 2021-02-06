@@ -3,9 +3,28 @@
   hosts: apt_cache
   tasks:
     
-    - name: first round of required packages are installed
+    - name: install apt-cacher-ng
       apt:
         name: 
           - apt-cacher-ng
-    
-    # if more config needed, it goes here:
+
+    #deploy dotfiles repo
+    - git:
+        repo: 'https://github.com/educatedCaveman/dotfiles.git'
+        dest: /home/drake/dotfiles
+        force:  yes
+
+    # link the config file
+    - name: link 00aptproxy
+      file:
+        src: /home/drake/dotfiles/apt_cache/00aptproxy
+        dest: /etc/apt/apt.conf.d/00aptproxy
+        state: link
+
+    # make sure apt-cacher-ng.service is running
+    - name: ensure apt-cacher-ng.service is running and enabled
+      systemd:
+        name: apt-cacher-ng.service
+        state: restarted
+        enabled: yes
+
