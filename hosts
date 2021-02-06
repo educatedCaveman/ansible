@@ -116,6 +116,9 @@ prd_swarm_worker_04
 [singularity]
 singularity.vm      ansible_ssh_user=root
 
+[apt_cache]
+apt-cache.vm        ansible_ssh_user=root
+
 #############
 # OS groups #
 #############
@@ -133,6 +136,7 @@ prd_swarm_managers
 prd_swarm_workers
 gitlab
 dilithium
+apt-cache.vm
 
 [ubuntu_debian_VM:children]
 oxygen
