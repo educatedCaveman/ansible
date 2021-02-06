@@ -48,15 +48,15 @@
     # make sure apache2 is running
     - name: ensure apache2 is running and enabled
       systemd:
-        name: apache2
+        name: apache2.service
         state: restarted
         enabled: yes
 
-    # - name: ensure a list of packages installed
-    #   apt:
-    #     name:
-    #       - apt-mirror
-    #     state:  latest
+    - name: ensure a list of packages installed
+      apt:
+        name:
+          - apt-mirror
+        state:  latest
 
 #TBD
 # - name: configure apt-cache
