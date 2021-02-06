@@ -59,8 +59,28 @@
         state:  latest
 
 
-#/etc/apt/mirror.list
+    # link the mirror.list file
+    - name: link mirror.list
+      file:
+        src: /home/drake/dotfiles/apt_cache_mirror/mirror.list
+        dest: /etc/apt/mirror.list
+        state: link
 
+    # set permissions on /var/www/html/ubuntu/var:
+    - name: create var folder
+      file:
+        path: /var/www/html/ubuntu/var
+        owner:  www-data
+        group:  www-data
+        state:  directory
+        recurse:  yes
+    
+    # copy postmirror.sh
+    - name: copy postmirror.sh to /var/www/html/ubuntu/var
+      copy:
+        src: /var/spool/apt-mirror/var/postmirror.sh
+        dest: /var/www/html/ubuntu/var/postmirror.sh
+        remote_src: yes
 
 
 
