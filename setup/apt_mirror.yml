@@ -1,0 +1,77 @@
+---
+- name: configure ubuntu host to use local apt-cache
+  hosts: apt_mirror
+  tasks:
+
+    - name: update packages
+      apt:
+        name: '*'
+        state: latest
+
+    - name: install NFS and apache
+      apt:
+        name: 
+          - nfs-common
+          - apache2
+        state:  latest
+
+    #deploy dotfiles repo
+    - git:
+        repo: 'https://github.com/educatedCaveman/dotfiles.git'
+        dest: /home/drake/dotfiles
+        force:  yes
+
+    #initial mount path check 
+    - name: create NFS folder
+      file:
+        path: /var/www/html/ubuntu
+        owner:  www-data
+        group:  www-data
+        state:  directory
+        recurse:  yes
+
+    - name: check for NFS folder
+      stat:
+        path: /var/www/html/ubuntu
+      register: mobius
+
+    # mount the APT share:
+    - name: Mount the APT share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/APT
+        path: /var/www/html/ubuntu
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+      when: mobius.stat.exists
+
+    # make sure apache2 is running
+    - name: ensure apache2 is running and enabled
+      systemd:
+        name: apache2
+        state: restarted
+        enabled: yes
+
+    # - name: ensure a list of packages installed
+    #   apt:
+    #     name:
+    #       - apt-mirror
+    #     state:  latest
+
+#TBD
+# - name: configure apt-cache
+#   hosts: apt_cache
+#   tasks:
+    
+#     - name: install apt-cacher-ng
+#       apt:
+#         name: 
+#           - apt-cacher-ng
+#         state:  latest
+
+#     # make sure apt-cacher-ng.service is running
+#     - name: ensure apt-cacher-ng.service is running and enabled
+#       systemd:
+#         name: apt-cacher-ng.service
+#         state: restarted
+#         enabled: yes
