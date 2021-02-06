@@ -1,0 +1,11 @@
+---
+- name: configure ubuntu host for docker
+  hosts: apt_cache
+  tasks:
+    
+    - name: first round of required packages are installed
+      apt:
+        name: 
+          - apt-cacher-ng
+    
+    # if more config needed, it goes here:
