@@ -16,13 +16,15 @@
         path: /home/drake/documentation
       register: doc_dir
 
-    - name: deploy documentation repo
-      git:
-        repo: https://github.com/educatedCaveman/documentation
-        dest: /home/drake/documentation
-        version:  master
-        force:  yes
-      when: doc_dir.stat.exists
+    # - name: deploy documentation repo
+    #   git:
+    #     repo: https://github.com/educatedCaveman/documentation
+    #     dest: /home/drake/documentation
+    #     version:  master
+    #     force:  yes
+    #   when: doc_dir.stat.exists
+
+    # cant do a git deploy bc of credentials?
 
     - name: set permissions on directory
       file:

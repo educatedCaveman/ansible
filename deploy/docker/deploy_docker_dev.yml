@@ -1,5 +1,5 @@
 ---
-- name: deploy docker code to DEV portainer instance
+- name: deploy DEV docker code to NFS mount
   # only need to deploy once
   hosts: self
   tasks:
@@ -18,6 +18,13 @@
         recurse:  yes
         owner:  drake
         group:  drake
+
+- name: deploy docker code to DEV portainer instance
+  # only need to deploy once
+  hosts: 
+    - self
+    - dilithium
+  tasks:
     
     - name: create the dev_code/docker directory
       file:

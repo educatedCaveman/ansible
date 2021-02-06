@@ -18,6 +18,13 @@
         owner:  drake
         group:  drake
 
+- name: deploy docker code to DEV portainer instance
+  # only need to deploy once
+  hosts: 
+    - self
+    - dilithium
+  tasks:
+    
     - name: create the docker directory
       file:
         path: /home/drake/docker
