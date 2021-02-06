@@ -1,5 +1,5 @@
 ---
-- name: configure ubuntu host to use local apt-cache
+- name: configure ubuntu host to use local apt-mirror
   hosts: apt_mirror
   tasks:
 
@@ -67,7 +67,7 @@
     # emove mirror.list if present
     - name: delete mirror.list if it exists
       file: 
-        path: /etc/motd
+        path: /etc/apt/mirror.list
         state:  absent
       when: mirror_list.stat.exists
 
