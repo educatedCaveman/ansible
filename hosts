@@ -119,6 +119,9 @@ singularity.vm      ansible_ssh_user=root
 [apt_cache]
 apt-cache.vm        ansible_ssh_user=root
 
+[apt_mirror]
+apt-mirror.vm        ansible_ssh_user=root
+
 #############
 # OS groups #
 #############
@@ -137,6 +140,7 @@ prd_swarm_workers
 gitlab
 dilithium
 apt_cache
+apt_mirror
 
 [ubuntu_debian_VM:children]
 oxygen

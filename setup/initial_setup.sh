@@ -22,11 +22,13 @@ HOSTS=( \
     gitlab \
     oxygen \
     apt_cache \
+    apt_mirror \
 )
 LXC_HOSTS=( \
     dev_api_LB \
     prd_api_LB \
     apt_cache \
+    apt_mirror \
 )
 
 # lastpass login paths
@@ -50,11 +52,13 @@ LOGINS=( \
     "Homelab\ssh/gitlab.vm" \
     "Homelab\ssh/oxygen.vm" \
     "Homelab\ssh/apt-cache.vm" \
+    "Homelab\ssh/apt-mirror.vm" \
 )
 LXC_LOGINS=( \
     "Homelab\ssh/swarm-api-lb.lab" \
     "Homelab\ssh/swarm-api-lb.vm" \
     "Homelab\ssh/apt-cache.vm" \
+    "Homelab\ssh/apt-mirror.vm" \
 )
 
 HOSTNAMES=( \
@@ -77,6 +81,7 @@ HOSTNAMES=( \
     "gitlab" \
     "oxygen" \
     "apt-cache" \
+    "apt-mirror" \
 )
 
 #handle drake users
