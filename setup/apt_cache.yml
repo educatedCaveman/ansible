@@ -1,5 +1,5 @@
 ---
-- name: configure ubuntu host for docker
+- name: configure ubuntu host to use local apt-cache
   hosts: ubuntu_debian_hosts
   tasks:
 
@@ -16,7 +16,7 @@
         dest: /etc/apt/apt.conf.d/00aptproxy
         state: link
 
-- name: configure ubuntu host for docker
+- name: configure apt-cache
   hosts: apt_cache
   tasks:
     
@@ -24,6 +24,7 @@
       apt:
         name: 
           - apt-cacher-ng
+        state:  latest
 
     # make sure apt-cacher-ng.service is running
     - name: ensure apt-cacher-ng.service is running and enabled
