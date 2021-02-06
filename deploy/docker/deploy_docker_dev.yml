@@ -37,7 +37,7 @@
         path: /home/drake/dev_code
       register: dev_code
 
-    - name: deploy dev_test branch to self
+    - name: deploy dev_test branch
       git:  
         repo: "https://github.com/educatedCaveman/docker-lab"
         dest: /home/drake/dev_code/docker
@@ -47,7 +47,7 @@
 
     - name: set permissions on directory
       file:
-        path: /home/drake/dev_code/docker
+        path: /home/drake/dev_code
         state:  directory
         recurse:  yes
         owner:  drake
