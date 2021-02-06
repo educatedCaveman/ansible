@@ -136,7 +136,7 @@ prd_swarm_managers
 prd_swarm_workers
 gitlab
 dilithium
-apt-cache.vm
+apt_cache
 
 [ubuntu_debian_VM:children]
 oxygen
