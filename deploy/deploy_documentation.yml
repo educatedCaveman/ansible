@@ -1,0 +1,33 @@
+---
+- name: deploy documentation repo to drake's /home
+  hosts:
+    - self
+    - dilithium
+  tasks:
+
+    - name: create the documentation/ directory
+      file:
+        path: /home/drake/documentation
+        state:  directory
+        recurse:  yes
+
+    - name: make sure directory exists
+      stat:
+        path: /home/drake/documentation
+      register: doc_dir
+
+    - name: deploy documentation repo
+      git:
+        repo: https://github.com/educatedCaveman/documentation
+        dest: /home/drake/documentation
+        version:  master
+        force:  yes
+      when: doc_dir.stat.exists
+
+    - name: set permissions on directory
+      file:
+        path: /home/drake/documentation
+        state:  directory
+        recurse:  yes
+        owner:  drake
+        group:  drake
