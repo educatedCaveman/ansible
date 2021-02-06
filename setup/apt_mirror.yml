@@ -58,6 +58,18 @@
           - apt-mirror
         state:  latest
 
+    # check if mirror.list is present
+    - name: Check if mirror.list exists
+      stat:
+        path: /etc/apt/mirror.list
+      register: mirror_list
+    
+    # emove mirror.list if present
+    - name: delete mirror.list if it exists
+      file: 
+        path: /etc/motd
+        state:  absent
+      when: mirror_list.stat.exists
 
     # link the mirror.list file
     - name: link mirror.list
