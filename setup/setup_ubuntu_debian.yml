@@ -30,6 +30,11 @@
           - python3-pip
           - ansible
           - lastpass-cli
+          - nmon
+          - ncdu
+          - dstat
+          - saidar
+          - ccze
 
     #change shell
     - name: change to ZSH
