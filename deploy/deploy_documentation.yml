@@ -18,7 +18,7 @@
 
     - name: deploy documentation repo
       git:
-        repo: https://{{USER|urlencode()}}:{{PASS|urlencode()}}@github.com/educatedCaveman/documentation
+        repo: https://{{USER|urlencode()}}:{{PASS|urlencode()}}@github.com/educatedCaveman/documentation.git
         dest: /home/drake/documentation
         version:  master
         force:  yes
