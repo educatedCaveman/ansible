@@ -58,6 +58,13 @@
           - apt-mirror
         state:  latest
 
+
+#/etc/apt/mirror.list
+
+
+
+
+
 #TBD
 # - name: configure apt-cache
 #   hosts: apt_cache

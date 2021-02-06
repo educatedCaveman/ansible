@@ -12,7 +12,7 @@
     # link the config file
     - name: link 00aptproxy
       file:
-        src: /home/drake/dotfiles/apt_cache/00aptproxy
+        src: /home/drake/dotfiles/apt_cache_mirror/00aptproxy
         dest: /etc/apt/apt.conf.d/00aptproxy
         state: link
 
