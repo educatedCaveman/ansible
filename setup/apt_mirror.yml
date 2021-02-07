@@ -130,22 +130,38 @@
         path: /etc/apt/sources.list.bak
       register: src_bkup
 
-    # if it doesn't exist, back it on up
-    - name: if the sources.list backup doesn't exist, create the backup
-      copy:
-        src:  /etc/apt/sources.list
-        dest: /etc/apt/sources.list.bak
-        remote_src: yes
-      when: not(src_bkup.stat.exists)
-
     # regardless, remove the existing sources.list
-    - name: remove existing sources.list
+    - name: if the sources.list backup exists, remove sources.list
       file:
         path: /etc/apt/sources.list
         state:  absent
+      when: src_bkup.stat.exists
 
-    # link the new sources.list
-    - name: link sources.list
+    # if it doesn't exist, back it on up
+    - name: if the sources.list backup exists, restore the backup
+      copy:
+        src:  /etc/apt/sources.list.bak
+        dest: /etc/apt/sources.list
+        remote_src: yes
+      when: src_bkup.stat.exists
+
+    # # link the new sources.list
+    # - name: link sources.list
+    #   file:
+    #     src: /home/drake/dotfiles/apt_cache_mirror/sources.list
+    #     dest: /etc/apt/sources.list
+    #     state: link
+
+- name: configure apt-cache host to use local apt-mirror
+  hosts: apt_cache
+  tasks:
+
+    - name: remove the existing sources.list
+      file:
+        path: /etc/apt/sources.list
+        state:  absent
+    
+    - name: link the new sources.list
       file:
         src: /home/drake/dotfiles/apt_cache_mirror/sources.list
         dest: /etc/apt/sources.list
