@@ -3,22 +3,14 @@
   hosts: self
   tasks:
 
-    - name: deploy master branch to sevastopol.vm
-      git:
-        repo: "https://github.com/educatedCaveman/docker-lab"
+    - name: copy docker prd code to NFS
+      copy:
+        src:  /var/lib/jenkins/workspace/docker_master/
         dest: /mnt/mobius/docker/prd
-        version:  master
         force:  yes
+        remote_src: yes
 
-    - name: set permissions in the directory
-      file:
-        path: /mnt/mobius/docker
-        state:  directory
-        recurse:  yes
-        owner:  drake
-        group:  drake
-
-- name: deploy docker code to DEV portainer instance
+- name: deploy docker code to portainer instance
   # only need to deploy once
   hosts: 
     - self

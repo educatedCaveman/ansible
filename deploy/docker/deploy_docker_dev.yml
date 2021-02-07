@@ -6,12 +6,12 @@
 
     # might have to deploy directly instead of to NFS?
     # but that could lead to inconsistency problems
-    # - name: deploy dev_test branch to dev_swarm_workers
-    #   git:
-    #     repo: "https://github.com/educatedCaveman/docker-lab"
-    #     dest: /mnt/mobius/docker/dev
-    #     version:  dev_test
-    #     force:  yes
+    - name: deploy dev_test branch to dev_swarm_workers
+      git:
+        repo: "https://github.com/educatedCaveman/docker-lab"
+        dest: /mnt/mobius/docker/dev
+        version:  dev_test
+        force:  yes
 
     # - name: set permissions in the directory
     #   file:
@@ -20,12 +20,12 @@
     #     recurse:  yes
     #     owner:  drake
     #     group:  drake
-    - name: copy docker dev code to NFS
-      copy:
-        src:  /var/lib/jenkins/workspace/docker_dev_test/
-        dest: /mnt/mobius/docker/dev
-        force:  yes
-        remote_src: yes
+    # - name: copy docker dev code to NFS
+    #   copy:
+    #     src:  /var/lib/jenkins/workspace/docker_dev_test/
+    #     dest: /mnt/mobius/docker/dev
+    #     force:  yes
+    #     remote_src: yes
 
 - name: deploy docker code to DEV portainer instance
   # only need to deploy once
