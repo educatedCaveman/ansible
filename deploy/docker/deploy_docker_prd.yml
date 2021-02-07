@@ -1,6 +1,6 @@
 ---
 - name: deploy docker code to PRD portainer instance
-   hosts: 
+  hosts: 
     - prd_swarm_managers
     - prd_swarm_workers
   tasks:
