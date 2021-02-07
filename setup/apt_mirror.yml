@@ -1,5 +1,5 @@
 ---
-- name: configure ubuntu host to use local apt-mirror
+- name: configure local apt-mirror
   hosts: apt_mirror
   tasks:
 
@@ -119,21 +119,35 @@
         hour: "1"
         job: "/usr/bin/apt-mirror"
 
+# all ubuntu hosts:
+- name: configure ubuntu host to use local apt-mirror
+  hosts: ubuntu_debian_hosts
+  tasks:
 
-#TBD
-# - name: configure apt-cache
-#   hosts: apt_cache
-#   tasks:
-    
-#     - name: install apt-cacher-ng
-#       apt:
-#         name: 
-#           - apt-cacher-ng
-#         state:  latest
+    # check for existing sources.list.bak
+    - name: check for existing sources.list backup
+      stat:
+        path: /etc/apt/sources.list.bak
+      register: src_bkup
 
-#     # make sure apt-cacher-ng.service is running
-#     - name: ensure apt-cacher-ng.service is running and enabled
-#       systemd:
-#         name: apt-cacher-ng.service
-#         state: restarted
-#         enabled: yes
+    # if it doesn't exist, back it on up
+    - name: if the sources.list backup doesn't exist, create the backup
+      copy:
+        src:  /etc/apt/sources.list
+        dest: /etc/apt/sources.list.bak
+        remote_src: yes
+      when: not(src_bkup.stat.exists)
+
+    # regardless, remove the existing sources.list
+    - name: remove existing sources.list
+      file:
+        path: /etc/apt/sources.list
+        state:  absent
+
+    # link the new sources.list
+    - name: link sources.list
+      file:
+        src: /home/drake/dotfiles/apt_cache_mirror/sources.list
+        dest: /etc/apt/sources.list
+        state: link
+        
