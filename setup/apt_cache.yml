@@ -25,7 +25,8 @@
     # link the config file
     - name: unlink 00aptproxy
       file:
-        state: absent
+        path: /etc/apt/apt.conf.d/00aptproxy
+        state:  absent
 
 - name: configure apt-cache
   hosts: apt_cache
