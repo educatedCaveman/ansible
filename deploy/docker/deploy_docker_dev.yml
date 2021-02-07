@@ -16,20 +16,6 @@
         version:  dev_test
         force:  yes
 
-    # - name: set permissions in the directory
-    #   file:
-    #     path: /mnt/mobius/docker
-    #     state:  directory
-    #     recurse:  yes
-    #     owner:  drake
-    #     group:  drake
-    # - name: copy docker dev code to NFS
-    #   copy:
-    #     src:  /var/lib/jenkins/workspace/docker_dev_test/
-    #     dest: /mnt/mobius/docker/dev
-    #     force:  yes
-    #     remote_src: yes
-
 - name: deploy docker code to DEV portainer instance
   # only need to deploy once
   hosts: 

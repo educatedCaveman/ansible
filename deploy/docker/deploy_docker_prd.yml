@@ -1,14 +1,19 @@
 ---
 - name: deploy docker code to PRD portainer instance
-  hosts: self
+   hosts: 
+    - prd_swarm_managers
+    - prd_swarm_workers
   tasks:
 
-    - name: copy docker prd code to NFS
-      copy:
-        src:  /var/lib/jenkins/workspace/docker_master/
-        dest: /mnt/mobius/docker/prd
+    # might have to deploy directly instead of to NFS?
+    # but that could lead to inconsistency problems
+    - name: deploy master branch to prd_swarm_workers
+      git:
+        repo: "https://github.com/educatedCaveman/docker-lab"
+        dest: /docker
+        # dest: /mnt/mobius/docker/dev
+        version:  master
         force:  yes
-        remote_src: yes
 
 - name: deploy docker code to portainer instance
   # only need to deploy once
