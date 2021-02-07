@@ -16,13 +16,15 @@
         state:  latest
 
     #deploy dotfiles repo
-    - git:
+    - name: deploy dotfiles
+      git:
         repo: 'https://github.com/educatedCaveman/dotfiles.git'
         dest: /home/drake/dotfiles
         force:  yes
 
     #deploy dotfiles repo
-    - git:
+    - name: deploy scripts
+      git:
         repo: 'https://github.com/educatedCaveman/scripts.git'
         dest: /home/drake/scripts
         force:  yes
@@ -109,7 +111,13 @@
         dest: /var/www/html/ubuntu/var/postmirror.sh
         remote_src: yes
 
-
+    # set cron to run apt-mirror at 1AM every day
+    - name: set cron to run apt-mirror at 1AM every day
+      cron:
+        name: apt-mirror
+        minute: "0"
+        hour: "1"
+        job: "/usr/bin/apt-mirror"
 
 
 #TBD
