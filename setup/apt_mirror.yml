@@ -21,6 +21,21 @@
         dest: /home/drake/dotfiles
         force:  yes
 
+    #deploy dotfiles repo
+    - git:
+        repo: 'https://github.com/educatedCaveman/scripts.git'
+        dest: /home/drake/scripts
+        force:  yes
+
+    # set permissions
+    - name: set permissions on home directory
+      file:
+        path: /home/drake
+        state:  directory
+        recurse:  yes
+        owner:  drake
+        group:  drake
+
     #initial mount path check 
     - name: create NFS folder
       file:
