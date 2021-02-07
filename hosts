@@ -141,6 +141,7 @@ gitlab
 dilithium
 apt_cache
 apt_mirror
+self
 
 [ubuntu_debian_VM:children]
 oxygen
