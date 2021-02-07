@@ -39,6 +39,7 @@
           - dstat
           - saidar
           - ccze
+          - lm-sensors
 
     #change shell
     - name: change to ZSH
