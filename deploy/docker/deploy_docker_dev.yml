@@ -4,6 +4,8 @@
   hosts: self
   tasks:
 
+    # might have to deploy directly instead of to NFS?
+    # but that could lead to inconsistency problems
     - name: deploy dev_test branch to dev_swarm_workers
       git:
         repo: "https://github.com/educatedCaveman/docker-lab"
