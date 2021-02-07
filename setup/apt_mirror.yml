@@ -81,7 +81,7 @@
     # set permissions on /var/www/html/ubuntu/var:
     - name: create var folder
       file:
-        path: /var/www/html/ubuntu/var
+        path: /var/www/html/ubuntu
         owner:  www-data
         group:  www-data
         state:  directory
