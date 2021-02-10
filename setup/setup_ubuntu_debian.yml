@@ -13,6 +13,10 @@
         name: '*'
         state: latest
 
+    - name: upgrade packages
+      apt:
+        upgrade:  safe
+
     - name: ensure a list of packages installed
       apt:
         name: 
@@ -35,6 +39,7 @@
           - dstat
           - saidar
           - ccze
+          - lm-sensors
 
     #change shell
     - name: change to ZSH

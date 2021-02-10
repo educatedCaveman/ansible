@@ -1,24 +1,21 @@
 ---
 - name: deploy docker code to PRD portainer instance
-  hosts: self
+  hosts: 
+    - prd_swarm_managers
+    - prd_swarm_workers
   tasks:
 
-    - name: deploy master branch to sevastopol.vm
+    # might have to deploy directly instead of to NFS?
+    # but that could lead to inconsistency problems
+    - name: deploy master branch to prd_swarm_workers
       git:
         repo: "https://github.com/educatedCaveman/docker-lab"
-        dest: /mnt/mobius/docker/prd
+        dest: /docker
+        # dest: /mnt/mobius/docker/dev
         version:  master
         force:  yes
 
-    - name: set permissions in the directory
-      file:
-        path: /mnt/mobius/docker
-        state:  directory
-        recurse:  yes
-        owner:  drake
-        group:  drake
-
-- name: deploy docker code to DEV portainer instance
+- name: deploy docker code to portainer instance
   # only need to deploy once
   hosts: 
     - self

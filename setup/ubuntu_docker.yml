@@ -32,7 +32,7 @@
 
     - name: Update apt and install docker-ce
       apt: 
-        update_cache: yes
+        # update_cache: yes
         name: 
           - docker-ce 
           - docker-ce-cli 
@@ -64,3 +64,9 @@
         opts: rw,nolock,tcp
         state: mounted
       when: mobius.stat.exists
+
+    # create docker config folder
+    - name: create docker folder
+      file:
+        path: /docker
+        state:  directory

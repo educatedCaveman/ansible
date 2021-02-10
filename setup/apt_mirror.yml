@@ -1,5 +1,5 @@
 ---
-- name: configure ubuntu host to use local apt-mirror
+- name: configure local apt-mirror
   hosts: apt_mirror
   tasks:
 
@@ -16,10 +16,27 @@
         state:  latest
 
     #deploy dotfiles repo
-    - git:
+    - name: deploy dotfiles
+      git:
         repo: 'https://github.com/educatedCaveman/dotfiles.git'
         dest: /home/drake/dotfiles
         force:  yes
+
+    #deploy dotfiles repo
+    - name: deploy scripts
+      git:
+        repo: 'https://github.com/educatedCaveman/scripts.git'
+        dest: /home/drake/scripts
+        force:  yes
+
+    # set permissions
+    - name: set permissions on home directory
+      file:
+        path: /home/drake
+        state:  directory
+        recurse:  yes
+        owner:  drake
+        group:  drake
 
     #initial mount path check 
     - name: create NFS folder
@@ -93,3 +110,60 @@
         src: /var/spool/apt-mirror/var/postmirror.sh
         dest: /var/www/html/ubuntu/var/postmirror.sh
         remote_src: yes
+
+    # set cron to run apt-mirror at 1AM every day
+    - name: set cron to run apt-mirror at 1AM every day
+      cron:
+        name: apt-mirror
+        minute: "0"
+        hour: "1"
+        job: "/usr/bin/apt-mirror"
+
+# all ubuntu hosts:
+- name: configure ubuntu host to use local apt-mirror
+  hosts: ubuntu_debian_hosts
+  tasks:
+
+    # check for existing sources.list.bak
+    - name: check for existing sources.list backup
+      stat:
+        path: /etc/apt/sources.list.bak
+      register: src_bkup
+
+    # regardless, remove the existing sources.list
+    - name: if the sources.list backup exists, remove sources.list
+      file:
+        path: /etc/apt/sources.list
+        state:  absent
+      when: src_bkup.stat.exists
+
+    # if it doesn't exist, back it on up
+    - name: if the sources.list backup exists, restore the backup
+      copy:
+        src:  /etc/apt/sources.list.bak
+        dest: /etc/apt/sources.list
+        remote_src: yes
+      when: src_bkup.stat.exists
+
+    # # link the new sources.list
+    # - name: link sources.list
+    #   file:
+    #     src: /home/drake/dotfiles/apt_cache_mirror/sources.list
+    #     dest: /etc/apt/sources.list
+    #     state: link
+
+- name: configure apt-cache host to use local apt-mirror
+  hosts: apt_cache
+  tasks:
+
+    - name: remove the existing sources.list
+      file:
+        path: /etc/apt/sources.list
+        state:  absent
+    
+    - name: link the new sources.list
+      file:
+        src: /home/drake/dotfiles/apt_cache_mirror/sources.list
+        dest: /etc/apt/sources.list
+        state: link
+        
