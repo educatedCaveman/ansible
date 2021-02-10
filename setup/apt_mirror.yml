@@ -93,24 +93,3 @@
         src: /var/spool/apt-mirror/var/postmirror.sh
         dest: /var/www/html/ubuntu/var/postmirror.sh
         remote_src: yes
-
-
-
-
-#TBD
-# - name: configure apt-cache
-#   hosts: apt_cache
-#   tasks:
-    
-#     - name: install apt-cacher-ng
-#       apt:
-#         name: 
-#           - apt-cacher-ng
-#         state:  latest
-
-#     # make sure apt-cacher-ng.service is running
-#     - name: ensure apt-cacher-ng.service is running and enabled
-#       systemd:
-#         name: apt-cacher-ng.service
-#         state: restarted
-#         enabled: yes

@@ -1,0 +1,14 @@
+---
+- name: upgrade/update ubuntu hosts
+  hosts: ubuntu_debian_hosts
+  ignore_unreachable: yes
+  tasks:
+
+    - name: update packages
+      apt:
+        name: '*'
+        state: latest
+
+    - name: upgrade packages
+      apt:
+        upgrade:  dist
