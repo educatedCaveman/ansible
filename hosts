@@ -113,6 +113,72 @@ prd_swarm_worker_02
 prd_swarm_worker_03
 prd_swarm_worker_04
 
+[dev_db_lb]
+dev-mariadb-lb.lab      ansible_ssh_user=root
+
+[dev_mariadb_1]
+dev-mariadb-1.lab       ansible_ssh_user=root
+
+[dev_mariadb_2]
+dev-mariadb-2.lab       ansible_ssh_user=root
+
+[dev_mariadb_3]
+dev-mariadb-3.lab       ansible_ssh_user=root
+
+[dev_mariadb:children]
+dev_mariadb_1
+dev_mariadb_2
+dev_mariadb_3
+
+[dev_rancher_lb]
+dev-rancher-lb.lab      ansible_ssh_user=root
+
+[dev_rancher_1]
+dev-rancher-1.lab       ansible_ssh_user=root
+
+[dev_rancher_2]
+dev-rancher-2.lab       ansible_ssh_user=root
+
+[dev_rancher_3]
+dev-rancher-3.lab       ansible_ssh_user=root
+
+[dev_rancher:children]
+dev_rancher_1
+dev_rancher_2
+dev_rancher_3
+
+[dev_k3s_worker_1]
+dev-k3s-worker-1.lab    ansible_ssh_user=root
+
+[dev_k3s_worker_2]
+dev-k3s-worker-2.lab    ansible_ssh_user=root
+
+[dev_k3s_worker_3]
+dev-k3s-worker-3.lab    ansible_ssh_user=root
+
+[dev_k3s_worker_4]
+dev-k3s-worker-4.lab    ansible_ssh_user=root
+
+[dev_k3s_workers:children]
+dev_k3s_worker_1
+dev_k3s_worker_2
+dev_k3s_worker_3
+dev_k3s_worker_4
+
+[dev_k3s_storage_1]
+dev-k3s-storage-1.lab   ansible_ssh_user=root
+
+[dev_k3s_storage_2]
+dev-k3s-storage-2.lab   ansible_ssh_user=root
+
+[dev_k3s_storage_3]
+dev-k3s-storage-3.lab   ansible_ssh_user=root
+
+[dev_k3s_storage:children]
+dev_k3s_storage_1
+dev_k3s_storage_2
+dev_k3s_storage_3
+
 [singularity]
 singularity.vm      ansible_ssh_user=root
 
@@ -142,6 +208,8 @@ dilithium
 apt_cache
 apt_mirror
 self
+dev_db_lb
+dev_mariadb
 
 [ubuntu_debian_VM:children]
 oxygen
@@ -151,6 +219,7 @@ prd_swarm_managers
 prd_swarm_workers
 gitlab
 oxygen
+dev_mariadb
 
 [linux:children]
 ubuntu_debian_hosts
