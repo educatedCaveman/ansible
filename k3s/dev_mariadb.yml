@@ -99,15 +99,15 @@
         dest: /etc/mysql/mariadb.conf.d/50-server.cnf
         remote_src: yes
 
-# only need to run this the first time?
-- name: initialize the cluster
-  hosts: dev_db_01
-  tasks:
+# # only need to run this the first time?
+# - name: initialize the cluster
+#   hosts: dev_db_01
+#   tasks:
 
-    # have to run a special command the first time:
-    - name: run "galera_new_cluster" on the first node
-      shell:
-        cmd:  galera_new_cluster
+#     # have to run a special command the first time:
+#     - name: run "galera_new_cluster" on the first node
+#       shell:
+#         cmd:  galera_new_cluster
 
 - name: add the remaining nodes to the cluster
   hosts: dev_mariadb
