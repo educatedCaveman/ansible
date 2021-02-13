@@ -65,7 +65,7 @@
 
 # copy the new/custom config over
 - name: configure galera/mariaDB on the first node
-  hosts: dev_db_03
+  hosts: dev_db_01
   tasks:
 
     # copy the new config
@@ -77,7 +77,7 @@
 
 # copy the new/custom config over
 - name: configure galera/mariaDB on the second node
-  hosts: dev_db_03
+  hosts: dev_db_02
   tasks:
 
     # copy the new config
@@ -99,15 +99,15 @@
         dest: /etc/mysql/mariadb.conf.d/50-server.cnf
         remote_src: yes
 
-#only need to run this the first time
-# - name: initialize the cluster
-#   hosts: dev_db_01
-#   tasks:
+# only need to run this the first time?
+- name: initialize the cluster
+  hosts: dev_db_01
+  tasks:
 
-#     # have to run a special command the first time:
-#     - name: run "galera_new_cluster" on the first node
-#       shell:
-#         cmd:  galera_new_cluster
+    # have to run a special command the first time:
+    - name: run "galera_new_cluster" on the first node
+      shell:
+        cmd:  galera_new_cluster
 
 - name: add the remaining nodes to the cluster
   hosts: dev_mariadb
