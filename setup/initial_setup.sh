@@ -24,9 +24,9 @@ HOSTS=( \
     apt_cache \
     apt_mirror \
     dev_LB \
-    dev_mariadb_1 \
-    dev_mariadb_2 \
-    dev_mariadb_3 \
+    dev_mariadb_01 \
+    dev_mariadb_02 \
+    dev_mariadb_03 \
 )
 LXC_HOSTS=( \
     dev_api_LB \
@@ -59,9 +59,9 @@ LOGINS=( \
     "Homelab\ssh/apt-cache.vm" \
     "Homelab\ssh/apt-mirror.vm" \
     "Homelab\ssh/dev-load-balancer.lab" \
-    "Homelab\ssh/dev-mariadb-1.lab" \
-    "Homelab\ssh/dev-mariadb-2.lab" \
-    "Homelab\ssh/dev-mariadb-3.lab" \
+    "Homelab\ssh/dev-mariadb-01.lab" \
+    "Homelab\ssh/dev-mariadb-02.lab" \
+    "Homelab\ssh/dev-mariadb-03.lab" \
 )
 LXC_LOGINS=( \
     "Homelab\ssh/swarm-api-lb.lab" \
@@ -93,9 +93,9 @@ HOSTNAMES=( \
     "apt-cache" \
     "apt-mirror" \
     "dev-load-balancer" \
-    "dev-mariadb-1" \
-    "dev-mariadb-2" \
-    "dev-mariadb-3" \
+    "dev-mariadb-01" \
+    "dev-mariadb-02" \
+    "dev-mariadb-03" \
 )
 
 #handle drake users
