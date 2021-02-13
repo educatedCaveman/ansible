@@ -28,90 +28,28 @@ oxygen.vm           ansible_ssh_user=root
 [dev_api_LB]
 swarm-api-lb.lab    ansible_ssh_user=root
 
-[dev_swarm_manager_01]
-lv426-manager-01.lab    ansible_ssh_user=root
+[dev_swarm_managers]
+lv426-manager-0[1:3].lab
 
-[dev_swarm_manager_02]
-lv426-manager-02.lab    ansible_ssh_user=root
-
-[dev_swarm_manager_03]
-lv426-manager-03.lab    ansible_ssh_user=root
-
-[dev_swarm_worker_01]
-lv426-worker-01.lab     ansible_ssh_user=root
-
-[dev_swarm_worker_02]
-lv426-worker-02.lab     ansible_ssh_user=root
-
-[dev_swarm_worker_03]
-lv426-worker-03.lab     ansible_ssh_user=root
-
-[dev_swarm_worker_04]
-lv426-worker-04.lab     ansible_ssh_user=root
-
-[dev_swarm_managers:children]
-dev_swarm_manager_01
-dev_swarm_manager_02
-dev_swarm_manager_03
-
-[dev_swarm_workers:children]
-dev_swarm_worker_01
-dev_swarm_worker_02
-dev_swarm_worker_03
-dev_swarm_worker_04
+[dev_swarm_workers]
+lv426-worker-0[1:4].lab
 
 [prd_api_LB]
 swarm-api-lb.vm ansible_ssh_user=root
 
-[prd_swarm_manager_01]
-sevastopol-manager-01.vm    ansible_ssh_user=root
+[prd_swarm_managers]
+sevastopol-manager-0[1:3].vm
 
-[prd_swarm_manager_02]
-sevastopol-manager-02.vm    ansible_ssh_user=root
-
-[prd_swarm_manager_03]
-sevastopol-manager-03.vm    ansible_ssh_user=root
-
-[prd_swarm_worker_01]
-sevastopol-worker-01.vm     ansible_ssh_user=root
-
-[prd_swarm_worker_02]
-sevastopol-worker-02.vm     ansible_ssh_user=root
-
-[prd_swarm_worker_03]
-sevastopol-worker-03.vm     ansible_ssh_user=root
-
-[prd_swarm_worker_04]
-sevastopol-worker-04.vm     ansible_ssh_user=root
-
-[prd_swarm_managers:children]
-prd_swarm_manager_01
-prd_swarm_manager_02
-prd_swarm_manager_03
-
-[prd_swarm_workers:children]
-prd_swarm_worker_01
-prd_swarm_worker_02
-prd_swarm_worker_03
-prd_swarm_worker_04
+[prd_swarm_workers]
+sevastopol-worker-0[1:4].vm
 
 [swarm_managers:children]
-dev_swarm_manager_01
-dev_swarm_manager_02
-dev_swarm_manager_03
-prd_swarm_manager_01
-prd_swarm_manager_02
-prd_swarm_manager_03
+dev_swarm_managers
+prd_swarm_managers
 
 [swarm_workers:children]
-dev_swarm_worker_01
-dev_swarm_worker_02
-dev_swarm_worker_03
-dev_swarm_worker_04
-prd_swarm_worker_01
-prd_swarm_worker_02
-prd_swarm_worker_03
-prd_swarm_worker_04
+dev_swarm_workers
+prd_swarm_workers
 
 [dev_db_lb]
 dev-mariadb-lb.lab      ansible_ssh_user=root
@@ -198,11 +136,9 @@ event_horizon
 plex
 oxygen
 dev_api_LB
-dev_swarm_managers
-dev_swarm_workers
+swarm_managers
+swarm_workers
 prd_api_LB
-prd_swarm_managers
-prd_swarm_workers
 gitlab
 dilithium
 apt_cache
