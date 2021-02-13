@@ -24,9 +24,9 @@ HOSTS=( \
     apt_cache \
     apt_mirror \
     dev_LB \
-    dev_mariadb_01 \
-    dev_mariadb_02 \
-    dev_mariadb_03 \
+    dev_db_01 \
+    dev_db_02 \
+    dev_db_03 \
 )
 LXC_HOSTS=( \
     dev_api_LB \
