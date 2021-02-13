@@ -1,0 +1,63 @@
+---
+- name: configure k3s control node
+  hosts: dev_mariadb
+  tasks:
+    # make sure all packages are up to date
+    - name: update packages
+      apt:
+        name: "*"
+        state: latest
+
+    # upgrade packages
+    - name: upgrade packages
+      apt:
+        upgrade:  safe
+
+    # make sure all the required packages are installed
+    - name: ensure a list of packages installed
+      apt:
+        name:
+          - mariadb-server
+          - rsync
+
+    # TODO: manual running of the securing script
+
+    # pull the dotfiles repo for the nginx config
+    - name: pull the dotfiles repository
+      git:
+        repo: "https://github.com/educatedCaveman/dotfiles.git"
+        dest: /home/drake/dotfiles
+        force: yes
+
+    # copy the default config, if the backup doesn't exist
+    - name: check if backup config exists
+      stat:
+        path: /etc/mysql/mariadb.conf.d/50-server.cnf.backup
+      register: backup_db_conf
+
+    - name: copy the default config, if the backup doesn't exist
+      copy:
+        src: /etc/mysql/mariadb.conf.d/50-server.cnf
+        dest: /etc/mysql/mariadb.conf.d/50-server.cnf.backup
+        remote_src: yes
+      when: not backup_db_conf.stat.exists
+
+    # remove the original
+    - name: remove the original config file
+      file:
+        path: /etc/mysql/mariadb.conf.d/50-server.cnf
+        state: absent
+
+    # link the custom one
+    - name: link the new custom config file
+      file:
+        src: /home/drake/dotfiles/kubernetes/dev/50-server.cnf
+        dest: /etc/mysql/mariadb.conf.d/50-server.cnf
+        state:  link
+
+    # make sure mariadb is enabled, and has been restarted
+    - name: ensure mariadb is running and enabled
+      systemd:
+        name: mariadb
+        state: restarted
+        enabled: yes
