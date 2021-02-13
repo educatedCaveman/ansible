@@ -1,0 +1,180 @@
+[event_horizon]
+event-horizon.srv   ansible_ssh_user=root
+
+[self]
+localhost           ansible_ssh_user=root
+
+[mobius]
+mobius.srv          ansible_ssh_user=drake
+
+[tesseract]
+tesseract.srv       ansible_ssh_user=root
+
+[nextcloud]
+nextcloud.vm        ansible_ssh_user=root
+
+[dilithium]
+dilithium.srv       ansible_ssh_user=root
+
+[plex]
+plex.vm             ansible_ssh_user=root
+
+[gitlab]
+gitlab.vm           ansible_ssh_user=root
+
+[oxygen]
+oxygen.vm           ansible_ssh_user=root
+
+[dev_api_LB]
+swarm-api-lb.lab    ansible_ssh_user=root
+
+[dev_swarm_managers]
+lv426-manager-0[1:3].lab
+
+[dev_swarm_workers]
+lv426-worker-0[1:4].lab
+
+[prd_api_LB]
+swarm-api-lb.vm ansible_ssh_user=root
+
+[prd_swarm_managers]
+sevastopol-manager-0[1:3].vm
+
+[prd_swarm_workers]
+sevastopol-worker-0[1:4].vm
+
+[swarm_managers:children]
+dev_swarm_managers
+prd_swarm_managers
+
+[swarm_workers:children]
+dev_swarm_workers
+prd_swarm_workers
+
+[dev_db_lb]
+dev-mariadb-lb.lab      ansible_ssh_user=root
+
+[dev_mariadb_1]
+dev-mariadb-1.lab       ansible_ssh_user=root
+
+[dev_mariadb_2]
+dev-mariadb-2.lab       ansible_ssh_user=root
+
+[dev_mariadb_3]
+dev-mariadb-3.lab       ansible_ssh_user=root
+
+[dev_mariadb:children]
+dev_mariadb_1
+dev_mariadb_2
+dev_mariadb_3
+
+[dev_rancher_lb]
+dev-rancher-lb.lab      ansible_ssh_user=root
+
+[dev_rancher_1]
+dev-rancher-1.lab       ansible_ssh_user=root
+
+[dev_rancher_2]
+dev-rancher-2.lab       ansible_ssh_user=root
+
+[dev_rancher_3]
+dev-rancher-3.lab       ansible_ssh_user=root
+
+[dev_rancher:children]
+dev_rancher_1
+dev_rancher_2
+dev_rancher_3
+
+[dev_k3s_worker_1]
+dev-k3s-worker-1.lab    ansible_ssh_user=root
+
+[dev_k3s_worker_2]
+dev-k3s-worker-2.lab    ansible_ssh_user=root
+
+[dev_k3s_worker_3]
+dev-k3s-worker-3.lab    ansible_ssh_user=root
+
+[dev_k3s_worker_4]
+dev-k3s-worker-4.lab    ansible_ssh_user=root
+
+[dev_k3s_workers:children]
+dev_k3s_worker_1
+dev_k3s_worker_2
+dev_k3s_worker_3
+dev_k3s_worker_4
+
+[dev_k3s_storage_1]
+dev-k3s-storage-1.lab   ansible_ssh_user=root
+
+[dev_k3s_storage_2]
+dev-k3s-storage-2.lab   ansible_ssh_user=root
+
+[dev_k3s_storage_3]
+dev-k3s-storage-3.lab   ansible_ssh_user=root
+
+[dev_k3s_storage:children]
+dev_k3s_storage_1
+dev_k3s_storage_2
+dev_k3s_storage_3
+
+[singularity]
+singularity.vm      ansible_ssh_user=root
+
+[apt_cache]
+apt-cache.vm        ansible_ssh_user=root
+
+[apt_mirror]
+apt-mirror.vm        ansible_ssh_user=root
+
+#############
+# OS groups #
+#############
+
+[ubuntu_debian_hosts:children]
+singularity
+event_horizon
+plex
+oxygen
+dev_api_LB
+swarm_managers
+swarm_workers
+prd_api_LB
+gitlab
+dilithium
+apt_cache
+apt_mirror
+self
+dev_db_lb
+dev_mariadb
+
+[ubuntu_debian_VM:children]
+oxygen
+dev_swarm_managers
+dev_swarm_workers
+prd_swarm_managers
+prd_swarm_workers
+gitlab
+oxygen
+dev_mariadb
+
+[linux:children]
+ubuntu_debian_hosts
+
+[trueNAS:children]
+mobius
+tesseract
+
+######################
+# application groups #
+######################
+
+[pihole:children]
+singularity
+event_horizon
+
+[portainer:children]
+oxygen
+dev_swarm_managers
+dev_swarm_workers
+prd_swarm_managers
+prd_swarm_workers
