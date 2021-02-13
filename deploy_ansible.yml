@@ -40,12 +40,12 @@
 
     - name: remove existing host file/link
       file:
-        path: /etc/ansible/hosts
+        path: /etc/ansible/hosts.ini
         state:  absent
 
     - name: link new hosts file
       file:
-        src:  /home/drake/ansible/hosts
+        src:  /home/drake/ansible/hosts.ini
         dest: /etc/ansible/hosts
         state:  link
 
