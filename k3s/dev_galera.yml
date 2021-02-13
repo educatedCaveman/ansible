@@ -16,29 +16,11 @@
         repo: "https://github.com/educatedCaveman/dotfiles.git"
         dest: /home/drake/dotfiles
         force: yes
-    
+
+# there are no existing configs, so we just have to link the custom ones
 - name: configure galera on first node
   hosts: dev_db_01
   tasks:
-
-    # copy the default config, if the backup doesn't exist
-    - name: check if backup config exists
-      stat:
-        path: /etc/mysql/conf.d/galera.cnf.backup
-      register: backup_galera_conf
-
-    - name: copy the default config, if the backup doesn't exist
-      copy:
-        src: /etc/mysql/conf.d/galera.cnf
-        dest: /etc/mysql/conf.d/galera.cnf.backup
-        remote_src: yes
-      when: not backup_galera_conf.stat.exists
-
-    # remove the original
-    - name: remove the original config file
-      file:
-        path: /etc/mysql/conf.d/galera.cnf
-        state: absent
 
     # link the custom one
     - name: link the new custom config file
@@ -51,25 +33,6 @@
   hosts: dev_db_02
   tasks:
 
-    # copy the default config, if the backup doesn't exist
-    - name: check if backup config exists
-      stat:
-        path: /etc/mysql/conf.d/galera.cnf.backup
-      register: backup_galera_conf
-
-    - name: copy the default config, if the backup doesn't exist
-      copy:
-        src: /etc/mysql/conf.d/galera.cnf
-        dest: /etc/mysql/conf.d/galera.cnf.backup
-        remote_src: yes
-      when: not backup_galera_conf.stat.exists
-
-    # remove the original
-    - name: remove the original config file
-      file:
-        path: /etc/mysql/conf.d/galera.cnf
-        state: absent
-
     # link the custom one
     - name: link the new custom config file
       file:
@@ -80,25 +43,6 @@
 - name: configure galera on first node
   hosts: dev_db_03
   tasks:
-
-    # copy the default config, if the backup doesn't exist
-    - name: check if backup config exists
-      stat:
-        path: /etc/mysql/conf.d/galera.cnf.backup
-      register: backup_galera_conf
-
-    - name: copy the default config, if the backup doesn't exist
-      copy:
-        src: /etc/mysql/conf.d/galera.cnf
-        dest: /etc/mysql/conf.d/galera.cnf.backup
-        remote_src: yes
-      when: not backup_galera_conf.stat.exists
-
-    # remove the original
-    - name: remove the original config file
-      file:
-        path: /etc/mysql/conf.d/galera.cnf
-        state: absent
 
     # link the custom one
     - name: link the new custom config file
