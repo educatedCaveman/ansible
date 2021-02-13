@@ -1,5 +1,5 @@
 ---
-- name: configure k3s control node
+- name: mariaDB initial setup
   hosts: dev_mariadb
   tasks:
     # make sure all packages are up to date
@@ -29,31 +29,89 @@
         dest: /home/drake/dotfiles
         force: yes
 
-    # copy the default config, if the backup doesn't exist
-    - name: check if backup mariaDB config exists
-      stat:
-        path: /etc/mysql/mariadb.conf.d/50-server.cnf.backup
-      register: backup_db_conf
+    # stop mariadb
+    - name: ensure mariadb has been stopped
+      systemd:
+        name: mariadb
+        state: stopped
+        enabled: yes
 
-    - name: copy the default mariaDB config, if the backup doesn't exist
-      copy:
-        src: /etc/mysql/mariadb.conf.d/50-server.cnf
-        dest: /etc/mysql/mariadb.conf.d/50-server.cnf.backup
-        remote_src: yes
-      when: not backup_db_conf.stat.exists
-
-    # remove the original
-    - name: remove the original mariaDB config file
+    # remove the existing file
+    - name: remove the original galera.cnf file, if present
       file:
-        path: /etc/mysql/mariadb.conf.d/50-server.cnf
+        path: /etc/mysql/conf.d/galera.cnf
         state: absent
 
-    # copy the custom one
-    - name: copy the new custom mariaDB config file
+    # check if the backup config exists
+    - name: check for the backup config file
+      stat:
+        path: /etc/mysql/mariadb.conf.d/50-server.cnf.backup
+      register: mariadb_conf_backup
+
+    # if the backup doesn't exist, create it
+    - name: if the backup doesn't exist, create it
       copy:
-        src: /home/drake/dotfiles/kubernetes/dev/50-server.cnf
+        src:  /etc/mysql/mariadb.conf.d/50-server.cnf
+        dest: /etc/mysql/mariadb.conf.d/50-server.cnf.backup
+        remote_src: yes
+      when: not(mariadb_conf_backup.stat.exists)
+
+    # make sure mariadb is stopped
+    - name: ensure mariadb is running and enabled
+      systemd:
+        name: mariadb
+        state: stopped
+        enabled: yes
+
+# copy the new/custom config over
+- name: configure galera/mariaDB on the first node
+  hosts: dev_db_03
+  tasks:
+
+    # copy the new config
+    - name: copy the new config
+      copy:
+        src:  /home/drake/dotfiles/kubernetes/dev/mariadb_01_50-server.cnf
         dest: /etc/mysql/mariadb.conf.d/50-server.cnf
         remote_src: yes
+
+# copy the new/custom config over
+- name: configure galera/mariaDB on the second node
+  hosts: dev_db_03
+  tasks:
+
+    # copy the new config
+    - name: copy the new config
+      copy:
+        src:  /home/drake/dotfiles/kubernetes/dev/mariadb_02_50-server.cnf
+        dest: /etc/mysql/mariadb.conf.d/50-server.cnf
+        remote_src: yes
+        
+# copy the new/custom config over
+- name: configure galera/mariaDB on the third node
+  hosts: dev_db_03
+  tasks:
+
+    # copy the new config
+    - name: copy the new config
+      copy:
+        src:  /home/drake/dotfiles/kubernetes/dev/mariadb_03_50-server.cnf
+        dest: /etc/mysql/mariadb.conf.d/50-server.cnf
+        remote_src: yes
+
+#only need to run this the first time
+# - name: initialize the cluster
+#   hosts: dev_db_01
+#   tasks:
+
+#     # have to run a special command the first time:
+#     - name: run "galera_new_cluster" on the first node
+#       shell:
+#         cmd:  galera_new_cluster
+
+- name: add the remaining nodes to the cluster
+  hosts: dev_mariadb
+  tasks:
 
     # make sure mariadb is enabled, and has been restarted
     - name: ensure mariadb is running and enabled
