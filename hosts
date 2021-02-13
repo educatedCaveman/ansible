@@ -1,11 +1,11 @@
 [event_horizon]
-event-horizon.srv 
+event-horizon.srv   ansible_python_interpreter=/usr/bin/python3
 
 [self]
 localhost 
 
 [mobius]
-mobius.srv ansible_ssh_user=drake
+mobius.srv  ansible_ssh_user=drake
 
 [tesseract]
 tesseract.srv 
@@ -14,7 +14,7 @@ tesseract.srv
 nextcloud.vm 
 
 [dilithium]
-dilithium.srv 
+dilithium.srv   ansible_python_interpreter=/usr/bin/python3
 
 [plex]
 plex.vm 
