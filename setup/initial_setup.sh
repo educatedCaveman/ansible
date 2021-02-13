@@ -27,6 +27,16 @@ HOSTS=( \
     dev_db_01 \
     dev_db_02 \
     dev_db_03 \
+    dev_k3s_server_01 \
+    dev_k3s_server_02 \
+    dev_k3s_server_03 \
+    dev_k3s_worker_01 \
+    dev_k3s_worker_02 \
+    dev_k3s_worker_03 \
+    dev_k3s_worker_04 \
+    dev_k3s_storage_01 \
+    dev_k3s_storage_02 \
+    dev_k3s_storage_03 \
 )
 LXC_HOSTS=( \
     dev_api_LB \
@@ -62,6 +72,16 @@ LOGINS=( \
     "Homelab\ssh/dev-mariadb-01.lab" \
     "Homelab\ssh/dev-mariadb-02.lab" \
     "Homelab\ssh/dev-mariadb-03.lab" \
+    "Homelab\ssh/k3s-server-01.lab" \
+    "Homelab\ssh/k3s-server-02.lab" \
+    "Homelab\ssh/k3s-server-03.lab" \
+    "Homelab\ssh/k3s-worker-01.lab" \
+    "Homelab\ssh/k3s-worker-02.lab" \
+    "Homelab\ssh/k3s-worker-03.lab" \
+    "Homelab\ssh/k3s-worker-04.lab" \
+    "Homelab\ssh/k3s-storage-01.lab" \
+    "Homelab\ssh/k3s-storage-02.lab" \
+    "Homelab\ssh/k3s-storage-03.lab" \
 )
 LXC_LOGINS=( \
     "Homelab\ssh/swarm-api-lb.lab" \
@@ -96,6 +116,16 @@ HOSTNAMES=( \
     "dev-mariadb-01" \
     "dev-mariadb-02" \
     "dev-mariadb-03" \
+    "k3s-server-01" \
+    "k3s-server-02" \
+    "k3s-server-03" \
+    "k3s-worker-01" \
+    "k3s-worker-02" \
+    "k3s-worker-03" \
+    "k3s-worker-04" \
+    "k3s-storage-01" \
+    "k3s-storage-02" \
+    "k3s-storage-03" \
 )
 
 #handle drake users
