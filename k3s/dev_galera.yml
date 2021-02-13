@@ -18,7 +18,7 @@
         force: yes
     
 - name: configure galera on first node
-  host: dev_db_01
+  hosts: dev_db_01
   tasks:
 
     # copy the default config, if the backup doesn't exist
@@ -48,7 +48,7 @@
         state:  link
     
 - name: configure galera on first node
-  host: dev_db_02
+  hosts: dev_db_02
   tasks:
 
     # copy the default config, if the backup doesn't exist
@@ -78,7 +78,7 @@
         state:  link
     
 - name: configure galera on first node
-  host: dev_db_03
+  hosts: dev_db_03
   tasks:
 
     # copy the default config, if the backup doesn't exist
@@ -108,7 +108,7 @@
         state:  link
 
 - name: initialize the cluster
-  host: dev_db_01
+  hosts: dev_db_01
   tasks:
 
     # have to run a special command the first time:
@@ -117,7 +117,7 @@
         cmd:  galera_new_cluster
 
 - name: add the remaining nodes to the cluster
-  host: 
+  hosts: 
     - dev_db_02
     - dev_db_03
   tasks:
@@ -128,4 +128,3 @@
         name: mariadb
         state: restarted
         enabled: yes
-        
