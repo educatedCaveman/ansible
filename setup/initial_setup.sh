@@ -23,7 +23,7 @@ HOSTS=( \
     oxygen \
     apt_cache \
     apt_mirror \
-    dev_db_lb \
+    dev_LB \
     dev_mariadb_1 \
     dev_mariadb_2 \
     dev_mariadb_3 \
@@ -33,7 +33,7 @@ LXC_HOSTS=( \
     prd_api_LB \
     apt_cache \
     apt_mirror \
-    dev_db_lb \
+    dev_LB \
 )
 
 # lastpass login paths
@@ -58,7 +58,7 @@ LOGINS=( \
     "Homelab\ssh/oxygen.vm" \
     "Homelab\ssh/apt-cache.vm" \
     "Homelab\ssh/apt-mirror.vm" \
-    "Homelab\ssh/dev-mariadb-lb.lab" \
+    "Homelab\ssh/dev-load-balancer.lab" \
     "Homelab\ssh/dev-mariadb-1.lab" \
     "Homelab\ssh/dev-mariadb-2.lab" \
     "Homelab\ssh/dev-mariadb-3.lab" \
@@ -68,7 +68,7 @@ LXC_LOGINS=( \
     "Homelab\ssh/swarm-api-lb.vm" \
     "Homelab\ssh/apt-cache.vm" \
     "Homelab\ssh/apt-mirror.vm" \
-    "Homelab\ssh/dev-mariadb-lb.lab" \
+    "Homelab\ssh/dev-load-balancer.lab" \
 )
 
 HOSTNAMES=( \
@@ -92,7 +92,7 @@ HOSTNAMES=( \
     "oxygen" \
     "apt-cache" \
     "apt-mirror" \
-    "dev-mariadb-lb" \
+    "dev-load-balancer" \
     "dev-mariadb-1" \
     "dev-mariadb-2" \
     "dev-mariadb-3" \

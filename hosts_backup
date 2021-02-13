@@ -8,7 +8,7 @@ localhost
 mobius.srv  ansible_ssh_user=drake
 
 [tesseract]
-tesseract.srv 
+tesseract.srv   ansible_python_interpreter=/usr/bin/python3
 
 [nextcloud]
 nextcloud.vm 
@@ -51,14 +51,11 @@ prd_swarm_managers
 dev_swarm_workers
 prd_swarm_workers
 
-[dev_db_lb]
-dev-mariadb-lb.lab 
+[dev_LB]
+dev-load-balancer.lab 
 
 [dev_mariadb]
 dev-mariadb-[1:3].lab 
-
-[dev_rancher_lb]
-dev-rancher-lb.lab 
 
 [dev_rancher]
 dev-rancher-[1:3].lab 
