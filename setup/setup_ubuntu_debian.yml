@@ -157,8 +157,7 @@
     - name: set ssh permissions
       file:
         path:     /home/drake/.ssh/authorized_keys
-        state:    directory
-        recurse:  yes
+        state:    file
         owner:    drake
         group:    drake
         mode:     '0600'
