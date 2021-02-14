@@ -156,6 +156,15 @@
     #set ssh directory permissions
     - name: set ssh permissions
       file:
+        path:     /home/drake/.ssh
+        state:    directory
+        owner:    drake
+        group:    drake
+        mode:     '0700'
+
+    #set ssh directory permissions
+    - name: set ssh permissions
+      file:
         path:     /home/drake/.ssh/authorized_keys
         state:    file
         owner:    drake

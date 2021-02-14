@@ -83,3 +83,9 @@
         name: mariadb
         state: restarted
         enabled: yes
+
+    # TODO:
+    # - dont do nginx
+    # - do all mariadb nodes
+    # - also setup galera cluster
+    
