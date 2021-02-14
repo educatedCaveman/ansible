@@ -1,6 +1,6 @@
 ---
 - name: mariaDB initial setup
-  hosts: dev_mariadb
+  hosts: dev_db
   tasks:
     # make sure all packages are up to date
     - name: update packages
