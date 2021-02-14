@@ -3,6 +3,12 @@
   hosts: ubuntu_debian_hosts
   tasks:
 
+    # make sure we have git installed
+    - name: install git
+      apt:
+        name: 
+          - git
+
     #deploy dotfiles repo
     - git:
         repo: 'https://github.com/educatedCaveman/dotfiles.git'
