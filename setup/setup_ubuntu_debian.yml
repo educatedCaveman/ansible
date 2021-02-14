@@ -152,6 +152,16 @@
         recurse: yes
         owner: drake
         group: drake
+
+    #set ssh directory permissions
+    - name: set ssh permissions
+      file:
+        path:     /home/drake/.ssh/authorized_keys
+        state:    directory
+        recurse:  yes
+        owner:    drake
+        group:    drake
+        mode:     '0600'
     
     # tweak MOTD:
     - name: test if first MOTD file is present
