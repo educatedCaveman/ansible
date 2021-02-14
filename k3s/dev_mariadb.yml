@@ -150,7 +150,7 @@
     # remove the initial config
     - name: remove the initial config
       file:
-        src:  /etc/mysql/mariadb.conf.d/50-server.cnf
+        path:   /etc/mysql/mariadb.conf.d/50-server.cnf
         state:  absent
 
     # copy the new config

@@ -3,7 +3,7 @@
   hosts: 
     - dev_k3s_servers
     - dev_k3s_workers
-    - dev_k3s_storage
+    - dev_k3s_data
   ignore_unreachable: yes
   tasks:
 
@@ -12,8 +12,6 @@
     # do docker install
     # reinstate sources.list
     # reinstate cache config
-
-
     
     - name: update packages
       apt:
@@ -32,7 +30,6 @@
           - curl
           - gnupg-agent
           - software-properties-common
-          - nfs-common
           - python3-pip
 
     - name: Add Docker GPG apt Key
@@ -44,7 +41,7 @@
       apt_repository:
         repo: deb https://download.docker.com/linux/ubuntu focal stable
         state: present
-        update_cache: yes
+        # update_cache: yes
 
     - name: Update apt and install docker-ce
       apt: 
