@@ -132,3 +132,6 @@ do
     ansible-playbook -l "${LXC_HOSTS[$n]}" "${ANSIBLE_DIR}/setup/LXC_root_setup.yml" \
         --extra-vars mypass="${PW}"
 done
+
+# setup LXC containers git
+ansible-playbook "${ANSIBLE_DIR}/setup/LXC_git.yml"

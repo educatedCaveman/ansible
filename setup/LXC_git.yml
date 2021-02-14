@@ -1,0 +1,19 @@
+---
+- name: configure LXC ubuntu host to to have git
+  hosts: ubuntu_debian_LXC
+  tasks:
+
+    - name: update packages
+      apt:
+        name: '*'
+        state: latest
+
+    - name: upgrade packages
+      apt:
+        upgrade:  safe
+        
+    # make sure we have git installed
+    - name: install git
+      apt:
+        name: 
+          - git
