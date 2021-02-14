@@ -87,17 +87,17 @@
         dest: /etc/mysql/mariadb.conf.d/50-server.cnf
         remote_src: yes
         
-# copy the new/custom config over
-- name: configure galera/mariaDB on the third node
-  hosts: dev_db_03
-  tasks:
+# # copy the new/custom config over
+# - name: configure galera/mariaDB on the third node
+#   hosts: dev_db_03
+#   tasks:
 
-    # copy the new config
-    - name: copy the new config
-      copy:
-        src:  /home/drake/dotfiles/kubernetes/dev/mariadb_03_50-server.cnf
-        dest: /etc/mysql/mariadb.conf.d/50-server.cnf
-        remote_src: yes
+#     # copy the new config
+#     - name: copy the new config
+#       copy:
+#         src:  /home/drake/dotfiles/kubernetes/dev/mariadb_03_50-server.cnf
+#         dest: /etc/mysql/mariadb.conf.d/50-server.cnf
+#         remote_src: yes
 
 # # only need to run this the first time?
 # - name: initialize the cluster

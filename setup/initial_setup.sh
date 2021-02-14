@@ -26,17 +26,12 @@ HOSTS=( \
     dev_LB \
     dev_db_01 \
     dev_db_02 \
-    dev_db_03 \
     dev_k3s_server_01 \
     dev_k3s_server_02 \
-    dev_k3s_server_03 \
     dev_k3s_worker_01 \
     dev_k3s_worker_02 \
-    dev_k3s_worker_03 \
-    dev_k3s_worker_04 \
-    dev_k3s_storage_01 \
-    dev_k3s_storage_02 \
-    dev_k3s_storage_03 \
+    dev_k3s_data_01 \
+    dev_k3s_data_02 \
 )
 LXC_HOSTS=( \
     dev_api_LB \
@@ -44,6 +39,8 @@ LXC_HOSTS=( \
     apt_cache \
     apt_mirror \
     dev_LB \
+    dev_db_01 \
+    dev_db_02 \
 )
 
 # lastpass login paths
@@ -69,19 +66,14 @@ LOGINS=( \
     "Homelab\ssh/apt-cache.vm" \
     "Homelab\ssh/apt-mirror.vm" \
     "Homelab\ssh/dev-load-balancer.lab" \
-    "Homelab\ssh/dev-mariadb-01.lab" \
-    "Homelab\ssh/dev-mariadb-02.lab" \
-    "Homelab\ssh/dev-mariadb-03.lab" \
+    "Homelab\ssh/dev-db-01.lab" \
+    "Homelab\ssh/dev-db-02.lab" \
     "Homelab\ssh/k3s-server-01.lab" \
     "Homelab\ssh/k3s-server-02.lab" \
-    "Homelab\ssh/k3s-server-03.lab" \
     "Homelab\ssh/k3s-worker-01.lab" \
     "Homelab\ssh/k3s-worker-02.lab" \
-    "Homelab\ssh/k3s-worker-03.lab" \
-    "Homelab\ssh/k3s-worker-04.lab" \
-    "Homelab\ssh/k3s-storage-01.lab" \
-    "Homelab\ssh/k3s-storage-02.lab" \
-    "Homelab\ssh/k3s-storage-03.lab" \
+    "Homelab\ssh/k3s-data-01.lab" \
+    "Homelab\ssh/k3s-data-02.lab" \
 )
 LXC_LOGINS=( \
     "Homelab\ssh/swarm-api-lb.lab" \
@@ -89,6 +81,8 @@ LXC_LOGINS=( \
     "Homelab\ssh/apt-cache.vm" \
     "Homelab\ssh/apt-mirror.vm" \
     "Homelab\ssh/dev-load-balancer.lab" \
+    "Homelab\ssh/dev-db-01.lab" \
+    "Homelab\ssh/dev-db-02.lab" \
 )
 
 HOSTNAMES=( \
@@ -115,17 +109,12 @@ HOSTNAMES=( \
     "dev-load-balancer" \
     "dev-mariadb-01" \
     "dev-mariadb-02" \
-    "dev-mariadb-03" \
     "k3s-server-01" \
     "k3s-server-02" \
-    "k3s-server-03" \
     "k3s-worker-01" \
     "k3s-worker-02" \
-    "k3s-worker-03" \
-    "k3s-worker-04" \
     "k3s-storage-01" \
     "k3s-storage-02" \
-    "k3s-storage-03" \
 )
 
 #handle drake users

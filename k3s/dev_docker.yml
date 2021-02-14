@@ -6,6 +6,14 @@
     - dev_k3s_storage
   ignore_unreachable: yes
   tasks:
+
+    # remove cache config, if present
+    # backup sources.list, if present
+    # do docker install
+    # reinstate sources.list
+    # reinstate cache config
+
+
     
     - name: update packages
       apt:
