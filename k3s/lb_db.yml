@@ -1,0 +1,91 @@
+---
+- name: configure k3s control node
+  hosts: dev_LB
+  tasks:
+    # make sure all packages are up to date
+    - name: update packages
+      apt:
+        name: "*"
+        state: latest
+    
+    # upgrade packages
+    - name: upgrade packages
+      apt:
+        upgrade:  safe
+
+    # make sure all the required packages are installed
+    - name: ensure a list of packages installed
+      apt:
+        name:
+          - nginx
+          - mariadb-server
+
+    # pull the dotfiles repo for the configs
+    - name: pull the dotfiles repository
+      git:
+        repo: "https://github.com/educatedCaveman/dotfiles.git"
+        dest: /home/drake/dotfiles
+        force: yes
+
+    # NGINX
+    # make sure the default site is disabled
+    - name: make sure the default nginx site is disabled
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    # remove the existing config, if present
+    - name:
+      file:
+        path: /etc/nginx/nginx.conf
+        state: absent
+
+    # ensure the link from available to enabled is set
+    - name: link the previous config to the enabled sites
+      file:
+        src: /home/drake/dotfiles/kubernetes/dev/nginx.conf
+        dest: /etc/nginx/nginx.conf
+        state: link
+
+    # make sure nginx is running
+    - name: ensure nginx is running and enabled
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: yes
+
+    # MARIADB
+    # stop mariadb
+    - name: ensure mariadb has been stopped
+      systemd:
+        name: mariadb
+        state: stopped
+        enabled: yes
+
+    # check if the backup config exists
+    - name: check for the backup config file
+      stat:
+        path: /etc/mysql/mariadb.conf.d/50-server.cnf.backup
+      register: mariadb_conf_backup
+
+    # if the backup doesn't exist, create it
+    - name: if the backup doesn't exist, create it
+      copy:
+        src:  /etc/mysql/mariadb.conf.d/50-server.cnf
+        dest: /etc/mysql/mariadb.conf.d/50-server.cnf.backup
+        remote_src: yes
+      when: not(mariadb_conf_backup.stat.exists)
+
+    # copy the new config
+    - name: copy the initial config
+      copy:
+        src:  /home/drake/dotfiles/kubernetes/dev/50-server.cnf
+        dest: /etc/mysql/mariadb.conf.d/50-server.cnf
+        remote_src: yes
+
+    # make sure mariadb is enabled, and has been restarted
+    - name: ensure mariadb is running and enabled
+      systemd:
+        name: mariadb
+        state: restarted
+        enabled: yes
