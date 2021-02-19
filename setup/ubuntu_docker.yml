@@ -66,8 +66,9 @@
         state: mounted
       when: mobius.stat.exists
 
-    # # create docker config folder
-    # - name: create docker folder
-    #   file:
-    #     path: /docker
-    #     state:  directory
+    # create docker config folder
+    - name: create docker folder
+      file:
+        path: /docker
+        state:  absent
+        recurse:  yes
