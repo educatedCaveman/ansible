@@ -16,6 +16,18 @@
         version:  dev_test
         force:  yes
 
+- name: deploy configs to gluster
+  hosts:  
+    - dev_swarm_manger_01
+    - dev_swarm_worker_01
+  tasks:
+    - name: deploy dev_test branch to dev_swarm
+      git:
+        repo: "https://github.com/educatedCaveman/docker-lab"
+        dest: /mnt/gluster/
+        version:  dev_test
+        force:  yes
+
 - name: deploy docker code to DEV portainer instance
   # only need to deploy once
   hosts: 
