@@ -23,24 +23,12 @@ HOSTS=( \
     oxygen \
     apt_cache \
     apt_mirror \
-    dev_LB \
-    dev_db_01 \
-    dev_db_02 \
-    dev_k3s_server_01 \
-    dev_k3s_server_02 \
-    dev_k3s_worker_01 \
-    dev_k3s_worker_02 \
-    dev_k3s_data_01 \
-    dev_k3s_data_02 \
 )
 LXC_HOSTS=( \
     dev_api_LB \
     prd_api_LB \
     apt_cache \
     apt_mirror \
-    dev_LB \
-    dev_db_01 \
-    dev_db_02 \
 )
 
 # lastpass login paths
@@ -54,35 +42,23 @@ LOGINS=( \
     "Homelab\ssh/lv426-worker-03.lab" \
     "Homelab\ssh/lv426-worker-04.lab" \
     "Homelab\ssh/swarm-api-lb.vm" \
-    "Homelab\ssh/sevastopol-manager-01.vm" \
-    "Homelab\ssh/sevastopol-manager-02.vm" \
-    "Homelab\ssh/sevastopol-manager-03.vm" \
-    "Homelab\ssh/sevastopol-worker-01.vm" \
-    "Homelab\ssh/sevastopol-worker-02.vm" \
-    "Homelab\ssh/sevastopol-worker-03.vm" \
-    "Homelab\ssh/sevastopol-worker-04.vm" \
+    "Homelab\ssh/docker_swarm" \
+    "Homelab\ssh/docker_swarm" \
+    "Homelab\ssh/docker_swarm" \
+    "Homelab\ssh/docker_swarm" \
+    "Homelab\ssh/docker_swarm" \
+    "Homelab\ssh/docker_swarm" \
+    "Homelab\ssh/docker_swarm" \
     "Homelab\ssh/gitlab.vm" \
     "Homelab\ssh/oxygen.vm" \
     "Homelab\ssh/apt-cache.vm" \
     "Homelab\ssh/apt-mirror.vm" \
-    "Homelab\ssh/dev-load-balancer.lab" \
-    "Homelab\ssh/dev-db-01.lab" \
-    "Homelab\ssh/dev-db-02.lab" \
-    "Homelab\ssh/k3s-server-01.lab" \
-    "Homelab\ssh/k3s-server-02.lab" \
-    "Homelab\ssh/k3s-worker-01.lab" \
-    "Homelab\ssh/k3s-worker-02.lab" \
-    "Homelab\ssh/k3s-data-01.lab" \
-    "Homelab\ssh/k3s-data-02.lab" \
 )
 LXC_LOGINS=( \
     "Homelab\ssh/swarm-api-lb.lab" \
     "Homelab\ssh/swarm-api-lb.vm" \
     "Homelab\ssh/apt-cache.vm" \
     "Homelab\ssh/apt-mirror.vm" \
-    "Homelab\ssh/dev-load-balancer.lab" \
-    "Homelab\ssh/dev-db-01.lab" \
-    "Homelab\ssh/dev-db-02.lab" \
 )
 
 HOSTNAMES=( \
@@ -106,15 +82,6 @@ HOSTNAMES=( \
     "oxygen" \
     "apt-cache" \
     "apt-mirror" \
-    "dev-load-balancer" \
-    "dev-mariadb-01" \
-    "dev-mariadb-02" \
-    "k3s-server-01" \
-    "k3s-server-02" \
-    "k3s-worker-01" \
-    "k3s-worker-02" \
-    "k3s-storage-01" \
-    "k3s-storage-02" \
 )
 
 #handle drake users
