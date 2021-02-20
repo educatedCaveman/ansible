@@ -119,71 +119,9 @@
         hour: "1"
         job: "/usr/bin/apt-mirror"
 
-# # all ubuntu hosts:
-# - name: configure ubuntu host to use local apt-mirror
-#   hosts: ubuntu_debian_hosts
-#   tasks:
-
-#     # check for existing sources.list.bak
-#     - name: check for existing sources.list
-#       stat:
-#         path: /etc/apt/sources.list
-#       register: sources
-
-#     - name: check for existing sources.list.bak
-#       stat:
-#         path: /etc/apt/sources.list.bak
-#       register: backup
-
-#     - debug:
-#         msg:  "/etc/apt/sources.list exists"
-#       when: sources.stat.exists
-
-#     - debug:
-#         msg:  "/etc/apt/sources.list does not exist"
-#       when: not sources.stat.exists
-
-#     - debug:
-#         msg:  "/etc/apt/sources.list.bak exists"
-#       when: backup.stat.exists
-
-#     - debug:
-#         msg:  "/etc/apt/sources.list.bak does not exist"
-#       when: not backup.stat.exists
-
-
-
-    # # regardless, remove the existing sources.list
-    # - name: if the sources.list backup exists, remove sources.list
-    #   file:
-    #     path: /etc/apt/sources.list
-    #     state:  absent
-    #   when: src_bkup.stat.exists
-
-    # # if it doesn't exist, back it on up
-    # - name: if the sources.list backup exists, restore the backup
-    #   copy:
-    #     src:  /etc/apt/sources.list.bak
-    #     dest: /etc/apt/sources.list
-    #     remote_src: yes
-    #   when: src_bkup.stat.exists
-
-    # # link the new sources.list
-    # - name: link sources.list
-    #   file:
-    #     src: /home/drake/dotfiles/apt_cache_mirror/sources.list
-    #     dest: /etc/apt/sources.list
-    #     state: link
-
 - name: configure apt-cache host to use local apt-mirror
   hosts: apt_cache
   tasks:
-
-    #   # check for existing sources.list
-    # - name: check for existing sources.list
-    #   stat:
-    #     path: /etc/apt/sources.list
-    #   register: sources
 
       # check for existing sources.list.bak
     - name: check for existing sources.list.bkup
@@ -239,19 +177,3 @@
         src:  /home/drake/dotfiles/apt_cache_mirror/docker.list
         dest: /etc/apt/sources.list.d/docker.list
         remote_src: yes
-
-
-
-
-
-    # - name: remove the existing sources.list
-    #   file:
-    #     path: /etc/apt/sources.list
-    #     state:  absent
-    
-    # - name: link the new sources.list
-    #   file:
-    #     src: /home/drake/dotfiles/apt_cache_mirror/sources.list
-    #     dest: /etc/apt/sources.list
-    #     state: link
-        

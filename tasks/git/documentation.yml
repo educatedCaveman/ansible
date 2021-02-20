@@ -1,0 +1,21 @@
+---
+# this only works when run by jenkins
+- name: create the documentation/ directory
+  file:
+    path: /home/drake/documentation
+    state:  directory
+    recurse:  yes
+
+- name: make sure directory exists
+  stat:
+    path: /home/drake/documentation
+  register: doc_dir
+
+- name: deploy documentation repo
+  git:
+    repo: https://{{USER|urlencode()}}:{{PASS|urlencode()}}@github.com/educatedCaveman/documentation.git
+    dest: /home/drake/documentation
+    version:  master
+    force:  yes
+  when: doc_dir.stat.exists
+  

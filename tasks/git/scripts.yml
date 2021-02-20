@@ -1,0 +1,34 @@
+---
+# some hosts don't have this.  best to install it here.
+- name: install relevant packages
+  apt:
+    name:
+      - python3-pip
+
+- name: create the scripts/ directory
+  file:
+    path: /home/drake/scripts
+    state:  directory
+    recurse:  yes
+
+- name: make sure directory exists
+  stat:
+    path: /home/drake/scripts
+  register: scripts_dir
+
+- name: deploy scripts repo
+  git:
+    repo: https://github.com/educatedCaveman/scripts
+    dest: /home/drake/scripts
+    version:  master
+    force:  yes
+  when: scripts_dir.stat.exists
+
+# copy over .zsh_secrets
+- name: copy .zsh_secrets
+  copy:
+    src:  /home/drake/.zsh_secrets
+    dest: /home/drake/.zsh_secrets
+    owner:  drake
+    group:  drake
+    mode: '0644'

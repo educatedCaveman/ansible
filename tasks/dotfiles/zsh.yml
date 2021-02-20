@@ -1,75 +1,48 @@
-ansible reorganiztion:
-- general setup
-    - apt_cache.yml
-    - apt_mirror.yml
-    - NFS
-        - docker_nfs.yml
-        - docker_swarm_manager_NFS.yml
-        - jenkins_nfs.yml
-        - nextcloud_nfs.yml
-        - plex_nfs.yml
-        - singularity_nfs.yml
-    - initial_setup.sh
-    - initial_setup.yml
-    - LXC_git.yml
-    - LXC_root_setup.yml
-    - setup_proxmox.yml
-    - setup_ubuntu_debian.yml
-    - ubuntu_docker.yml
-- host / app specific initial config
-    - docker
-- deployments
-    - docker_lab
-        - deploy_docker_dev.yml
-        - deploy_docker_prd.yml
-        - dev_swarm_API_LB.yml
-        - prd_swarm_API_LB.yml
-    - dotfiles
-        - deploy_dotfiles_carbon.yml
-        - deploy_dotfiles_core.yml
-        - deploy_dotfiles_pihole.yml
-        - deploy_dotfiles_theseus.yml
-    - deploy_documentation.yml
-    - deploy_jenkins.yml
-    - deploy_scripts.yml
-    - deploy_ansible.yml    (this is different)
-- maintenance
-    - update_ubuntu.yml
-- tasks:
-    - pull git repos:
-        - dotfiles
-        - scripts
-        - ansible
-        - jenkins
-        - documentation
-        - docker-lab?
-    - update/upgrade packages
-    - NFS:
-        - docker-specific?
-        - general mount points
-    - link dotfiles:
-        - 00aptproxy
-        - ZSH
-            - change shell
-            - oh-my-zsh
-            - .zshrc
-            - .zsh_aliases
-            - .zsh-theme
-            - zsh-autosuggestions
-            - .zsh_secrets (optional)
-        - NeoVim:
-            - Vundle
-            - init.vim
-        - netdata
-            - install
-            - enabled/restared
-            - link dotfiles
-    - MOTD edits
-    - unlink dotfiles:
-        - 00aptproxy
-    - set password/hostname
-        - call existing stuff with only a certain host/group in mind?
-    - set home directory permissions
-        - special for .ssh
-    - install docker
+---
+#change shell
+- name: change to ZSH
+    user:
+    name: drake
+    shell: /usr/bin/zsh
 
+#oh-my-zsh
+- name: Cloning  oh-my-zsh
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh
+    dest: /home/drake/.oh-my-zsh
+
+#zsh plugin from git:
+- name: cloning zsh-autosuggestions
+  git:
+    repo: 'https://github.com/zsh-users/zsh-autosuggestions'
+    dest: /home/drake/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+# check for dotfiles repo
+# the assumption is that if they're there, they were deployed recently
+- name: Check if the dotfiles repository is present
+  stat:
+    path: /home/drake/dotfiles
+  register: dotfiles
+
+# ZSH dotfile links:
+- name: link .zshrc
+  file:
+    src: /home/drake/dotfiles/zsh/zshrc
+    dest: /home/drake/.zshrc
+    state: link
+  when: dotfiles.stat.exists
+
+- name: link .zsh_aliases
+  file:
+    src: /home/drake/dotfiles/zsh/zsh_aliases
+    dest: /home/drake/.zsh_aliases
+    state: link
+  when: dotfiles.stat.exists
+
+- name: link .zsh-theme
+  file:
+    src: /home/drake/dotfiles/zsh/less-fishy.zsh-theme
+    dest: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
+    state: link
+  when: dotfiles.stat.exists
+  
