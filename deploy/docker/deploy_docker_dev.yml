@@ -1,32 +1,31 @@
 ---
-- name: deploy DEV docker code to NFS mount
-  # only need to deploy once
-  hosts: 
-    - dev_swarm_managers
-    - dev_swarm_workers
+- name: deploy git repo to Dev Swarm mangers
+  hosts:  dev_swarm_managers
   tasks:
 
-    # might have to deploy directly instead of to NFS?
-    # but that could lead to inconsistency problems
-    - name: deploy dev_test branch to dev_swarm_workers
-      git:
-        repo: "https://github.com/educatedCaveman/docker-lab"
-        dest: /docker
-        # dest: /mnt/mobius/docker/dev
-        version:  dev_test
-        force:  yes
-
-- name: deploy configs to gluster
-  hosts:  
-    - dev_swarm_manger_01
-    - dev_swarm_worker_01
-  tasks:
-    - name: deploy dev_test branch to dev_swarm
+    # Only deploy once, to whichever one is first available
+    # distributing to the rest is handled by glusterFS
+    - name: deploy dev_test branch to the Swarm Managers
       git:
         repo: "https://github.com/educatedCaveman/docker-lab"
         dest: /mnt/gluster/
         version:  dev_test
         force:  yes
+        run_once: yes
+
+- name: deploy git repo to Dev Swarm workers
+  hosts:  dev_swarm_workers
+  tasks:
+
+    # Only deploy once, to whichever one is first available
+    # distributing to the rest is handled by glusterFS
+    - name: deploy dev_test branch to the Swarm workers
+      git:
+        repo: "https://github.com/educatedCaveman/docker-lab"
+        dest: /mnt/gluster/
+        version:  dev_test
+        force:  yes
+        run_once: yes
 
 - name: deploy docker code to DEV portainer instance
   # only need to deploy once
