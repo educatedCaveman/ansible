@@ -17,9 +17,7 @@
           - curl
           - gnupg-agent
           - software-properties-common
-          - nfs-common
           - python3-pip
-          - glusterfs-server
 
     - name: Add Docker GPG apt Key
       apt_key:
@@ -45,26 +43,6 @@
         name: drake
         group:  docker
         append: yes
-
-    #initial NFS check
-    - name: create NFS folder
-      file:
-        path: /mnt/mobius
-        state:  directory
-
-    - name: check for NFS folder
-      stat:
-        path: /mnt/mobius
-      register: mobius
-
-    - name: Mount the Backup share... 
-      mount:
-        src: 192.168.11.2:/mnt/storage_node/Backup
-        path: /mnt/mobius/Backup
-        fstype: nfs 
-        opts: rw,nolock,tcp
-        state: mounted
-      when: mobius.stat.exists
 
     # create docker config folder
     - name: create docker folder
