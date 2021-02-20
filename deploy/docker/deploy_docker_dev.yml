@@ -1,31 +1,19 @@
 ---
-- name: deploy git repo to Dev Swarm mangers
-  hosts:  dev_swarm_managers
+# Only deploy once to the manager and worker groups
+# if the first is down, that is something that should be looked into anyway
+# distributing to the rest is handled by glusterFS
+- name: deploy git repo to single Dev Swarm manger/worker
+  hosts:  
+    - dev_swarm_manager_01
+    - dev_swarm_worker_01
   tasks:
 
-    # Only deploy once, to whichever one is first available
-    # distributing to the rest is handled by glusterFS
-    - name: deploy dev_test branch to the Swarm Managers
+    - name: deploy dev_test branch to the Swarm
       git:
         repo: "https://github.com/educatedCaveman/docker-lab"
         dest: /mnt/gluster/
         version:  dev_test
         force:  yes
-        run_once: yes
-
-- name: deploy git repo to Dev Swarm workers
-  hosts:  dev_swarm_workers
-  tasks:
-
-    # Only deploy once, to whichever one is first available
-    # distributing to the rest is handled by glusterFS
-    - name: deploy dev_test branch to the Swarm workers
-      git:
-        repo: "https://github.com/educatedCaveman/docker-lab"
-        dest: /mnt/gluster/
-        version:  dev_test
-        force:  yes
-        run_once: yes
 
 - name: deploy docker code to DEV portainer instance
   # only need to deploy once
@@ -60,3 +48,4 @@
         recurse:  yes
         owner:  drake
         group:  drake
+        
