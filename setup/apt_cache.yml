@@ -38,6 +38,7 @@
           - apt-cacher-ng
         state:  latest
 
+    # TODO: look into using a handler for this?
     # make sure apt-cacher-ng.service is running
     - name: ensure apt-cacher-ng.service is running and enabled
       systemd:
