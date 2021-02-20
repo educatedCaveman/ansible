@@ -16,35 +16,7 @@
         dest: /home/drake/dotfiles
         force:  yes
       when: host_up.ping is defined
-        
-    - name: link .zshrc
-      file:
-        src: /home/drake/dotfiles/zsh/zshrc
-        dest: /home/drake/.zshrc
-        state: link
-      when: host_up.ping is defined
-        
-    - name: link .zsh_aliases
-      file:
-        src: /home/drake/dotfiles/zsh/zsh_aliases
-        dest: /home/drake/.zsh_aliases
-        state: link
-      when: host_up.ping is defined
-        
-    - name: link .zsh-theme
-      file:
-        src: /home/drake/dotfiles/zsh/less-fishy.zsh-theme
-        dest: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
-        state: link
-      when: host_up.ping is defined
-    
-    - name: link init.vim
-      file:
-        src: /home/drake/dotfiles/init.vim
-        dest: /home/drake/.config/nvim/init.vim
-        state: link
-      when: host_up.ping is defined
-    
+            
     #set home directory permissions
     - name: set home permissions
       file:
