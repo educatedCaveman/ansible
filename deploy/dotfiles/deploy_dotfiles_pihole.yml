@@ -57,3 +57,4 @@
     - name: restart DNS
       shell:
         cmd:  pihole restartdns
+        
