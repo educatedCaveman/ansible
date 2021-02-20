@@ -145,12 +145,12 @@
         remote_src: yes
       when: src_bkup.stat.exists
 
-    # # link the new sources.list
-    # - name: link sources.list
-    #   file:
-    #     src: /home/drake/dotfiles/apt_cache_mirror/sources.list
-    #     dest: /etc/apt/sources.list
-    #     state: link
+    # link the new sources.list
+    - name: link sources.list
+      file:
+        src: /home/drake/dotfiles/apt_cache_mirror/sources.list
+        dest: /etc/apt/sources.list
+        state: link
 
 - name: configure apt-cache host to use local apt-mirror
   hosts: apt_cache
