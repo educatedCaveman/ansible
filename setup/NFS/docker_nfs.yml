@@ -1,6 +1,8 @@
 ---
 - name: configure NFS mounts for DEV docker swarm
-  hosts: dev_swarm_workers
+  hosts: 
+    - dev_swarm_managers
+    - dev_swarm_workers
   ignore_unreachable: yes
   tasks:
 
@@ -34,7 +36,9 @@
         state: mounted
 
 - name: configure NFS mounts for PRD docker swarm
-  hosts: prd_swarm_workers
+  hosts: 
+    - prd_swarm_managers
+    - prd_swarm_workers
   ignore_unreachable: yes
   tasks:
 
