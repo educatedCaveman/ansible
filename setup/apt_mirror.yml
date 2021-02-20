@@ -119,37 +119,40 @@
         hour: "1"
         job: "/usr/bin/apt-mirror"
 
-# all ubuntu hosts:
-- name: configure ubuntu host to use local apt-mirror
-  hosts: ubuntu_debian_hosts
-  tasks:
+# # all ubuntu hosts:
+# - name: configure ubuntu host to use local apt-mirror
+#   hosts: ubuntu_debian_hosts
+#   tasks:
 
-    # check for existing sources.list.bak
-    - name: check for existing sources.list
-      stat:
-        path: /etc/apt/sources.list
-      register: sources
+#     # check for existing sources.list.bak
+#     - name: check for existing sources.list
+#       stat:
+#         path: /etc/apt/sources.list
+#       register: sources
 
-    - name: check for existing sources.list.bak
-      stat:
-        path: /etc/apt/sources.list.bak
-      register: backup
+#     - name: check for existing sources.list.bak
+#       stat:
+#         path: /etc/apt/sources.list.bak
+#       register: backup
 
-    - debug:
-        msg:  "/etc/apt/sources.list exists"
-      when: sources.stat.exists
+#     - debug:
+#         msg:  "/etc/apt/sources.list exists"
+#       when: sources.stat.exists
 
-    - debug:
-        msg:  "/etc/apt/sources.list does not exist"
-      when: not sources.stat.exists
+#     - debug:
+#         msg:  "/etc/apt/sources.list does not exist"
+#       when: not sources.stat.exists
 
-    - debug:
-        msg:  "/etc/apt/sources.list.bak exists"
-      when: backup.stat.exists
+#     - debug:
+#         msg:  "/etc/apt/sources.list.bak exists"
+#       when: backup.stat.exists
 
-    - debug:
-        msg:  "/etc/apt/sources.list.bak does not exist"
-      when: not backup.stat.exists
+#     - debug:
+#         msg:  "/etc/apt/sources.list.bak does not exist"
+#       when: not backup.stat.exists
+
+
+
     # # regardless, remove the existing sources.list
     # - name: if the sources.list backup exists, remove sources.list
     #   file:
@@ -176,14 +179,66 @@
   hosts: apt_cache
   tasks:
 
-    - name: remove the existing sources.list
-      file:
-        path: /etc/apt/sources.list
-        state:  absent
-    
-    - name: link the new sources.list
-      file:
-        src: /home/drake/dotfiles/apt_cache_mirror/sources.list
+    #   # check for existing sources.list
+    # - name: check for existing sources.list
+    #   stat:
+    #     path: /etc/apt/sources.list
+    #   register: sources
+
+      # check for existing sources.list.bak
+    - name: check for existing sources.list.bkup
+      stat:
+        path: /etc/apt/sources.list.bak
+      register: src_backup
+
+    # create backup if not present:
+    - name: create sources.list backup if it isn't present
+      copy:
+        src:  /etc/apt/sources.list
+        dest: /etc/apt/sources.list.bkup
+        remote_src: yes
+      when: not src_backup.stat.exists
+
+    # regardless, copy the new one
+    - name: copy the new config
+      copy:
+        src:  /home/drake/dotfiles/apt_cache_mirror/sources.list
         dest: /etc/apt/sources.list
-        state: link
+        remote_src: yes
+
+    # check for an existing docker.list backup
+    - name: check for existing docker.list.bkup
+      stat:
+        path: /etc/apt/sources.list.d/docker.list.bkup
+      register: docker_backup 
+
+    # create backup if not present:
+    - name: create docker.list backup if it isn't present
+      copy:
+        src:  /etc/apt/sources.list.d/docker.list
+        dest: /etc/apt/sources.list.d/docker.list.bkup
+        remote_src: yes
+      when: not docker_backup.stat.exists
+      
+    # regardless, copy the new one
+    - name: copy the new docker.list
+      copy:
+        src:  /home/drake/dotfiles/apt_cache_mirror/docker.list
+        dest: /etc/apt/sources.list.d/docker.list
+        remote_src: yes
+
+
+
+
+
+    # - name: remove the existing sources.list
+    #   file:
+    #     path: /etc/apt/sources.list
+    #     state:  absent
+    
+    # - name: link the new sources.list
+    #   file:
+    #     src: /home/drake/dotfiles/apt_cache_mirror/sources.list
+    #     dest: /etc/apt/sources.list
+    #     state: link
         
