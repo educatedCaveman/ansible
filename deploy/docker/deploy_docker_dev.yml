@@ -2,7 +2,7 @@
 # Only deploy once to the manager and worker groups
 # if the first is down, that is something that should be looked into anyway
 # distributing to the rest is handled by glusterFS
-- name: deploy git repo to single Dev Swarm manger
+- name: deploy git repo to single DEV Swarm manger
   hosts:  dev_swarm_manager_01
   tasks:
 
@@ -13,7 +13,7 @@
         version:  dev_test
         force:  yes
 
-- name: deploy git repo to single Dev Swarm worker
+- name: deploy git repo to single DEV Swarm worker
   hosts:  dev_swarm_worker_01
   tasks:
 

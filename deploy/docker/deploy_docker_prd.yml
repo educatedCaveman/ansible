@@ -1,17 +1,26 @@
 ---
-- name: deploy docker code to PRD portainer instance
-  hosts: 
-    - prd_swarm_managers
-    - prd_swarm_workers
+# Only deploy once to the manager and worker groups
+# if the first is down, that is something that should be looked into anyway
+# distributing to the rest is handled by glusterFS
+- name: deploy git repo to single PRD Swarm manger
+  hosts:  prd_swarm_manager_01
   tasks:
 
-    # might have to deploy directly instead of to NFS?
-    # but that could lead to inconsistency problems
-    - name: deploy master branch to prd_swarm_workers
+    - name: deploy master branch to the Swarm manager
       git:
         repo: "https://github.com/educatedCaveman/docker-lab"
-        dest: /docker
-        # dest: /mnt/mobius/docker/dev
+        dest: /mnt/gluster/docker-lab
+        version:  master
+        force:  yes
+
+- name: deploy git repo to single PRD Swarm worker
+  hosts:  prd_swarm_worker_01
+  tasks:
+
+    - name: deploy master branch to the Swarm worker
+      git:
+        repo: "https://github.com/educatedCaveman/docker-lab"
+        dest: /mnt/gluster/docker-lab
         version:  master
         force:  yes
 
