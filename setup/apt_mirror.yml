@@ -231,6 +231,7 @@
       file:
         src:  /etc/apt/sources.list.d/docker.list
         state:  absent
+      when: docker_list.stat.exists
 
     # regardless, copy the new one
     - name: copy the new docker.list
