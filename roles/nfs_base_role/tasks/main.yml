@@ -1,0 +1,13 @@
+---
+# tasks file for nfs_base_role
+- name: install required packages
+  apt:
+    name:
+      - nfs-common
+    state:  latest
+
+- name: create base mount path
+  file:
+    path: /mnt/mobius
+    recursive:  yes
+    state:  directory

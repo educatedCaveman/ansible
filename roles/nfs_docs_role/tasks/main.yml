@@ -1,16 +1,5 @@
 ---
 # tasks file for nfs_docs_role
-- name: Ensure the mount path exists
-  file:
-    path: /mnt/mobius
-    state:  directory
-    recurse:  yes
-  
-- name: Verify the mount path exists
-  stat:
-    path: /mnt/mobius
-  register: mount_path
-
 - name: Mount the Documents NFS share if the mount path exists
   mount:
     src: 192.168.11.2:/mnt/storage_node/Documents
@@ -18,4 +7,3 @@
     fstype: nfs 
     opts: rw,nolock,tcp
     state: mounted
-  when: mount_path.stat.exists
