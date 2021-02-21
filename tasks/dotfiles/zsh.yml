@@ -1,7 +1,7 @@
 ---
 #change shell
 - name: change to ZSH
-    user:
+  user:
     name: drake
     shell: /usr/bin/zsh
 

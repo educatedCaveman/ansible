@@ -1,17 +1,9 @@
 ---
 # tasks file for LXC_role
-- name: update packages
-  apt:
-    name: '*'
-    state: latest
-
-- name: upgrade packages
-  apt:
-    upgrade:  safe
-    
-# make sure we have git installed
+# install git, as its missing from the base image
 - name: install git
-  apt:
-    name: 
-      - git
-      
+  import_tasks: install_git.yml
+
+# create drake user
+- name: create drake user
+  import_tasks: create_drake.yml

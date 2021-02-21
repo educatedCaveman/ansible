@@ -1,5 +1,5 @@
 ---
-- linux role:
+- linux_role:
   - install certain packages
   - dotfiles
     - zsh
@@ -19,3 +19,6 @@
 
 - LXC role:
   - install git
+
+- drake_role:
+  - set permissions on home directory
