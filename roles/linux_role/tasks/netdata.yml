@@ -14,33 +14,43 @@
 
 # link netdata dotfiles
 # netdata.conf
+- name: check for existing netdata.conf
+  stat:
+    path: /etc/netdata/netdata.conf
+  register: netdata
+
 - name: remove the existing netdata.conf
   file:
     path: /etc/netdata/netdata.conf
     state:  absent
-  when: dotfiles.stat.exists
+  when: dotfiles.stat.exists and (netdata.stat.islnk is defined and netdata.stat.islnk == False)
 
 - name: link netdata.conf
   file:
     src:  /home/drake/dotfiles/netdata/netdata.conf
     dest: /etc/netdata/netdata.conf
     state:  link
-  when: dotfiles.stat.exists
+  when: dotfiles.stat.exists and (netdata.stat.islnk is defined and netdata.stat.islnk == False)
 
 # health_alarm_notify.conf
 # no longer set to send slack notifications, but doesnt hurt to keep this in place
+- name: check for existing health_alarm_notify.conf
+  stat:
+    path: /etc/netdata/health_alarm_notify.conf
+  register: netdata_health
+
 - name: remove the existing health_alarm_notify.conf
   file:
     path: /etc/netdata/health_alarm_notify.conf
     state:  absent
-  when: dotfiles.stat.exists
+  when: dotfiles.stat.exists and (netdata_health.stat.islnk is defined and netdata_health.stat.islnk == False)
 
 - name: link health_alarm_notify.conf
   file:
     src:  /home/drake/dotfiles/netdata/health_alarm_notify.conf
     dest: /etc/netdata/health_alarm_notify.conf
     state:  link
-  when: dotfiles.stat.exists
+  when: dotfiles.stat.exists and (netdata_health.stat.islnk is defined and netdata_health.stat.islnk == False)
 
 # systemd restart and enable netdata
 - name: enable and restart netdata
