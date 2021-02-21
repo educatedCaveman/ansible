@@ -4,9 +4,12 @@
     append: yes
     groups: 
       - sudo
+    # update_password:  on_create
+    password: '!'
+    expires: 0
 
-- name: Unlock password and set it to empty
-  command: passwd -d drake
+# - name: Unlock password and set it to empty
+#   command: passwd -d drake
 
-- name: Expire password
-  command: chage -d 0 drake
+# - name: Expire password
+#   command: chage -d 0 drake
