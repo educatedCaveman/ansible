@@ -51,7 +51,7 @@
   # remove the docker.list if it exists
   - name: remove the existing docker.list if it exists
     file:
-      src:  /etc/apt/sources.list.d/docker.list
+      path:   /etc/apt/sources.list.d/docker.list
       state:  absent
     when: docker_list.stat.exists
 
