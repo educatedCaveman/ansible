@@ -3,3 +3,8 @@
   roles:
     - drake_role
     - LXC_role
+- tasks:
+
+  - apt:
+      name:
+        - vim
