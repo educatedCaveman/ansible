@@ -5,11 +5,17 @@
     groups: 
       - sudo
     # update_password:  on_create
-    password: '!'
-    expires: 0
+    password: 'password'
+  register: accounts
+  notify: force_change_password
 
 # - name: Unlock password and set it to empty
 #   command: passwd -d drake
 
 # - name: Expire password
 #   command: chage -d 0 drake
+
+# handler
+- name: force_change_password
+  command: "chage -d 0 drake"
+  when: accounts.exists
