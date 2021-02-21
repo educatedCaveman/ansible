@@ -1,14 +1,14 @@
-- name: update packages
+- name: Update packages
   apt:
     name: '*'
     state: latest
 
-- name: upgrade packages
+- name: Upgrade packages
   apt:
     upgrade:  safe
     
 # make sure we have git installed
-- name: install git
+- name: Install git
   apt:
     name: git
     state:  present
