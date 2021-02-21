@@ -71,6 +71,6 @@
 
     # jenkins repo
     - debug:
-      msg:  "deployment of jenkins repo is handled by jenkins"
+        msg:  "deployment of jenkins repo is handled by jenkins"
 
 

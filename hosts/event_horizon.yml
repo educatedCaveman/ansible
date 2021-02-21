@@ -8,7 +8,7 @@
   tasks:
   
     - debug:
-      msg:  "configuration of pihole must be done manually"
+        msg:  "configuration of pihole must be done manually"
 
     - debug:
-      msg:  "configuration of gravity-sync must be done manually"
+        msg:  "configuration of gravity-sync must be done manually"
