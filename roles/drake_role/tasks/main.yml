@@ -1,5 +1,5 @@
 ---
-#set home directory permissions
+# tasks file for drake_role
 - name: set home permissions
   file:
     path: /home/drake

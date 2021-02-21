@@ -1,2 +1,17 @@
 ---
 # tasks file for LXC_role
+- name: update packages
+  apt:
+    name: '*'
+    state: latest
+
+- name: upgrade packages
+  apt:
+    upgrade:  safe
+    
+# make sure we have git installed
+- name: install git
+  apt:
+    name: 
+      - git
+      

@@ -1,0 +1,5 @@
+- name: configure ubuntu hosts
+  hosts:  test_host
+  roles:
+    - drake_role
+    - LXC_role
