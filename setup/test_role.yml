@@ -3,7 +3,7 @@
   roles:
     - drake_role
     - LXC_role
-- tasks:
+  tasks:
 
   - apt:
       name:
