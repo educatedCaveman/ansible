@@ -1,2 +1,6 @@
 ---
 # handlers file for LXC_role
+# force_change_password
+- name: force_change_password
+  command: "chage -d 0 drake"
+  when: accounts.exists

@@ -15,7 +15,3 @@
 # - name: Expire password
 #   command: chage -d 0 drake
 
-# handler
-- name: force_change_password
-  command: "chage -d 0 drake"
-  when: accounts.exists
