@@ -1,10 +1,12 @@
 - name: Create drake with locked password
   user:
     name: drake
+    append: yes
+    groups: 
+      - sudo
 
 - name: Unlock password and set it to empty
   command: passwd -d drake
 
 - name: Expire password
   command: chage -d 0 drake
-  

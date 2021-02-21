@@ -7,3 +7,11 @@
 # create drake user
 - name: create drake user
   import_tasks: create_drake.yml
+
+# copy authorized_keys file from root to drake
+- name: copy authorized_keys
+  copy:
+    src:  /root/.ssh/authorized_keys
+    dest: /home/drake/.ssh/authorized_keys
+    remote_src: yes
+    
