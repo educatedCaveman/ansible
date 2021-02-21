@@ -11,7 +11,7 @@
 
 # MOTD
 - name: Configure MOTD
-  import_tasks: MODT.yml
+  import_tasks: MOTD.yml
 
 # Netdata
 - name: Configure Netdata
