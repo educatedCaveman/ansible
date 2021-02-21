@@ -8,7 +8,7 @@
 - name: install NeoVim
   apt:
     name: 
-      - nvim
+      - neovim
     state:  present
   when: dotfiles.stat.exists
 
