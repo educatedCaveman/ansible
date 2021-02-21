@@ -1,0 +1,14 @@
+- name: configure apt_cache
+  hosts:  event_horizon
+  roles:
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - git_scripts_role    # deploy the scripts repo
+    - linux_role          # base linux configs
+    - drake_role          # drake home directory permissions
+  tasks:
+  
+    - debug:
+      msg:  "configuration of pihole must be done manually"
+
+    - debug:
+      msg:  "configuration of gravity-sync must be done manually"

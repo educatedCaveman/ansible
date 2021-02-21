@@ -33,40 +33,40 @@
         owner:  drake
         group:  drake
 
-- name: deploy ansible repo to itself
-  hosts:  
-    - dilithium
-  tasks:
+# - name: deploy ansible repo to itself
+#   hosts:  
+#     - dilithium
+#   tasks:
 
-    - name: remove existing host file/link
-      file:
-        path: /etc/ansible/hosts.ini
-        state:  absent
+#     - name: remove existing host file/link
+#       file:
+#         path: /etc/ansible/hosts.ini
+#         state:  absent
 
-    - name: link new hosts file
-      file:
-        src:  /home/drake/ansible/hosts.ini
-        dest: /etc/ansible/hosts
-        state:  link
+#     - name: link new hosts file
+#       file:
+#         src:  /home/drake/ansible/hosts.ini
+#         dest: /etc/ansible/hosts
+#         state:  link
 
-    - name: remove existing ansible.cfg file/link
-      file:
-        path: /etc/ansible/ansible.cfg
-        state:  absent
+#     - name: remove existing ansible.cfg file/link
+#       file:
+#         path: /etc/ansible/ansible.cfg
+#         state:  absent
 
-    - name: link new ansible.cfg file
-      file:
-        src:  /home/drake/ansible/ansible.cfg
-        dest: /etc/ansible/ansible.cfg
-        state:  link
+#     - name: link new ansible.cfg file
+#       file:
+#         src:  /home/drake/ansible/ansible.cfg
+#         dest: /etc/ansible/ansible.cfg
+#         state:  link
 
-    - name: remove existing roles folder/link
-      file:
-        path: /etc/ansible/roles
-        state:  absent
+#     - name: remove existing roles folder/link
+#       file:
+#         path: /etc/ansible/roles
+#         state:  absent
 
-    - name: link new roles folder
-      file:
-        src:  /home/drake/ansible/roles
-        dest: /etc/ansible/roles
-        state:  link
+#     - name: link new roles folder
+#       file:
+#         src:  /home/drake/ansible/roles
+#         dest: /etc/ansible/roles
+#         state:  link

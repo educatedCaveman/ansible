@@ -3,7 +3,7 @@
   roles:
     - VM_role             # base VM container config
     - git_dotfiles_role   # deploy the dotfiles repo
-    - git_scripts_role    # deploy the dotfiles repo
+    - git_scripts_role    # deploy the scripts repo
     - linux_role          # base linux configs
     - drake_role          # drake home directory permissions
   tasks:
