@@ -16,3 +16,7 @@
 # Netdata
 - name: Configure Netdata
   import_tasks: netdata.yml
+
+# Quality of life packages
+- name: Install Quality-of-Life packages
+  import_tasks: packages.yml

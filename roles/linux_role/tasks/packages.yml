@@ -1,0 +1,14 @@
+- name: install packages
+  apt:
+    name:  
+      - htop
+      - tree
+      - curl
+      - lastpass-cli
+      - nmon
+      - ncdu
+      - dstat
+      - saidar
+      - ccze
+      - lm-sensors
+    state:  present

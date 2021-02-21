@@ -1,2 +1,7 @@
 ---
 # tasks file for git_ansible_role
+- name: Deploy the ansible git repository
+  git:
+    repo: https://github.com/educatedCaveman/ansible
+    dest: /home/drake/ansible
+    force:  yes

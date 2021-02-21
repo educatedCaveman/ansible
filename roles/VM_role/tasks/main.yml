@@ -1,2 +1,17 @@
 ---
 # tasks file for VM_role
+- name: Update packages
+  apt:
+    name: '*'
+    state: latest
+
+- name: Upgrade packages
+  apt:
+    upgrade:  safe
+    
+# make sure we have git installed
+- name: Install QEMU gues agent
+  apt:
+    name:
+      - qemu-guest-agent
+    state:  present

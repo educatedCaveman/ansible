@@ -7,7 +7,6 @@
     update_password:  on_create
     password: "{{ 'password' | password_hash('sha512') }}"
   register: accounts
-  # notify: force_change_password
 
 - name: Unlock password and set it to empty
   command: passwd -d drake
