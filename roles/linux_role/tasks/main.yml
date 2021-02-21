@@ -1,2 +1,18 @@
 ---
 # tasks file for linux_role
+
+# ZSH
+- name: Configure ZSH
+  import_tasks: zsh.yml
+
+# NeoVim
+- name: Configure NeoVim
+  import_tasks: neovim.yml
+
+# MOTD
+- name: Configure MOTD
+  import_tasks: MODT.yml
+
+# Netdata
+- name: Configure Netdata
+  import_tasks: netdata.yml

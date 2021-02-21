@@ -2,5 +2,8 @@
   hosts:  test_host
   roles:
     - LXC_role
+    - git_dotfiles_role
+    - apt_client_role
+    - linux_role
   tasks:
 

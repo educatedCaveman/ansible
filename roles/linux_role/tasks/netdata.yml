@@ -1,0 +1,51 @@
+# check for dotfiles
+- name: check if the dotfiles are present
+  stat:
+    path: /home/drake/dotfiles
+  register: dotfiles
+
+# install ZSH
+- name: install Netdata
+  apt:
+    name: 
+      - netdata
+    state:  present
+  when: dotfiles.stat.exists
+
+# link netdata dotfiles
+# netdata.conf
+- name: remove the existing netdata.conf
+  file:
+    path: /etc/netdata/netdata.conf
+    state:  absent
+  when: dotfiles.stat.exists
+
+- name: link netdata.conf
+  file:
+    src:  /home/drake/dotfiles/netdata/netdata.conf
+    dest: /etc/netdata/netdata.conf
+    state:  link
+  when: dotfiles.stat.exists
+
+# health_alarm_notify.conf
+# no longer set to send slack notifications, but doesnt hurt to keep this in place
+- name: remove the existing health_alarm_notify.conf
+  file:
+    path: /etc/netdata/health_alarm_notify.conf
+    state:  absent
+  when: dotfiles.stat.exists
+
+- name: link health_alarm_notify.conf
+  file:
+    src:  /home/drake/dotfiles/netdata/health_alarm_notify.conf
+    dest: /etc/netdata/health_alarm_notify.conf
+    state:  link
+  when: dotfiles.stat.exists
+
+# systemd restart and enable netdata
+- name: enable and restart netdata
+  systemd:
+    name: netdata
+    state:  restarted
+    enabled:  yes
+  when: dotfiles.stat.exists

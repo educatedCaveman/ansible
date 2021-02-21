@@ -1,2 +1,8 @@
 ---
 # tasks file for apt_client_role
+# just link the apt proxy
+- name: link 00aptproxy
+  file:
+    src: /home/drake/dotfiles/apt_cache_mirror/00aptproxy
+    dest: /etc/apt/apt.conf.d/00aptproxy
+    state: link
