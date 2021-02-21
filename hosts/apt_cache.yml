@@ -1,0 +1,77 @@
+- name: configure apt_cache
+  hosts:  apt_cache
+  roles:
+    - LXC_role            # base LXC container config
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - linux_role          # base linux configs
+    - drake_role          # drake home directory permissions
+  tasks:
+
+  # check for existing sources.list.bak
+  - name: check for existing sources.list.bkup
+    stat:
+      path: /etc/apt/sources.list.bak
+    register: src_backup
+
+  # create backup if not present:
+  - name: create sources.list backup if it isn't present
+    copy:
+      src:  /etc/apt/sources.list
+      dest: /etc/apt/sources.list.bkup
+      remote_src: yes
+    when: not src_backup.stat.exists
+
+  # regardless, copy the new one
+  - name: copy the new config
+    copy:
+      src:  /home/drake/dotfiles/apt_cache_mirror/sources.list
+      dest: /etc/apt/sources.list
+      remote_src: yes
+
+  # check for an existing docker.list 
+  - name: check for existing docker.list
+    stat:
+      path: /etc/apt/sources.list.d/docker.list
+    register: docker_list 
+  
+  # check for an existing docker.list backup
+  - name: check for existing docker.list.bkup
+    stat:
+      path: /etc/apt/sources.list.d/docker.list.bkup
+    register: docker_backup 
+
+  # create backup if not present:
+  - name: create docker.list backup if it isn't present
+    copy:
+      src:  /etc/apt/sources.list.d/docker.list
+      dest: /etc/apt/sources.list.d/docker.list.bkup
+      remote_src: yes
+    when: (not docker_backup.stat.exists) and docker_list.stat.exists
+    
+  # remove the docker.list if it exists
+  - name: remove the existing docker.list if it exists
+    file:
+      src:  /etc/apt/sources.list.d/docker.list
+      state:  absent
+    when: docker_list.stat.exists
+
+  # regardless, copy the new one
+  - name: copy the new docker.list
+    copy:
+      src:  /home/drake/dotfiles/apt_cache_mirror/docker.list
+      dest: /etc/apt/sources.list.d/docker.list
+      remote_src: yes
+
+  - name: install apt-cacher-ng
+    apt:
+      name: 
+        - apt-cacher-ng
+      state:  latest
+
+  # TODO: look into using a handler for this?
+  # make sure apt-cacher-ng.service is running
+  - name: ensure apt-cacher-ng.service is running and enabled
+    systemd:
+      name: apt-cacher-ng.service
+      state: restarted
+      enabled: yes
