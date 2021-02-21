@@ -44,7 +44,7 @@
     src: /home/drake/dotfiles/zsh/zshrc
     dest: /home/drake/.zshrc
     state: link
-  when: (not stat_zshrc.stat.exists) and oh_my_zsh.stat.exists and dotfiles.stat.exists
+  when: (not zshrc.stat.exists) and oh_my_zsh.stat.exists and dotfiles.stat.exists
 
 # check if .zsh_aliases exists:
 - name: checking for .zsh_aliases
