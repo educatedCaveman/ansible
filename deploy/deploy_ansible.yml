@@ -59,3 +59,14 @@
         src:  /home/drake/ansible/ansible.cfg
         dest: /etc/ansible/ansible.cfg
         state:  link
+
+    - name: remove existing roles folder/link
+      file:
+        path: /etc/ansible/roles
+        state:  absent
+
+    - name: link new roles folder
+      file:
+        src:  /home/drake/ansible/roles
+        dest: /etc/ansible/roles
+        state:  link
