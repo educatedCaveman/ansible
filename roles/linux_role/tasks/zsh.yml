@@ -5,7 +5,7 @@
   register: dotfiles
 
 # install ZSH
-- name: install ZSH and Tmux
+- name: install ZSH and related packages
   apt:
     name: 
       - zsh

@@ -4,7 +4,7 @@
     append: yes
     groups: 
       - sudo
-    # update_password:  on_create
+    update_password:  on_create
     password: "{{ 'password' | password_hash('sha512') }}"
   register: accounts
   # notify: force_change_password
