@@ -1,0 +1,24 @@
+---
+# tasks file for LXC_netplan_MTU
+- name: search for an existing netplan config
+  stat:
+    path: /etc/netplan/00-installer-config.yaml
+  register: netplan
+
+- name: remove the existing 00-installer-config.yaml
+  file:
+    path: /etc/netplan/00-installer-config.yaml
+    state:  absent
+  when: netplan.stat.exists and (netplan.stat.islnk is defined and netplan.stat.islnk == False)
+
+- name: link 00-installer-config.yaml
+  file:
+    src:  /home/drake/dotfiles/netplan/00-LXC-installer-config.yaml
+    dest: /etc/netplan/00-installer-config.yaml
+    state:  link
+  when: netplan.stat.exists and (netplan.stat.islnk is defined and netplan.stat.islnk == False)
+
+- name: apply the changes
+  shell:
+    cmd:  netplan apply
+    
