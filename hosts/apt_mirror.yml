@@ -1,4 +1,4 @@
-- name: configure apt_cache
+- name: configure apt_mirror
   hosts:  apt_mirror
   roles:
     - VM_role             # base VM container config

@@ -1,4 +1,4 @@
-- name: configure apt_cache
+- name: configure event_horizon
   hosts:  event_horizon
   roles:
     - git_dotfiles_role   # deploy the dotfiles repo

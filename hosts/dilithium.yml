@@ -1,4 +1,4 @@
-- name: configure apt_cache
+- name: configure dilithium (spare pi)
   hosts:  dilithium
   roles:
     - git_dotfiles_role   # deploy the dotfiles repo
