@@ -17,4 +17,9 @@
 
     - name: debug parted info
       debug:
-        msg:  "{{ vdb_info }}"
+        msg:  "{{ vdb_info.partitions }}"
+
+    - name: debug when there are no partitions
+      debug:
+        mgs:  "{{ vdb_info.partitions | length }}"
+
