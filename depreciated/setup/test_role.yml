@@ -5,6 +5,7 @@
     - git_dotfiles_role
     - apt_client_role
     - linux_role
+    - gluster_dev_mgr_role
     - drake_role
   tasks:
 

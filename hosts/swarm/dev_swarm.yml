@@ -1,0 +1,39 @@
+# base docker config
+- name: configure Docker Swarm Cluster (DEV)
+  hosts:
+    - dev_swarm_managers
+    - dev_swarm_workers
+  roles:
+    - VM_role            # base LXC container config
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - VM_netplan_MTU     # use the mtu9000 netplan config
+    - apt_client_role
+    - linux_role          # base linux configs
+    - docker_role
+    - drake_role          # drake home directory permissions
+  tasks:
+    - name: placeholder
+      debug:
+        msg:  this is a placeholder
+
+# gluster for managers
+- name: configure GlusterFS for manager Nodes (DEV)
+  hosts:
+    - dev_swarm_managers
+  roles:
+    - gluster_dev_mgr_role
+
+# gluster for workers:
+- name: configure GlusterFS for worker Nodes (DEV)
+  hosts:
+    - dev_swarm_workers
+  roles:
+    - gluster_dev_wkr_role
+
+# create the swarm:
+# start with managers
+# - initiate cluster on first host
+# - collect both manager and worker tokens
+# - add remainging managers
+# add all workers
+# deploy portainer?

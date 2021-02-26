@@ -1,0 +1,28 @@
+---
+# tasks file for gluster_dev_mgr_role
+
+# on all hosts:
+
+# configure disks:
+# - partition
+# - mkfs
+# - create mount dir
+# - add disks to fstab
+# - only want to do all of this once.
+
+# add hostsfile records
+# - or use the local DNS entries?
+# - if so, how to get them when creating the glusterFS
+# - may not be necessary
+
+# gluster:
+# - install glusterFS
+# - enable it
+
+# use ansible glusterfs to setup the cluster
+
+# add the gluster volume to the fstab (mount)
+
+
+
+- name: fuck
