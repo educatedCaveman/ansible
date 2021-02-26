@@ -32,6 +32,12 @@
         state:  present
         device: /dev/vdb1
 
+    - name: check the partitions
+      community.general.parted:
+        device: /dev/vdb
+        unit: MiB
+      register: vdb_info2
+
     - name: debug parted info
       debug:
-        msg:  "{{ vdb_info }}"
+        msg:  "{{ vdb_info2 }}"
