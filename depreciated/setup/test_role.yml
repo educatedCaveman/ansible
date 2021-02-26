@@ -9,3 +9,12 @@
     - drake_role
   tasks:
 
+    - name: check the partitions
+      community.general.parted:
+        device: /dev/vdb
+        unit: MiB
+      register: vdb_info
+
+    - name: debug parted info
+      debug:
+        msg:  "{{ vdb_info }}"
