@@ -15,6 +15,10 @@
       - software-properties-common
       - python3-pip
 
+- name: install pip packages
+  pip:
+    name: docker
+
 - name: Add Docker GPG apt Key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
