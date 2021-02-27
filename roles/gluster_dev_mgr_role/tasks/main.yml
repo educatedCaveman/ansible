@@ -95,7 +95,7 @@
 
 - name: test single loop
   shell:
-    cmd:  ping -c1 "{{ item }}"
+    cmd:  gluster peer probe "{{ item }}"
   loop: "{{ play_hosts }}"
   when: inventory_hostname == play_hosts[0]
 
@@ -105,11 +105,12 @@
 #   loop: "{{ play_hosts }}"
 #   when: inventory_hostname == play_hosts[0]
 
-
-
-
-
 # add the gluster volume to the fstab (mount)
-
+- name: create gluster volume
+  gluster.gluster.gluster_volume:
+    state: started
+    name: test1
+    bricks: /gluster/bricks/1
+  run_once: true
 
 
