@@ -109,7 +109,7 @@
 
 - name: see if we can get the lenth of the play_hosts variable
   debug:
-    mgs:  "{{ play_hosts | length }}"
+    msg:  "{{ play_hosts | length }}"
 
 # - name: create gluster volume
 #   gluster.gluster.gluster_volume:
