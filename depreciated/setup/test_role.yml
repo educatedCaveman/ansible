@@ -61,8 +61,22 @@
       debug:
         msg:  "{{ mount_reg }}"
 
-    - name: create the folder gluster
+    - name: create the folder for gluster
       file:
         path: /gluster/bricks/1/brick
         state:  directory
         recurse:  no
+
+    # install gluster
+    - name: install gluster
+      apt:
+        name: glusterfs-sever
+        state:  installed
+
+    # start the service
+    - name: start gluster
+      systemd:
+        name: glusterd
+        state:  started
+        enabled:  yes
+    
