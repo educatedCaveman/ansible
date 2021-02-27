@@ -86,17 +86,17 @@
 #     msg:  "{{ item }}"
 #   loop: "{{  cluster_hosts  }}"
 
-# - name: Create a trusted storage pool
-#   gluster.gluster.gluster_peer:
-#     state: present
-#     nodes: "{{ item }}"
+- name: Create a trusted storage pool
+  gluster.gluster.gluster_peer:
+    state: present
+    nodes: "{{ play_hosts }}"
+  # loop: "{{ play_hosts }}"
+
+
+# - name: test single loop
+#   shell:
+#     cmd:  gluster peer probe "{{ item }}"
 #   loop: "{{ play_hosts }}"
-
-
-- name: test single loop
-  shell:
-    cmd:  gluster peer probe "{{ item }}"
-  loop: "{{ play_hosts }}"
   # when: inventory_hostname == play_hosts[0]
 
 # - name: probe the peers
@@ -107,20 +107,21 @@
 
 # add the gluster volume to the fstab (mount)
 
-- name: see if we can get the lenth of the play_hosts variable
-  debug:
-    msg:  "{{ play_hosts | length }}"
+# - name: see if we can get the lenth of the play_hosts variable
+#   debug:
+#     msg:  "{{ play_hosts | length }}"
 
-# - name: create gluster volume
-#   gluster.gluster.gluster_volume:
-#     state: present
-#     name: test1
-#     bricks: /gluster/bricks/1
-#   run_once: true
+- name: create gluster volume
+  gluster.gluster.gluster_volume:
+    state: present
+    replicas: "{{ play_hosts | length }}"
+    name: test1
+    bricks: /gluster/bricks/1
+  run_once: true
 
-# - name: start gluster volume
-#   gluster.gluster.gluster_volume:
-#     state: started
-#     name: test1
+- name: start gluster volume
+  gluster.gluster.gluster_volume:
+    state: started
+    name: test1
 
 
