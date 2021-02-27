@@ -44,7 +44,7 @@
         token:  "{{ swarm.swarm_facts.JoinTokens.Worker }}"
 
 - name: test dummy hosts
-  # hosts:  dev_swarm_manager_02
+  # hosts:  dev_swarm_managers:!dev_swarm_manager_01
   hosts:  192.168.13.251
   tasks:
 
