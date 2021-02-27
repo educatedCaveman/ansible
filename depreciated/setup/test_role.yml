@@ -17,6 +17,7 @@
     community.docker.docker_swarm:
       state: present
     register: swarm
+    when: inventory_hostname == play_hosts[0]
 
   - name: debug
     debug:
