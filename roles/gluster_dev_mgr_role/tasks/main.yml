@@ -75,8 +75,39 @@
     state:  started
     enabled:  yes
     
-
 # use ansible glusterfs to setup the cluster
+
+# - name: testing hostvars
+#   debug:
+#     msg:  "{{ play_hosts }}"
+
+# - name: testing a loop
+#   debug:
+#     msg:  "{{ item }}"
+#   loop: "{{  cluster_hosts  }}"
+
+# - name: Create a trusted storage pool
+#   gluster.gluster.gluster_peer:
+#     state: present
+#     nodes: "{{ item }}"
+#   loop: "{{ play_hosts }}"
+
+
+- name: test single loop
+  shell:
+    cmd:  ping -c1 "{{ item }}"
+  loop: "{{ play_hosts }}"
+  when: inventory_hostname == play_hosts[0]
+
+# - name: probe the peers
+#   shell:
+#     cmd:  gluster peer probe "{{ item }}"
+#   loop: "{{ play_hosts }}"
+#   when: inventory_hostname == play_hosts[0]
+
+
+
+
 
 # add the gluster volume to the fstab (mount)
 

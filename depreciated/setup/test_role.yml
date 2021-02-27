@@ -1,5 +1,6 @@
 - name: configure ubuntu hosts
-  hosts:  test_host
+  hosts:  test_hosts
+  gather_facts: yes
   roles:
     # - LXC_role
     # - git_dotfiles_role
@@ -86,12 +87,18 @@
         state:  started
         enabled:  yes
 
-    - name: testing hostvars
-      debug:
-        msg:  "{{ play_hosts }}"
+    # - name: testing hostvars
+    #   debug:
+    #     msg:  "{{ play_hosts }}"
 
-    - name: testing a loop
-      debug:
-        msg:  "{{ item }}"
-      loop: "{{  cluster_hosts  }}"
+    # - name: testing a loop
+    #   debug:
+    #     msg:  "{{ item }}"
+    #   loop: "{{  cluster_hosts  }}"
+
+    # - name: Create a trusted storage pool
+    #   gluster.gluster.gluster_peer:
+    #     state: present
+    #     nodes: "{{ item }}"
+    #   loop: "{{ play_hosts }}"
     
