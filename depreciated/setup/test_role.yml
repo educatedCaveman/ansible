@@ -13,16 +13,62 @@
     - cluster_name: "swarm_data"
   tasks:
 
-  - name: configure swarm
-    community.docker.docker_swarm:
-      state: present
-    register: swarm
-    when: inventory_hostname == play_hosts[0]
 
-  - name: debug
-    debug:
-      msg:  "{{ swarm }}"
 
-  - name: manager token
-    debug:
-      msg:  "{{ swarm.swarm_facts.JoinTokens.Manager }}"
+  # instead of this, I should only do it on 1 host (the first master)
+  # and register the needed output of swarm into one or more dummy
+  # hosts
+
+  # then on the remaining hosts, proceed with adding them to the swarm 
+  # with the apropriate roles
+
+- name: initiate the swarm
+  hosts:  dev_swarm_manager_01
+  gather_facts: yes
+  tasks:
+
+    - name: initiate the swarm, gather tokens
+      community.docker.docker_swarm:
+        state: present
+      register: swarm
+
+    - name: register dummy manager host
+      add_host:
+        name: "SWARM_MGR"
+        token:  "{{ swarm.swarm_facts.JoinTokens.Manager }}"
+
+    - name: register dummy worker host
+      add_host:
+        name: "SWARM_WKR"
+        token:  "{{ swarm.swarm_facts.JoinTokens.Worker }}"
+
+- name: test dummy hosts
+  hosts:  dev_swarm_manager_02
+  tasks:
+
+    - name: manager token
+      debug:
+        msg:  "{{ hostvars['SWARM_MGR']['token'] }}"
+
+    - name: worker token
+      debug:
+        msg:  "{{ hostvars['SWARM_WKR']['token'] }}"
+
+
+  # - name: configure swarm
+  #   community.docker.docker_swarm:
+  #     state: present
+  #   register: swarm
+  #   when: inventory_hostname == play_hosts[0]
+
+  # - name: debug
+  #   debug:
+  #     msg:  "{{ swarm }}"
+
+  # - name: manager token
+  #   debug:
+  #     msg:  "{{ swarm.swarm_facts.JoinTokens.Manager }}"
+
+  # - name: worker token
+  #   debug:
+  #     msg:  "{{ swarm.swarm_facts.JoinTokens.Worker }}"
