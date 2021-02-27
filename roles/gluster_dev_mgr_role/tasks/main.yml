@@ -119,7 +119,7 @@
     name: test1
     bricks: /gluster/bricks/1/brick
   run_once: true
-  when: inventory_hostname == play_hosts[0]
+  # when: inventory_hostname == play_hosts[0]
 
 - name: start gluster volume
   gluster.gluster.gluster_volume:
