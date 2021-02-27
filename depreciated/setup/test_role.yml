@@ -8,16 +8,17 @@
     - VM_netplan_MTU
     - apt_client_role
     - linux_role
+    - docker_role
     - drake_role
-  tasks:
-
-- name: configure test hosts
-  hosts:  test_hosts
-  gather_facts: yes
-  roles:
-    - gluster_role
   vars:
     - cluster_name: "swarm_data"
   tasks:
 
-    
+  - name: configure swarm
+    community.docker.docker_swarm:
+      state: present
+    register: swarm
+
+  - name: debug
+    debug:
+      msg:  "{{ swarm }}"

@@ -6,7 +6,7 @@
   roles:
     - VM_role            # base LXC container config
     - git_dotfiles_role   # deploy the dotfiles repo
-    - VM_netplan_MTU     # use the mtu9000 netplan config
+    # - VM_netplan_MTU     # use the mtu9000 netplan config
     - apt_client_role
     - linux_role          # base linux configs
     - docker_role
@@ -21,14 +21,21 @@
   hosts:
     - dev_swarm_managers
   roles:
-    - gluster_dev_mgr_role
+    - gluster_role
+  vars:
+    - cluster_name: "portainer_data"
+  tasks:
 
 # gluster for workers:
 - name: configure GlusterFS for worker Nodes (DEV)
   hosts:
     - dev_swarm_workers
   roles:
-    - gluster_dev_wkr_role
+    - gluster_role
+  vars:
+    - cluster_name: "docker_data"
+  tasks:
+
 
 # create the swarm:
 # start with managers
