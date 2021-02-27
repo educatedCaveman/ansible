@@ -86,8 +86,12 @@
         state:  started
         enabled:  yes
 
+    - name: testing hostvars
+      debug:
+        msg:  "{{ hostvars['dev_swarm_managers'].ansible_host }}"
+
     - name: testing a loop
       debug:
         msg:  "{{ item }}"
-      loop: "{{  list_of_packages  }}"
+      loop: "{{  cluster_hosts  }}"
     
