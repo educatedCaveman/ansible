@@ -21,3 +21,7 @@
   - name: debug
     debug:
       msg:  "{{ swarm }}"
+
+  - name: manager token
+    debug:
+      msg:  "{{ swarm.swarm_facts.JoinTokens.Manager }}"
