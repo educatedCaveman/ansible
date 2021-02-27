@@ -20,3 +20,9 @@
 # Quality of life packages
 - name: Install Quality-of-Life packages
   import_tasks: packages.yml
+
+# timezone:
+- name: set timezone
+  timezone:
+    name: America/New_York
+    

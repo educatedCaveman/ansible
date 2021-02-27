@@ -10,6 +10,78 @@
 # - add disks to fstab
 # - only want to do all of this once.
 
+# partition the drive
+- name: check the partitions
+  community.general.parted:
+    device: /dev/vdb
+    unit: MiB
+  # register: vdb_info
+
+# - name: debug parted info
+#   debug:
+#     msg:  "{{ vdb_info }}"
+
+- name: create partition
+  community.general.parted:
+    device: /dev/vdb
+    number: 1
+    label:  gpt
+    state:  present
+
+# create the filesystem
+- name: create filesystem
+  community.general.filesystem:
+    fstype: ext4
+    state:  present
+    device: /dev/vdb1
+
+# - name: check the partitions
+#   community.general.parted:
+#     device: /dev/vdb
+#     unit: MiB
+#   register: vdb_info2
+
+# - name: debug parted info
+#   debug:
+#     msg:  "{{ vdb_info2 }}"
+
+# create the mount directory:
+- name: create the device mount directory
+  file:
+    path: /gluster/bricks/1
+    state:  directory
+    recurse:  yes
+
+- name: mount the drive
+  mount:
+    src:  /dev/vdb1
+    path: /gluster/bricks/1
+    fstype: ext4
+    state:  mounted
+  register: mount_reg
+
+- name: show mounted info
+  debug:
+    msg:  "{{ mount_reg }}"
+
+- name: create the folder gluster
+  file:
+    path: /gluster/bricks/1/brick
+    state:  directory
+    recurse:  no
+
+
+
+
+
+
+
+
+
+
+
+
+
 # add hostsfile records
 # - or use the local DNS entries?
 # - if so, how to get them when creating the glusterFS
@@ -25,7 +97,3 @@
 
 
 
-- name: fuck
-  debug:
-    msg:  "fuck"
-    
