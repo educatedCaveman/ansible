@@ -57,9 +57,9 @@
         state:  mounted
       register: mount_reg
 
-    - name: show mounted info
-      debug:
-        msg:  "{{ mount_reg }}"
+    # - name: show mounted info
+    #   debug:
+    #     msg:  "{{ mount_reg }}"
 
     - name: create the folder for gluster
       file:
@@ -71,7 +71,7 @@
     - name: install gluster
       apt:
         name: glusterfs-sever
-        state:  installed
+        state:  present
 
     # start the service
     - name: start gluster
