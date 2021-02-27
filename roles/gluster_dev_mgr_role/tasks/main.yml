@@ -126,4 +126,15 @@
     state: started
     name: test1
 
+- name: create mount directory
+  file:
+    path: /mnt/gluster
+    state:  directory
+    recurse:  yes
 
+- name: mount gluster volume
+  mount:
+    src:  localhost:/test1
+    path: /mnt/gluster
+    fstype: ext4
+    state:  mounted
