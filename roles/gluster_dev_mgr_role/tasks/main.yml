@@ -97,7 +97,7 @@
   shell:
     cmd:  gluster peer probe "{{ item }}"
   loop: "{{ play_hosts }}"
-  when: inventory_hostname == play_hosts[0]
+  # when: inventory_hostname == play_hosts[0]
 
 # - name: probe the peers
 #   shell:
