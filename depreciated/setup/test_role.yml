@@ -1,106 +1,23 @@
-- name: configure ubuntu hosts
+- name: configure test hosts
   hosts:  test_hosts
   gather_facts: yes
   roles:
     # - LXC_role
-    # - VM_role
-    # - git_dotfiles_role
-    # - VM_netplan_MTU
-    # - apt_client_role
-    # - linux_role
-    - gluster_dev_mgr_role
+    - VM_role
+    - git_dotfiles_role
+    - VM_netplan_MTU
+    - apt_client_role
+    - linux_role
     - drake_role
-  # vars:
-  #   - cluster_hosts:
-  #     - "this"
-  #     - "is"
-  #     - "a"
-  #     - "test"
   tasks:
 
-    # - name: check the partitions
-    #   community.general.parted:
-    #     device: /dev/vdb
-    #     unit: MiB
-    #   register: vdb_info
+- name: configure test hosts
+  hosts:  test_hosts
+  gather_facts: yes
+  roles:
+    - gluster_role
+  vars:
+    - cluster_name: "swarm_data"
+  tasks:
 
-    # - name: debug parted info
-    #   debug:
-    #     msg:  "{{ vdb_info }}"
-
-    # - name: create partition
-    #   community.general.parted:
-    #     device: /dev/vdb
-    #     number: 1
-    #     label:  gpt
-    #     state:  present
-
-    # - name: create filesystem
-    #   community.general.filesystem:
-    #     fstype: ext4
-    #     state:  present
-    #     device: /dev/vdb1
-
-    # - name: check the partitions
-    #   community.general.parted:
-    #     device: /dev/vdb
-    #     unit: MiB
-    #   register: vdb_info2
-
-    # - name: debug parted info
-    #   debug:
-    #     msg:  "{{ vdb_info2 }}"
-
-    # # gluster prep
-    # - name: create the device mount directory
-    #   file:
-    #     path: /gluster/bricks/1
-    #     state:  directory
-    #     recurse:  yes
-
-    # - name: mount the drive
-    #   mount:
-    #     src:  /dev/vdb1
-    #     path: /gluster/bricks/1
-    #     fstype: ext4
-    #     state:  mounted
-    #   register: mount_reg
-
-    # # - name: show mounted info
-    # #   debug:
-    # #     msg:  "{{ mount_reg }}"
-
-    # - name: create the folder for gluster
-    #   file:
-    #     path: /gluster/bricks/1/brick
-    #     state:  directory
-    #     recurse:  no
-
-    # # install gluster
-    # - name: install gluster
-    #   apt:
-    #     name: glusterfs-server
-    #     state:  present
-
-    # # start the service
-    # - name: start gluster
-    #   systemd:
-    #     name: glusterd
-    #     state:  started
-    #     enabled:  yes
-
-    # # - name: testing hostvars
-    # #   debug:
-    # #     msg:  "{{ play_hosts }}"
-
-    # # - name: testing a loop
-    # #   debug:
-    # #     msg:  "{{ item }}"
-    # #   loop: "{{  cluster_hosts  }}"
-
-    # # - name: Create a trusted storage pool
-    # #   gluster.gluster.gluster_peer:
-    # #     state: present
-    # #     nodes: "{{ item }}"
-    # #   loop: "{{ play_hosts }}"
     

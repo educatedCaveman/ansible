@@ -1,19 +1,6 @@
 ---
-# tasks file for gluster_dev_mgr_role
-
-# on all hosts:
-
-# configure disks:
-# - partition
-# - mkfs
-# - create mount dir
-# - add disks to fstab
-# - only want to do all of this once.
-
-# - name: Configure ZSH
-#   import_tasks: zsh.yml
-
-# partition the drive
+# tasks file for gluster_role
+# partition the drive and create the filesystem
 - name: check the partitions
   community.general.parted:
     device: /dev/vdb
@@ -26,7 +13,6 @@
     label:  gpt
     state:  present
 
-# create the filesystem
 - name: create filesystem
   community.general.filesystem:
     fstype: ext4
@@ -46,21 +32,13 @@
     path: /gluster/bricks/1
     fstype: ext4
     state:  mounted
-    
+
+# folder for gluster
 - name: create the folder gluster
   file:
     path: /gluster/bricks/1/brick
     state:  directory
     recurse:  no
-
-# add hostsfile records
-# - or use the local DNS entries?
-# - if so, how to get them when creating the glusterFS
-# - may not be necessary
-
-# gluster:
-# - install glusterFS
-# - enable it
 
 # install gluster
 - name: install gluster
@@ -76,55 +54,20 @@
     enabled:  yes
     
 # use ansible glusterfs to setup the cluster
-
-# - name: testing hostvars
-#   debug:
-#     msg:  "{{ play_hosts }}"
-
-# - name: testing a loop
-#   debug:
-#     msg:  "{{ item }}"
-#   loop: "{{  cluster_hosts  }}"
-
-# - name: Create a trusted storage pool
-#   gluster.gluster.gluster_peer:
-#     state: present
-#     nodes: "{{ play_hosts }}"
-#   # loop: "{{ play_hosts }}"
-
-
-# - name: test single loop
-#   shell:
-#     cmd:  gluster peer probe "{{ item }}"
-#   loop: "{{ play_hosts }}"
-  # when: inventory_hostname == play_hosts[0]
-
-# - name: probe the peers
-#   shell:
-#     cmd:  gluster peer probe "{{ item }}"
-#   loop: "{{ play_hosts }}"
-#   when: inventory_hostname == play_hosts[0]
-
-# add the gluster volume to the fstab (mount)
-
-# - name: see if we can get the lenth of the play_hosts variable
-#   debug:
-#     msg:  "{{ play_hosts | length }}"
-
 - name: create gluster volume
   gluster.gluster.gluster_volume:
     state: present
     replicas: "{{ play_hosts | length }}"
     cluster:  "{{ play_hosts }}"
-    name: test1
+    name: "{{ cluster_name }}"
     bricks: /gluster/bricks/1/brick
   run_once: true
-  # when: inventory_hostname == play_hosts[0]
+  when: inventory_hostname == play_hosts[0]
 
 - name: start gluster volume
   gluster.gluster.gluster_volume:
     state: started
-    name: test1
+    name: "{{ cluster_name }}"
 
 - name: create mount directory
   file:
@@ -134,7 +77,7 @@
 
 - name: mount gluster volume
   mount:
-    src:  localhost:/test1
+    src:  "localhost:/{{ cluster_name }}"
     path: /mnt/gluster
     fstype: glusterfs
     state:  mounted
