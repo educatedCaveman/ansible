@@ -117,7 +117,7 @@
     replicas: "{{ play_hosts | length }}"
     cluster:  "{{ play_hosts }}"
     name: test1
-    bricks: /gluster/bricks/1
+    bricks: /gluster/bricks/1/brick
   run_once: true
   when: inventory_hostname == play_hosts[0]
 
