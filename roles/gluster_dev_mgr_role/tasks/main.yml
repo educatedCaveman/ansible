@@ -136,5 +136,5 @@
   mount:
     src:  localhost:/test1
     path: /mnt/gluster
-    fstype: ext4
+    fstype: glusterfs
     state:  mounted
