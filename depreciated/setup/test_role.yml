@@ -2,12 +2,11 @@
   hosts:  test_hosts
   gather_facts: yes
   roles:
-    # - LXC_role
-    - VM_role
-    - git_dotfiles_role
-    - VM_netplan_MTU
-    - apt_client_role
-    - linux_role
+    # - VM_role
+    # - git_dotfiles_role
+    # - VM_netplan_MTU
+    # - apt_client_role
+    # - linux_role
     - docker_role
     - drake_role
   vars:

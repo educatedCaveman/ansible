@@ -43,4 +43,10 @@
     name: drake
     group:  docker
     append: yes
+
+- name: start and enable docker
+  systemd:
+    name: docker
+    state:  restarted
+    enabled:  yes
     
