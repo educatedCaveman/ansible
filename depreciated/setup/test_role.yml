@@ -3,10 +3,12 @@
   gather_facts: yes
   roles:
     # - LXC_role
-    # - git_dotfiles_role
-    # - apt_client_role
-    # - linux_role
-    # - gluster_dev_mgr_role
+    - VM_role
+    - git_dotfiles_role
+    - VM_netplan_MTU
+    - apt_client_role
+    - linux_role
+    - gluster_dev_mgr_role
     - drake_role
   vars:
     - cluster_hosts:
