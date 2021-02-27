@@ -88,7 +88,7 @@
 
     - name: testing hostvars
       debug:
-        msg:  "{{ hostvars['dev_swarm_managers'].ansible_host }}"
+        msg:  "{{ play_hosts }}"
 
     - name: testing a loop
       debug:
