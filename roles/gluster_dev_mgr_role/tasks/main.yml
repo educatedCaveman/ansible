@@ -86,11 +86,11 @@
 #     msg:  "{{ item }}"
 #   loop: "{{  cluster_hosts  }}"
 
-- name: Create a trusted storage pool
-  gluster.gluster.gluster_peer:
-    state: present
-    nodes: "{{ play_hosts }}"
-  # loop: "{{ play_hosts }}"
+# - name: Create a trusted storage pool
+#   gluster.gluster.gluster_peer:
+#     state: present
+#     nodes: "{{ play_hosts }}"
+#   # loop: "{{ play_hosts }}"
 
 
 # - name: test single loop
@@ -115,9 +115,11 @@
   gluster.gluster.gluster_volume:
     state: present
     replicas: "{{ play_hosts | length }}"
+    cluster:  "{{ play_hosts }}"
     name: test1
     bricks: /gluster/bricks/1
   run_once: true
+  delegate_to:  play_hosts[0]
 
 - name: start gluster volume
   gluster.gluster.gluster_volume:
