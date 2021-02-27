@@ -70,7 +70,7 @@
     # install gluster
     - name: install gluster
       apt:
-        name: glusterfs-sever
+        name: glusterfs-server
         state:  present
 
     # start the service
