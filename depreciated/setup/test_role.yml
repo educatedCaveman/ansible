@@ -23,7 +23,8 @@
   # with the apropriate roles
 
 - name: initiate the swarm
-  hosts:  dev_swarm_manager_01
+  # hosts:  dev_swarm_manager_01
+  hosts:  192.168.13.250
   gather_facts: yes
   tasks:
 
@@ -43,7 +44,8 @@
         token:  "{{ swarm.swarm_facts.JoinTokens.Worker }}"
 
 - name: test dummy hosts
-  hosts:  dev_swarm_manager_02
+  # hosts:  dev_swarm_manager_02
+  hosts:  192.168.13.251
   tasks:
 
     - name: manager token
