@@ -7,6 +7,12 @@
     # - linux_role
     # - gluster_dev_mgr_role
     - drake_role
+  vars:
+    - cluster_hosts:
+      - "this"
+      - "is"
+      - "a"
+      - "test"
   tasks:
 
     - name: check the partitions
@@ -79,4 +85,9 @@
         name: glusterd
         state:  started
         enabled:  yes
+
+    - name: testing a loop
+      debug:
+        msg:  "{{ item }}"
+      loop: "{{  list_of_packages  }}"
     
