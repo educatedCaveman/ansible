@@ -4,4 +4,8 @@
     - name: test json
       debug:
         msg:  "{{ logins }}"
-        
+
+    - name: test filtering
+      debug:
+        msg:  "{{ logins[0].login.password }}"
+      when: logins[0].name == inventory_hostname
