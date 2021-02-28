@@ -35,13 +35,16 @@
 
     - name: register dummy manager host
       add_host:
-        name: "SWARM_MGR"
-        token:  "{{ swarm.swarm_facts.JoinTokens.Manager }}"
+        name: "SWARM_INFO"
+        manager_IP:     "{{ ansible_all_ipv4_addresses }}"
+        manager_port:   "2377"
+        manager_token:  "{{ swarm.swarm_facts.JoinTokens.Manager }}"
+        manager_token:  "{{ swarm.swarm_facts.JoinTokens.Worker }}"
 
-    - name: register dummy worker host
-      add_host:
-        name: "SWARM_WKR"
-        token:  "{{ swarm.swarm_facts.JoinTokens.Worker }}"
+    # - name: register dummy worker host
+    #   add_host:
+    #     name: "SWARM_WKR"
+    #     token:  "{{ swarm.swarm_facts.JoinTokens.Worker }}"
 
 - name: test dummy hosts
   # hosts:  dev_swarm_managers:!dev_swarm_manager_01
