@@ -3,4 +3,20 @@
   tasks:
     - name: test json
       debug:
-        msg:  "{{ hosts }}"
+        msg:  "{{ machines }}"
+
+    - name: test self
+      debug:
+        msg:  "{{ machines.self }}"
+
+    - name: test self
+      debug:
+        msg:  "{{ machines.self.hostname }}"
+
+    - name: test self
+      debug:
+        msg:  "{{ machines.self.password }}"
+
+    - name: test self
+      debug:
+        msg:  "{{ machines.self.LXC }}"

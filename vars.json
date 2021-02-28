@@ -10,6 +10,11 @@
                 "hostname": "dev_swarm_manager_02",
                 "password": "badpass",
                 "LXC": 1
+            },
+            "self": {
+                "hostname": "jenkins.lab",
+                "password": "badpass",
+                "LXC": 1
             }
         }
     ]
