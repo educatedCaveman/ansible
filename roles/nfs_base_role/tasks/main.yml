@@ -8,6 +8,6 @@
 
 - name: create base mount path
   file:
-    path: /mnt/mobius
-    recursive:  yes
-    state:  directory
+    path:     /mnt/mobius
+    recurse:  yes
+    state:    directory
