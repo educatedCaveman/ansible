@@ -6,6 +6,7 @@
   roles:
     - VM_role            # base LXC container config
     - git_dotfiles_role   # deploy the dotfiles repo
+    - git_scripts_role
     - VM_netplan_MTU     # use the mtu9000 netplan config
     - apt_client_role
     - linux_role          # base linux configs
@@ -85,4 +86,37 @@
         join_token:   "{{ hostvars['SWARM_INFO']['worker_token'] }}"
         remote_addrs: "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
 
-# deploy portainer?
+# set up cron on the main worker
+- name: set up cron backup script for the managers
+  hosts:  dev_swarm_worker_01
+  tasks:
+
+    - name: configure the backup cron
+      cron:
+        name: dev_worker_backup
+        minute: "0"
+        hour: "*"
+        job: "sh /home/drake/scripts/docker/swarm_backup.sh DEV worker"
+
+# set up cron on the main manager
+- name: set up cron backup script for the managers
+  hosts:  dev_swarm_manager_01
+  tasks:
+
+    - name: configure the backup cron
+      cron:
+        name: dev_manager_backup
+        minute: "0"
+        hour: "*"
+        job: "sh /home/drake/scripts/docker/swarm_backup.sh DEV manager"
+
+    - name: deploying the custom portianer stack file
+      get_url:
+        url:  "https://raw.githubusercontent.com/educatedCaveman/docker-lab/dev_test/scripts/swarm/portainer-agent-stack.yml"
+        dest: /tmp/
+
+    - name: setting up portainer
+      debug:
+        msg:
+          - "to install/start portainer, run the following:" 
+          - docker stack deploy -c /tmp/portainer-agent-stack.yml portainer
