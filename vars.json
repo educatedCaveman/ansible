@@ -1,5 +1,5 @@
 {
-    "hosts": [
+    "machines": [
         {
             "dev_swarm_manager_01": {
                 "hostname": "dev_swarm_manager_01",
