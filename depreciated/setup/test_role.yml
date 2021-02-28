@@ -2,18 +2,16 @@
   hosts:  test_hosts
   gather_facts: yes
   roles:
-    # - VM_role
-    # - git_dotfiles_role
-    # - VM_netplan_MTU
-    # - apt_client_role
-    # - linux_role
+    - VM_role
+    - git_dotfiles_role
+    - VM_netplan_MTU
+    - apt_client_role
+    - linux_role
     - docker_role
     - drake_role
   vars:
     - cluster_name: "swarm_data"
   tasks:
-
-
 
   # instead of this, I should only do it on 1 host (the first master)
   # and register the needed output of swarm into one or more dummy
@@ -41,14 +39,11 @@
         manager_token:  "{{ swarm.swarm_facts.JoinTokens.Manager }}"
         worker_token:   "{{ swarm.swarm_facts.JoinTokens.Worker }}"
 
-    # - name: register dummy worker host
-    #   add_host:
-    #     name: "SWARM_WKR"
-    #     token:  "{{ swarm.swarm_facts.JoinTokens.Worker }}"
-
 - name: test dummy hosts
   # hosts:  dev_swarm_managers:!dev_swarm_manager_01
-  hosts:  192.168.13.251
+  hosts:  
+    - 192.168.13.251
+    - 192.168.13.252
   tasks:
 
     - name: manager token
@@ -66,6 +61,12 @@
     - name: manager port
       debug:
         msg:  "{{ hostvars['SWARM_INFO']['manager_port'] }}"
+
+    - name: Add nodes
+      community.docker.docker_swarm:
+        state: join
+        join_token:   "{{ hostvars['SWARM_INFO']['worker_token'] }}"
+        remote_addrs: "{{ hostvars['SWARM_INFO']['manager_IP'] }}:{{ hostvars['SWARM_INFO']['manager_port'] }}"
 
     # - name: manager inventory hostname
     #   debug:
