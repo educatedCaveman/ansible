@@ -45,9 +45,4 @@
     dest: /home/drake/.config/nvim/init.vim
     state: link
   when: (not nvim.stat.exists) and dotfiles.stat.exists
-
-# prep nvim for use
-- name: run :PluginUpdate
-  shell:
-    cmd:  nvim -E -s -c ":PluginUpdate" -c ":q" -c ":q" 
   
