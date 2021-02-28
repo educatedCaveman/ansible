@@ -1,0 +1,8 @@
+---
+  - packages:
+    - ansible
+      - ansible-galaxy
+      - other ansible community packages
+    - snapd
+      - requires squashfuse
+      - doesn't work

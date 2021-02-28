@@ -1,5 +1,5 @@
 #!/bin/bash
-ANSIBLE_DIR='/home/drake/ansible'
+ANSIBLE_DIR='/home/drake/ansible/depreciated'
 
 # hosts for ansible
 HOSTS=( \
