@@ -4,14 +4,14 @@
     - dev_swarm_managers
     - dev_swarm_workers
   roles:
-    - VM_role            # base LXC container config
-    - git_dotfiles_role   # deploy the dotfiles repo
+    - VM_role
+    - git_dotfiles_role
     - git_scripts_role
-    - VM_netplan_MTU     # use the mtu9000 netplan config
+    - VM_netplan_MTU
     - apt_client_role
-    - linux_role          # base linux configs
+    - linux_role
     - docker_role
-    - drake_role          # drake home directory permissions
+    - drake_role
     - nfs_base_role
     - nfs_backup_role
   tasks:

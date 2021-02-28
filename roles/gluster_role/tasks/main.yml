@@ -19,12 +19,18 @@
     state:  present
     device: /dev/vdb1
 
-# create the mount directory:
+# create the mount directory, if needed:
+- name: check if the directory exists
+  stat:
+    path: /gluster/bricks/1
+  register: gluster_mount
+
 - name: create the device mount directory
   file:
     path: /gluster/bricks/1
     state:  directory
     recurse:  yes
+  when: not gluster_mount.stat.exists
 
 - name: mount the drive
   mount:

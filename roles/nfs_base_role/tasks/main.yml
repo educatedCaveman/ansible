@@ -6,8 +6,14 @@
       - nfs-common
     state:  latest
 
+- name: check if mount path exists
+  stat:
+    path: /mnt/mobius
+  register: mobius
+
 - name: create base mount path
   file:
     path:     /mnt/mobius
     recurse:  yes
     state:    directory
+  when: not mobius.stat.exists
