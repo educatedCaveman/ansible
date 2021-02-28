@@ -14,9 +14,6 @@
     - nfs_base_role
     - nfs_backup_role
   tasks:
-    - name: placeholder
-      debug:
-        msg:  this is a placeholder
 
 # gluster for managers
 - name: configure GlusterFS for manager Nodes (DEV)
