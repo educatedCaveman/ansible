@@ -68,24 +68,3 @@
         join_token:   "{{ hostvars['SWARM_INFO']['worker_token'] }}"
         remote_addrs: "{{ hostvars['SWARM_INFO']['manager_IP'] }}:{{ hostvars['SWARM_INFO']['manager_port'] }}"
 
-    # - name: manager inventory hostname
-    #   debug:
-    #     msg:  "{{ hostvars['dev_swarm_manager_01']['inventory_hostname'] }}"
-
-  # - name: configure swarm
-  #   community.docker.docker_swarm:
-  #     state: present
-  #   register: swarm
-  #   when: inventory_hostname == play_hosts[0]
-
-  # - name: debug
-  #   debug:
-  #     msg:  "{{ swarm }}"
-
-  # - name: manager token
-  #   debug:
-  #     msg:  "{{ swarm.swarm_facts.JoinTokens.Manager }}"
-
-  # - name: worker token
-  #   debug:
-  #     msg:  "{{ swarm.swarm_facts.JoinTokens.Worker }}"
