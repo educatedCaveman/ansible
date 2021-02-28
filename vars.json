@@ -1,0 +1,16 @@
+{
+    "hosts": [
+        {
+            "dev_swarm_manager_01": {
+                "hostname": "dev_swarm_manager_01",
+                "password": "dksjdlkfjslkj",
+                "LXC": 0
+            },
+            "dev_swarm_manager_02": {
+                "hostname": "dev_swarm_manager_02",
+                "password": "badpass",
+                "LXC": 1
+            }
+        }
+    ]
+}

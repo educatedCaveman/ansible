@@ -1,0 +1,6 @@
+---
+- hosts:  all
+  tasks:
+    - name: test json
+      debug:
+        msg:  "{{ hosts }}"
