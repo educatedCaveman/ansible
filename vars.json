@@ -6,7 +6,7 @@
                 "password": "dksjdlkfjslkj",
                 "LXC": 0
             },
-            "dev_swarm_manager_02": {
+            "lv426-manager-01.lab": {
                 "hostname": "dev_swarm_manager_02",
                 "password": "badpass",
                 "LXC": 1
