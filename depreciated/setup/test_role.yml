@@ -39,7 +39,7 @@
         manager_IP:     "{{ ansible_all_ipv4_addresses }}"
         manager_port:   "2377"
         manager_token:  "{{ swarm.swarm_facts.JoinTokens.Manager }}"
-        manager_token:  "{{ swarm.swarm_facts.JoinTokens.Worker }}"
+        worker_token:   "{{ swarm.swarm_facts.JoinTokens.Worker }}"
 
     # - name: register dummy worker host
     #   add_host:
@@ -53,12 +53,19 @@
 
     - name: manager token
       debug:
-        msg:  "{{ hostvars['SWARM_MGR']['token'] }}"
+        msg:  "{{ hostvars['SWARM_INFO']['manager_token'] }}"
 
     - name: worker token
       debug:
-        msg:  "{{ hostvars['SWARM_WKR']['token'] }}"
+        msg:  "{{ hostvars['SWARM_INFO']['worker_token'] }}"
 
+    - name: manager IP
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['manager_IP'] }}"
+
+    - name: manager port
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['manager_port'] }}"
 
   # - name: configure swarm
   #   community.docker.docker_swarm:
