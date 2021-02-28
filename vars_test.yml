@@ -7,4 +7,4 @@
 
     - name: test matching
       debug:
-        msg:  machines[0].inventory_hostname
+        msg:  "{{ machines[0].inventory_hostname }}"
