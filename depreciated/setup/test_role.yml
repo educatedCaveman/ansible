@@ -36,7 +36,7 @@
     - name: register dummy manager host
       add_host:
         name: "SWARM_INFO"
-        manager_IP:     "{{ ansible_all_ipv4_addresses }}"
+        manager_IP:     "{{ inventory_hostname }}"
         manager_port:   "2377"
         manager_token:  "{{ swarm.swarm_facts.JoinTokens.Manager }}"
         worker_token:   "{{ swarm.swarm_facts.JoinTokens.Worker }}"
@@ -67,9 +67,9 @@
       debug:
         msg:  "{{ hostvars['SWARM_INFO']['manager_port'] }}"
 
-    - name: manager inventory hostname
-      debug:
-        msg:  "{{ hostvars['dev_swarm_manager_01']['inventory_hostname'] }}"
+    # - name: manager inventory hostname
+    #   debug:
+    #     msg:  "{{ hostvars['dev_swarm_manager_01']['inventory_hostname'] }}"
 
   # - name: configure swarm
   #   community.docker.docker_swarm:
