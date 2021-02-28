@@ -1,17 +1,7 @@
 ---
 - hosts:  all
-  vars:
-    - hostnames:
-      - "dev_swarm_manager_01"
-      - "lv426-manager-01.lab"
-      - "self"
-    - LXC:
-      - true
-      - false
-      - true
   tasks:
     - name: test json
       debug:
-        msg:  "{{ machines }}"
-
+        msg:  "{{ logins }}"
         

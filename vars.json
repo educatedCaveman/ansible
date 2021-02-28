@@ -1,21 +1,20 @@
-{
-    "machines": [
-        {
-            "dev_swarm_manager_01": {
-                "hostname": "dev_swarm_manager_01",
-                "password": "dksjdlkfjslkj",
-                "LXC": 0
-            },
-            "lv426-manager-01.lab": {
-                "hostname": "dev_swarm_manager_02",
-                "password": "badpass",
-                "LXC": 1
-            },
-            "self": {
-                "hostname": "jenkins.lab",
-                "password": "badpass",
-                "LXC": 1
-            }
+[
+    {
+        "name": "lv426-manager-01.lab",
+        "login": {
+            "password": "manager01"
         }
-    ]
-}
+    },
+    {
+        "name": "lv426-manager-02.lab",
+        "login": {
+            "password": "manager02"
+        }
+    },    
+    {
+        "name": "lv426-manager-03.lab",
+        "login": {
+            "password": "manager03"
+        }
+    }
+]
