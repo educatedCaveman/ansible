@@ -49,5 +49,5 @@
 # prep nvim for use
 - name: run :PluginUpdate
   shell:
-    cmd:  nvim -E -s -c "source /home/drake/.config/nvim/init.vim" -c ":PluginUpdate" -c ":q" -c ":q" 
+    cmd:  nvim -E -s -c ":PluginUpdate" -c ":q" -c ":q" 
   
