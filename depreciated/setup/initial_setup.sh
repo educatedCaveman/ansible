@@ -34,13 +34,13 @@ LXC_HOSTS=( \
 # lastpass login paths
 LOGINS=( \
     "Homelab\ssh/swarm-api-lb.lab" \
-    "Homelab\ssh/lv426-manager-01.lab" \
-    "Homelab\ssh/lv426-manager-02.lab" \
-    "Homelab\ssh/lv426-manager-03.lab" \
-    "Homelab\ssh/lv426-worker-01.lab" \
-    "Homelab\ssh/lv426-worker-02.lab" \
-    "Homelab\ssh/lv426-worker-03.lab" \
-    "Homelab\ssh/lv426-worker-04.lab" \
+    "Homelab\ssh/docker_swarm" \
+    "Homelab\ssh/docker_swarm" \
+    "Homelab\ssh/docker_swarm" \
+    "Homelab\ssh/docker_swarm" \
+    "Homelab\ssh/docker_swarm" \
+    "Homelab\ssh/docker_swarm" \
+    "Homelab\ssh/docker_swarm" \
     "Homelab\ssh/swarm-api-lb.vm" \
     "Homelab\ssh/docker_swarm" \
     "Homelab\ssh/docker_swarm" \
