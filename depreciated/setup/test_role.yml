@@ -67,6 +67,10 @@
       debug:
         msg:  "{{ hostvars['SWARM_INFO']['manager_port'] }}"
 
+    - name: manager inventory hostname
+      debug:
+        msg:  "{{ hostvars['dev_swarm_manager_01']['inventory_hostname'] }}"
+
   # - name: configure swarm
   #   community.docker.docker_swarm:
   #     state: present
