@@ -1,20 +1,24 @@
 [
     {
-        "name": "lv426-manager-01.lab",
-        "login": {
-            "password": "manager01"
-        }
-    },
-    {
-        "name": "lv426-manager-02.lab",
-        "login": {
-            "password": "manager02"
-        }
-    },    
-    {
-        "name": "lv426-manager-03.lab",
-        "login": {
-            "password": "manager03"
-        }
+        "logins": [
+            {
+                "name": "lv426-manager-01.lab",
+                "login": {
+                    "password": "manager01"
+                }
+            },
+            {
+                "name": "lv426-manager-02.lab",
+                "login": {
+                    "password": "manager02"
+                }
+            },
+            {
+                "name": "lv426-manager-03.lab",
+                "login": {
+                    "password": "manager03"
+                }
+            }
+        ]
     }
 ]
