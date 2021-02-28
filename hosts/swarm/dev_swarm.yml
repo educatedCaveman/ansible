@@ -36,14 +36,7 @@
     - cluster_name: "docker_data"
   tasks:
 
-
 # create the swarm:
-# start with managers
-# - initiate cluster on first host
-# - collect both manager and worker tokens
-# - add remainging managers
-# add all workers
-# deploy portainer?
 
 - name: initiate the swarm
   hosts:  dev_swarm_manager_01

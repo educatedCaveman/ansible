@@ -21,4 +21,7 @@
 # - name: apply the changes
 #   shell:
 #     cmd:  netplan apply
+- name: reboot to apply changes
+  reboot:
+    test_command: uptime
     
