@@ -7,16 +7,16 @@
 
     - name: test self
       debug:
-        msg:  "{{ machines.self }}"
+        msg:  "{{ machines[0].self }}"
 
     - name: test self
       debug:
-        msg:  "{{ machines.self.hostname }}"
+        msg:  "{{ machines[0].self.hostname }}"
 
     - name: test self
       debug:
-        msg:  "{{ machines.self.password }}"
+        msg:  "{{ machines[0].self.password }}"
 
     - name: test self
       debug:
-        msg:  "{{ machines.self.LXC }}"
+        msg:  "{{ machines[0].self.LXC }}"
