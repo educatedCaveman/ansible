@@ -1,9 +1,22 @@
 ---
 # tasks file for nfs_pics_role
-- name: Mount the Pictures NFS share if the mount path exists
+- name: create the mount directory
+  file:
+    path:     /mnt/mobius/Pictures
+    state:    directory
+    recurse:  yes
+
+- name: check for the mount directory before mounting
+  stat: 
+    path: /mnt/mobius/Pictures
+  register: pics_dir
+  
+- name: Mount the pr0n NFS share if the mount path exists
   mount:
     src: 192.168.11.2:/mnt/storage_node/Pictures
     path: /mnt/mobius/Pictures
     fstype: nfs 
     opts: rw,nolock,tcp
     state: mounted
+  when: pics_dir.stat.exists
+  

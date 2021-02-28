@@ -1,5 +1,16 @@
 ---
 # tasks file for nfs_pr0n_role
+- name: create the mount directory
+  file:
+    path:     /mnt/mobius/pr0n
+    state:    directory
+    recurse:  yes
+
+- name: check for the mount directory before mounting
+  stat: 
+    path: /mnt/mobius/pr0n
+  register: pr0n_dir
+  
 - name: Mount the pr0n NFS share if the mount path exists
   mount:
     src: 192.168.11.2:/mnt/storage_node/pr0n
@@ -7,3 +18,5 @@
     fstype: nfs 
     opts: rw,nolock,tcp
     state: mounted
+  when: pr0n_dir.stat.exists
+  

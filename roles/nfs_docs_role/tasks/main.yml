@@ -1,9 +1,22 @@
 ---
 # tasks file for nfs_docs_role
-- name: Mount the Documents NFS share if the mount path exists
+- name: create the mount directory
+  file:
+    path:     /mnt/mobius/Documents
+    state:    directory
+    recurse:  yes
+
+- name: check for the mount directory before mounting
+  stat: 
+    path: /mnt/mobius/Documents
+  register: docs_dir
+  
+- name: Mount the pr0n NFS share if the mount path exists
   mount:
     src: 192.168.11.2:/mnt/storage_node/Documents
     path: /mnt/mobius/Documents
     fstype: nfs 
     opts: rw,nolock,tcp
     state: mounted
+  when: docs_dir.stat.exists
+  
