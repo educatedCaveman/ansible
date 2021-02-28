@@ -1,15 +1,16 @@
 ---
 # tasks file for nfs_backup_role
+- name: check for the mount directory before mounting
+  stat: 
+    path: /mnt/mobius/Backup
+  register: backup_dir
+
 - name: create the mount directory
   file:
     path:     /mnt/mobius/Backup
     state:    directory
     recurse:  yes
-
-- name: check for the mount directory before mounting
-  stat: 
-    path: /mnt/mobius/Backup
-  register: backup_dir
+  when: not backup_dir.stat.exists
 
 - name: Mount the Backup NFS share if the mount path exists
   mount:
@@ -18,4 +19,3 @@
     fstype: nfs 
     opts:   rw,nolock,tcp
     state:  mounted
-  when: backup_dir.stat.exists
