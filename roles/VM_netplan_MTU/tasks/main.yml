@@ -18,10 +18,10 @@
     state:  link
   when: netplan.stat.exists and (netplan.stat.islnk is defined and netplan.stat.islnk == False)
 
-# - name: apply the changes
-#   shell:
-#     cmd:  netplan apply
-- name: reboot to apply changes
-  reboot:
-    test_command: uptime
+# - name: reboot to apply changes
+#   reboot:
+#     test_command: uptime
     
+- name: apply netplan
+  shell:
+    cmd:  netplan apply

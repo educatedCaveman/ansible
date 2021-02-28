@@ -6,7 +6,7 @@
   roles:
     - VM_role            # base LXC container config
     - git_dotfiles_role   # deploy the dotfiles repo
-    # - VM_netplan_MTU     # use the mtu9000 netplan config
+    - VM_netplan_MTU     # use the mtu9000 netplan config
     - apt_client_role
     - linux_role          # base linux configs
     - docker_role
@@ -37,10 +37,8 @@
   tasks:
 
 # create the swarm:
-
 - name: initiate the swarm
   hosts:  dev_swarm_manager_01
-  # hosts:  192.168.13.250
   gather_facts: yes
   tasks:
 
