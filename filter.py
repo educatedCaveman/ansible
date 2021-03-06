@@ -17,9 +17,12 @@ ssh_items = {}
 count = 0
 
 for entry in items:
-    print(type(entry))
-    print('found a relevant entry!')
-    count += 1
+    if entry['folderId'] == folder_id
+        print(entry['folderId'])
+        print('found a relevant entry!')
+        count += 1
+    else:
+        print("'{id1} != '{id2}'".format(id1=entry['folderId'], id2=folder_id))
 
 print(count)
 
