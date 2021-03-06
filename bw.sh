@@ -8,17 +8,21 @@
 # check BW_CLIENTID
 if [[ -z "${BW_CLIENTID}" ]]; then
     echo "BW_CLIENTID env var is not set. exiting..."
+    exit 1
 fi
 
 # check BW_CLIENTSECRET
 if [[ -z "${BW_CLIENTSECRET}" ]]; then
     echo "BW_CLIENTSECRET env var is not set. exiting..."
+    exit 1
 fi
 
-echo "bitwarden login:"
+# echo "bitwarden login:"
 bw login --apikey
 
-echo "\nBitwarden unlocking:"
-SESSION_TXT=$(bw unlock)
-echo "\n\nBitwarden session text:"
+echo "Unlock BitWarden Vault:"
+SESSION_TXT=$(bw unlock | tee)
+echo "Bitwarden session text:"
 echo "${SESSION_TEXT}"
+
+bw logout
