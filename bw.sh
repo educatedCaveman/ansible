@@ -24,7 +24,7 @@ HOSTS=( \
     prd_swarm_worker_02 \
     prd_swarm_worker_03 \
     prd_swarm_worker_04 \
-    ansible/gitlab \
+    ansible_gitlab \
     oxygen \
     apt_cache \
     apt_mirror \
@@ -85,6 +85,12 @@ do
     echo "    password:  ${PASSWORD}"
     echo "    LXC?:      ${LXC}"
     echo ""
+
+    if [ "${LXC}" -eq "true" ]
+    then
+        echo "this is where we'd run the LXC playbook"
+    fi
+
     # ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/initial_setup.yml" \
     #     --extra-vars mypass="${PW}" --extra-vars hn="${HOSTNAMES[$n]}"
 done
