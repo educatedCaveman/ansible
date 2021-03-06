@@ -32,6 +32,6 @@ export BW_SESSION=$SESSION_KEY
 # put stuff to get passwords here
 ALL_ITEMS=$(bw list items)
 FOLDER_ID=$(bw get folder "Homelab/ssh" | jq '.id')
-python3 filter.py $FOLDER_ID $ALL_ITEMS
+python3 filter.py "${FOLDER_ID}" "${ALL_ITEMS}"
 
 bw logout
