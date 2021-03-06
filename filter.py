@@ -25,7 +25,7 @@ for entry in items:
         # print(json.dumps(entry, indent=4))
         hostname = entry['name']
         password = entry['login']['password']
-        host_map.append(hostname, password)
+        host_map.append([hostname, password])
         count += 1
 
 print(tabulate(host_map))

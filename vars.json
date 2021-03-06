@@ -1,22 +1,10 @@
 {
-    "logins": [
-        {
-            "name": "lv426-manager-02.lab",
-            "login": {
-                "password": "manager02"
-            }
-        },
-        {
-            "name": "lv426-manager-01.lab",
-            "login": {
-                "password": "manager01"
-            }
-        },
-        {
-            "name": "lv426-manager-03.lab",
-            "login": {
-                "password": "manager03"
-            }
-        }
-    ]
+    "hostnames": {
+        "apt_cache": "apt-cache",
+        "apt_mirror": "apt-mirror"
+    },
+    "passwords": {
+        "apt_cache": "apt-cache-pass",
+        "apt_mirror": "apt-mirror-pass"
+    }
 }

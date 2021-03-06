@@ -1,0 +1,12 @@
+[
+    {
+        "ans_name": "apt_cache",
+        "hostname": "apt-cache",
+        "password": "aptcachepass"
+    },
+    {
+        "ans_name": "apt_mirror",
+        "hostname": "apt-mirror",
+        "password": "aptmirrorpass"
+    }
+]

@@ -1,11 +1,19 @@
 ---
-- hosts:  all
-  tasks:
-    - name: test json
-      debug:
-        msg:  "{{ logins }}"
+- hosts:
+    - apt_mirror
+    - apt_cache
+  vars:
+    host_info_1: "{{ lookup('file', 'vars.json') }}"
+    host_info_2: "{{ lookup('file', 'vars2.json') }}"
 
-    - name: test filtering
-      debug:
-        msg:  "{{ logins[0].login.password }}"
-      when: logins[0].name == inventory_hostname
+  tasks:
+
+  - name: "Output all host_info_2 tList as-is"
+    debug:
+      msg: "{{ host_info_2 }}"
+
+  - name: "Print all hostnames"
+    debug:
+      msg: "{{ item.hostname }}"
+    loop: "{{ host_info_2 }}"
+    
