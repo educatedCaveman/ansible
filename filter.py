@@ -12,7 +12,15 @@ folder_id = sys.argv[1]
 print(folder_id)
 
 items = json.loads(sys.argv[2])
-
 ssh_items = {}
+
+count = 0
+
+for entry in items:
+    if entry["folderId"] == str(folder_id):
+        print('found a relevant entry!')
+        count += 1
+
+print(count)
 
 print(json.dumps(items, indent=4))
