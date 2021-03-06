@@ -70,8 +70,8 @@ for (( n=0; n<${#HOSTS[@]}; n++ ))
 do
     # PW=$(lpass show -p "${LOGINS[$n]}")
     BW_ITEM=$(bw get item "${HOSTS[$n]}")
-    PASSWORD=$("${BW_ITEM}" | jq '.login.password')
-    HOSTNAME=$("${BW_ITEM}" | jq '.fields[0].value')
+    PASSWORD=$(echo "${BW_ITEM}" | jq '.login.password')
+    HOSTNAME=$(echo "${BW_ITEM}" | jq '.fields[0].value')
     echo "${HOSTS[$n]} info:"
     echo "\thostname:\t${HOSTNAME}"
     echo "\tpassword:\t${PASSWORD}"
