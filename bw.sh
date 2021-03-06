@@ -66,7 +66,7 @@ export BW_SESSION=$SESSION_KEY
 # python3 filter.py "${FOLDER_ID}" "${ALL_ITEMS}"
 
 #handle drake users
-for (( n=0; n<${#LOGINS[@]}; n++ ))
+for (( n=0; n<${#HOSTS[@]}; n++ ))
 do
     # PW=$(lpass show -p "${LOGINS[$n]}")
     BW_ITEM=$(bw get item "${HOSTS[$n]}")
