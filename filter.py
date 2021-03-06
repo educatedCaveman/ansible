@@ -10,4 +10,4 @@ if len(sys.argv) != 3:
 # retirieve argument
 folder_id = sys.argv[1]
 
-print(f'the folder ID to filter on is {folder_id}')
+print(folder_id)
