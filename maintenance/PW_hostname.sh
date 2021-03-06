@@ -4,7 +4,7 @@
 # - BW_CLIENTSECRET="alphabet_soup"
 # https://bitwarden.com/help/article/personal-api-key/
 
-ANSIBLE_DIR='/home/drake/ansible/depreciated'
+ANSIBLE_DIR='/home/drake/ansible/maintenance'
 
 # hosts for ansible
 HOSTS=( \
@@ -75,20 +75,20 @@ do
     LXC=${BW_LXC:1:-1}
 
     # run the playbook, passing in the secrets
-    ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/initial_setup.yml" \
+    ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/PW_hostname.yml" \
         --extra-vars mypass="${PASSWORD}" --extra-vars hn="${HOSTNAME}"
 
     # handle the root user for LXC containers
     if [ "${LXC}" == "true" ]
     then
         # echo "this is where we'd run the LXC playbook"
-        ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/LXC_root_setup.yml" \
+        ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/LXC_root_setup.yml" \
             --extra-vars mypass="${PASSWORD}"
     fi
 
 done
 
 # setup LXC containers git
-ansible-playbook "${ANSIBLE_DIR}/setup/LXC_git.yml"
+ansible-playbook "${ANSIBLE_DIR}/LXC_git.yml"
 
 bw logout
