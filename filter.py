@@ -12,4 +12,7 @@ folder_id = sys.argv[1]
 print(folder_id)
 
 items = json.loads(sys.argv[2])
-print(items)
+
+ssh_items = {}
+
+print(json.dumps(items, indent=4))
