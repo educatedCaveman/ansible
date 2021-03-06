@@ -7,29 +7,28 @@
 ANSIBLE_DIR='/home/drake/ansible/depreciated'
 
 # hosts for ansible
-# HOSTS=( \
-#     dev_api_LB \
-#     dev_swarm_manager_01 \
-#     dev_swarm_manager_02 \
-#     dev_swarm_manager_03 \
-#     dev_swarm_worker_01 \
-#     dev_swarm_worker_02 \
-#     dev_swarm_worker_03 \
-#     dev_swarm_worker_04 \
-#     prd_api_LB \
-#     prd_swarm_manager_01 \
-#     prd_swarm_manager_02 \
-#     prd_swarm_manager_03 \
-#     prd_swarm_worker_01 \
-#     prd_swarm_worker_02 \
-#     prd_swarm_worker_03 \
-#     prd_swarm_worker_04 \
-#     ansible_gitlab \
-#     oxygen \
-#     apt_cache \
-#     apt_mirror \
-# )
-HOSTS=( dev_api_LB )
+HOSTS=( \
+    dev_api_LB \
+    dev_swarm_manager_01 \
+    dev_swarm_manager_02 \
+    dev_swarm_manager_03 \
+    dev_swarm_worker_01 \
+    dev_swarm_worker_02 \
+    dev_swarm_worker_03 \
+    dev_swarm_worker_04 \
+    prd_api_LB \
+    prd_swarm_manager_01 \
+    prd_swarm_manager_02 \
+    prd_swarm_manager_03 \
+    prd_swarm_worker_01 \
+    prd_swarm_worker_02 \
+    prd_swarm_worker_03 \
+    prd_swarm_worker_04 \
+    ansible_gitlab \
+    oxygen \
+    apt_cache \
+    apt_mirror \
+)
 
 # check BW_CLIENTID
 if [[ -z "${BW_CLIENTID}" ]]; then
@@ -59,7 +58,7 @@ export BW_SESSION=$SESSION_KEY
 for (( n=0; n<${#HOSTS[@]}; n++ ))
 do
     echo "starting configuration of ${HOSTS[$n]}"
-    
+
     # get the full BitWarden item
     BW_ITEM=$(bw get item "${HOSTS[$n]}")
 
@@ -75,11 +74,7 @@ do
     BW_LXC=$(echo "${BW_ITEM}" | jq '.fields[1].value')
     LXC=${BW_LXC:1:-1}
 
-    # echo "${HOSTS[$n]} info:"
-    # echo "    hostname:  ${HOSTNAME}"
-    # echo "    password:  ${PASSWORD}"
-    # echo "    LXC?:      ${LXC}"
-    # echo ""
+    # run the playbook, passing in the secrets
     ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/initial_setup.yml" \
         --extra-vars mypass="${PASSWORD}" --extra-vars hn="${HOSTNAME}"
 
