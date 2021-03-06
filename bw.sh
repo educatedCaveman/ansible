@@ -18,16 +18,20 @@ if [[ -z "${BW_CLIENTSECRET}" ]]; then
     exit 1
 fi
 
-# echo "bitwarden login:"
+# must first log out, to make sure the key will be printed later
+bw logout
+
+# use the API key so we don't have to use an email address
 bw login --apikey
 
 echo "Unlock BitWarden Vault:"
 SESSION_TXT=$(bw unlock | tee)
-# echo "Bitwarden session text:"
-# echo "${SESSION_TXT}"
-
 SESSION_LINE=$(echo "${SESSION_TXT}" | grep "export BW_SESSION")
-echo "line containing the session key is:"
-echo "${SESSION_LINE}"
+SESSION_KEY=${SESSION_LINE:20}
+
+# put stuff to get passwords here
+ALL_ITEMS=$(bw get items)
+FOLDER_ID=$(bw get folder "Homelab/ssh" | jq '.id')
+python3 "${FOLDER_ID}" "${ALL_ITEMS}"
 
 bw logout
