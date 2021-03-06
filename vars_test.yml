@@ -4,14 +4,16 @@
   roles:
     - ansible-modules-bitwarden
   vars:
-    - bw_info:  "{{ lookup('bitwarden', 'apt-cache.vm', field='item') }}"
+    - in_host:  "apt_cache"
+    - bw_pass:  "{{ lookup('bitwarden', vars['in_host']) }}"
+    - bw_hostname:  "{{ lookup('bitwarden', vars['in_host'], field='hostname', custom_field=true) }}"
   tasks:
 
     # Get password for Google
   - debug:
       msg: 
-        - "hostname: {{ bw_info.name }}"
-        - "password: {{ bw_info.login.password }}"
+        - "hostname: {{ bw_pass }}"
+        - "password: {{ bw_hostname }}"
 
 #   - name: "Output all host_info_2 tList as-is"
 #     debug:
