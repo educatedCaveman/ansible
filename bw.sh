@@ -26,8 +26,8 @@ bw login --apikey
 echo "Unlock BitWarden Vault:"
 SESSION_TXT=$(bw unlock | tee)
 SESSION_LINE=$(echo "${SESSION_TXT}" | grep "export BW_SESSION")
-SESSION_KEY=${SESSION_LINE:21:88}
-export $SESSION_KEY
+SESSION_KEY=${SESSION_LINE:20}
+export BW_SESSION=$SESSION_KEY
 
 # put stuff to get passwords here
 ALL_ITEMS=$(bw get items)
