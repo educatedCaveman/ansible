@@ -7,34 +7,29 @@
 ANSIBLE_DIR='/home/drake/ansible/depreciated'
 
 # hosts for ansible
-HOSTS=( \
-    dev_api_LB \
-    dev_swarm_manager_01 \
-    dev_swarm_manager_02 \
-    dev_swarm_manager_03 \
-    dev_swarm_worker_01 \
-    dev_swarm_worker_02 \
-    dev_swarm_worker_03 \
-    dev_swarm_worker_04 \
-    prd_api_LB \
-    prd_swarm_manager_01 \
-    prd_swarm_manager_02 \
-    prd_swarm_manager_03 \
-    prd_swarm_worker_01 \
-    prd_swarm_worker_02 \
-    prd_swarm_worker_03 \
-    prd_swarm_worker_04 \
-    ansible_gitlab \
-    oxygen \
-    apt_cache \
-    apt_mirror \
-)
-LXC_HOSTS=( \
-    dev_api_LB \
-    prd_api_LB \
-    apt_cache \
-    apt_mirror \
-)
+# HOSTS=( \
+#     dev_api_LB \
+#     dev_swarm_manager_01 \
+#     dev_swarm_manager_02 \
+#     dev_swarm_manager_03 \
+#     dev_swarm_worker_01 \
+#     dev_swarm_worker_02 \
+#     dev_swarm_worker_03 \
+#     dev_swarm_worker_04 \
+#     prd_api_LB \
+#     prd_swarm_manager_01 \
+#     prd_swarm_manager_02 \
+#     prd_swarm_manager_03 \
+#     prd_swarm_worker_01 \
+#     prd_swarm_worker_02 \
+#     prd_swarm_worker_03 \
+#     prd_swarm_worker_04 \
+#     ansible_gitlab \
+#     oxygen \
+#     apt_cache \
+#     apt_mirror \
+# )
+HOSTS=( dev_api_LB )
 
 # check BW_CLIENTID
 if [[ -z "${BW_CLIENTID}" ]]; then
@@ -60,50 +55,45 @@ SESSION_LINE=$(echo "${SESSION_TXT}" | grep "export BW_SESSION")
 SESSION_KEY=${SESSION_LINE:20}
 export BW_SESSION=$SESSION_KEY
 
-# # put stuff to get passwords here
-# ALL_ITEMS=$(bw list items)
-# FOLDER_ID=$(bw get folder "Homelab/ssh" | jq '.id')
-# python3 filter.py "${FOLDER_ID}" "${ALL_ITEMS}"
-
 #handle drake users
 for (( n=0; n<${#HOSTS[@]}; n++ ))
 do
-    # PW=$(lpass show -p "${LOGINS[$n]}")
+    echo "starting configuration of ${HOSTS[$n]}"
+    
+    # get the full BitWarden item
     BW_ITEM=$(bw get item "${HOSTS[$n]}")
 
+    # filter out the password
     BW_PASS=$(echo "${BW_ITEM}" | jq '.login.password')
     PASSWORD=${BW_PASS:1:-1}
 
+    # filter out the hostname
     BW_HOST=$(echo "${BW_ITEM}" | jq '.fields[0].value')
     HOSTNAME=${BW_HOST:1:-1}
 
+    # filter out the LXC switch
     BW_LXC=$(echo "${BW_ITEM}" | jq '.fields[1].value')
     LXC=${BW_LXC:1:-1}
 
-    echo "${HOSTS[$n]} info:"
-    echo "    hostname:  ${HOSTNAME}"
-    echo "    password:  ${PASSWORD}"
-    echo "    LXC?:      ${LXC}"
-    echo ""
+    # echo "${HOSTS[$n]} info:"
+    # echo "    hostname:  ${HOSTNAME}"
+    # echo "    password:  ${PASSWORD}"
+    # echo "    LXC?:      ${LXC}"
+    # echo ""
+    ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/initial_setup.yml" \
+        --extra-vars mypass="${PASSWORD}" --extra-vars hn="${HOSTNAME}"
 
-    if [ "${LXC}" -eq "true" ]
+    # handle the root user for LXC containers
+    if [ "${LXC}" == "true" ]
     then
-        echo "this is where we'd run the LXC playbook"
+        # echo "this is where we'd run the LXC playbook"
+        ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/LXC_root_setup.yml" \
+            --extra-vars mypass="${PASSWORD}"
     fi
 
-    # ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/initial_setup.yml" \
-    #     --extra-vars mypass="${PW}" --extra-vars hn="${HOSTNAMES[$n]}"
 done
 
-# #handle root users, LCX containers only
-# for (( n=0; n<${#LXC_LOGINS[@]}; n++ ))
-# do
-#     PW=$(lpass show -p "${LXC_LOGINS[$n]}")
-#     ansible-playbook -l "${LXC_HOSTS[$n]}" "${ANSIBLE_DIR}/setup/LXC_root_setup.yml" \
-#         --extra-vars mypass="${PW}"
-# done
-
-# # setup LXC containers git
-# ansible-playbook "${ANSIBLE_DIR}/setup/LXC_git.yml"
+# setup LXC containers git
+ansible-playbook "${ANSIBLE_DIR}/setup/LXC_git.yml"
 
 bw logout
