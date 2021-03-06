@@ -17,10 +17,10 @@ ssh_items = {}
 count = 0
 
 for entry in items:
-    if entry["folderId"] == str(folder_id):
-        print('found a relevant entry!')
-        count += 1
+    print(type(entry))
+    print('found a relevant entry!')
+    count += 1
 
 print(count)
 
-print(json.dumps(items, indent=4))
+# print(json.dumps(items, indent=4))
