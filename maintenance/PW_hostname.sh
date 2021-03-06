@@ -24,7 +24,7 @@ HOSTS=( \
     prd_swarm_worker_02 \
     prd_swarm_worker_03 \
     prd_swarm_worker_04 \
-    ansible_gitlab \
+    gitlab_vm \
     oxygen \
     apt_cache \
     apt_mirror \
