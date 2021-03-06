@@ -72,11 +72,11 @@ do
     BW_ITEM=$(bw get item "${HOSTS[$n]}")
 
     BW_PASS=$(echo "${BW_ITEM}" | jq '.login.password')
-    PASSWORD=$($BW_PASS:1:-1)
+    PASSWORD=${$BW_PASS:1:-1}
 
     BW_HOST=$(echo "${BW_ITEM}" | jq '.fields[0].value')
-    HOSTNAME=$($BW_HOST:1:-1)
-    
+    HOSTNAME=${$BW_HOST:1:-1}
+
     echo "${HOSTS[$n]} info:"
     echo "    hostname:  ${HOSTNAME}"
     echo "    password:  ${PASSWORD}"
