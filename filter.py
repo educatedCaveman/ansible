@@ -7,8 +7,9 @@ if len(sys.argv) != 3:
     print('incorrect number of arguments.  takes 2 arguments.')
     sys.exit(1)
 
-# retirieve argument
-folder_id = sys.argv[1]
+# retirieve argument, but remove quotes from it
+raw_in = sys.argv[1]
+folder_id = raw_in[1:-1]
 print(folder_id)
 
 items = json.loads(sys.argv[2])
@@ -17,7 +18,7 @@ ssh_items = {}
 count = 0
 
 for entry in items:
-    if entry['folderId'] == folder_id
+    if entry['folderId'] == folder_id:
         print(entry['folderId'])
         print('found a relevant entry!')
         count += 1
