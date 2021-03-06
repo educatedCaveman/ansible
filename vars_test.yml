@@ -4,7 +4,7 @@
   roles:
     - ansible-modules-bitwarden
   vars:
-    - in_host:  "apt_cache"
+    # - in_host:  "apt_cache"
     - bw_pass:  "{{ lookup('bitwarden', vars['in_host']) }}"
     - bw_hostname:  "{{ lookup('bitwarden', vars['in_host'], field='hostname', custom_field=true) }}"
   tasks:
