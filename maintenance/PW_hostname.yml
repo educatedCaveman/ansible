@@ -1,6 +1,7 @@
 ---
 - hosts: all
   become: yes
+  gather_facts: no
   tasks:
 
     # set user's password, and add to sudo group
