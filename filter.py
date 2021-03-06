@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import json
 import sys
+from tabulate import tabulate
 
 # count number of arguments:
 if len(sys.argv) != 3:
@@ -17,10 +18,17 @@ ssh_items = {}
 
 count = 0
 
+host_map = []
+
 for entry in items:
     if entry['folderId'] == folder_id:
-        print(json.dumps(entry, indent=4))
+        # print(json.dumps(entry, indent=4))
+        hostname = entry['name']
+        password = entry['login']['password']
+        host_map.append(hostname, password)
         count += 1
+
+print(tabulate(host_map))
 
 print(count)
 
