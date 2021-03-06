@@ -9,5 +9,7 @@ if len(sys.argv) != 3:
 
 # retirieve argument
 folder_id = sys.argv[1]
-
 print(folder_id)
+
+items = json.loads(sys.argv[2])
+print(items)
