@@ -1,11 +1,9 @@
 ---
 - hosts:
-    - apt_mirror
-    - apt_cache
+    - self
   vars:
     host_info_1: "{{ lookup('file', 'vars.json') }}"
     host_info_2: "{{ lookup('file', 'vars2.json') }}"
-
   tasks:
 
   - name: "Output all host_info_2 tList as-is"
@@ -16,4 +14,31 @@
     debug:
       msg: "{{ item.hostname }}"
     loop: "{{ host_info_2 }}"
-    
+
+- hosts: apt_cache
+  vars:
+    host_info_1: "{{ lookup('file', 'vars.json') }}"
+  tasks:
+
+  - name: get the specific values for apt-cache.vm
+    debug:
+      msg:  "hostname: {{ host_info_1.hostname.apt_cache }}"
+
+  - name: get the specific values for apt-cache.vm
+    debug:
+      msg:  "password: {{ host_info_1.password.apt_cache }}"
+
+
+- hosts: apt_mirror
+  vars:
+    host_info_1: "{{ lookup('file', 'vars.json') }}"
+  tasks:
+
+  - name: get the specific values for apt-mirror.vm
+    debug:
+      msg:  "hostname: {{ host_info_1.hostname.apt_mirror }}"
+  
+  - name: get the specific values for apt-mirror.vm
+    debug:
+      msg:  "password: {{ host_info_1.password.apt_mirror }}"
+
