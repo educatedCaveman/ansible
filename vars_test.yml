@@ -22,11 +22,11 @@
 
   - name: get the specific values for apt-cache.vm
     debug:
-      msg:  "hostname: {{ host_info_1.hostname.apt_cache }}"
+      msg:  "hostname: {{ host_info_1.hostnames.apt_cache }}"
 
   - name: get the specific values for apt-cache.vm
     debug:
-      msg:  "password: {{ host_info_1.password.apt_cache }}"
+      msg:  "password: {{ host_info_1.passwords.apt_cache }}"
 
 
 - hosts: apt_mirror
@@ -36,9 +36,9 @@
 
   - name: get the specific values for apt-mirror.vm
     debug:
-      msg:  "hostname: {{ host_info_1.hostname.apt_mirror }}"
+      msg:  "hostname: {{ host_info_1.hostnames.apt_mirror }}"
   
   - name: get the specific values for apt-mirror.vm
     debug:
-      msg:  "password: {{ host_info_1.password.apt_mirror }}"
+      msg:  "password: {{ host_info_1.passwords.apt_mirror }}"
 
