@@ -22,6 +22,6 @@
 #   reboot:
 #     test_command: uptime
     
-- name: apply netplan
-  shell:
-    cmd:  netplan apply
+# - name: apply netplan
+#   shell:
+#     cmd:  netplan apply

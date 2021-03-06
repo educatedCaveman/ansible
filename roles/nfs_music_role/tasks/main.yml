@@ -1,16 +1,17 @@
 ---
 # tasks file for nfs_music_role
-- name: create the mount directory
-  file:
-    path:     /mnt/mobius/Music
-    state:    directory
-    recurse:  yes
-
 - name: check for the mount directory before mounting
   stat: 
     path: /mnt/mobius/Music
   register: music_dir
   
+- name: create the mount directory
+  file:
+    path:     /mnt/mobius/Music
+    state:    directory
+    recurse:  yes
+  when: not music_dir.stat.exists
+
 - name: Mount the pr0n NFS share if the mount path exists
   mount:
     src: 192.168.11.2:/mnt/storage_node/Music
@@ -18,5 +19,4 @@
     fstype: nfs 
     opts: rw,nolock,tcp
     state: mounted
-  when: music_dir.stat.exists
   
