@@ -70,11 +70,16 @@ for (( n=0; n<${#HOSTS[@]}; n++ ))
 do
     # PW=$(lpass show -p "${LOGINS[$n]}")
     BW_ITEM=$(bw get item "${HOSTS[$n]}")
-    PASSWORD=$(echo "${BW_ITEM}" | jq '.login.password')
-    HOSTNAME=$(echo "${BW_ITEM}" | jq '.fields[0].value')
+
+    BW_PASS=$(echo "${BW_ITEM}" | jq '.login.password')
+    PASSWORD=$($BW_PASS:1:-1)
+
+    BW_HOST=$(echo "${BW_ITEM}" | jq '.fields[0].value')
+    HOSTNAME=$($BW_HOST:1:-1)
+    
     echo "${HOSTS[$n]} info:"
-    echo "\thostname:\t${HOSTNAME}"
-    echo "\tpassword:\t${PASSWORD}"
+    echo "    hostname:  ${HOSTNAME}"
+    echo "    password:  ${PASSWORD}"
     echo ""
     # ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/initial_setup.yml" \
     #     --extra-vars mypass="${PW}" --extra-vars hn="${HOSTNAMES[$n]}"
