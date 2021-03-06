@@ -24,7 +24,7 @@ HOSTS=( \
     prd_swarm_worker_02 \
     prd_swarm_worker_03 \
     prd_swarm_worker_04 \
-    gitlab \
+    ansible/gitlab \
     oxygen \
     apt_cache \
     apt_mirror \
@@ -77,9 +77,13 @@ do
     BW_HOST=$(echo "${BW_ITEM}" | jq '.fields[0].value')
     HOSTNAME=${BW_HOST:1:-1}
 
+    BW_LXC=$(echo "${BW_ITEM}" | jq '.fields[1].value')
+    LXC=${BW_LXC:1:-1}
+
     echo "${HOSTS[$n]} info:"
     echo "    hostname:  ${HOSTNAME}"
     echo "    password:  ${PASSWORD}"
+    echo "    LXC?:      ${LXC}"
     echo ""
     # ansible-playbook -l "${HOSTS[$n]}" "${ANSIBLE_DIR}/setup/initial_setup.yml" \
     #     --extra-vars mypass="${PW}" --extra-vars hn="${HOSTNAMES[$n]}"
