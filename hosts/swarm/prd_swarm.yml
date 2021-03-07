@@ -1,0 +1,122 @@
+# base docker config
+- name: configure Docker Swarm Cluster (PRD)
+  hosts:
+    - prd_swarm_managers
+    - prd_swarm_workers
+  roles:
+    - VM_role
+    - git_dotfiles_role
+    - git_scripts_role
+    - VM_netplan_MTU
+    - apt_client_role
+    - linux_role
+    - docker_role
+    - drake_role
+    - nfs_base_role
+    - nfs_backup_role
+  tasks:
+
+# gluster for managers
+- name: configure GlusterFS for manager Nodes (PRD)
+  hosts:
+    - prd_swarm_managers
+  roles:
+    - gluster_role
+  vars:
+    - cluster_name: "portainer_data"
+  tasks:
+
+# gluster for workers:
+- name: configure GlusterFS for worker Nodes (PRD)
+  hosts:
+    - prd_swarm_workers
+  roles:
+    - gluster_role
+  vars:
+    - cluster_name: "docker_data"
+  tasks:
+
+# create the swarm:
+- name: initiate the swarm
+  hosts:  prd_swarm_manager_01
+  gather_facts: yes
+  tasks:
+
+    - name: initiate the swarm, gather tokens
+      community.docker.docker_swarm:
+        state: present
+      register: swarm
+
+    - name: register dummy manager host
+      add_host:
+        name: "SWARM_INFO"
+        manager_endpoint: "{{ inventory_hostname }}:2377"
+        manager_token:    "{{ swarm.swarm_facts.JoinTokens.Manager }}"
+        worker_token:     "{{ swarm.swarm_facts.JoinTokens.Worker }}"
+
+    - name: show manager token
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['manager_token'] }}"
+
+    - name: show worker token
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['worker_token'] }}"
+
+    - name: show manager IP/hostname and port
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
+
+- name: Add Manager Nodes
+  hosts:  prd_swarm_managers:!prd_swarm_manager_01
+  tasks:
+
+    - name: Add Manager Nodes
+      community.docker.docker_swarm:
+        state: join
+        join_token:   "{{ hostvars['SWARM_INFO']['manager_token'] }}"
+        remote_addrs: "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
+
+- name: Add Worker Nodes
+  hosts:  prd_swarm_workers
+  tasks:
+
+    - name: Add Worker Nodes
+      community.docker.docker_swarm:
+        state: join
+        join_token:   "{{ hostvars['SWARM_INFO']['worker_token'] }}"
+        remote_addrs: "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
+
+# set up cron on the main worker
+- name: set up cron backup script for the managers
+  hosts:  prd_swarm_worker_01
+  tasks:
+
+    - name: configure the backup cron
+      cron:
+        name: prd_worker_backup
+        minute: "0"
+        hour: "*"
+        job: "sh /home/drake/scripts/docker/swarm_backup.sh PRD worker"
+
+# set up cron on the main manager
+- name: set up cron backup script for the managers
+  hosts:  prd_swarm_manager_01
+  tasks:
+
+    - name: configure the backup cron
+      cron:
+        name: prd_manager_backup
+        minute: "0"
+        hour: "*"
+        job: "sh /home/drake/scripts/docker/swarm_backup.sh PRD manager"
+
+    - name: deploying the custom portianer stack file
+      get_url:
+        url:  "https://raw.githubusercontent.com/educatedCaveman/docker-lab/master/scripts/swarm/portainer-agent-stack.yml"
+        dest: /tmp/
+
+    - name: setting up portainer
+      debug:
+        msg:
+          - "to install/start portainer, run the following:" 
+          - docker stack deploy -c /tmp/portainer-agent-stack.yml portainer
