@@ -96,7 +96,7 @@
         name: prd_worker_backup
         minute: "0"
         hour: "*"
-        job: "sh /home/drake/scripts/docker/swarm_backup.sh PRD worker"
+        job: "bash /home/drake/scripts/docker/swarm_backup.sh PRD worker"
 
 # set up cron on the main manager
 - name: set up cron backup script for the managers
@@ -108,7 +108,7 @@
         name: prd_manager_backup
         minute: "0"
         hour: "*"
-        job: "sh /home/drake/scripts/docker/swarm_backup.sh PRD manager"
+        job: "bash /home/drake/scripts/docker/swarm_backup.sh PRD manager"
 
     - name: deploying the custom portianer stack file
       get_url:

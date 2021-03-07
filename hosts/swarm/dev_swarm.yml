@@ -96,7 +96,7 @@
         name: dev_worker_backup
         minute: "0"
         hour: "*"
-        job: "sh /home/drake/scripts/docker/swarm_backup.sh DEV worker"
+        job: "bash /home/drake/scripts/docker/swarm_backup.sh DEV worker"
 
 # set up cron on the main manager
 - name: set up cron backup script for the managers
@@ -108,7 +108,7 @@
         name: dev_manager_backup
         minute: "0"
         hour: "*"
-        job: "sh /home/drake/scripts/docker/swarm_backup.sh DEV manager"
+        job: "bash /home/drake/scripts/docker/swarm_backup.sh DEV manager"
 
     - name: deploying the custom portianer stack file
       get_url:
