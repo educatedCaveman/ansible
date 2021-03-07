@@ -55,6 +55,10 @@
         - "to get the initial admin password, run the following:"
         - cat /var/lib/jenkins/secrets/initialAdminPassword
 
+  - name: Jenkins setup
+    debug:
+      msg:  the ability to restore th jenkins from backup config would go here?
+
   # TODO: ansible? anything to do?
 
   # bitwarden config
@@ -75,17 +79,24 @@
     register: bw_zip
 
   - name: unzip bitwarden
-    shell:
-      cmd:  unzip /tmp/bw.zip -d /tmp
-    when:   bw_zip.stat.exists
-
-  - name: copy bitwarden to the path
-    copy:
-      src:  /tmp/bw
+    unarchive:
+      src:  /tmp/bw.zip
       dest: /usr/local/sbin/bw
-      remote_source:  yes
+      remote_src: yes
       mode: a+x
-    when:   bw_zip.stat.exists
+
+  # - name: unzip bitwarden
+  #   shell:
+  #     cmd:  unzip /tmp/bw.zip -d /tmp
+  #   when:   bw_zip.stat.exists
+
+  # - name: copy bitwarden to the path
+  #   copy:
+  #     src:  /tmp/bw
+  #     dest: /usr/local/sbin/bw
+  #     remote_source:  yes
+  #     mode: a+x
+  #   when:   bw_zip.stat.exists
 
   #   debug:
   #     msg:
