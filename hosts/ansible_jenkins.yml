@@ -11,8 +11,6 @@
     # - drake_role          # drake home directory permissions
     # - nfs_base_role       
     # - nfs_backup_role
-  vars:
-    - jenkins_pass: /var/lib/jenkins/secrets/initialAdminPassword
   tasks:
 
   - name: Install main packages
@@ -52,8 +50,8 @@
 
   # initial admin password:
   - name: print initial admin password
-    shell:
-      cmd: "cat /var/lib/jenkins/secrets/initialAdminPassword"
+    debug:
+      msg: "{{lookup('file', '/var/lib/jenkins/secrets/initialAdminPassword') }}"
 
   # TODO: ansible? anything to do?
 
@@ -67,7 +65,7 @@
     get_url:
       url: https://vault.bitwarden.com/download/?app=cli&platform=linux
       dest: /tmp/bw.zip
-    when: bw_installed.stat.exists
+    when: not bw_installed.stat.exists
 
   - name: check that downloaded file exists
     stat:
