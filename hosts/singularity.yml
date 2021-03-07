@@ -12,6 +12,72 @@
     - nfs_backup_role
   tasks:
 
+  # pihole-specific dotfiles:
+  # note: will use gravity sync to sync the rest
+  # dnsmasq (CNAME)
+  - name: check for existin cname.conf
+    stat:
+      path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
+    register: cname_conf
+
+  - name: remove existing cname.conf
+    file:
+      path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
+      state:  absent
+    when: cname_conf.stat.exists and (cname_conf.stat.islnk is defined and cname_conf.stat.islnk == False)
+
+  - name: link new cname.conf
+    file:
+      src:  /home/drake/dotfiles/pihole/cname.conf
+      dest: /etc/dnsmasq.d/05-pihole-custom-cname.conf
+      owner:  root
+      group:  root
+      state:  link
+    when: cname_conf.stat.exists and (cname_conf.stat.islnk is defined and cname_conf.stat.islnk == False)
+
+  # custom.list
+  - name: check for existin custom.list
+    stat:
+      path: /etc/pihole/custom.list
+    register: cust_list
+
+  - name: remove existing custom.list
+    file:
+      path: /etc/pihole/custom.list
+      state:  absent
+    when: cust_list.stat.exists and (cust_list.stat.islnk is defined and cust_list.stat.islnk == False)
+
+  - name: link new custom.list
+    file:
+      src:  /home/drake/dotfiles/pihole/custom.list
+      dest: /etc/pihole/custom.list
+      owner:  root
+      group:  root
+      state:  link
+    when: cust_list.stat.exists and (cust_list.stat.islnk is defined and cust_list.stat.islnk == False)
+  
+  # FTL conf
+  - name: check for existin pihole-FTL.conf
+    stat:
+      path: /etc/pihole/pihole-FTL.conf
+    register: ftl_conf
+
+  - name: remove existing pihole-FTL.conf
+    file:
+      path: /etc/pihole/pihole-FTL.conf
+      state:  absent
+    when: ftl_conf.stat.exists and (ftl_conf.stat.islnk is defined and ftl_conf.stat.islnk == False)
+
+  - name: link new pihole-FTL.conf
+    file:
+      src:  /home/drake/dotfiles/pihole/pihole-FTL.conf
+      dest: /etc/pihole/pihole-FTL.conf
+      owner:  root
+      group:  root
+      state:  link
+    when: ftl_conf.stat.exists and (ftl_conf.stat.islnk is defined and ftl_conf.stat.islnk == False)
+
+  # CRON
   - name: setup pihole backup script
     cron:
       name: dev_manager_backup
@@ -19,6 +85,7 @@
       hour: "2"
       job: "/bin/bash /home/drake/scripts/pihole/pihole_backup.sh"
 
+  # Pi-Hole
   - debug:
       msg:  "configuration of pihole must be done manually"
 
