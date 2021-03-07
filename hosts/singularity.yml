@@ -77,6 +77,12 @@
       state:  link
     when: ftl_conf.stat.exists and (ftl_conf.stat.islnk is defined and ftl_conf.stat.islnk == False)
 
+  # backup directory:
+  - name: create pihole backup folder
+    file:
+      path: /mnt/mobius/Backup/pihole
+      state:  directory
+
   # CRON
   - name: setup pihole backup script
     cron:

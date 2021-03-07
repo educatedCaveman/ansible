@@ -1,0 +1,31 @@
+---
+- name: configure NFS mount for gitlab
+  hosts: gitlab
+  tasks:
+
+    - name: make sure we have the nfs-utils...
+      apt:
+        name: nfs-common
+        state: latest
+
+    #initial NFS check
+    - name: create NFS folder
+      file:
+        path: /mnt/mobius
+        state:  directory
+
+    - name: check for NFS folder
+      stat:
+        path: /mnt/mobius
+      register: mobius
+
+    #mount the NFS share
+    - name: Mount the Backup share... 
+      mount:
+        src: 192.168.11.2:/mnt/storage_node/git
+        path: /mnt/mobius/git
+        fstype: nfs 
+        opts: rw,nolock,tcp
+        state: mounted
+      when: mobius.stat.exists
+      
