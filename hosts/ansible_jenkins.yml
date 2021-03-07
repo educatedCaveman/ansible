@@ -6,3 +6,4 @@
     - snapd
       - requires squashfuse
       - doesn't work
+    - download bitwarden directly
