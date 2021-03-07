@@ -2,15 +2,15 @@
 - name: configure Ansible/Jenkins
   hosts:  test_hosts
   roles:
-    # - LXC_role            # base LXC container config
-    # - git_dotfiles_role   # deploy the dotfiles repo
-    # - git_scripts_role
-    # - apt_client_role
-    # - LXC_netplan_MTU     # use the mtu9000 netplan config
-    # - linux_role          # base linux configs
-    # - drake_role          # drake home directory permissions
-    # - nfs_base_role       
-    # - nfs_backup_role
+    - LXC_role            # base LXC container config
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - git_scripts_role
+    - apt_client_role
+    - LXC_netplan_MTU     # use the mtu9000 netplan config
+    - linux_role          # base linux configs
+    - drake_role          # drake home directory permissions
+    - nfs_base_role       
+    - nfs_backup_role
   tasks:
 
   - name: Install main packages
@@ -81,32 +81,7 @@
   - name: unzip bitwarden
     unarchive:
       src:  /tmp/bw.zip
-      dest: /usr/local/sbin/bw
+      dest: /usr/local/sbin/
       remote_src: yes
       mode: a+x
-
-  # - name: unzip bitwarden
-  #   shell:
-  #     cmd:  unzip /tmp/bw.zip -d /tmp
-  #   when:   bw_zip.stat.exists
-
-  # - name: copy bitwarden to the path
-  #   copy:
-  #     src:  /tmp/bw
-  #     dest: /usr/local/sbin/bw
-  #     remote_source:  yes
-  #     mode: a+x
-  #   when:   bw_zip.stat.exists
-
-  #   debug:
-  #     msg:
-  #       - bitwarden must be installed manually.  (install link is wonky)
-
-  # - packages:
-  #   - ansible
-  #     - ansible-galaxy
-  #     - other ansible community packages
-  #   - snapd
-  #     - requires squashfuse
-  #     - doesn't work
-  #   - download bitwarden directly
+      
