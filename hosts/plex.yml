@@ -111,7 +111,7 @@
   - name: plex installation
     debug:
       msg:
-        - plex installation is best done manually (its not hard).  follow these instructions:
+        - "plex installation is best done manually (its not hard).  follow these instructions:"
         - https://support.plex.tv/articles/235974187-enable-repository-updating-for-supported-linux-server-distributions/
 
   - name: restoration notes
@@ -120,6 +120,6 @@
         - when re-creating the server, or restoring from backup,
         - you must first manually restore the data.  it also helps
         - to stop the plexmediaserver daemon first.  see the following
-        - link for additional details:
+        - "link for additional details:"
         - 
         - https://support.plex.tv/articles/201370363-move-an-install-to-another-system/

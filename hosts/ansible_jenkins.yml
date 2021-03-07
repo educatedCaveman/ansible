@@ -1,9 +1,94 @@
 ---
-  - packages:
-    - ansible
-      - ansible-galaxy
-      - other ansible community packages
-    - snapd
-      - requires squashfuse
-      - doesn't work
-    - download bitwarden directly
+- name: configure Ansible/Jenkins
+  hosts:  test_hosts
+  roles:
+    - LXC_role            # base LXC container config
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - git_scripts_role
+    - apt_client_role
+    - LXC_netplan_MTU     # use the mtu9000 netplan config
+    - linux_role          # base linux configs
+    - drake_role          # drake home directory permissions
+    # - nfs_base_role       
+    # - nfs_backup_role
+  vars:
+    - jenkins_pass: /var/lib/jenkins/secrets/initialAdminPassword
+  tasks:
+
+  - name: Install main packages
+    apt:
+      name:
+        - ansible
+        - ansible-galaxy
+        - default-jre
+        - default-jdk
+        - unzip
+      state:  latest
+
+  # Jenkins config
+  - name: add Jenkins Key
+    apt_key:
+      url:  https://pkg.jenkins.io/debian-stable/jenkins.io.key
+
+  - name: add Jenkins repo
+    apt_repository:
+      repo: deb http://pkg.jenkins.io/debian-stable binary/
+      update_cache: yes
+      state: present
+      filename: jenkins.list
+
+  - name: Install Jenkins
+    apt:
+      name:
+        - jenkins
+      state:  latest
+
+  - name: enable and restart jenkins
+    systemd:
+      name: jenkins
+      state:  started
+      enabled:  yes
+
+  # initial admin password:
+  - name: print initial admin password
+    shell:
+      cmd: "cat {{ jenkins_pass}} "
+
+  # TODO: ansible? anything to do?
+
+  # bitwarden config
+  - name: install bitwarden
+    get_url:
+      url: https://vault.bitwarden.com/download/?app=cli&platform=linux
+      dest: /tmp/bw.zip
+
+  - name: check that downloaded file exists
+    stat:
+      path: /tmp/bw.zip
+    register: bw_zip
+
+  - name: unzip bitwarden
+    shell:
+      cmd:  unzip /tmp/bw.zip -d /tmp
+    when:   bw_zip.stat.exists
+
+  - name: copy bitwarden to the path
+    copy:
+      src:  /tmp/bw
+      dest: /usr/local/sbin/bw
+      remote_source:  yes
+      mode: a+x
+    when:   bw_zip.stat.exists
+
+  #   debug:
+  #     msg:
+  #       - bitwarden must be installed manually.  (install link is wonky)
+
+  # - packages:
+  #   - ansible
+  #     - ansible-galaxy
+  #     - other ansible community packages
+  #   - snapd
+  #     - requires squashfuse
+  #     - doesn't work
+  #   - download bitwarden directly
