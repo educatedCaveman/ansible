@@ -15,13 +15,95 @@
     - nfs_hegre_role
   tasks:
 
-  # NFS:
-  # - video/movies
-  # - video/tv_shows
-  # - music
+  # non-standard NFS mounts
+  # NFS: Movies
+  - name: check for the Movies directory before mounting
+    stat: 
+      path: /mnt/mobius/Movies
+    register: movies_dir
+    
+  - name: create the mount directory
+    file:
+      path:     /mnt/mobius/Movies
+      state:    directory
+      recurse:  yes
+    when: not movies_dir.stat.exists
+
+  - name: Mount the Movies NFS share if the mount path exists
+    mount:
+      src: 192.168.11.2:/mnt/storage_node/Video/Movies
+      path: /mnt/mobius/Movies
+      fstype: nfs 
+      opts: rw,nolock,tcp
+      state: mounted
+
+  # NFS: TV Shows
+  # careful of the spelling here
+  - name: check for the TV Shows directory before mounting
+    stat: 
+      path: /mnt/mobius/TV-Shows
+    register: shows_dir
+    
+  - name: create the mount directory
+    file:
+      path:     /mnt/mobius/TV-Shows
+      state:    directory
+      recurse:  yes
+    when: not shows_dir.stat.exists
+
+  - name: Mount the TV Shows NFS share if the mount path exists
+    mount:
+      src: 192.168.11.2:/mnt/storage_node/Video/TV-shows
+      path: /mnt/mobius/TV-Shows
+      fstype: nfs 
+      opts: rw,nolock,tcp
+      state: mounted
+
+  # NFS: Music
+  - name: check for the Music directory before mounting
+    stat: 
+      path: /mnt/mobius/Music
+    register: music_dir
+  
+  - name: create the mount directory
+    file:
+      path:     /mnt/mobius/Music
+      state:    directory
+      recurse:  yes
+    when: not music_dir.stat.exists
+
+  - name: Mount the Music NFS share if the mount path exists
+    mount:
+      src: 192.168.11.2:/mnt/storage_node/Music/iTunes/iTunes Media/Music
+      path: /mnt/mobius/Music
+      fstype: nfs 
+      opts: rw,nolock,tcp
+      state: mounted
 
   # CRON:
-   0 0 1 * *	/usr/bin/rsync -a --delete --exclude="Plex\ Media\ Server/Cache*" /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server /mnt/mobius/Backup/plex/
+  - name: add backup script to cron
+    cron:
+      name: plex_backup
+      minute: "0"
+      hour: "0"
+      day:  "1"
+      job: "/bin/bash /home/drake/scripts/backup/plex_backup.sh"
 
+  # plex install
+  # https://support.plex.tv/articles/235974187-enable-repository-updating-for-supported-linux-server-distributions/
+  - name: Add Plex Repository
+    apt_repository:
+      repo: deb https://downloads.plex.tv/repo/deb public main
+      state: present
 
-   # refine the above into a proper backup script
+  - name: Add Plex APT Key
+    apt_key:
+      url: https://downloads.plex.tv/plex-keys/PlexSign.key
+      state: present
+
+  - name: Update apt and install Plex
+    apt: 
+      # update_cache: yes
+      name: 
+        - plexmediaserver
+      state: latest
