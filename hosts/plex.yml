@@ -91,22 +91,28 @@
 
   # plex install
   # https://support.plex.tv/articles/235974187-enable-repository-updating-for-supported-linux-server-distributions/
-  - name: Add Plex Repository
-    apt_repository:
-      repo: deb https://downloads.plex.tv/repo/deb public main
-      state: present
+  # - name: Add Plex Repository
+  #   apt_repository:
+  #     repo: deb https://downloads.plex.tv/repo/deb public main
+  #     state: present
 
-  - name: Add Plex APT Key
-    apt_key:
-      url: https://downloads.plex.tv/plex-keys/PlexSign.key
-      state: present
+  # - name: Add Plex APT Key
+  #   apt_key:
+  #     url: https://downloads.plex.tv/plex-keys/PlexSign.key
+  #     state: present
 
-  - name: Update apt and install Plex
-    apt: 
-      # update_cache: yes
-      name: 
-        - plexmediaserver
-      state: latest
+  # - name: Update apt and install Plex
+  #   apt: 
+  #     # update_cache: yes
+  #     name: 
+  #       - plexmediaserver
+  #     state: latest
+
+  - name: plex installation
+    debug:
+      msg:
+        - "plex installation is best done manually (its not hard).  follow these instructions:"
+        - "https://support.plex.tv/articles/235974187-enable-repository-updating-for-supported-linux-server-distributions/"
 
   - name: restoration notes
     debug:
