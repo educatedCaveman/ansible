@@ -53,7 +53,7 @@
   # initial admin password:
   - name: print initial admin password
     shell:
-      cmd: "cat {{ jenkins_pass}} "
+      cmd: "cat /var/lib/jenkins/secrets/initialAdminPassword"
 
   # TODO: ansible? anything to do?
 
