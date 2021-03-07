@@ -19,7 +19,7 @@
     apt:
       name:
         - ansible
-        - ansible-galaxy
+        # - ansible-galaxy
         - default-jre
         - default-jdk
         - unzip
