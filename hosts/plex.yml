@@ -1,0 +1,27 @@
+- name: configure Plex
+  hosts:  plex
+  roles:
+    - LXC_role            # base LXC container config
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - git_scripts_role
+    - apt_client_role
+    - LXC_netplan_MTU     # use the mtu9000 netplan config
+    - linux_role          # base linux configs
+    - drake_role          # drake home directory permissions
+    - nfs_base_role       
+    - nfs_backup_role
+    - nfs_pics_role
+    - nfs_pr0n_role
+    - nfs_hegre_role
+  tasks:
+
+  # NFS:
+  # - video/movies
+  # - video/tv_shows
+  # - music
+
+  # CRON:
+   0 0 1 * *	/usr/bin/rsync -a --delete --exclude="Plex\ Media\ Server/Cache*" /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server /mnt/mobius/Backup/plex/
+
+
+   # refine the above into a proper backup script

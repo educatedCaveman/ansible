@@ -8,6 +8,7 @@
     - dev_swarm_worker_01
     - prd_swarm_manager_01
     - prd_swarm_worker_01
+    - plex
   tasks:
 
     - name: install relevant packages
