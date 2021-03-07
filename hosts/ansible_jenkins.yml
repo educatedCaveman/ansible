@@ -49,15 +49,11 @@
       enabled:  yes
 
   # initial admin password:
-  - name: get initial admin password
+  - name: Initial admin password
     debug:
-      msg: cat /var/lib/jenkins/secrets/initialAdminPassword
-    register: admin_PW
-
-  - name: print initial admin password
-    debug: 
-      msg:  {{ admin_PW.stdout }}
-    when: admin_PW is defined and admin_PW|succeeded
+      msg: 
+        - "to get the initial admin password, run the following:"
+        - cat /var/lib/jenkins/secrets/initialAdminPassword
 
   # TODO: ansible? anything to do?
 
