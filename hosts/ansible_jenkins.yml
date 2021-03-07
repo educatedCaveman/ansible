@@ -49,9 +49,15 @@
       enabled:  yes
 
   # initial admin password:
-  - name: print initial admin password
+  - name: get initial admin password
     debug:
-      msg: "{{lookup('file', '/var/lib/jenkins/secrets/initialAdminPassword') }}"
+      msg: cat /var/lib/jenkins/secrets/initialAdminPassword
+    register: admin_PW
+
+  - name: print initial admin password
+    debug: 
+      msg:  {{ admin_PW.stdout }}
+    when: admin_PW is defined and admin_PW|succeeded
 
   # TODO: ansible? anything to do?
 
