@@ -2,13 +2,13 @@
 - name: configure Ansible/Jenkins
   hosts:  test_hosts
   roles:
-    - LXC_role            # base LXC container config
-    - git_dotfiles_role   # deploy the dotfiles repo
-    - git_scripts_role
-    - apt_client_role
-    - LXC_netplan_MTU     # use the mtu9000 netplan config
-    - linux_role          # base linux configs
-    - drake_role          # drake home directory permissions
+    # - LXC_role            # base LXC container config
+    # - git_dotfiles_role   # deploy the dotfiles repo
+    # - git_scripts_role
+    # - apt_client_role
+    # - LXC_netplan_MTU     # use the mtu9000 netplan config
+    # - linux_role          # base linux configs
+    # - drake_role          # drake home directory permissions
     # - nfs_base_role       
     # - nfs_backup_role
   vars:
@@ -20,6 +20,7 @@
       name:
         - ansible
         # - ansible-galaxy
+        - gpg
         - default-jre
         - default-jdk
         - unzip
@@ -57,10 +58,16 @@
   # TODO: ansible? anything to do?
 
   # bitwarden config
+  - name: check for bitwarden
+    stat:
+      path: /usr/local/sbin/bw
+    register: bw_installed
+
   - name: install bitwarden
     get_url:
       url: https://vault.bitwarden.com/download/?app=cli&platform=linux
       dest: /tmp/bw.zip
+    when: bw_installed.stat.exists
 
   - name: check that downloaded file exists
     stat:
