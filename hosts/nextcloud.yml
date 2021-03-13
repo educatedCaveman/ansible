@@ -79,7 +79,7 @@
   # manual config steps?
   # or run these things as shell commands?
   # but what about the password?
-  - name: manually configure the snap
+  - name: manually configure the nextcloud snap
     debug:
       - "the first time this is run on a host, look through the following guide"
       - "for configuration steps:"

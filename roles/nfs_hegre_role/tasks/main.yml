@@ -12,7 +12,7 @@
     recurse:  yes
   when: not hegre_dir.stat.exists
 
-- name: Mount the pr0n NFS share if the mount path exists
+- name: Mount the Hegre NFS share if the mount path exists
   mount:
     src: 192.168.11.2:/mnt/storage_node/Hegre
     path: /mnt/mobius/Hegre

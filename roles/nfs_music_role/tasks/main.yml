@@ -12,7 +12,7 @@
     recurse:  yes
   when: not music_dir.stat.exists
 
-- name: Mount the pr0n NFS share if the mount path exists
+- name: Mount the Music NFS share if the mount path exists
   mount:
     src: 192.168.11.2:/mnt/storage_node/Music
     path: /mnt/mobius/Music
