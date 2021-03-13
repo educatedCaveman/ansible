@@ -12,7 +12,7 @@
     recurse:  yes
   when: not pics_dir.stat.exists
 
-- name: Mount the pr0n NFS share if the mount path exists
+- name: Mount the Pictures NFS share if the mount path exists
   mount:
     src: 192.168.11.2:/mnt/storage_node/Pictures
     path: /mnt/mobius/Pictures

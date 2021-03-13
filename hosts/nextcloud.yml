@@ -11,8 +11,8 @@
     - linux_role
     - drake_role
     - nfs_base_role
-    - nfs_docs_role
-    - nfs_pics_role
+    # - nfs_docs_role
+    # - nfs_pics_role
   tasks:
 
   # install nextcloud snap
@@ -21,49 +21,64 @@
       name:
         - nextcloud
 
-  # setup the following NFS links:
-  - name: link Documents to nextcloud
+  # # setup the following NFS links:
+  # - name: link Documents to nextcloud
+  #   file:
+  #     src:  /mnt/mobius/Documents
+  #     dest: /var/snap/nextcloud/common/nextcloud/data/Documents
+  #     state:  link
+
+  # - name: link Pictures to nextcloud
+  #   file:
+  #     src:  /mnt/mobius/Pictures
+  #     dest: /var/snap/nextcloud/common/nextcloud/data/Pictures
+  #     state:  link
+
+  # Pictures NFS mount
+  - name: check for the mount directory before mounting
+    stat: 
+      path: /var/snap/nextcloud/common/nextcloud/data/Pictures
+    register: pics_dir
+    
+  - name: create the mount directory
     file:
-      src:  /mnt/mobius/Documents
-      dest: /var/snap/nextcloud/common/nextcloud/data/Documents
-      state:  link
+      path:     /var/snap/nextcloud/common/nextcloud/data/Pictures
+      state:    directory
+      recurse:  yes
+    when: not pics_dir.stat.exists
 
-  - name: link Pictures to nextcloud
+  - name: Mount the Pictures NFS share if the mount path exists
+    mount:
+      src: 192.168.11.2:/mnt/storage_node/Pictures
+      path: /var/snap/nextcloud/common/nextcloud/data/Pictures
+      fstype: nfs 
+      opts: rw,nolock,tcp
+      state: mounted
+    
+  # Documents NFS mount
+  - name: check for the mount directory before mounting
+    stat: 
+      path: /var/snap/nextcloud/common/nextcloud/data/Documents
+    register: docs_dir
+    
+  - name: create the mount directory
     file:
-      src:  /mnt/mobius/Pictures
-      dest: /var/snap/nextcloud/common/nextcloud/data/Pictures
-      state:  link
+      path:     /var/snap/nextcloud/common/nextcloud/data/Documents
+      state:    directory
+      recurse:  yes
+    when: not docs_dir.stat.exists
 
-#     #NFS path check
-#     - name: create NFS folder
-#       file:
-#         path: /var/snap/nextcloud/common/nextcloud/data
-#         state:  directory
+  - name: Mount the Documents NFS share if the mount path exists
+    mount:
+      src: 192.168.11.2:/mnt/storage_node/Documents
+      path: /var/snap/nextcloud/common/nextcloud/data/Documents
+      fstype: nfs 
+      opts: rw,nolock,tcp
+      state: mounted
 
-#     - name: check for NFS folder
-#       stat:
-#         path: /var/snap/nextcloud/common/nextcloud/data
-#       register: nextcloud
-
-#     #mount the Documents share
-#     - name: Mount the Documents share... 
-#       mount:
-#         src: 192.168.11.2:/mnt/storage_node/Documents
-#         path: /var/snap/nextcloud/common/nextcloud/data/Documents
-#         fstype: nfs 
-#         opts: rw,nolock,tcp
-#         state: mounted
-#       when: nextcloud.stat.exists
-
-#     #mount the Pictures share
-#     - name: Mount the Pictures share... 
-#       mount:
-#         src: 192.168.11.2:/mnt/storage_node/Pictures
-#         path: /var/snap/nextcloud/common/nextcloud/data/Pictures
-#         fstype: nfs 
-#         opts: rw,nolock,tcp
-#         state: mounted
-#       when: nextcloud.stat.exists
+  # manual config steps?
+  # or run these things as shell commands?
+  # but what about the password?
   - name: manually configure the snap
     debug:
       - "the first time this is run on a host, look through the following guide"
