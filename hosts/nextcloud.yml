@@ -81,9 +81,10 @@
   # but what about the password?
   - name: manually configure the nextcloud snap
     debug:
-      - "the first time this is run on a host, look through the following guide"
-      - "for configuration steps:"
-      - "https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-nextcloud-on-ubuntu-20-04"
-      - ""
-      - "after doing the config, run the following:"
-      - "sudo snap restart nextcloud"
+      msg:
+        - "the first time this is run on a host, look through the following guide"
+        - "for configuration steps:"
+        - "https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-nextcloud-on-ubuntu-20-04"
+        - ""
+        - "after doing the config, run the following:"
+        - "sudo snap restart nextcloud"
