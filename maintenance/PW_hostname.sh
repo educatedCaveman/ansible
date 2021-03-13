@@ -27,7 +27,7 @@ HOSTS=( \
     gitlab_vm \
     apt_cache \
     apt_mirror \
-    nextcloud \
+    nextcloud_vm \
 )
 
 # check BW_CLIENTID
