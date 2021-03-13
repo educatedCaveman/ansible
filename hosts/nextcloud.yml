@@ -11,8 +11,6 @@
     - linux_role
     - drake_role
     - nfs_base_role
-    # - nfs_docs_role
-    # - nfs_pics_role
   tasks:
 
   # install nextcloud snap
@@ -20,19 +18,6 @@
     community.general.snap:
       name:
         - nextcloud
-
-  # # setup the following NFS links:
-  # - name: link Documents to nextcloud
-  #   file:
-  #     src:  /mnt/mobius/Documents
-  #     dest: /var/snap/nextcloud/common/nextcloud/data/Documents
-  #     state:  link
-
-  # - name: link Pictures to nextcloud
-  #   file:
-  #     src:  /mnt/mobius/Pictures
-  #     dest: /var/snap/nextcloud/common/nextcloud/data/Pictures
-  #     state:  link
 
   # Pictures NFS mount
   - name: check for the mount directory before mounting
