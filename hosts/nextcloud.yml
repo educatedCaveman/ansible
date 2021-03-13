@@ -21,19 +21,18 @@
       name:
         - nextcloud
 
-  # setup the following NFS 
+  # setup the following NFS links:
+  - name: link Documents to nextcloud
+    file:
+      src:  /mnt/mobius/Documents
+      dest: /var/snap/nextcloud/common/nextcloud/data/Documents
+      state:  link
 
-
-
-
-# - name: configure NFS mount for NextCloud
-#   hosts: nextcloud
-#   tasks:
-
-#     - name: make sure we have the nfs-utils...
-#       apt:
-#         name: nfs-common
-#         state: latest
+  - name: link Pictures to nextcloud
+    file:
+      src:  /mnt/mobius/Pictures
+      dest: /var/snap/nextcloud/common/nextcloud/data/Pictures
+      state:  link
 
 #     #NFS path check
 #     - name: create NFS folder
@@ -65,4 +64,11 @@
 #         opts: rw,nolock,tcp
 #         state: mounted
 #       when: nextcloud.stat.exists
-      
+  - name: manually configure the snap
+    debug:
+      - "the first time this is run on a host, look through the following guide"
+      - "for configuration steps:"
+      - "https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-nextcloud-on-ubuntu-20-04"
+      - ""
+      - "after doing the config, run the following:"
+      - "sudo snap restart nextcloud"
