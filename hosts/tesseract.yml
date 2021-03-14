@@ -47,7 +47,7 @@
       src:  /home/drake/dotfiles/zed/zed.rc
       dest: /etc/zfs/zed.d/zed.rc
       state:  link
-    when: dotfiles.stat.exists and (netdata.stat.islnk is defined and netdata.stat.islnk == False)
+    when: dotfiles.stat.exists and (zed_rc.stat.islnk is defined and zed_rc.stat.islnk == False)
 
   - name: enable and restart ZED
     systemd:
@@ -56,3 +56,6 @@
       enabled:  yes
 
   # sanoid, configure, restart
+  # also download
+
+  # email setup stuff
