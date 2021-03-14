@@ -44,5 +44,7 @@
     src: /home/drake/dotfiles/init.vim
     dest: /home/drake/.config/nvim/init.vim
     state: link
-  when: (not nvim.stat.exists) and dotfiles.stat.exists
+  when: 
+    - not nvim.stat.exists
+    - dotfiles.stat.exists
   

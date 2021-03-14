@@ -25,7 +25,9 @@
       file:
         path: /etc/ansible/hosts.ini
         state:  absent
-      when: hosts.stat.islnk is defined and hosts.stat.islnk == False
+      when: 
+        - hosts.stat.islnk is defined
+        - hosts.stat.islnk == False
 
     - name: link new hosts file
       file:
@@ -43,7 +45,9 @@
       file:
         path: /etc/ansible/ansible.cfg
         state:  absent
-      when: config.stat.islnk is defined and config.stat.islnk == False
+      when: 
+        - config.stat.islnk is defined
+        - config.stat.islnk == False
 
     - name: link new ansible.cfg file
       file:
@@ -61,7 +65,9 @@
       file:
         path: /etc/ansible/roles
         state:  absent
-      when: roles.stat.islnk is defined and roles.stat.islnk == False
+      when: 
+        - roles.stat.islnk is defined
+        - roles.stat.islnk == False
 
     - name: link new roles folder
       file:
@@ -72,5 +78,3 @@
     # jenkins repo
     - debug:
         msg:  "deployment of jenkins repo is handled by jenkins"
-
-

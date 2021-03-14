@@ -47,7 +47,9 @@
       src:  /etc/apt/sources.list.d/docker.list
       dest: /etc/apt/sources.list.d/docker.list.bkup
       remote_src: yes
-    when: (not docker_backup.stat.exists) and docker_list.stat.exists
+    when: 
+      - not docker_backup.stat.exists
+      - docker_list.stat.exists
     
   # remove the docker.list if it exists
   - name: remove the existing docker.list if it exists

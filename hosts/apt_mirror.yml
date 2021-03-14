@@ -52,7 +52,9 @@
       file: 
         path: /etc/apt/mirror.list
         state:  absent
-      when: mirror_list.stat.islnk is defined and mirror_list.stat.islnk == False
+      when: 
+        - mirror_list.stat.islnk is defined
+        - mirror_list.stat.islnk == False
 
     # link the mirror.list file
     - name: link mirror.list

@@ -24,7 +24,10 @@
     file:
       path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
       state:  absent
-    when: cname_conf.stat.exists and (cname_conf.stat.islnk is defined and cname_conf.stat.islnk == False)
+    when: 
+      - cname_conf.stat.exists
+      - cname_conf.stat.islnk is defined
+      - cname_conf.stat.islnk == False
 
   - name: link new cname.conf
     file:
@@ -33,7 +36,10 @@
       owner:  root
       group:  root
       state:  link
-    when: cname_conf.stat.exists and (cname_conf.stat.islnk is defined and cname_conf.stat.islnk == False)
+    when: 
+      - cname_conf.stat.exists
+      - cname_conf.stat.islnk is defined
+      - cname_conf.stat.islnk == False
 
   # custom.list
   - name: check for existin custom.list
@@ -45,7 +51,10 @@
     file:
       path: /etc/pihole/custom.list
       state:  absent
-    when: cust_list.stat.exists and (cust_list.stat.islnk is defined and cust_list.stat.islnk == False)
+    when: 
+      - cust_list.stat.exists
+      - cust_list.stat.islnk is defined
+      - cust_list.stat.islnk == False
 
   - name: link new custom.list
     file:
@@ -54,7 +63,10 @@
       owner:  root
       group:  root
       state:  link
-    when: cust_list.stat.exists and (cust_list.stat.islnk is defined and cust_list.stat.islnk == False)
+    when: 
+      - cust_list.stat.exists
+      - cust_list.stat.islnk is defined
+      - cust_list.stat.islnk == False
   
   # FTL conf
   - name: check for existin pihole-FTL.conf
@@ -66,7 +78,10 @@
     file:
       path: /etc/pihole/pihole-FTL.conf
       state:  absent
-    when: ftl_conf.stat.exists and (ftl_conf.stat.islnk is defined and ftl_conf.stat.islnk == False)
+    when: 
+      - ftl_conf.stat.exists
+      - ftl_conf.stat.islnk is defined
+      - ftl_conf.stat.islnk == False
 
   - name: link new pihole-FTL.conf
     file:
@@ -75,7 +90,10 @@
       owner:  root
       group:  root
       state:  link
-    when: ftl_conf.stat.exists and (ftl_conf.stat.islnk is defined and ftl_conf.stat.islnk == False)
+    when:
+      - ftl_conf.stat.exists
+      - ftl_conf.stat.islnk is defined
+      - ftl_conf.stat.islnk == False
 
   # backup directory:
   - name: create pihole backup folder

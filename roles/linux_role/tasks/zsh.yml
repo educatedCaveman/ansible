@@ -45,7 +45,10 @@
     src: /home/drake/dotfiles/zsh/zshrc
     dest: /home/drake/.zshrc
     state: link
-  when: (not zshrc.stat.exists) and oh_my_zsh.stat.exists and dotfiles.stat.exists
+  when: 
+    - not zshrc.stat.exists
+    - oh_my_zsh.stat.exists
+    - dotfiles.stat.exists
 
 # check if .zsh_aliases exists:
 - name: checking for .zsh_aliases
@@ -58,7 +61,10 @@
     src: /home/drake/dotfiles/zsh/zsh_aliases
     dest: /home/drake/.zsh_aliases
     state: link
-  when: (not zsh_aliases.stat.exists) and oh_my_zsh.stat.exists and dotfiles.stat.exists
+  when: 
+    - not zsh_aliases.stat.exists
+    - oh_my_zsh.stat.exists
+    - dotfiles.stat.exists
 
 # check if .zsh-theme exists:
 - name: checking for .zsh-theme
@@ -71,7 +77,10 @@
     src: /home/drake/dotfiles/zsh/less-fishy.zsh-theme
     dest: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
     state: link
-  when: (not zsh_theme.stat.exists) and oh_my_zsh.stat.exists and dotfiles.stat.exists
+  when: 
+    - not zsh_theme.stat.exists
+    - oh_my_zsh.stat.exists
+    - dotfiles.stat.exists
 
 # zsh plugin from git:
 - name: cloning zsh-autosuggestions
