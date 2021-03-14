@@ -36,14 +36,20 @@
     file:
       path: /etc/zfs/zed.d/zed.rc
       state:  absent
-    when: dotfiles.stat.exists and (zed_rc.stat.islnk is defined and zed_rc.stat.islnk == False)
+    when: 
+      - dotfiles.stat.exists
+      - zed_rc.stat.islnk is defined
+      - zed_rc.stat.islnk == False
 
   - name: link zed.rc
     file:
       src:  /home/drake/dotfiles/zed/zed.rc
       dest: /etc/zfs/zed.d/zed.rc
       state:  link
-    when: dotfiles.stat.exists and (zed_rc.stat.islnk is defined and zed_rc.stat.islnk == False)
+    when: 
+      - dotfiles.stat.exists
+      - zed_rc.stat.islnk is defined
+      - zed_rc.stat.islnk == False
 
   - name: enable and restart ZED
     systemd:
@@ -56,6 +62,12 @@
   - name: first sanoid should be installed
     debug:
       msg: https://github.com/jimsalterjrs/sanoid/blob/master/INSTALL.md
+
+  # check if sanoid already present
+  - name:
+    stat:
+      path: /usr/bin/sanoid
+    register: sanoid
 
   - name: check for existing sanoid.conf
     stat:
@@ -72,25 +84,53 @@
       src:  /etc/sanoid/sanoid.conf
       dest: /etc/sanoid/sanoid.conf.bkup
       remote_src: yes
-    when: not sanoid_bkup.stat.exists
+    when: 
+      - not sanoid_bkup.stat.exists
+      - sanoid.stat.exists
 
   - name: remove the existing sanoid.conf
     file:
       path: /etc/sanoid/sanoid.conf
       state:  absent
-    when: dotfiles.stat.exists and (sanoid_conf.stat.islnk is defined and sanoid_conf.stat.islnk == False)
+    when: 
+      - dotfiles.stat.exists
+      - sanoid_conf.stat.islnk is defined
+      - sanoid_conf.stat.islnk == False
+      - sanoid.stat.exists
 
   - name: link sanoid.conf
     file:
       src:  /home/drake/dotfiles/sanoid/sanoid.conf
       dest: /etc/sanoid/sanoid.conf
       state:  link
-    when: dotfiles.stat.exists and (sanoid_conf.stat.islnk is defined and sanoid_conf.stat.islnk == False)
+    when: 
+      - dotfiles.stat.exists
+      - sanoid_conf.stat.islnk is defined
+      - sanoid_conf.stat.islnk == False
+      - sanoid.stat.exists
 
   - name: enable and restart sanoid
     systemd:
       name: sanoid
       state:  restarted
       enabled:  yes
+    when: sanoid.stat.exists
 
   # email setup stuff
+  # https://github.com/Tontonjo/proxmox.git
+  - name: check for existing email repo
+    stat:
+      path: /home/drake/email_setup
+    register: email
+
+  - name: email notifications 
+    git:
+      repo: https://github.com/Tontonjo/proxmox.git
+      dest: /home/drake/email_setup
+      force:  yes
+    when: not email.stat.exists
+
+  - name: initial config (manual)
+    debug:
+      msg: run ez_proxmox_mail_configurator.sh, after preparing an app password for gmail
+    when: not email.stat.exists
