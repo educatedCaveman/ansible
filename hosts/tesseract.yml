@@ -15,10 +15,6 @@
     register: dotfiles
 
   # ZED, configure, restart
-  # - backup any existing config
-  # - link config
-  # - reference other stuff for exact steps
-  # - restart service
   - name: check for existing zed.rc
     stat:
       path: /etc/zfs/zed.d/zed.rc
@@ -57,5 +53,44 @@
 
   # sanoid, configure, restart
   # also download
+  - name: first sanoid should be installed
+    debug:
+      msg: https://github.com/jimsalterjrs/sanoid/blob/master/INSTALL.md
+
+  - name: check for existing sanoid.conf
+    stat:
+      path: /etc/sanoid/sanoid.conf
+    register: sanoid_conf
+
+  - name: check for existing sanoid.conf.bkup
+    stat:
+      path: /etc/sanoid/sanoid.conf.bkup
+    register: sanoid_bkup
+
+  - name: backup sanoid.conf if the backup doesn't exist
+    copy:
+      src:  /etc/sanoid/sanoid.conf
+      dest: /etc/sanoid/sanoid.conf.bkup
+      remote_src: yes
+    when: not sanoid_bkup.stat.exists
+
+  - name: remove the existing sanoid.conf
+    file:
+      path: /etc/sanoid/sanoid.conf
+      state:  absent
+    when: dotfiles.stat.exists and (sanoid_conf.stat.islnk is defined and sanoid_conf.stat.islnk == False)
+
+  - name: link sanoid.conf
+    file:
+      src:  /home/drake/dotfiles/sanoid/sanoid.conf
+      dest: /etc/sanoid/sanoid.conf
+      state:  link
+    when: dotfiles.stat.exists and (sanoid_conf.stat.islnk is defined and sanoid_conf.stat.islnk == False)
+
+  - name: enable and restart sanoid
+    systemd:
+      name: sanoid
+      state:  restarted
+      enabled:  yes
 
   # email setup stuff
