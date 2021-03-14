@@ -4,7 +4,6 @@
       - htop
       - tree
       - curl
-      - lastpass-cli
       - nmon
       - ncdu
       - dstat

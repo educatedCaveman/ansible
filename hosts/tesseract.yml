@@ -1,0 +1,14 @@
+---
+- name: configure basic elements of Tesseract
+  hosts:
+    - tesseract
+  roles:
+    - git_dotfiles_role
+    - git_scripts_role
+    - linux_role
+    - drake_role
+  tasks:
+
+  # ZED, configure, restart
+
+  # sanoid, configure, restart

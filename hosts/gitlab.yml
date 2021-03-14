@@ -17,9 +17,8 @@
   - name: install GitLab manually
     debug:
       msg: 
-        - run through the setup here:
-        - https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-gitlab-on-ubuntu-18-04
-
+        - "run through the setup here:"
+        - "https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-gitlab-on-ubuntu-18-04"
 
 
 # - name: configure NFS mount for gitlab

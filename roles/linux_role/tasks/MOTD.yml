@@ -23,7 +23,13 @@
   when: news_text_file.stat.exists
 
 # tweak MOTD:
+- name: test if general MOTD file is present
+  stat:
+    path: /etc/motd
+  register: motd_file
+
 - name: delete the raspbian MOTD file
   file: 
     path: /etc/motd
     state:  absent
+  when: motd_file.stat.exists
