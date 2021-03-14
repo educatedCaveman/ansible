@@ -1,6 +1,8 @@
 ---
 - name: deploy dotfiles 
-  hosts:  linux
+  hosts:  
+    - linux
+    - tesseract
   ignore_unreachable: true
   gather_facts: false
   tasks:

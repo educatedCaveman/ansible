@@ -9,6 +9,50 @@
     - drake_role
   tasks:
 
+  - name: check if the dotfiles are present
+    stat:
+      path: /home/drake/dotfiles
+    register: dotfiles
+
   # ZED, configure, restart
+  # - backup any existing config
+  # - link config
+  # - reference other stuff for exact steps
+  # - restart service
+  - name: check for existing zed.rc
+    stat:
+      path: /etc/zfs/zed.d/zed.rc
+    register: zed_rc
+
+  - name: check for existing zed.rc.bkup
+    stat:
+      path: /etc/zfs/zed.d/zed.rc.bkup
+    register: zed_rc_bkup
+
+  - name: backup zed.rc if the backup doesn't exist
+    copy:
+      src:  /etc/zfs/zed.d/zed.rc
+      dest: /etc/zfs/zed.d/zed.rc.bkup
+      remote_src: yes
+    when: not zed_rc_bkup.stat.exists
+
+  - name: remove the existing zed.rc
+    file:
+      path: /etc/zfs/zed.d/zed.rc
+      state:  absent
+    when: dotfiles.stat.exists and (zed_rc.stat.islnk is defined and zed_rc.stat.islnk == False)
+
+  - name: link zed.rc
+    file:
+      src:  /home/drake/dotfiles/zed/zed.rc
+      dest: /etc/zfs/zed.d/zed.rc
+      state:  link
+    when: dotfiles.stat.exists and (netdata.stat.islnk is defined and netdata.stat.islnk == False)
+
+  - name: enable and restart ZED
+    systemd:
+      name: zed
+      state:  restarted
+      enabled:  yes
 
   # sanoid, configure, restart
