@@ -9,7 +9,7 @@
     - VM_netplan_MTU
     - apt_client_role
     - linux_role
-    - drake_role
+    # - drake_role
   vars:
     - driver_file:  "/home/drake/NVIDIA-Linux-x86_64-460.67.run"
     - driver_url: "https://international.download.nvidia.com/XFree86/Linux-x86_64/460.67/NVIDIA-Linux-x86_64-460.67.run"
@@ -20,6 +20,13 @@
   tasks:
 
     #TODO: install dependencies:
+    - name: Install nVidia Driver Dependencies
+      apt:
+        name:
+          - build-essential 
+          - libglvnd-dev 
+          - pkg-config
+        state:  latest
 
     # nvidia driver
     - name: check for the driver being present already
@@ -49,25 +56,25 @@
 
     - name: check for existing T-Rex folder
       stat:
-        path: "{{ t_rex.dir }}"
+        path: "{{ t_rex[0] }}"
       register: trex_dir
 
     - name: create T-Rex folder
       file:
-        path: "{{ t_rex.dir }}"
+        path: "{{ t_rex[0] }}"
         state:  directory
       when: not trex_dir.stat.exists
 
     - name: retrieving T-Rex
       get_url:
-        url:  "{{ trex.realease_url }}"
-        dest: "{{ trex.dir }}/{{ trex.archive }}"
+        url:  "{{ trex[2] }}"
+        dest: "{{ trex[0] }}/{{ trex[1] }}"
       when: not trex_dir.stat.exists
 
     - name: unzip T-Rex
       unarchive:
-        src:  "{{ trex.dir }}/{{ trex.archive }}"
-        dest: "{{ trex.dir }}"
+        src:  "{{ trex[0] }}/{{ trex[1] }}"
+        dest: "{{ trex[0] }}"
         remote_src: yes
         mode: a+x
       
