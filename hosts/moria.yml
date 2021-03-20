@@ -9,17 +9,15 @@
     - VM_netplan_MTU
     - apt_client_role
     - linux_role
-    # - drake_role
   vars:
     - driver_file:  "/home/drake/NVIDIA-Linux-x86_64-460.67.run"
     - driver_url: "https://international.download.nvidia.com/XFree86/Linux-x86_64/460.67/NVIDIA-Linux-x86_64-460.67.run"
-    - t_rex:
-      - dir:  "/home/drake/t_rex"
-      - archive:  "t-rex-0.19.12-linux-cuda11.1.tar.gz"
-      - release_url:  "https://github.com/trexminer/T-Rex/releases/download/0.19.12/t-rex-0.19.12-linux-cuda11.1.tar.gz"
+    - t_rex_dir:  "/home/drake/t_rex"
+    - t_rex_archive:  "t-rex-0.19.12-linux-cuda11.1.tar.gz"
+    - t_rex_release_url:  "https://github.com/trexminer/T-Rex/releases/download/0.19.12/t-rex-0.19.12-linux-cuda11.1.tar.gz"
   tasks:
 
-    #TODO: install dependencies:
+    # install dependencies:
     - name: Install nVidia Driver Dependencies
       apt:
         name:
@@ -56,25 +54,25 @@
 
     - name: check for existing T-Rex folder
       stat:
-        path: "{{ t_rex[0] }}"
+        path: "{{ t_rex_dir }}"
       register: trex_dir
 
     - name: create T-Rex folder
       file:
-        path: "{{ t_rex[0] }}"
+        path: "{{ t_rex_dir }}"
         state:  directory
       when: not trex_dir.stat.exists
 
     - name: retrieving T-Rex
       get_url:
-        url:  "{{ trex[2] }}"
-        dest: "{{ trex[0] }}/{{ trex[1] }}"
+        url:  "{{ t_rex_release_url }}"
+        dest: "{{ t_rex_dir }}/{{ t_rex_archive }}"
       when: not trex_dir.stat.exists
 
     - name: unzip T-Rex
       unarchive:
-        src:  "{{ trex[0] }}/{{ trex[1] }}"
-        dest: "{{ trex[0] }}"
+        src:  "{{ t_rex_dir }}/{{ t_rex_archive }}"
+        dest: "{{ t_rex_dir }}"
         remote_src: yes
         mode: a+x
       
@@ -82,7 +80,12 @@
 
 # TODO: special tmux.conf
 
-- name: configure GitLab
+
+
+
+
+# permissions
+- name: Apply the Drake Role
   hosts:
     - moria
   roles:
