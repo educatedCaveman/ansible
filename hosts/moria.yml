@@ -94,6 +94,7 @@
         state:  absent
       when:
         - dotfiles.stat.exists
+        - tmux_conf.stat.exists
         - tmux_conf.stat.islnk is defined
         - tmux_conf.stat.islnk == False
 
@@ -103,6 +104,7 @@
         dest: /home/drake/.tmux.conf
         state:  link
       when:
+        - tmux_conf.stat.exists
         - dotfiles.stat.exists
         - tmux_conf.stat.islnk is defined
         - tmux_conf.stat.islnk == False
