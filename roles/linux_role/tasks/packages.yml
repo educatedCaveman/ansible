@@ -10,4 +10,5 @@
       - saidar
       - ccze
       - lm-sensors
+      - lnav
     state:  present
