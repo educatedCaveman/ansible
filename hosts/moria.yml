@@ -1,5 +1,5 @@
 ---
-- name: configure GitLab
+- name: configure Moria
   hosts:
     - moria
   roles:
@@ -13,7 +13,13 @@
   vars:
     - driver_file:  "/home/drake/NVIDIA-Linux-x86_64-460.67.run"
     - driver_url: "https://international.download.nvidia.com/XFree86/Linux-x86_64/460.67/NVIDIA-Linux-x86_64-460.67.run"
+    - t_rex:
+      - dir:  "/home/drake/t_rex"
+      - archive:  "t-rex-0.19.12-linux-cuda11.1.tar.gz"
+      - release_url:  "https://github.com/trexminer/T-Rex/releases/download/0.19.12/t-rex-0.19.12-linux-cuda11.1.tar.gz"
   tasks:
+
+    #TODO: install dependencies:
 
     # nvidia driver
     - name: check for the driver being present already
@@ -33,18 +39,66 @@
         mode: a+x
       when: not driver.stat.exists
 
-# TODO: trex miner
-# also set up custom run script?
+    # trex miner
+    # also set up custom run script?
+
+    # check for t-rex folder
+    # if absent, create
+    # if absent, download release
+    # if absent, extract
+
+    - name: check for existing T-Rex folder
+      stat:
+        path: "{{ t_rex.dir }}"
+      register: trex_dir
+
+    - name: create T-Rex folder
+      file:
+        path: "{{ t_rex.dir }}"
+        state:  directory
+      when: not trex_dir.stat.exists
+
+    - name: retrieving T-Rex
+      get_url:
+        url:  "{{ trex.realease_url }}"
+        dest: "{{ trex.dir }}/{{ trex.archive }}"
+      when: not trex_dir.stat.exists
+
+    - name: unzip T-Rex
+      unarchive:
+        src:  "{{ trex.dir }}/{{ trex.archive }}"
+        dest: "{{ trex.dir }}"
+        remote_src: yes
+        mode: a+x
+      
+
 
 # TODO: special tmux.conf
 
+- name: configure GitLab
+  hosts:
+    - moria
+  roles:
+    - drake_role
+  tasks:
 
+- name: Manual Config
+  hosts:
+    - moria
+  tasks:  
 # debug messages:
-    - name: driver versions
+    - name: driver version
       debug:
         msg: 
           - "the following driver versions may be out of date."
           - "check the following URL for the latest version:"
           - "https://www.nvidia.com/Download/index.aspx?lang=en-us"
 
-      
+    - name: T-Rex version
+      debug:
+        msg: 
+          - "the following T-Rex version may be out of date."
+          - "check the following URL for the latest version:"
+          - "https://github.com/trexminer/T-Rex/releases"
+
+    
