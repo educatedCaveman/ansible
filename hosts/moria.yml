@@ -2,13 +2,13 @@
 - name: configure Moria
   hosts:
     - moria
-  # roles:
-  #   - VM_role
+  roles:
+    - VM_role
     - git_dotfiles_role
-  #   - git_scripts_role
-  #   - VM_netplan_MTU
-  #   - apt_client_role
-  #   - linux_role
+    - git_scripts_role
+    - VM_netplan_MTU
+    - apt_client_role
+    - linux_role
   vars:
     - driver_file:  "/home/drake/NVIDIA-Linux-x86_64-460.67.run"
     - driver_url: "https://international.download.nvidia.com/XFree86/Linux-x86_64/460.67/NVIDIA-Linux-x86_64-460.67.run"
@@ -44,9 +44,7 @@
         mode: a+x
       when: not driver.stat.exists
 
-    # trex miner
-    # also set up custom run script?
-
+    # T-Rex 
     - name: check for existing T-Rex folder
       stat:
         path: "{{ t_rex_dir }}"
@@ -71,18 +69,12 @@
         remote_src: yes
         mode: a+x
       
-    # TODO: special tmux.conf
-    # check if config already exists
-    # if exist, but not link:
-    # - check if config exists in dotfiles
-    # - remove
-    # - link to dotfiles
+    # special tmux.conf
     - name: Check for existing tmux config
       stat:
         path: /home/drake/.tmux.conf
       register: tmux_conf
 
-    # check for dotfiles
     - name: check if the dotfiles are present
       stat:
         path: /home/drake/dotfiles
@@ -118,7 +110,7 @@
   hosts:
     - moria
   tasks:  
-# debug messages:
+  
     - name: driver version
       debug:
         msg: 
