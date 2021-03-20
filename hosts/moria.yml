@@ -47,11 +47,6 @@
     # trex miner
     # also set up custom run script?
 
-    # check for t-rex folder
-    # if absent, create
-    # if absent, download release
-    # if absent, extract
-
     - name: check for existing T-Rex folder
       stat:
         path: "{{ t_rex_dir }}"
@@ -76,16 +71,41 @@
         remote_src: yes
         mode: a+x
       
+    # TODO: special tmux.conf
+    # check if config already exists
+    # if exist, but not link:
+    # - check if config exists in dotfiles
+    # - remove
+    # - link to dotfiles
+    - name: Check for existing tmux config
+      stat:
+        path: /home/drake/.tmux.conf
+      register: tmux_conf
 
+    # check for dotfiles
+    - name: check if the dotfiles are present
+      stat:
+        path: /home/drake/dotfiles
+      register: dotfiles
 
-# TODO: special tmux.conf
-# check if config already exists
-# if exist, but not link:
-# - check if config exists in dotfiles
-# - remove
-# - link to dotfiles
+    - name: remove the existing .tmux.conf
+      file:
+        path: /home/drake/.tmux.conf
+        state:  absent
+      when:
+        - dotfiles.stat.exists
+        - tmux_conf.stat.islnk is defined
+        - tmux_conf.stat.islnk == False
 
-
+    - name: link tmux.conf
+      file:
+        src:  /home/drake/dotfiles/tmux/moria.tmux
+        dest: /home/drake/.tmux.conf
+        state:  link
+      when:
+        - dotfiles.stat.exists
+        - tmux_conf.stat.islnk is defined
+        - tmux_conf.stat.islnk == False
 
 # permissions
 - name: Apply the Drake Role
@@ -95,6 +115,7 @@
     - drake_role
   tasks:
 
+# manual config
 - name: Manual Config
   hosts:
     - moria
