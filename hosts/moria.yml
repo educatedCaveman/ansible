@@ -2,13 +2,13 @@
 - name: configure Moria
   hosts:
     - moria
-  roles:
-    - VM_role
-    - git_dotfiles_role
-    - git_scripts_role
-    - VM_netplan_MTU
-    - apt_client_role
-    - linux_role
+  # roles:
+  #   - VM_role
+  #   - git_dotfiles_role
+  #   - git_scripts_role
+  #   - VM_netplan_MTU
+  #   - apt_client_role
+  #   - linux_role
   vars:
     - driver_file:  "/home/drake/NVIDIA-Linux-x86_64-460.67.run"
     - driver_url: "https://international.download.nvidia.com/XFree86/Linux-x86_64/460.67/NVIDIA-Linux-x86_64-460.67.run"
@@ -79,8 +79,11 @@
 
 
 # TODO: special tmux.conf
-
-
+# check if config already exists
+# if exist, but not link:
+# - check if config exists in dotfiles
+# - remove
+# - link to dotfiles
 
 
 
