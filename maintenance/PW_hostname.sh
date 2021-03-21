@@ -28,6 +28,8 @@ HOSTS=( \
     apt_cache \
     apt_mirror \
     nextcloud_vm \
+    moria \
+    origami \
 )
 
 # check BW_CLIENTID
