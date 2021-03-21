@@ -1,0 +1,63 @@
+---
+- name: configure Folding @ Home
+  hosts:
+    - origami
+  roles:
+    - VM_role
+    - git_dotfiles_role
+    - git_scripts_role
+    - VM_netplan_MTU
+    - apt_client_role
+    - linux_role
+  vars:
+    - base_url:     "https://download.foldingathome.org/releases/public/release"
+    - client_url:   "fahclient/debian-stable-64bit/v7.6"
+    - control_url:  "fahcontrol/debian-stable-64bit/v7.6"
+    - viewer_url:   "fahviewer/debian-stable-64bit/v7.6"
+    - client_deb:   "fahclient_7.6.21_amd64.deb"
+    - control_deb:  "fahcontrol_7.6.21-1_all.deb"
+    - viewer_deb:   "fahviewer_7.6.21_amd64.deb"
+  tasks:
+
+    # FAH client
+    - name: get fahclient
+      get_url:
+        url:  "{{ base_url }}/{{ client_url }}/{{ client_deb }}"
+        dest: "/home/drake/{{ client_deb }}"
+
+    # FAH control
+    - name: get fahcontrol
+      get_url:
+        url:  "{{ base_url }}/{{ control_url }}/{{ control_deb }}"
+        dest: "/home/drake/{{ control_deb }}"
+
+    # FAH viewer
+    - name: get fahviewer
+      get_url:
+        url:  "{{ base_url }}/{{ viewer_url }}/{{ viewer_deb }}"
+        dest: "/home/drake/{{ viewer_deb }}"
+
+# permissions
+- name: Apply the Drake Role
+  hosts:
+    - origami
+  roles:
+    - drake_role
+  tasks:
+
+# manual config
+- name: Manual Config
+  hosts:
+    - origami
+  tasks:  
+  
+    - name: F@H versions
+      debug:
+        msg: 
+          - "the versions of the download .deb packages may be out of date."
+          - "check for updates, if you like."
+  
+    - name: F@H install
+      debug:
+        msg: 
+          - "the .deb files must be installed manually.  look up how to do that."
