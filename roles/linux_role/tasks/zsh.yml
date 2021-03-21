@@ -9,7 +9,6 @@
   apt:
     name: 
       - zsh
-      - tmux
       - neofetch
     state:  present
   when: dotfiles.stat.exists

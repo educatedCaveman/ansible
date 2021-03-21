@@ -1,0 +1,74 @@
+# check for dotfiles
+- name: check if the dotfiles are present
+  stat:
+    path: /home/drake/dotfiles
+  register: dotfiles
+
+# install Tmux
+- name: install Tmux and related packages
+  apt:
+    name: 
+      - tmux
+      - tmuxinator
+    state:  present
+  when: dotfiles.stat.exists
+
+# .tmux.conf
+- name: checking for .tmux.conf
+  stat: 
+    path: /home/drake/.tmux.conf
+  register: tmux
+
+- name: remove existing .tmux.conf
+  file:
+    path: /home/drake/.tmux.conf
+    state:  absent
+  when:
+    - dotfiles.stat.exists
+    - tmux.stat.islnk is defined
+    - tmux.stat.islnk == False
+
+- name: link .tmux.conf
+  file:
+    src: /home/drake/dotfiles/tmux.conf
+    dest: /home/drake/.tmux.conf
+    state: link
+
+# tmuxinator configs
+- name: checking for tmuxinator configs
+  stat: 
+    path: /home/drake/.config/tmuxinator
+  register: mux
+
+- name: remove existing tmuxinator configs
+  file:
+    path: /home/drake/.config/tmuxinator
+    state:  absent
+  when:
+    - dotfiles.stat.exists
+    - mux.stat.islnk is defined
+    - mux.stat.islnk == False
+
+- name: link tmuxinator configs
+  file:
+    src: /home/drake/dotfiles/tmuxinator
+    dest: /home/drake/.config/tmuxinator
+    state: link
+
+
+
+# # check if .zshrc exists:
+# - name: checking for .zshrc
+#   stat: 
+#     path: /home/drake/.zshrc
+#   register: zshrc
+
+# - name: link .zshrc
+#   file:
+#     src: /home/drake/dotfiles/zsh/zshrc
+#     dest: /home/drake/.zshrc
+#     state: link
+#   when: 
+#     - not zshrc.stat.exists
+#     - oh_my_zsh.stat.exists
+#     - dotfiles.stat.exists
