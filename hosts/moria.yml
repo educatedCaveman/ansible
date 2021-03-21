@@ -69,36 +69,12 @@
         remote_src: yes
         mode: a+x
       
-    # # special tmux.conf
-    # - name: Check for existing tmux config
-    #   stat:
-    #     path: /home/drake/.tmux.conf
-    #   register: tmux_conf
-
-    # - name: check if the dotfiles are present
-    #   stat:
-    #     path: /home/drake/dotfiles
-    #   register: dotfiles
-
-    # - name: remove the existing .tmux.conf
-    #   file:
-    #     path: /home/drake/.tmux.conf
-    #     state:  absent
-    #   when:
-    #     - dotfiles.stat.exists
-    #     - tmux_conf.stat.islnk is defined
-    #     - tmux_conf.stat.islnk == False
-
-    # - name: link tmux.conf
-    #   file:
-    #     src:  /home/drake/dotfiles/tmux/moria.tmux
-    #     dest: /home/drake/.tmux.conf
-    #     state:  link
-    #   when:
-    #     - dotfiles.stat.exists
-
     # cron helper script for autostarting tmux
-
+    - name: configure cron
+      cron:
+        name: start tmux if its not running
+        user: drake
+        job: "bash /home/drake/scripts/t_rex_mining/tmux_check.sh"
 
 # permissions
 - name: Apply the Drake Role
