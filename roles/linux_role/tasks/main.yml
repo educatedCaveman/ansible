@@ -5,6 +5,10 @@
 - name: Configure ZSH
   import_tasks: zsh.yml
 
+# Tmux
+- name: Configure Tmux
+  import_tasks: tmux.yml
+
 # NeoVim
 - name: Configure NeoVim
   import_tasks: neovim.yml
