@@ -2,5 +2,6 @@
 - name: apply/update the Linux role
   hosts:
     - ubuntu_debian_hosts
-  roles:  linux_role
+  roles:
+    - linux_role
   tasks:

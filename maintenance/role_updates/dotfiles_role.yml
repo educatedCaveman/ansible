@@ -4,5 +4,6 @@
     - ubuntu_debian_hosts
     - tesseract
     # - mobius
-  roles:  git_dotfiles_role
+  roles:
+    - git_dotfiles_role
   tasks:
