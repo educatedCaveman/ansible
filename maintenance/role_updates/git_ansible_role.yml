@@ -1,0 +1,9 @@
+---
+- name: apply/update the Git Ansible role
+  hosts:
+    - self
+    - dilithium
+  roles:
+    - git_ansible_role
+  tasks:
+  

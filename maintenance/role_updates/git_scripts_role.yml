@@ -1,0 +1,20 @@
+---
+- name: apply/update the Scripts role
+  hosts:
+    - self
+    - gitlab_vm
+    - tesseract
+    - singularity
+    - swarm_managers
+    - swarm_workers
+    - plex
+    - origami
+    - apt_mirror
+    - dilithium
+    - event_horizon
+    - moria
+    - nextcloud
+  roles:
+    - git_scripts_role
+  tasks:
+  

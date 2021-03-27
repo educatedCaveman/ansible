@@ -1,0 +1,9 @@
+---
+- name: apply/update the Drake role
+  hosts:
+    - ubuntu_debian_hosts
+    - tesseract
+  roles:
+    - drake_role
+  tasks:
+  
