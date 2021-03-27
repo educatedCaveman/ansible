@@ -1,0 +1,8 @@
+---
+- name: apply/update the NFS Base role
+  hosts:
+    - plex
+  roles:
+    - nfs_pics_role
+  tasks:
+  

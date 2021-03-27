@@ -13,7 +13,7 @@
     - dilithium
     - event_horizon
     - moria
-    - nextcloud
+    - nextcloud_vm
   roles:
     - git_scripts_role
   tasks:

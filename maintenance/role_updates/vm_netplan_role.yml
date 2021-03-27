@@ -1,0 +1,8 @@
+---
+- name: apply/update the VM MTU role
+  hosts:
+    - ubuntu_debian_VM
+  roles:
+    - VM_netplan_MTU
+  tasks:
+  

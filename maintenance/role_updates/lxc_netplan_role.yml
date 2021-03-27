@@ -1,0 +1,8 @@
+---
+- name: apply/update the LXC MTU role
+  hosts:
+    - ubuntu_debian_LXC
+  roles:
+    - LXC_netplan_MTU
+  tasks:
+  

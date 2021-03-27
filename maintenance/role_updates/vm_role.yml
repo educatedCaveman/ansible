@@ -1,0 +1,8 @@
+---
+- name: apply/update the VM role
+  hosts:
+    - ubuntu_debian_VM
+  roles:
+    - VM_role
+  tasks:
+  

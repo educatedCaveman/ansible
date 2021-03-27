@@ -1,0 +1,13 @@
+---
+- name: apply/update the NFS Base role
+  hosts:
+    # - self
+    # - swarm_managers
+    # - swarm_workers
+    # - gitlab_vm
+    # - plex
+    # - singularity
+  roles:
+    - nfs_PVEdata_role
+  tasks:
+  

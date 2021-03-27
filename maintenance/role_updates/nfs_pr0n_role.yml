@@ -1,0 +1,8 @@
+---
+- name: apply/update the NFS pr0n role
+  hosts:
+    - plex
+  roles:
+    - nfs_pr0n_role
+  tasks:
+  

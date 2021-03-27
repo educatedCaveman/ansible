@@ -1,0 +1,8 @@
+---
+- name: apply/update the NFS Hegre role
+  hosts:
+    - plex
+  roles:
+    - nfs_hegre_role
+  tasks:
+  
