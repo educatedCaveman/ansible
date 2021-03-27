@@ -1,0 +1,6 @@
+---
+- name: configure Ansible/Jenkins
+  hosts:
+    - ubuntu_debian_hosts
+  roles:  linux_role
+  tasks:
