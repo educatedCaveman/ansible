@@ -51,6 +51,6 @@
 
 - name: link tmuxinator configs
   file:
-    src: /home/drake/dotfiles/tmuxp
+    src: /home/drake/dotfiles/tmuxp_configs
     dest: /home/drake/.config/tmuxp
     state: link
