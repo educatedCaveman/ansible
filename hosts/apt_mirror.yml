@@ -93,3 +93,9 @@
         minute: "0"
         hour: "1"
         job: "/usr/bin/apt-mirror"
+
+    - name: setup TMUX autostart check
+      cron:
+        name: tmux_run_check
+        user: drake
+        job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh apt_mirror"

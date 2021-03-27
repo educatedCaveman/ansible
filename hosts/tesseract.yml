@@ -130,6 +130,12 @@
       force:  yes
     when: not email.stat.exists
 
+  - name: setup TMUX autostart check
+    cron:
+      name: tmux_run_check
+      user: drake
+      job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh tesseract"
+
   - name: initial config (manual)
     debug:
       msg: run ez_proxmox_mail_configurator.sh, after preparing an app password for gmail

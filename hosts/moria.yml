@@ -75,6 +75,13 @@
         name: start tmux if its not running
         user: drake
         job: "bash /home/drake/scripts/t_rex_mining/tmux_check.sh"
+        disabled: yes
+
+    - name: setup TMUX autostart check
+      cron:
+        name: tmux_run_check
+        user: drake
+        job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh moria"
 
 # permissions
 - name: Apply the Drake Role

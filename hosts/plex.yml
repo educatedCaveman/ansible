@@ -89,6 +89,12 @@
       day:  "1"
       job: "/bin/bash /home/drake/scripts/backup/plex_backup.sh"
 
+  - name: setup TMUX autostart check
+    cron:
+      name: tmux_run_check
+      user: drake
+      job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh plex"
+
   # plex install
   # https://support.plex.tv/articles/235974187-enable-repository-updating-for-supported-linux-server-distributions/
   # - name: Add Plex Repository

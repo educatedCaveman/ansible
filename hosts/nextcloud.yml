@@ -73,3 +73,9 @@
         - ""
         - "after doing the config, run the following:"
         - "sudo snap restart nextcloud"
+
+  - name: setup TMUX autostart check
+    cron:
+      name: tmux_run_check
+      user: drake
+      job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh nextcloud"

@@ -17,7 +17,7 @@
   tasks:
 
 # gluster for managers
-- name: configure GlusterFS for manager Nodes (PRD)
+- name: configure GlusterFS for manager Nodes (PRD), and TMUX
   hosts:
     - prd_swarm_managers
   roles:
@@ -25,6 +25,12 @@
   vars:
     - cluster_name: "portainer_data"
   tasks:
+
+    - name: setup TMUX autostart check
+      cron:
+        name: tmux_run_check
+        user: drake
+        job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh docker_swarm"
 
 # gluster for workers:
 - name: configure GlusterFS for worker Nodes (PRD)

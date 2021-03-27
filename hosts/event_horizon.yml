@@ -6,6 +6,12 @@
     - linux_role          # base linux configs
     - drake_role          # drake home directory permissions
   tasks:
+
+    - name: setup TMUX autostart check
+      cron:
+        name: tmux_run_check
+        user: drake
+        job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh pihole"
   
     - debug:
         msg:  "configuration of pihole must be done manually"

@@ -78,3 +78,9 @@
       name: apt-cacher-ng.service
       state: restarted
       enabled: yes
+
+  - name: setup TMUX autostart check
+    cron:
+      name: tmux_run_check
+      user: drake
+      job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh apt_cache"
