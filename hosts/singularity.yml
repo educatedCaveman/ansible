@@ -104,10 +104,16 @@
   # CRON
   - name: setup pihole backup script
     cron:
-      name: dev_manager_backup
+      name: pihole backup
       minute: "0"
       hour: "2"
       job: "/bin/bash /home/drake/scripts/pihole/pihole_backup.sh"
+
+  - name: setup TMUX autostart check
+    cron:
+      name: tmux_run_check
+      user: drake
+      job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh pihole"
 
   # Pi-Hole
   - debug:
