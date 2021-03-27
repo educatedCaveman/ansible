@@ -1,5 +1,5 @@
 ---
-- name: apply/update the NFS Base role
+- name: apply/update the NFS Pics role
   hosts:
     - plex
   roles:

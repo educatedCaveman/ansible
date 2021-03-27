@@ -1,5 +1,5 @@
 ---
-- name: apply/update the NFS Base role
+- name: apply/update the NFS PVE Data role
   hosts:
     # - self
     # - swarm_managers

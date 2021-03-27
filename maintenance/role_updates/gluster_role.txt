@@ -1,0 +1,1 @@
+the gluster role doesn't make sense on its own.  it only makes sense to be used in the docker swarm playbooks.

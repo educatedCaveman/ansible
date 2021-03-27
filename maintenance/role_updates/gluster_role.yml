@@ -1,9 +1,0 @@
----
-- name: apply/update the Gluster role
-  hosts:
-    - swarm_managers
-    - swarm_workers
-  roles:
-    - gluster_role
-  tasks:
-  
