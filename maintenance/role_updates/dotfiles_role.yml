@@ -1,0 +1,8 @@
+---
+- name: apply/update the Dotfiles role
+  hosts:
+    - ubuntu_debian_hosts
+    # - tesseract
+    # - mobius
+  roles:  git_dotfiles_role
+  tasks:
