@@ -2,6 +2,7 @@
 - name: apply/update the Linux role
   hosts:
     - ubuntu_debian_hosts
+    - tesseract
   roles:
     - linux_role
   tasks:
