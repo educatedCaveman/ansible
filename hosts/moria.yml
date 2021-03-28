@@ -18,12 +18,13 @@
   tasks:
 
     # install dependencies:
-    - name: Install nVidia Driver Dependencies
+    - name: Install Dependencies
       apt:
         name:
           - build-essential 
           - libglvnd-dev 
           - pkg-config
+          - python3-pip
         state:  latest
 
     # nvidia driver
@@ -69,6 +70,24 @@
         remote_src: yes
         mode: a+x
 
+    # coolgpus:
+    - name: install CoolGPUs
+      pip:
+        name: coolgpus
+
+    - name: install CoolGPUs service file
+      copy:
+        src:  /home/drake/dotfiles/systemd/coolgpus.service
+        dest: /etc/systemd/system/coolgpus.service
+        remote_src: yes
+
+    - name: enable CoolGPUs service
+      systemd:
+        name: coolgpus
+        state:  restarted
+        enabled:  yes
+
+    # tmux cron
     - name: setup TMUX autostart check
       cron:
         name: tmux_run_check
