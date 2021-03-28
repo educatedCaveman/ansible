@@ -7,11 +7,7 @@
       - neofetch
       - python
       - netdata
+      - tmuxinator
     state:  latest
     update_homebrew:  yes
-
-- name: Python packages
-  pip:
-    name:
-      - tmuxp
       
