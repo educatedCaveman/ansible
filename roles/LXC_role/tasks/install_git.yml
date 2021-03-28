@@ -6,6 +6,7 @@
 - name: Upgrade packages
   apt:
     upgrade:  safe
+    update_cache: yes
     
 # make sure we have git installed
 - name: Install git
