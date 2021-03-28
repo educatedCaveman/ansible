@@ -3,9 +3,12 @@
   roles:
     - LXC_role            # base LXC container config
     - git_dotfiles_role   # deploy the dotfiles repo
+    - apt_client_role
     - LXC_netplan_MTU     # use the mtu9000 netplan config
     - linux_role          # base linux configs
     - drake_role          # drake home directory permissions
+    - nfs_base_role
+    - nfs_backup_role
   tasks:
 
   # add the key

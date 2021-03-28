@@ -7,6 +7,7 @@
     - gitlab_vm
     - plex
     - singularity
+    - influxDB
   roles:
     - nfs_backup_role
   tasks:

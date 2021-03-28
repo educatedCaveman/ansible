@@ -1,8 +1,9 @@
 - name: configure Grafana
-  hosts:  Grafana
+  hosts:  grafana
   roles:
     - LXC_role            # base LXC container config
     - git_dotfiles_role   # deploy the dotfiles repo
+    - apt_client_role
     - LXC_netplan_MTU     # use the mtu9000 netplan config
     - linux_role          # base linux configs
     - drake_role          # drake home directory permissions
