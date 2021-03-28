@@ -1,0 +1,43 @@
+- name: configure Grafana
+  hosts:  Grafana
+  roles:
+    - LXC_role            # base LXC container config
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - LXC_netplan_MTU     # use the mtu9000 netplan config
+    - linux_role          # base linux configs
+    - drake_role          # drake home directory permissions
+  tasks:
+
+  - name: install Grafana prerequisites
+    apt:
+      name:
+        - apt-transport-https
+        - software-properties-common
+        - wget
+      state:  present
+
+  # add the key
+  - name: add the APT key for Grafana
+    apt_key:
+      url:    https://packages.grafana.com/gpg.key
+      state:  present
+
+  # add the repo
+  - name: add the Grafana repository
+    apt_repository:
+      repo:   deb https://packages.grafana.com/oss/deb focal stable
+      state:  present
+
+  # install influxdb
+  - name: install Grafana
+    apt:
+      name:   grafana
+      state:  present
+
+  # start and enable with systemd
+  - name: enable Grafana
+    systemd:
+      name:     grafana
+      state:    restarted
+      enabled:  yes
+      

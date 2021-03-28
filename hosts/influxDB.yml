@@ -1,0 +1,34 @@
+- name: configure influxDB
+  hosts:  influxDB
+  roles:
+    - LXC_role            # base LXC container config
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - LXC_netplan_MTU     # use the mtu9000 netplan config
+    - linux_role          # base linux configs
+    - drake_role          # drake home directory permissions
+  tasks:
+
+  # add the key
+  - name: add the APT key for influxDB
+    apt_key:
+      url:    https://repos.influxdata.com/influxdb.key
+      state:  present
+
+  # add the repo
+  - name: add the influxDB repository
+    apt_repository:
+      repo:   deb https://repos.influxdata.com focal stable
+      state:  present
+
+  # install influxdb
+  - name: install influxDB
+    apt:
+      name:   influxdb
+      state:  present
+
+  # start and enable with systemd
+  - name: enable influxDB
+    systemd:
+      name:     influxdb
+      state:    restarted
+      enabled:  yes
