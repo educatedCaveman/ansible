@@ -6,7 +6,6 @@
     state: directory
     recurse: yes
     owner: drake
-    group: drake
 
 #set ssh directory permissions
 - name: set ssh permissions
@@ -14,7 +13,6 @@
     path:     /Users/drake/.ssh
     state:    directory
     owner:    drake
-    group:    drake
     mode:     '0700'
 
 #set ssh directory permissions
@@ -23,6 +21,5 @@
     path:     /Users/drake/.ssh/authorized_keys
     state:    file
     owner:    drake
-    group:    drake
     mode:     '0600'
     
