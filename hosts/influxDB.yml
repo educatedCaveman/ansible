@@ -28,6 +28,7 @@
     apt_repository:
       repo:   deb https://repos.influxdata.com focal stable
       state:  present
+      update_cache: no
 
   # install influxdb
   - name: install influxDB
