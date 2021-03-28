@@ -1,12 +1,5 @@
 ---
 # tasks file for drake_role
-- name: set home permissions
-  file:
-    path: /Users/drake
-    state: directory
-    recurse: yes
-    owner: drake
-
 #set ssh directory permissions
 - name: set ssh permissions
   file:
