@@ -11,6 +11,12 @@
     - nfs_backup_role
   tasks:
 
+  - name: install influxDB prerequisites
+    apt:
+      name:
+        - gpg
+      state:  present
+
   # add the key
   - name: add the APT key for influxDB
     apt_key:
