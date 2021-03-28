@@ -1,0 +1,80 @@
+# check for dotfiles
+- name: check if the dotfiles are present
+  stat:
+    path: /Users/drake/dotfiles
+  register: dotfiles
+
+# change shell
+- name: change to ZSH
+  user:
+    name: drake
+    shell: /bin/zsh
+  when: dotfiles.stat.exists
+
+# clone the repo 
+- name: cloning  oh-my-zsh
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh
+    dest: /Users/drake/.oh-my-zsh
+  when: dotfiles.stat.exists
+
+# check for .oh-my-zsh
+- name: check if .oh-my-zsh exists
+  stat:
+    path: /Users/drake/.oh-my-zsh
+  register: oh_my_zsh
+
+# check if .zshrc exists:
+- name: checking for .zshrc
+  stat: 
+    path: /Users/drake/.zshrc
+  register: zshrc
+
+- name: link .zshrc
+  file:
+    src: /Users/drake/dotfiles/zsh/zshrc
+    dest: /Users/drake/.zshrc
+    state: link
+  when: 
+    - not zshrc.stat.exists
+    - oh_my_zsh.stat.exists
+    - dotfiles.stat.exists
+
+# check if .zsh_aliases exists:
+- name: checking for .zsh_aliases
+  stat: 
+    path: /Users/drake/.zsh_aliases
+  register: zsh_aliases
+
+- name: link .zsh_aliases
+  file:
+    src: /Users/drake/dotfiles/zsh/zsh_aliases
+    dest: /Users/drake/.zsh_aliases
+    state: link
+  when: 
+    - not zsh_aliases.stat.exists
+    - oh_my_zsh.stat.exists
+    - dotfiles.stat.exists
+
+# check if .zsh-theme exists:
+- name: checking for .zsh-theme
+  stat: 
+    path: /Users/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
+  register: zsh_theme
+
+- name: link .zsh-theme
+  file:
+    src: /Users/drake/dotfiles/zsh/less-fishy.zsh-theme
+    dest: /Users/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
+    state: link
+  when: 
+    - not zsh_theme.stat.exists
+    - oh_my_zsh.stat.exists
+    - dotfiles.stat.exists
+
+# zsh plugin from git:
+- name: cloning zsh-autosuggestions
+  git:
+    repo: 'https://github.com/zsh-users/zsh-autosuggestions'
+    dest: /Users/drake/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+  when: oh_my_zsh.stat.exists

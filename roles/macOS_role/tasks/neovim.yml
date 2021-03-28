@@ -1,0 +1,42 @@
+# check that dotfiles are present
+- name: checking for dotfiles
+  stat:
+    path: /Users/drake/dotfiles
+  register: dotfiles
+
+# create Vundle directory, which also creates the nvim directory
+- name: create NeoVim and Vundle directories
+  file:
+    path: /Users/drake/.config/nvim/bundle
+    state: directory
+    recurse: yes
+  when: dotfiles.stat.exists
+
+# Vundle
+- name: verify Vundle directory exists
+  stat:
+    path: /Users/drake/.config/nvim/bundle
+  register: bundle
+
+- name: cloning Vundle
+  git:
+    repo: 'https://github.com/VundleVim/Vundle.vim.git'
+    dest: /Users/drake/.config/nvim/bundle/Vundle.vim
+  when: bundle.stat.exists
+
+#neovim
+- name: checking for init.vim
+  stat: 
+    path: /Users/drake/.config/nvim/init.vim
+  register: nvim
+
+# link config file to proper config location
+- name: link init.vim
+  file:
+    src: /Users/drake/dotfiles/init.vim
+    dest: /Users/drake/.config/nvim/init.vim
+    state: link
+  when: 
+    - not nvim.stat.exists
+    - dotfiles.stat.exists
+  

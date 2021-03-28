@@ -1,0 +1,47 @@
+# check for dotfiles
+- name: check if the dotfiles are present
+  stat:
+    path: /Users/drake/dotfiles
+  register: dotfiles
+
+# .tmux.conf
+- name: checking for .tmux.conf
+  stat: 
+    path: /Users/drake/.tmux.conf
+  register: tmux
+
+- name: remove existing .tmux.conf
+  file:
+    path: /Users/drake/.tmux.conf
+    state:  absent
+  when:
+    - dotfiles.stat.exists
+    - tmux.stat.islnk is defined
+    - tmux.stat.islnk == False
+
+- name: link .tmux.conf
+  file:
+    src: /Users/drake/dotfiles/tmux.conf
+    dest: /Users/drake/.tmux.conf
+    state: link
+
+# tmuxp configs
+- name: checking for tmuxp configs
+  stat: 
+    path: /Users/drake/.config/tmuxp
+  register: mux
+
+- name: remove existing tmuxp configs
+  file:
+    path: /Users/drake/.tmuxp
+    state:  absent
+  when:
+    - dotfiles.stat.exists
+    - mux.stat.islnk is defined
+    - mux.stat.islnk == False
+
+- name: link tmuxp configs
+  file:
+    src: /Users/drake/dotfiles/tmuxp_configs
+    dest: /Users/drake/.tmuxp
+    state: link

@@ -1,0 +1,61 @@
+---
+# tasks file for macOS_role
+
+# most of linux role
+# Quality of life and required packages
+# just have them all here so brew doesn't need to be run multiple times
+- name: Install required packages
+  import_tasks: packages.yml
+
+# ZSH
+- name: Configure ZSH
+  import_tasks: zsh.yml
+
+# Tmux
+- name: Configure Tmux
+  import_tasks: tmux.yml
+
+# NeoVim
+- name: Configure NeoVim
+  import_tasks: neovim.yml
+
+# TODO: figure out if the instal location is the same
+# # Netdata
+# - name: Configure Netdata
+#   import_tasks: netdata.yml
+
+# dotfiles role
+- name: Deploy the dotfiles git repository
+  git:
+    repo: 'https://github.com/educatedCaveman/dotfiles.git'
+    dest: /Users/drake/dotfiles
+    force:  yes
+
+# ansible role
+- name: Deploy the ansible git repository
+  git:
+    repo: https://github.com/educatedCaveman/ansible
+    dest: /Users/drake/ansible
+    force:  yes
+
+# scripts role
+- name: Deploy the scripts git repository
+  git:
+    repo: https://github.com/educatedCaveman/scripts
+    dest: /Users/drake/scripts
+    version:  master
+
+# copy over .zsh_secrets
+- name: copy .zsh_secrets
+  copy:
+    src:  /Users/drake/.zsh_secrets
+    dest: /Users/drake/.zsh_secrets
+    owner:  drake
+    group:  drake
+    mode: '0644'
+    
+# drake role
+- name: Home directory permissions
+  import_tasks: permissions.yml    
+  
+# possibly NFS roles?

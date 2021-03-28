@@ -1,0 +1,17 @@
+- name: Install Dependencies
+  community.general.homebrew:
+    name:
+      - neovim
+      - htop
+      - tmux
+      - neofetch
+      - python
+      - netdata
+    state:  latest
+    update_homebrew:  yes
+
+- name: Python packages
+  pip:
+    name:
+      - tmuxp
+      
