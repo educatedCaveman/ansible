@@ -2,60 +2,10 @@
 - name: configure Holodeck
   hosts:
     - holodeck
-  vars:
-    - HOME: /Users/drake
+  roles:
+    - macOS_role
   tasks:
 
-    # dotfiles:
-    - name: Deploy dotfiles
-      git:
-        repo: 'https://github.com/educatedCaveman/dotfiles.git'
-        dest: "{{ HOME }}/dotfiles"
-        force:  yes
-
-    # scripts:
-    - name: Deploy the scripts
-      git:
-        repo: https://github.com/educatedCaveman/scripts
-        dest: "{{ HOME }}/scripts"
-        version:  master
-        force:  yes
-
-    # copy over .zsh_secrets
-    - name: copy .zsh_secrets
-      copy:
-        src:  /home/drake/.zsh_secrets
-        dest: "{{ HOME }}/.zsh_secrets"
-        owner:  drake
-        mode: '0644'
-
-    # TODO: ansible
-
     # TODO: setup NFS mounts?
-
-    # TMUX
-    # - name: install tmuxp
-    #   pip:
-    #     name: tmuxp
-    #     executable: pip3
-
-    # install packages:
-    - name: Install Dependencies
-      community.general.homebrew:
-        name:
-          - neovim
-          - htop
-          - tmux
-          - neofetch
-          - python
-          - netdata
-        state:  latest
-        update_homebrew:  yes
-
-# links for all the things:
-# - neovim
-# - tmux
-# - tmuxpconfigs
-# - zsh configs
 
 
