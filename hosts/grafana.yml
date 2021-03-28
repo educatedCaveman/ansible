@@ -37,7 +37,7 @@
   # start and enable with systemd
   - name: enable Grafana
     systemd:
-      name:     grafana
+      name:     grafana-server
       state:    restarted
       enabled:  yes
       
