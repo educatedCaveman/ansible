@@ -25,6 +25,7 @@
           - libglvnd-dev 
           - pkg-config
           - python3-pip
+          - nvtop
         state:  latest
 
     # nvidia driver
