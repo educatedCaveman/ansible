@@ -27,7 +27,6 @@
         src:  /home/drake/.zsh_secrets
         dest: "{{ HOME }}/.zsh_secrets"
         owner:  drake
-        group:  drake
         mode: '0644'
 
     # TODO: ansible
@@ -35,9 +34,10 @@
     # TODO: setup NFS mounts?
 
     # TMUX
-    - name: install tmuxp
-      pip:
-        name: tmuxp
+    # - name: install tmuxp
+    #   pip:
+    #     name: tmuxp
+    #     executable: pip3
 
     # install packages:
     - name: Install Dependencies
