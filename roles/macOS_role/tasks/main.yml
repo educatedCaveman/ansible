@@ -51,7 +51,6 @@
     src:  /Users/drake/.zsh_secrets
     dest: /Users/drake/.zsh_secrets
     owner:  drake
-    group:  drake
     mode: '0644'
     
 # drake role
