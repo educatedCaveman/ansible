@@ -68,14 +68,6 @@
         dest: "{{ t_rex_dir }}"
         remote_src: yes
         mode: a+x
-      
-    # cron helper script for autostarting tmux
-    - name: configure cron
-      cron:
-        name: start tmux if its not running
-        user: drake
-        job: "bash /home/drake/scripts/t_rex_mining/tmux_check.sh"
-        disabled: yes
 
     - name: setup TMUX autostart check
       cron:
