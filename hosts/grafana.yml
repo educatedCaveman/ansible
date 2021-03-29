@@ -26,7 +26,7 @@
   # add the repo
   - name: add the Grafana repository
     apt_repository:
-      repo:   deb https://packages.grafana.com/oss/deb focal stable
+      repo:   deb https://packages.grafana.com/oss/deb stable main
       state:  present
       update_cache: no
 
