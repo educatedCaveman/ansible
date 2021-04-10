@@ -25,11 +25,10 @@
 # if not a link, link correct one, using variable passed into the role
 - name: link telegraf.conf
   file:
-    src:  "/home/drake/dotfiles/telegraf/${{ telegraf_config }}"
+    src:  "/home/drake/dotfiles/telegraf/{{ telegraf_config }}"
     dest: /etc/telegraf/telegraf.conf
     state:  link
   when: 
     - dotfiles.stat.exists
     - telegraf.stat.islnk is defined
     - telegraf.stat.islnk == False
-    
