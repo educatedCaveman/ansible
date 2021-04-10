@@ -1,0 +1,14 @@
+---
+# tasks file for telegraf_role
+
+# packages/dependencies:
+- name: Satisfy Telegraf Dependencies, and install Telegraf
+  import_tasks: packages.yml
+
+# packages/dependencies:
+- name: Install the Telegraf Config
+  import_tasks: config.yml
+
+# packages/dependencies:
+- name: Start the Telegraf service
+  import_tasks: service.yml

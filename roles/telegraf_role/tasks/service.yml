@@ -1,0 +1,6 @@
+# start and enable with systemd
+- name: enable telegraf
+  systemd:
+    name:     telegraf
+    state:    restarted
+    enabled:  yes
