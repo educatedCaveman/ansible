@@ -36,7 +36,6 @@
     apt:
       name:   
         - influxdb
-        - influxdb-client
         - telegraf
       state:  present
 
