@@ -21,6 +21,39 @@
         - influxdb
       state:  present
 
+  # check for dotfiles
+  - name: check if the dotfiles are present
+    stat:
+      path: /home/drake/dotfiles
+    register: dotfiles
+
+  # check for an existsing config
+  - name: check for existing influxdb.conf
+    stat:
+      path: /etc/influxdb/influxdb.conf
+    register: influxdb
+
+  # if not a link, remove
+  - name: remove the existing influxdb.conf
+    file:
+      path: /etc/influxdb/influxdb.conf
+      state:  absent
+    when: 
+      - dotfiles.stat.exists
+      - influxdb.stat.islnk is defined
+      - influxdb.stat.islnk == False
+
+  # if not a link, link correct one, using variable passed into the role
+  - name: link influxdb.conf
+    file:
+      src:  "/home/drake/dotfiles/influxdb.conf"
+      dest: /etc/influxdb/influxdb.conf
+      state:  link
+    when: 
+      - dotfiles.stat.exists
+      - influxdb.stat.islnk is defined
+      - influxdb.stat.islnk == False
+
   # start and enable with systemd
   - name: enable influxDB
     systemd:
