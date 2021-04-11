@@ -16,3 +16,10 @@
     repo:   deb https://repos.influxdata.com/ubuntu focal stable
     state:  present
     update_cache: yes
+
+# install Telegraf
+- name: install telegraf 
+  apt:
+    name:   telegraf
+    state:  present
+    
