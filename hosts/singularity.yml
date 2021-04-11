@@ -12,7 +12,7 @@
     - nfs_backup_role
     - role: telegraf_role
       vars:
-        telegraf_config:  'telegraf_base.conf'
+        telegraf_config:  'pihole_telegraf.conf'
   tasks:
 
   # pihole-specific dotfiles:
