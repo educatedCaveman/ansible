@@ -9,30 +9,10 @@
     - drake_role          # drake home directory permissions
     - nfs_base_role
     - nfs_backup_role
-    # - influx_role
     - role: telegraf_role
       vars:
         telegraf_config:  'telegraf_base.conf'
   tasks:
-
-  # - name: install influxDB prerequisites
-  #   apt:
-  #     name:
-  #       - gpg
-  #     state:  present
-
-  # # add the key
-  # - name: add the APT key for influxDB
-  #   apt_key:
-  #     url:    https://repos.influxdata.com/influxdb.key
-  #     state:  present
-
-  # # add the repo
-  # - name: add the influxDB repository
-  #   apt_repository:
-  #     repo:   deb https://repos.influxdata.com focal stable
-  #     state:  present
-  #     update_cache: no
 
   # install influxdb
   - name: install influxDB and telegraf
@@ -48,10 +28,3 @@
       name:     influxdb
       state:    restarted
       enabled:  yes
-
-  # # start and enable with systemd
-  # - name: enable telegraf
-  #   systemd:
-  #     name:     telegraf
-  #     state:    restarted
-  #     enabled:  yes
