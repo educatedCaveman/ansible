@@ -19,7 +19,6 @@
     apt:
       name:   
         - influxdb
-        # - telegraf
       state:  present
 
   # start and enable with systemd

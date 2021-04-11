@@ -1,6 +1,6 @@
 ---
 - name: configure Ansible/Jenkins
-  hosts:  test_hosts
+  hosts:  self
   roles:
     - LXC_role            # base LXC container config
     - git_dotfiles_role   # deploy the dotfiles repo
