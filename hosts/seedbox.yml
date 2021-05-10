@@ -60,7 +60,7 @@
 
   - name: copy the service file
     copy:
-      src:  /home/drake/qbittorrent/qbittorrent-nox.service
+      src:  /home/drake/dotfiles/qbittorrent/qbittorrent-nox.service
       dest: /etc/systemd/system/qbittorrent-nox.service
       remote_src: yes
     # when:
