@@ -27,6 +27,11 @@
   # qbittorrent-nox
   # drake: add to qbittorrent group
 
+  - name: create the qbittorrent-nox group
+    group:
+      name:   qbittorrent-nox
+      state:  present
+
   - name: create the qbittorrent-nox user
     user:
       name:   qbittorrent-nox
