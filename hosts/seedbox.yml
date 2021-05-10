@@ -1,0 +1,69 @@
+- name: configure seedbox
+  hosts:  seedbox
+  roles:
+    - LXC_role            # base LXC container config
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - git_scripts_role
+    - apt_client_role
+    - LXC_netplan_MTU     # use the mtu9000 netplan config
+    - linux_role          # base linux configs
+    - drake_role          # drake home directory permissions
+    - nfs_base_role       
+    - nfs_video_role
+    - nfs_music_role
+    - nfs_staging_role
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'telegraf_base.conf'
+  tasks:
+
+  - name: install qbittorrent
+    apt:
+      name:
+        - qbittorrent-nox
+      state:  latest
+
+  # create users
+  # qbittorrent-nox
+  # drake: add to qbittorrent group
+
+  - name: create the qbittorrent-nox user
+    user:
+      name:   qbittorrent-nox
+      group:  qbittorrent-nox
+      system: yes
+      state:  present
+
+  - name: add drake to the qbittorrent-nox group
+    user:
+      name:   drake
+      groups: qbittorrent-nox
+      append: yes
+
+  # systemd file
+  # - name: check for existing service file
+  #   stat:
+  #     path: /etc/systemd/system/qbittorrent-nox.service
+  #   register: service_file
+
+  - name: remove the service file, if present
+    file:
+      path: /etc/systemd/system/qbittorrent-nox.service
+      state:  absent
+    # when:
+    #   - service_file.stat.exists
+
+  - name: copy the service file
+    copy:
+      src:  /home/drake/qbittorrent/qbittorrent-nox.service
+      dest: /etc/systemd/system/qbittorrent-nox.service
+      remote_src: yes
+    # when:
+    #   - service_file.stat.exists
+
+  - name: enable and restart the service
+    systemd:
+      name:   qbittorrent-nox
+      state:  restarted
+      enabled:  yes
+
