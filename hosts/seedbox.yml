@@ -75,29 +75,6 @@
       - conf_1.stat.islnk is defined
       - conf_1.stat.islnk == False
 
-  # - name: set permissions on qBittorrent.conf
-  #   file:
-  #     path:   "{{ config_dir }}/qBittorrent.conf"
-  #     owner:  qbittorrent-nox
-  #     group:  qbittorrent-nox
-  #   when: 
-  #     - conf_1.stat.exists
-  #     - conf_1.stat.islnk is defined
-  #     - conf_1.stat.islnk == False
-
-  # - name: remove the qBittorrent.conf file
-  #   file:
-  #     path:   "{{ config_dir }}/qBittorrent.conf"
-  #     state:  absent
-
-  # - name: copy the qBittorrent.conf file
-  #   copy:
-  #     src:  "{{ dotfiles_dir }}/qBittorrent.conf"
-  #     dest: "{{ config_dir }}/qBittorrent.conf"
-  #     owner:  qbittorrent-nox
-  #     group:  qbittorrent-nox
-  #     remote_src: yes
-
   - name: check for existing qBittorrent-data.conf
     stat:
       path: "{{ config_dir }}/qBittorrent-data.conf"
@@ -139,7 +116,6 @@
   - name: enable and restart the service
     systemd:
       name:   qbittorrent-nox
-      # state:  restarted
-      state:  stopped
+      state:  restarted
       enabled:  yes
 
