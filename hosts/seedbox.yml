@@ -75,15 +75,16 @@
       - conf_1.stat.islnk is defined
       - conf_1.stat.islnk == False
 
-  - name: set permissions on qBittorrent.conf
-    file:
-      path:   "{{ config_dir }}/qBittorrent.conf"
-      owner:  qbittorrent-nox
-      group:  qbittorrent-nox
-    when: 
-      - conf_1.stat.exists
-      - conf_1.stat.islnk is defined
-      - conf_1.stat.islnk == False
+  # - name: set permissions on qBittorrent.conf
+  #   file:
+  #     path:   "{{ config_dir }}/qBittorrent.conf"
+  #     owner:  qbittorrent-nox
+  #     group:  qbittorrent-nox
+  #   when: 
+  #     - conf_1.stat.exists
+  #     - conf_1.stat.islnk is defined
+  #     - conf_1.stat.islnk == False
+
   # - name: remove the qBittorrent.conf file
   #   file:
   #     path:   "{{ config_dir }}/qBittorrent.conf"
@@ -96,6 +97,32 @@
   #     owner:  qbittorrent-nox
   #     group:  qbittorrent-nox
   #     remote_src: yes
+
+  - name: check for existing qBittorrent-data.conf
+    stat:
+      path: "{{ config_dir }}/qBittorrent-data.conf"
+    register: conf_2
+
+  - name: remove existing qBittorrent-data.conf
+    file:
+      path:   "{{ config_dir }}/qBittorrent-data.conf"
+      state:  absent
+    when: 
+      - conf_2.stat.exists
+      - conf_2.stat.islnk is defined
+      - conf_2.stat.islnk == False
+
+  - name: link new qBittorrent-data.conf
+    file:
+      src:  "{{ dotfiles_dir }}/qBittorrent-data.conf"
+      dest: "{{ config_dir }}/qBittorrent-data.conf"
+      owner:  qbittorrent-nox
+      group:  qbittorrent-nox
+      state:  link
+    when: 
+      - conf_2.stat.exists
+      - conf_2.stat.islnk is defined
+      - conf_2.stat.islnk == False
 
   # systemd file
   - name: remove the service file
