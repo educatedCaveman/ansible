@@ -74,6 +74,16 @@
       - conf_1.stat.exists
       - conf_1.stat.islnk is defined
       - conf_1.stat.islnk == False
+
+  - name: set permissions on qBittorrent.conf
+    file:
+      path:   "{{ config_dir }}/qBittorrent.conf"
+      owner:  qbittorrent-nox
+      group:  qbittorrent-nox
+    when: 
+      - conf_1.stat.exists
+      - conf_1.stat.islnk is defined
+      - conf_1.stat.islnk == False
   # - name: remove the qBittorrent.conf file
   #   file:
   #     path:   "{{ config_dir }}/qBittorrent.conf"
