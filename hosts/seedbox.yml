@@ -49,31 +49,41 @@
       append: yes
 
   # qBittorrent configs
-  - name: check for existing qBittorrent.conf
-    stat:
-      path: "{{ config_dir }}/qBittorrent.conf"
-    register: conf_1
+  # - name: check for existing qBittorrent.conf
+  #   stat:
+  #     path: "{{ config_dir }}/qBittorrent.conf"
+  #   register: conf_1
 
-  - name: remove existing qBittorrent.conf
+  # - name: remove existing qBittorrent.conf
+  #   file:
+  #     path:   "{{ config_dir }}/qBittorrent.conf"
+  #     state:  absent
+  #   when: 
+  #     - conf_1.stat.exists
+  #     - conf_1.stat.islnk is defined
+  #     - conf_1.stat.islnk == False
+
+  # - name: link new qBittorrent.conf
+  #   file:
+  #     src:  "{{ dotfiles_dir }}/qBittorrent.conf"
+  #     dest: "{{ config_dir }}/qBittorrent.conf"
+  #     owner:  qbittorrent-nox
+  #     group:  qbittorrent-nox
+  #     state:  link
+  #   when: 
+  #     - conf_1.stat.exists
+  #     - conf_1.stat.islnk is defined
+  #     - conf_1.stat.islnk == False
+  - name: remove the qBittorrent.conf file
     file:
       path:   "{{ config_dir }}/qBittorrent.conf"
       state:  absent
-    when: 
-      - conf_1.stat.exists
-      - conf_1.stat.islnk is defined
-      - conf_1.stat.islnk == False
 
-  - name: link new qBittorrent.conf
-    file:
+  - name: copy the qBittorrent.conf file
+    copy:
       src:  "{{ dotfiles_dir }}/qBittorrent.conf"
       dest: "{{ config_dir }}/qBittorrent.conf"
-      owner:  qbittorrent-nox
-      group:  qbittorrent-nox
-      state:  link
-    when: 
-      - conf_1.stat.exists
-      - conf_1.stat.islnk is defined
-      - conf_1.stat.islnk == False
+      remote_src: yes
 
   # systemd file
   - name: remove the service file
