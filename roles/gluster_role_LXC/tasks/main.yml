@@ -1,0 +1,89 @@
+---
+# tasks file for gluster_role
+# partition the drive and create the filesystem
+# - name: check the partitions
+#   community.general.parted:
+#     device: /dev/vdb
+#     unit: MiB
+
+# - name: create partition
+#   community.general.parted:
+#     device: /dev/vdb
+#     number: 1
+#     label:  gpt
+#     state:  present
+
+# - name: create filesystem
+#   community.general.filesystem:
+#     fstype: ext4
+#     state:  present
+#     device: /dev/vdb1
+
+# # create the mount directory, if needed:
+# - name: check if the directory exists
+#   stat:
+#     path: /gluster/bricks/1
+#   register: gluster_mount
+
+# - name: create the device mount directory
+#   file:
+#     path: /gluster/bricks/1
+#     state:  directory
+#     recurse:  yes
+#   when: not gluster_mount.stat.exists
+
+# - name: mount the drive
+#   mount:
+#     src:  /dev/vdb1
+#     path: /gluster/bricks/1
+#     fstype: ext4
+#     state:  mounted
+
+# folder for gluster
+- name: create the folder gluster
+  file:
+    path: /gluster/bricks/1/brick
+    state:  directory
+    recurse:  no
+
+# install gluster
+- name: install gluster
+  apt:
+    name: glusterfs-server
+    state:  present
+
+# start the service
+- name: start gluster
+  systemd:
+    name: glusterd
+    state:  started
+    enabled:  yes
+    
+# use ansible glusterfs to setup the cluster
+- name: create gluster volume
+  gluster.gluster.gluster_volume:
+    state: present
+    replicas: "{{ play_hosts | length }}"
+    cluster:  "{{ play_hosts }}"
+    name: "{{ cluster_name }}"
+    bricks: /gluster/bricks/1/brick
+  run_once: true
+  when: inventory_hostname == play_hosts[0]
+
+- name: start gluster volume
+  gluster.gluster.gluster_volume:
+    state: started
+    name: "{{ cluster_name }}"
+
+- name: create mount directory
+  file:
+    path: /mnt/gluster
+    state:  directory
+    recurse:  yes
+
+- name: mount gluster volume
+  mount:
+    src:  "localhost:/{{ cluster_name }}"
+    path: /mnt/gluster
+    fstype: glusterfs
+    state:  mounted

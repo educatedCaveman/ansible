@@ -1,0 +1,133 @@
+# base docker config
+- name: configure Docker Swarm Cluster (DEV)
+  hosts:
+    - dev_swarm_managers
+    - dev_swarm_workers
+  roles:
+    # - VM_role
+    - LXC_role
+    - git_dotfiles_role
+    - git_scripts_role
+    # - VM_netplan_MTU
+    - LXC_netplan_MTU
+    - apt_client_role
+    - linux_role
+    - docker_role
+    - drake_role
+    - nfs_base_role
+    - nfs_backup_role
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'telegraf_base.conf'
+  tasks:
+
+# gluster for managers
+- name: configure GlusterFS for manager Nodes (DEV)
+  hosts:
+    - dev_swarm_managers
+  roles:
+    - gluster_role_LXC
+  vars:
+    - cluster_name: "portainer_data"
+  tasks:
+
+    - name: setup TMUX autostart check
+      cron:
+        name: tmux_run_check
+        user: drake
+        job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh docker_swarm"
+
+# gluster for workers:
+- name: configure GlusterFS for worker Nodes (DEV)
+  hosts:
+    - dev_swarm_workers
+  roles:
+    - gluster_role_LXC
+  vars:
+    - cluster_name: "docker_data"
+  tasks:
+
+# create the swarm:
+- name: initiate the swarm
+  hosts:  dev_swarm_manager_01
+  gather_facts: yes
+  tasks:
+
+    - name: initiate the swarm, gather tokens
+      community.docker.docker_swarm:
+        state: present
+      register: swarm
+
+    - name: register dummy manager host
+      add_host:
+        name: "SWARM_INFO"
+        manager_endpoint: "{{ inventory_hostname }}:2377"
+        manager_token:    "{{ swarm.swarm_facts.JoinTokens.Manager }}"
+        worker_token:     "{{ swarm.swarm_facts.JoinTokens.Worker }}"
+
+    - name: show manager token
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['manager_token'] }}"
+
+    - name: show worker token
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['worker_token'] }}"
+
+    - name: show manager IP/hostname and port
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
+
+- name: Add Manager Nodes
+  hosts:  dev_swarm_managers:!dev_swarm_manager_01
+  tasks:
+
+    - name: Add Manager Nodes
+      community.docker.docker_swarm:
+        state: join
+        join_token:   "{{ hostvars['SWARM_INFO']['manager_token'] }}"
+        remote_addrs: "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
+
+- name: Add Worker Nodes
+  hosts:  dev_swarm_workers
+  tasks:
+
+    - name: Add Worker Nodes
+      community.docker.docker_swarm:
+        state: join
+        join_token:   "{{ hostvars['SWARM_INFO']['worker_token'] }}"
+        remote_addrs: "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
+
+# set up cron on the main worker
+- name: set up cron backup script for the managers
+  hosts:  dev_swarm_worker_01
+  tasks:
+
+    - name: configure the backup cron
+      cron:
+        name: dev_worker_backup
+        minute: "0"
+        hour: "*"
+        job: "bash /home/drake/scripts/docker/swarm_backup.sh DEV worker"
+
+# set up cron on the main manager
+- name: set up cron backup script for the managers
+  hosts:  dev_swarm_manager_01
+  tasks:
+
+    - name: configure the backup cron
+      cron:
+        name: dev_manager_backup
+        minute: "0"
+        hour: "*"
+        job: "bash /home/drake/scripts/docker/swarm_backup.sh DEV manager"
+
+    - name: deploying the custom portianer stack file
+      get_url:
+        url:  "https://raw.githubusercontent.com/educatedCaveman/docker-lab/dev_test/scripts/swarm/portainer-agent-stack.yml"
+        dest: /tmp/
+
+    - name: setting up portainer
+      debug:
+        msg:
+          - "to install/start portainer, run the following:" 
+          - docker stack deploy -c /tmp/portainer-agent-stack.yml portainer
