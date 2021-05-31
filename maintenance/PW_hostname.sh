@@ -24,7 +24,6 @@ HOSTS=( \
     prd_swarm_worker_02 \
     prd_swarm_worker_03 \
     prd_swarm_worker_04 \
-    gitlab_vm \
     apt_cache \
     apt_mirror \
     nextcloud_vm \
