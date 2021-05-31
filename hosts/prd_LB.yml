@@ -1,7 +1,7 @@
 # base docker config
-- name: configure Docker Swarm Cluster (DEV)
+- name: configure Docker Swarm Cluster (PRD)
   hosts:
-    - dev_api_LB
+    - prd_api_LB
   roles:
     - LXC_role
     - git_dotfiles_role
@@ -15,6 +15,6 @@
         telegraf_config:  'telegraf_base.conf'
     - role: nginx_role
       vars:
-        source_conf:  '/home/drake/dotfiles/docker_swarm/dev_lb_nginx.conf'
+        source_conf:  '/home/drake/dotfiles/docker_swarm/prd_lb_nginx.conf'
         dest_conf:    '/etc/nginx/nginx.conf'
   tasks:
