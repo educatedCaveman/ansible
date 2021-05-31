@@ -1,0 +1,53 @@
+---
+# tasks file for nginx_role
+
+# install nginx
+- name: install nginx
+  apt:
+    name:
+      - nginx
+    state: latest
+
+# make sure nginx is stopped
+- name: stop nginx
+  systemd:
+    name: nginx
+    state:  stopped
+
+# check if source file exists
+- name: check if source config file exists
+  stat:
+    path: "{{ source_conf }}"
+  register: nginx_source
+
+# check if dest file exists, when source file exists
+- name: check if destination config file exists
+  stat:
+    path: "{{ dest_conf }}"
+  register: nginx_dest
+  when: nginx_source.stat.exists
+
+# if dest and source files exist, remove dest file
+- name: remove destination config file
+  file:
+    path: "{{ dest_conf }}"
+    state:  absent
+  when:
+    - nginx_source.stat.exists
+    - nginx_dest.stat.exists
+
+# if source file exists, link it to create dest file
+- name: link source to destination
+  file:
+    src:    "{{ source_conf }}"
+    dest:   "{{ dest_conf }}"
+    state:  link
+  when: nginx_source.stat.exists
+
+# restart nginx
+- name: restart nginx
+  systemd:
+    name:     nginx
+    state:    restarted
+    enabled:  yes
+
