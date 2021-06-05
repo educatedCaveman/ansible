@@ -18,7 +18,7 @@
 # omit self, because it is what runs the job
 
 - name: rolling restarts
-  hosts:  ubuntu_debian_hosts:!octopi:!self
+  hosts:  ubuntu_debian_hosts:!octopi:!self:!dev_api_LB
   serial: 1
   ignore_unreachable: yes
   tasks:
