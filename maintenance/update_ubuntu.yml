@@ -12,3 +12,15 @@
     - name: upgrade packages
       apt:
         upgrade:  dist
+
+# rolling restarts
+# omit octopi, because it might have a print running
+
+- name: rolling restarts
+  hosts:  ubuntu_debian_hosts:!octopi
+  serial: 1
+  ignore_unreachable: yes
+  tasks:
+
+    - reboot:
+        reboot_timeout: 300
