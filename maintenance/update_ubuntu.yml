@@ -16,9 +16,11 @@
 # rolling restarts
 # omit octopi, because it might have a print running
 # omit self, because it is what runs the job
+# omit moria, because it often has issues being restarted
+# - fuckyounvidia.jpg
 
 - name: rolling restarts
-  hosts:  ubuntu_debian_hosts:!octopi:!self:!dev_api_LB
+  hosts:  ubuntu_debian_hosts:!octopi:!self:!moria
   serial: 1
   ignore_unreachable: yes
   tasks:
