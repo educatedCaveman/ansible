@@ -105,6 +105,11 @@
       dest: /etc/default/minio
       state:  link
 
+  - name: remove old minio service file
+    file:
+      src:  /etc/systemd/system/minio.service
+      state:  absent
+
   # download, edit, and install service file
   - name: install minio service file
     copy:
@@ -112,11 +117,10 @@
       dest: /etc/systemd/system/minio.service
       remote_src: yes
 
-  # disabled so i can verify things
-  # # start and enable daemon
-  # - name: enable and restart minio
-  #   systemd:
-  #     name:   minio
-  #     state:  restarted
-  #     enabled:  yes
+  # start and enable daemon
+  - name: enable and restart minio
+    systemd:
+      name:   minio
+      state:  restarted
+      enabled:  yes
 
