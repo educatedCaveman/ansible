@@ -1,5 +1,5 @@
 - name: configure Minio
-  hosts:  plex
+  hosts:  minio
   roles:
     - LXC_role            # base LXC container config
     - git_dotfiles_role   # deploy the dotfiles repo
@@ -16,6 +16,12 @@
 
   # most of this is based on the following guide
   # https://www.digitalocean.com/community/tutorials/how-to-set-up-an-object-storage-server-using-minio-on-ubuntu-18-04
+
+  # create minio group
+  - name: create the minio-user group
+    group:
+      name:   minio-user
+      state:  present
 
   # create minio user
   - name: create minio user
