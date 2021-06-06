@@ -48,11 +48,11 @@
 
   - name: Mount the Minio NFS share if the mount path exists
     mount:
-      src: 192.168.11.2:/mnt/storage_node/minio
-      path: /mnt/mobius/minio
+      src:    192.168.11.2:/mnt/storage_node/minio
+      path:   /mnt/mobius/minio
       fstype: nfs 
-      opts: rw,nolock,tcp
-      state: mounted
+      opts:   rw,nolock,tcp
+      state:  mounted
 
   # create /etc/minio and set permissions
   - name: create /etc/minio folder and set permissions
@@ -76,7 +76,8 @@
   #     group:  minio-user
   #     state:  directory
 
-  # get and install Minio  - name: retrieve Minio
+  # get and install Minio  
+  - name: retrieve Minio
     get_url:
       src:  'https://dl.min.io/server/minio/release/linux-amd64/minio'
       dest: /tmp/minio
