@@ -107,7 +107,7 @@
 
   - name: remove old minio service file
     file:
-      src:  /etc/systemd/system/minio.service
+      path:   /etc/systemd/system/minio.service
       state:  absent
 
   # download, edit, and install service file
