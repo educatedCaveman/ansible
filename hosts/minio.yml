@@ -85,7 +85,7 @@
   # get and install Minio  
   - name: retrieve Minio
     get_url:
-      src:  'https://dl.min.io/server/minio/release/linux-amd64/minio'
+      url:  'https://dl.min.io/server/minio/release/linux-amd64/minio'
       dest: /tmp/minio
 
   - name: install Minio
