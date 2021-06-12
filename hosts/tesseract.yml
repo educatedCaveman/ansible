@@ -155,7 +155,7 @@
     when: 
       - dotfiles.stat.exists
       - smartd_conf.stat.islnk is defined
-      - sanoid_conf.stat.islnk == False
+      - smartd_conf.stat.islnk == False
 
   - name: enable and restart smartd
     systemd:
