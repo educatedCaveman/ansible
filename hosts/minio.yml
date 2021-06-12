@@ -66,22 +66,6 @@
       path: /etc/minio
       state:  directory
 
-  # create /usr/local/bin/minio and set permissions
-  # - name: create /usr/local/bin/minio folder and set permissions
-  #   file:
-  #     path: /usr/local/bin/minio
-  #     owner:  minio-user
-  #     group:  minio-user
-  #     state:  directory
-
-  # create /usr/local/share/minio and set permissions
-  # - name: create /usr/local/share/minio folder and set permissions
-  #   file:
-  #     path: /usr/local/share/minio
-  #     owner:  minio-user
-  #     group:  minio-user
-  #     state:  directory
-
   # get and install Minio  
   - name: retrieve Minio
     get_url:

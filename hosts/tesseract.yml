@@ -119,6 +119,50 @@
       enabled:  yes
     when: sanoid.stat.exists
 
+  # smartd  
+  # check if smartd already present
+  - name: check for existing smartd.conf
+    stat:
+      path: /etc/smartd.conf
+    register: smartd_conf
+
+  - name: check for existing smartd.conf.bkup
+    stat:
+      path: /etc//smartd.conf.bkup
+    register: smartd_bkup
+
+  - name: backup smartd.conf if the backup doesn't exist
+    copy:
+      src:  /etc/smartd.conf
+      dest: /etc/smartd.conf.bkup
+      remote_src: yes
+    when: not smartd_bkup.stat.exists
+
+  - name: remove the existing smartd.conf
+    file:
+      path: /etc/smartd.conf
+      state:  absent
+    when: 
+      - dotfiles.stat.exists
+      - smartd_conf.stat.islnk is defined
+      - smartd_conf.stat.islnk == False
+
+  - name: link smartd.conf
+    file:
+      src:  /home/drake/dotfiles/smartd/smartd.conf
+      dest: /etc/smartd.conf
+      state:  link
+    when: 
+      - dotfiles.stat.exists
+      - smartd_conf.stat.islnk is defined
+      - sanoid_conf.stat.islnk == False
+
+  - name: enable and restart smartd
+    systemd:
+      name: smartd
+      state:  restarted
+      enabled:  yes
+
   # email setup stuff
   # https://github.com/Tontonjo/proxmox.git
   - name: check for existing email repo
