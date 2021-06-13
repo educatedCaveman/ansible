@@ -169,4 +169,9 @@
       - server_conf.stat.islnk == False
 
   # start graylog service
+  - name: enable and restart Graylog
+    systemd:
+      name: graylog-server
+      state:  started
+      enabled:  yes
 
