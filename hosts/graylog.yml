@@ -65,6 +65,47 @@
       state: present
       filename: elastic-7.x.list
 
+  - name: check for existing elasticsearch.yml
+    stat:
+      path: /etc/elasticsearch/elasticsearch.yml
+    register: es_conf
+
+  - name: check for existing elasticsearch.yml.bkup
+    stat:
+      path: /etc/elasticsearch/elasticsearch.yml.bkup
+    register: es_conf_bkup
+
+  - name: check if the dotfiles are present
+    stat:
+      path: /home/drake/dotfiles
+    register: dotfiles
+
+  - name: backup elasticsearch.yml if the backup doesn't exist
+    copy:
+      src:  /etc/elasticsearch/elasticsearch.yml
+      dest: /etc/elasticsearch/elasticsearch.yml.bkup
+      remote_src: yes
+    when: not es_conf_bkup.stat.exists
+
+  - name: remove the existing elasticsearch.yml
+    file:
+      path: /etc/elasticsearch/elasticsearch.yml
+      state:  absent
+    when: 
+      - dotfiles.stat.exists
+      - es_conf.stat.islnk is defined
+      - es_conf.stat.islnk == False
+
+  - name: link elasticsearch.yml
+    file:
+      src:  /home/drake/dotfiles/graylog/elasticsearch.yml
+      dest: /etc/elasticsearch/elasticsearch.yml
+      state:  link
+    when: 
+      - dotfiles.stat.exists
+      - es_conf.stat.islnk is defined
+      - es_conf.stat.islnk == False
+
   - name: Install Elasticsearch
     apt:
       name:
