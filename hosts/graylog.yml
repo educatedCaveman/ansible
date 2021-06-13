@@ -52,8 +52,6 @@
       enabled:  yes
 
   # elasticsearch
-  # - modify config
-
   - name: add Elasticsearch Key
     apt_key:
       url:  https://artifacts.elastic.co/GPG-KEY-elasticsearch
@@ -64,7 +62,8 @@
       update_cache: yes
       state: present
       filename: elastic-7.x.list
-
+  
+  # modify config
   - name: check for existing elasticsearch.yml
     stat:
       path: /etc/elasticsearch/elasticsearch.yml
@@ -119,7 +118,9 @@
       enabled:  yes
 
   # graylog
-
+  - name: install graylog package
+    apt:
+      deb:  https://packages.graylog2.org/repo/packages/graylog-4.0-repository_latest.deb
 
   # config
 
