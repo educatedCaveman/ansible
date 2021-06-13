@@ -1,8 +1,8 @@
 # base docker config
 - name: configure Docker Swarm Cluster (DEV)
   hosts:
-    - dev_swarm_managers
-    - dev_swarm_workers
+    - test_swarm_managers
+    - test_swarm_workers
   roles:
     # - VM_role
     - LXC_role
@@ -24,7 +24,7 @@
 # gluster for managers
 - name: configure GlusterFS for manager Nodes (DEV)
   hosts:
-    - dev_swarm_managers
+    - test_swarm_managers
   roles:
     - gluster_role_LXC
   vars:
@@ -40,7 +40,7 @@
 # gluster for workers:
 - name: configure GlusterFS for worker Nodes (DEV)
   hosts:
-    - dev_swarm_workers
+    - test_swarm_workers
   roles:
     - gluster_role_LXC
   vars:
@@ -49,7 +49,7 @@
 
 # create the swarm:
 - name: initiate the swarm
-  hosts:  dev_swarm_manager_01
+  hosts:  test_swarm_manager_01
   gather_facts: yes
   tasks:
 
@@ -78,7 +78,7 @@
         msg:  "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
 
 - name: Add Manager Nodes
-  hosts:  dev_swarm_managers:!dev_swarm_manager_01
+  hosts:  test_swarm_managers:!test_swarm_manager_01
   tasks:
 
     - name: Add Manager Nodes
@@ -88,7 +88,7 @@
         remote_addrs: "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
 
 - name: Add Worker Nodes
-  hosts:  dev_swarm_workers
+  hosts:  test_swarm_workers
   tasks:
 
     - name: Add Worker Nodes
@@ -99,31 +99,31 @@
 
 # # set up cron on the first worker
 # - name: set up cron backup script for the workers
-#   hosts:  dev_swarm_worker_01
+#   hosts:  test_swarm_worker_01
 #   tasks:
 
 #     - name: configure the backup cron
 #       cron:
-#         name: dev_worker_backup
+#         name: test_worker_backup
 #         minute: "0"
 #         hour: "*"
 #         job: "bash /home/drake/scripts/docker/swarm_backup.sh DEV worker"
 
 # # set up cron on the first manager
 # - name: set up cron backup script for the managers
-#   hosts:  dev_swarm_manager_01
+#   hosts:  test_swarm_manager_01
 #   tasks:
 
 #     - name: configure the backup cron
 #       cron:
-#         name: dev_manager_backup
+#         name: test_manager_backup
 #         minute: "0"
 #         hour: "*"
 #         job: "bash /home/drake/scripts/docker/swarm_backup.sh DEV manager"
 
 #     - name: deploying the custom portianer stack file
 #       get_url:
-#         url:  "https://raw.githubusercontent.com/educatedCaveman/docker-lab/dev_test/scripts/swarm/portainer-agent-stack.yml"
+#         url:  "https://raw.githubusercontent.com/educatedCaveman/docker-lab/test_test/scripts/swarm/portainer-agent-stack.yml"
 #         dest: /tmp/
 
 #     - name: setting up portainer
