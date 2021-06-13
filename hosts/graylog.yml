@@ -27,6 +27,12 @@
         - pwgen
       state:  present
 
+  # check for dotfiles
+  - name: check if the dotfiles are present
+    stat:
+      path: /home/drake/dotfiles
+    register: dotfiles
+
   # mongoDB
   - name: add MongoDB Key
     apt_key:
@@ -73,11 +79,6 @@
     stat:
       path: /etc/elasticsearch/elasticsearch.yml.bkup
     register: es_conf_bkup
-
-  - name: check if the dotfiles are present
-    stat:
-      path: /home/drake/dotfiles
-    register: dotfiles
 
   - name: backup elasticsearch.yml if the backup doesn't exist
     copy:
@@ -130,8 +131,42 @@
         - graylog-integrations-plugins 
         - graylog-enterprise-integrations-plugins
 
-  # config
+  # config:  /etc/graylog/server/server.conf
+  - name: check for existing graylog server.conf
+    stat:
+      path: /etc/graylog/server/server.conf
+    register: server_conf
 
+  - name: check for existing graylog server.conf.bkup
+    stat:
+      path: /etc/graylog/server/server.conf.bkup
+    register: server_conf_bkup
 
+  - name: backup graylog server.conf if the backup doesn't exist
+    copy:
+      src:  /etc/graylog/server/server.conf
+      dest: /etc/graylog/server/server.conf.bkup
+      remote_src: yes
+    when: not server_conf_bkup.stat.exists
 
+  - name: remove the existing graylog server.conf
+    file:
+      path: /etc/graylog/server/server.conf
+      state:  absent
+    when: 
+      - dotfiles.stat.exists
+      - server_conf.stat.islnk is defined
+      - server_conf.stat.islnk == False
+
+  - name: link graylog server.conf
+    file:
+      src:  /home/drake/dotfiles/graylog/server.conf
+      dest: /etc/graylog/server/server.conf
+      state:  link
+    when: 
+      - dotfiles.stat.exists
+      - server_conf.stat.islnk is defined
+      - server_conf.stat.islnk == False
+
+  # start graylog service
 
