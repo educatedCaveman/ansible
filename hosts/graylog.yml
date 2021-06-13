@@ -14,4 +14,31 @@
         telegraf_config:  'telegraf_base.conf'
   tasks:
 
+  # this is based off of the following guide:
+  # https://docs.graylog.org/en/4.0/pages/installation/os/ubuntu.html
+
+  # prerequisites
+  - name: install prerequisites
+    apt:
+      name:
+        - apt-transport-https 
+        - openjdk-8-jre-headless 
+        - uuid-runtime 
+        - pwgen
+      state:  present
+
+
+  # mongoDB
+
+
+  # elasticsearch
+
+
+  # graylog
+
+
+  # config
+
+
+
 
