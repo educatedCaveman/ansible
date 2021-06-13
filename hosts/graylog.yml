@@ -52,6 +52,30 @@
       enabled:  yes
 
   # elasticsearch
+  # - modify config
+
+  - name: add Elasticsearch Key
+    apt_key:
+      url:  https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+  - name: add Elasticsearch repo
+    apt_repository:
+      repo: deb https://artifacts.elastic.co/packages/7.x/apt stable main
+      update_cache: yes
+      state: present
+      filename: elastic-7.x.list
+
+  - name: Install Elasticsearch
+    apt:
+      name:
+        - elasticsearch
+      state:  latest
+
+  # - name: enable and restart Elasticsearch
+  #   systemd:
+  #     name: elasticsearch
+  #     state:  started
+  #     enabled:  yes
 
 
   # graylog
