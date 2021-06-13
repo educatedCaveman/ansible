@@ -27,9 +27,29 @@
         - pwgen
       state:  present
 
-
   # mongoDB
+  - name: add MongoDB Key
+    apt_key:
+      url:  https://www.mongodb.org/static/pgp/server-4.4.asc
 
+  - name: add MongoDB repo
+    apt_repository:
+      repo: deb https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse
+      update_cache: yes
+      state: present
+      filename: mongodb-org-4.4.list
+
+  - name: Install MongoDB
+    apt:
+      name:
+        - mongodb-org
+      state:  latest
+
+  - name: enable and restart MongoDB
+    systemd:
+      name: mongod
+      state:  started
+      enabled:  yes
 
   # elasticsearch
 
