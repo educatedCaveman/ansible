@@ -112,12 +112,11 @@
         - elasticsearch
       state:  latest
 
-  # - name: enable and restart Elasticsearch
-  #   systemd:
-  #     name: elasticsearch
-  #     state:  started
-  #     enabled:  yes
-
+  - name: enable and restart Elasticsearch
+    systemd:
+      name: elasticsearch
+      state:  started
+      enabled:  yes
 
   # graylog
 
