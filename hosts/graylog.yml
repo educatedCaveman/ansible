@@ -118,9 +118,17 @@
       enabled:  yes
 
   # graylog
-  - name: install graylog package
+  - name: fetch graylog package
     apt:
       deb:  https://packages.graylog2.org/repo/packages/graylog-4.0-repository_latest.deb
+
+  - name: install graylog and related packages
+    apt:
+      name:
+        - graylog-server 
+        - graylog-enterprise-plugins 
+        - graylog-integrations-plugins 
+        - graylog-enterprise-integrations-plugins
 
   # config
 
