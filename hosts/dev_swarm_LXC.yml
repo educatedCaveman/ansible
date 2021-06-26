@@ -123,7 +123,7 @@
 
     - name: deploying the custom portianer stack file
       get_url:
-        url:  "https://raw.githubusercontent.com/educatedCaveman/docker-lab/test_test/scripts/swarm/portainer-agent-stack.yml"
+        url:  "https://raw.githubusercontent.com/educatedCaveman/docker-lab/dev_test/scripts/swarm/portainer-agent-stack.yml"
         dest: /tmp/
 
     - name: setting up portainer
