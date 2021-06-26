@@ -20,6 +20,7 @@
       name:   
         - influxdb
         - chronograf
+        - kapacitor
       state:  present
 
   # check for dotfiles
