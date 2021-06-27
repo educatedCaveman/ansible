@@ -108,12 +108,12 @@
     #     state:  restarted
     #     enabled:  yes
 
-    # # tmux cron
-    # - name: setup TMUX autostart check
-    #   cron:
-    #     name: tmux_run_check
-    #     user: drake
-    #     job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh moria"
+    # tmux cron
+    - name: setup TMUX autostart check
+      cron:
+        name: tmux_run_check
+        user: drake
+        job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh moria"
 
 # permissions
 - name: Apply the Drake Role
@@ -131,13 +131,6 @@
   hosts:
     - moria
   tasks:  
-  
-#     - name: driver version
-#       debug:
-#         msg: 
-#           - "the following driver versions may be out of date."
-#           - "check the following URL for the latest version:"
-#           - "https://www.nvidia.com/Download/index.aspx?lang=en-us"
 
     - name: T-Rex version
       debug:
