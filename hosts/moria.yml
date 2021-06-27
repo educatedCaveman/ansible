@@ -13,11 +13,8 @@
       vars:
         telegraf_config:  'telegraf_base.conf'
   vars:
-    # - driver_file:  "/home/drake/NVIDIA-Linux-x86_64-460.67.run"
-    # - driver_url: "https://international.download.nvidia.com/XFree86/Linux-x86_64/460.67/NVIDIA-Linux-x86_64-460.67.run"
     - t_rex_dir:  "/home/drake/t_rex"
-    - t_rex_archive:  "t-rex-0.19.12-linux-cuda11.1.tar.gz"
-    # - t_rex_release_url:  "https://github.com/trexminer/T-Rex/releases/download/0.19.12/t-rex-0.19.12-linux-cuda11.1.tar.gz"
+    - t_rex_archive:  "t-rex-0.20.4-linux.tar.gz"
     - t_rex_release_url:  "https://github.com/trexminer/T-Rex/releases/download/0.20.4/t-rex-0.20.4-linux.tar.gz"
     - distribution: "ubuntu2004"
   tasks:
@@ -30,37 +27,28 @@
           - libglvnd-dev 
           - pkg-config
           - python3-pip
-          # - nvtop
         state:  latest
 
     # nvidia driver
     # This is based on this guide:
     # https://docs.nvidia.com/datacenter/tesla/tesla-installation-notes/index.html
-
-    # wget https://developer.download.nvidia.com/compute/cuda/repos/$distribution/x86_64/cuda-$distribution.pin
-    # sudo mv cuda-$distribution.pin /etc/apt/preferences.d/cuda-repository-pin-600
     - name: retrieving repo files
       get_url:
         url:  "https://developer.download.nvidia.com/compute/cuda/repos/{{ distribution }}/x86_64/cuda-{{ distribution }}.pin"
         dest: /etc/apt/preferences.d/cuda-repository-pin-600
 
-    # sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/$distribution/x86_64/7fa2af80.pub
     - name: add repo key
       apt_key:
         url:    "https://developer.download.nvidia.com/compute/cuda/repos/{{ distribution }}/x86_64/7fa2af80.pub"
         state:  present
 
-    # echo "deb http://developer.download.nvidia.com/compute/cuda/repos/$distribution/x86_64 /" | sudo tee /etc/apt/sources.list.d/cuda.list
     - name: add the repository
       apt_repository:
         repo:     "deb http://developer.download.nvidia.com/compute/cuda/repos/{{ distribution }}/x86_64 /"
         state:    present
         filename: cuda.list
 
-
-    # sudo apt-get update --no-install-recommends
-    # sudo apt-get -y install cuda-drivers --no-install-recommends
-    # nvidia-cuda-toolkit, nvtop
+    # install nvidia packages
     - name: install nvidia packages
       apt:
         name:
@@ -71,26 +59,12 @@
         install_recommends: no
         update_cache: yes
 
-
-
-    # - name: check for the driver being present already
-    #   stat:
-    #     path: "{{ driver_file }}"
-    #   register: driver
-
-    # - name: retrieving the nVidia driver
-    #   get_url:
-    #     url:  "{{ driver_url }}"
-    #     dest: "{{ driver_file }}"
-    #   when: not driver.stat.exists
-
-    # - name: add execute permissions
-    #   file:
-    #     path: "{{ driver_file }}"
-    #     mode: a+x
-    #   when: not driver.stat.exists
-
-    # TODO: disable gdm?
+    # disable gdm    
+    - name: GDM service
+      systemd:
+        name: gdm
+        state:  stopped
+        enabled:  no
 
     # T-Rex 
     - name: check for existing T-Rex folder
@@ -149,11 +123,14 @@
     - drake_role
   tasks:
 
+    - name: reboot for drivers and such
+      reboot:
+
 # manual config
-# - name: Manual Config
-#   hosts:
-#     - moria
-#   tasks:  
+- name: Manual Config
+  hosts:
+    - moria
+  tasks:  
   
 #     - name: driver version
 #       debug:
@@ -162,11 +139,11 @@
 #           - "check the following URL for the latest version:"
 #           - "https://www.nvidia.com/Download/index.aspx?lang=en-us"
 
-#     - name: T-Rex version
-#       debug:
-#         msg: 
-#           - "the following T-Rex version may be out of date."
-#           - "check the following URL for the latest version:"
-#           - "https://github.com/trexminer/T-Rex/releases"
+    - name: T-Rex version
+      debug:
+        msg: 
+          - "the following T-Rex version may be out of date."
+          - "check the following URL for the latest version:"
+          - "https://github.com/trexminer/T-Rex/releases"
 
     
