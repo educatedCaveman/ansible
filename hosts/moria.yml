@@ -13,11 +13,13 @@
       vars:
         telegraf_config:  'telegraf_base.conf'
   vars:
-    - driver_file:  "/home/drake/NVIDIA-Linux-x86_64-460.67.run"
-    - driver_url: "https://international.download.nvidia.com/XFree86/Linux-x86_64/460.67/NVIDIA-Linux-x86_64-460.67.run"
+    # - driver_file:  "/home/drake/NVIDIA-Linux-x86_64-460.67.run"
+    # - driver_url: "https://international.download.nvidia.com/XFree86/Linux-x86_64/460.67/NVIDIA-Linux-x86_64-460.67.run"
     - t_rex_dir:  "/home/drake/t_rex"
     - t_rex_archive:  "t-rex-0.19.12-linux-cuda11.1.tar.gz"
-    - t_rex_release_url:  "https://github.com/trexminer/T-Rex/releases/download/0.19.12/t-rex-0.19.12-linux-cuda11.1.tar.gz"
+    # - t_rex_release_url:  "https://github.com/trexminer/T-Rex/releases/download/0.19.12/t-rex-0.19.12-linux-cuda11.1.tar.gz"
+    - t_rex_release_url:  "https://github.com/trexminer/T-Rex/releases/download/0.20.4/t-rex-0.20.4-linux.tar.gz"
+    - distribution: "ubuntu2004"
   tasks:
 
     # install dependencies:
@@ -28,26 +30,67 @@
           - libglvnd-dev 
           - pkg-config
           - python3-pip
-          - nvtop
+          # - nvtop
         state:  latest
 
     # nvidia driver
-    - name: check for the driver being present already
-      stat:
-        path: "{{ driver_file }}"
-      register: driver
+    # This is based on this guide:
+    # https://docs.nvidia.com/datacenter/tesla/tesla-installation-notes/index.html
 
-    - name: retrieving the nVidia driver
+    # wget https://developer.download.nvidia.com/compute/cuda/repos/$distribution/x86_64/cuda-$distribution.pin
+    # sudo mv cuda-$distribution.pin /etc/apt/preferences.d/cuda-repository-pin-600
+    - name: retrieving repo files
       get_url:
-        url:  "{{ driver_url }}"
-        dest: "{{ driver_file }}"
-      when: not driver.stat.exists
+        url:  "https://developer.download.nvidia.com/compute/cuda/repos/{{ distribution }}/x86_64/cuda-{{ distribution }}.pin"
+        dest: /etc/apt/preferences.d/cuda-repository-pin-600
 
-    - name: add execute permissions
-      file:
-        path: "{{ driver_file }}"
-        mode: a+x
-      when: not driver.stat.exists
+    # sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/$distribution/x86_64/7fa2af80.pub
+    - name: add repo key
+      apt_key:
+        url:    "https://developer.download.nvidia.com/compute/cuda/repos/{{ distribution }}/x86_64/7fa2af80.pub"
+        state:  present
+
+    # echo "deb http://developer.download.nvidia.com/compute/cuda/repos/$distribution/x86_64 /" | sudo tee /etc/apt/sources.list.d/cuda.list
+    - name: add the repository
+      apt_repository:
+        repo:     "deb http://developer.download.nvidia.com/compute/cuda/repos/{{ distribution }}/x86_64 /"
+        state:    present
+        filename: cuda.list
+
+
+    # sudo apt-get update --no-install-recommends
+    # sudo apt-get -y install cuda-drivers --no-install-recommends
+    # nvidia-cuda-toolkit, nvtop
+    - name: install nvidia packages
+      apt:
+        name:
+          - nvtop
+          - cuda-drivers
+          - nvidia-cuda-toolkit
+        state:  latest
+        install_recommends: no
+        update_cache: yes
+
+
+
+    # - name: check for the driver being present already
+    #   stat:
+    #     path: "{{ driver_file }}"
+    #   register: driver
+
+    # - name: retrieving the nVidia driver
+    #   get_url:
+    #     url:  "{{ driver_url }}"
+    #     dest: "{{ driver_file }}"
+    #   when: not driver.stat.exists
+
+    # - name: add execute permissions
+    #   file:
+    #     path: "{{ driver_file }}"
+    #     mode: a+x
+    #   when: not driver.stat.exists
+
+    # TODO: disable gdm?
 
     # T-Rex 
     - name: check for existing T-Rex folder
@@ -74,29 +117,29 @@
         remote_src: yes
         mode: a+x
 
-    # coolgpus:
-    - name: install CoolGPUs
-      pip:
-        name: coolgpus
+    # # coolgpus:
+    # - name: install CoolGPUs
+    #   pip:
+    #     name: coolgpus
 
-    - name: install CoolGPUs service file
-      copy:
-        src:  /home/drake/dotfiles/systemd/coolgpus.service
-        dest: /etc/systemd/system/coolgpus.service
-        remote_src: yes
+    # - name: install CoolGPUs service file
+    #   copy:
+    #     src:  /home/drake/dotfiles/systemd/coolgpus.service
+    #     dest: /etc/systemd/system/coolgpus.service
+    #     remote_src: yes
 
-    - name: enable CoolGPUs service
-      systemd:
-        name: coolgpus
-        state:  restarted
-        enabled:  yes
+    # - name: enable CoolGPUs service
+    #   systemd:
+    #     name: coolgpus
+    #     state:  restarted
+    #     enabled:  yes
 
-    # tmux cron
-    - name: setup TMUX autostart check
-      cron:
-        name: tmux_run_check
-        user: drake
-        job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh moria"
+    # # tmux cron
+    # - name: setup TMUX autostart check
+    #   cron:
+    #     name: tmux_run_check
+    #     user: drake
+    #     job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh moria"
 
 # permissions
 - name: Apply the Drake Role
@@ -107,23 +150,23 @@
   tasks:
 
 # manual config
-- name: Manual Config
-  hosts:
-    - moria
-  tasks:  
+# - name: Manual Config
+#   hosts:
+#     - moria
+#   tasks:  
   
-    - name: driver version
-      debug:
-        msg: 
-          - "the following driver versions may be out of date."
-          - "check the following URL for the latest version:"
-          - "https://www.nvidia.com/Download/index.aspx?lang=en-us"
+#     - name: driver version
+#       debug:
+#         msg: 
+#           - "the following driver versions may be out of date."
+#           - "check the following URL for the latest version:"
+#           - "https://www.nvidia.com/Download/index.aspx?lang=en-us"
 
-    - name: T-Rex version
-      debug:
-        msg: 
-          - "the following T-Rex version may be out of date."
-          - "check the following URL for the latest version:"
-          - "https://github.com/trexminer/T-Rex/releases"
+#     - name: T-Rex version
+#       debug:
+#         msg: 
+#           - "the following T-Rex version may be out of date."
+#           - "check the following URL for the latest version:"
+#           - "https://github.com/trexminer/T-Rex/releases"
 
     
