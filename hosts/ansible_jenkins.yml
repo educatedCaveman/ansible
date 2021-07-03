@@ -62,7 +62,8 @@
     debug:
       msg:  the ability to restore th jenkins from backup config would go here?
 
-  # TODO: ansible? anything to do?
+  # Semaphore (Web UI for Ansible)
+  # https://github.com/ansible-semaphore/semaphore/releases/download/v2.7.0/semaphore_2.7.0_linux_amd64.deb
 
   # bitwarden config
   - name: check for bitwarden

@@ -19,11 +19,21 @@
 # omit moria, because it often has issues being restarted
 # - fuckyounvidia.jpg
 
-- name: rolling restarts
-  hosts:  ubuntu_debian_hosts:!octopi:!self:!moria
+- name: ubuntu_debian_hosts:!octopi:!self:!moria:!HA_hosts
+  hosts:  HA_hosts
+  ignore_unreachable: yes
+  tasks:
+
+    - reboot:
+        reboot_timeout: 300
+
+# restart HA hosts one at a time so they don't go down
+- name: rolling restarts, Highly-Available Hosts
+  hosts:  HA_hosts
   serial: 1
   ignore_unreachable: yes
   tasks:
 
     - reboot:
         reboot_timeout: 300
+
