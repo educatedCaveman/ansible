@@ -4,14 +4,11 @@
   ignore_unreachable: yes
   tasks:
 
-    - name: update packages
+    - name: update and upgrade packages
       apt:
-        name: '*'
-        state: latest
-
-    - name: upgrade packages
-      apt:
-        upgrade:  dist
+        name:     '*'
+        state:    latest
+        upgrade:  yes
 
 # rolling restarts
 # omit octopi, because it might have a print running
@@ -19,21 +16,21 @@
 # omit moria, because it often has issues being restarted
 # - fuckyounvidia.jpg
 
-- name: ubuntu_debian_hosts:!octopi:!self:!moria:!HA_hosts
-  hosts:  HA_hosts
+- name: rolling restarts, non-HA hosts
+  hosts:  ubuntu_debian_hosts:!octopi:!self:!moria:!HA_hosts
   ignore_unreachable: yes
   tasks:
 
     - reboot:
         reboot_timeout: 300
 
-# restart HA hosts one at a time so they don't go down
-- name: rolling restarts, Highly-Available Hosts
-  hosts:  HA_hosts
-  serial: 1
-  ignore_unreachable: yes
-  tasks:
+# # restart HA hosts one at a time so they don't go down
+# - name: rolling restarts, HA Hosts
+#   hosts:  HA_hosts
+#   serial: 1
+#   ignore_unreachable: yes
+#   tasks:
 
-    - reboot:
-        reboot_timeout: 300
+#     - reboot:
+#         reboot_timeout: 300
 
