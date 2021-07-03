@@ -4,11 +4,14 @@
   ignore_unreachable: yes
   tasks:
 
-    - name: update and upgrade packages
-      apt:
-        name:     '*'
-        state:    latest
-        upgrade:  yes
+    # - name: update packages
+    #   apt:
+    #     name:     '*'
+    #     state:    latest
+
+    # - name: upgrade packages
+    #   apt:
+    #     upgrade:  yes
 
 # rolling restarts
 # omit octopi, because it might have a print running
