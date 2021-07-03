@@ -17,8 +17,8 @@
 # omit octopi, because it might have a print running
 # omit self, because it is what runs the job
 # omit moria, because it often has issues being restarted
-# omit apt_cache, because it times out
 # - fuckyounvidia.jpg
+# omit apt_cache, because it times out
 
 - name: rolling restarts, non-HA hosts
   hosts:  ubuntu_debian_hosts:!octopi:!self:!moria:!HA_hosts:!apt_cache
