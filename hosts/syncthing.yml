@@ -1,0 +1,62 @@
+- name: configure Syncthing
+  hosts:  syncthing
+  roles:
+    - LXC_role            # base LXC container config
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - git_scripts_role
+    - apt_client_role
+    - LXC_netplan_MTU     # use the mtu9000 netplan config
+    - linux_role          # base linux configs
+    - drake_role          # drake home directory permissions
+    - nfs_base_role       
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'telegraf_base.conf'
+  tasks:
+
+  # # install prerequisites
+  # - name: install prerequisites
+  #   apt:
+  #     name:   
+  #       - curl 
+  #       - apt-transport-https
+  #       - syncthing
+  #     state:  present
+
+  # apt key
+  - name: install syncthing GPG key
+    apt_key:
+      url:  https://syncthing.net/release-key.txt
+      state:  present
+
+  # apt repository
+  - name: set up repository
+    apt_repository:
+      repo: deb https://apt.syncthing.net/ syncthing release
+      state:  present
+      filename: syncthing.list
+
+  # install packages
+  - name: install packages
+    apt:
+      name:   
+        - curl 
+        - apt-transport-https
+        - syncthing
+      state:  present
+
+  # service file:
+  - name: install Syncthing service file
+    copy:
+      src:  /home/drake/dotfiles/systemd/syncthing.service
+      dest: /etc/systemd/system/syncthing.service
+      remote_src: yes
+
+  - name: enable Syncthing service
+    systemd:
+      name: syncthing
+      state:  restarted
+      enabled:  yes
+
+  # TODO: handle config file and database?
+
