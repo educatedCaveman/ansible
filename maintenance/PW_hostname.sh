@@ -29,6 +29,11 @@ HOSTS=( \
     nextcloud_vm \
     moria \
     origami \
+    influxDB \
+    grafana \
+    minio \
+    graylog \
+    syncthing \
 )
 
 # check BW_CLIENTID
