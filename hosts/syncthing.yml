@@ -14,14 +14,20 @@
         telegraf_config:  'telegraf_base.conf'
   tasks:
 
-  # # install prerequisites
-  # - name: install prerequisites
-  #   apt:
-  #     name:   
-  #       - curl 
-  #       - apt-transport-https
-  #       - syncthing
-  #     state:  present
+  # create syncthing group
+  - name: create the syncthing-user group
+    group:
+      name:   syncthing-user
+      state:  present
+
+  # create syncthing user
+  - name: create syncthing user
+    user:
+      name:   syncthing-user
+      group:  syncthing-user
+      system: yes
+      state:  present
+      shell:  /sbin/nologin
 
   # apt key
   - name: install syncthing GPG key
