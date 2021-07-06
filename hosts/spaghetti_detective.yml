@@ -1,0 +1,21 @@
+# base docker config
+- name: configure Docker Swarm Cluster (DEV)
+  hosts:
+    - spaghetti_detective
+  roles:
+    - LXC_role
+    - git_dotfiles_role
+    - git_scripts_role
+    - LXC_netplan_MTU
+    - apt_client_role
+    - linux_role
+    - docker_role
+    - drake_role
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'telegraf_base.conf'
+  tasks:
+
+
+
+  
