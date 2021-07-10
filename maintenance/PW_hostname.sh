@@ -7,35 +7,34 @@
 ANSIBLE_DIR='/home/drake/ansible/maintenance'
 
 # hosts for ansible
-# HOSTS=( \
-#     dev_api_LB \
-#     dev_swarm_manager_01 \
-#     dev_swarm_manager_02 \
-#     dev_swarm_manager_03 \
-#     dev_swarm_worker_01 \
-#     dev_swarm_worker_02 \
-#     dev_swarm_worker_03 \
-#     dev_swarm_worker_04 \
-#     prd_api_LB \
-#     prd_swarm_manager_01 \
-#     prd_swarm_manager_02 \
-#     prd_swarm_manager_03 \
-#     prd_swarm_worker_01 \
-#     prd_swarm_worker_02 \
-#     prd_swarm_worker_03 \
-#     prd_swarm_worker_04 \
-#     apt_cache \
-#     apt_mirror \
-#     nextcloud_vm \
-#     moria \
-#     origami \
-#     influxDB_vm \
-#     grafana_vm \
-#     minio_vm \
-#     graylog_vm \
-#     syncthing_vm \
-# )
-HOSTS=(influxDB_vm grafana_vm minio_vm graylog_vm syncthing_vm)
+HOSTS=( \
+    dev_api_LB \
+    dev_swarm_manager_01 \
+    dev_swarm_manager_02 \
+    dev_swarm_manager_03 \
+    dev_swarm_worker_01 \
+    dev_swarm_worker_02 \
+    dev_swarm_worker_03 \
+    dev_swarm_worker_04 \
+    prd_api_LB \
+    prd_swarm_manager_01 \
+    prd_swarm_manager_02 \
+    prd_swarm_manager_03 \
+    prd_swarm_worker_01 \
+    prd_swarm_worker_02 \
+    prd_swarm_worker_03 \
+    prd_swarm_worker_04 \
+    apt_cache \
+    apt_mirror \
+    nextcloud_vm \
+    moria \
+    origami \
+    influxDB_vm \
+    grafana_vm \
+    minio_vm \
+    graylog_vm \
+    syncthing_vm \
+)
 
 # check BW_CLIENTID
 if [[ -z "${BW_CLIENTID}" ]]; then
@@ -68,23 +67,18 @@ do
 
     # get the full BitWarden item
     BW_ITEM=$(bw get item "$host")
-    # echo "BW_ITEM:"
-    # echo "$BW_ITEM"
 
     # filter out the password
     BW_PASS=$(echo "${BW_ITEM}" | jq '.login.password')
     PASSWORD=${BW_PASS:1:-1}
-    # echo "password: $PASSWORD"
 
     # filter out the hostname
     BW_HOST=$(echo "${BW_ITEM}" | jq '.fields[0].value')
     HOSTNAME=${BW_HOST:1:-1}
-    # echo "hostname: $HOSTNAME"
 
     # filter out the LXC switch
     BW_LXC=$(echo "${BW_ITEM}" | jq '.fields[1].value')
     LXC=${BW_LXC:1:-1}
-    # echo "LXC: $LXC"
 
     # run the playbook, passing in the secrets
     ansible-playbook -l "$host" "${ANSIBLE_DIR}/PW_hostname.yml" \
@@ -93,7 +87,6 @@ do
     # handle the root user for LXC containers
     if [ "${LXC}" == "true" ]
     then
-        # echo "this is where we'd run the LXC playbook"
         ansible-playbook -l "$host" "${ANSIBLE_DIR}/LXC_root_setup.yml" \
             --extra-vars mypass="${PASSWORD}"
     fi
@@ -101,6 +94,6 @@ do
 done
 
 # setup LXC containers git
-# ansible-playbook "${ANSIBLE_DIR}/LXC_git.yml"
+ansible-playbook "${ANSIBLE_DIR}/LXC_git.yml"
 
-# bw logout
+bw logout
