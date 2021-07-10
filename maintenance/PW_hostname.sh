@@ -68,23 +68,23 @@ do
 
     # get the full BitWarden item
     BW_ITEM=$(bw get item "$host")
-    echo "BW_ITEM:"
-    echo "$BW_ITEM"
+    # echo "BW_ITEM:"
+    # echo "$BW_ITEM"
 
     # filter out the password
     BW_PASS=$(echo "${BW_ITEM}" | jq '.login.password')
     PASSWORD=${BW_PASS:1:-1}
-    echo "password: $PASSWORD"
+    # echo "password: $PASSWORD"
 
     # filter out the hostname
     BW_HOST=$(echo "${BW_ITEM}" | jq '.fields[0].value')
     HOSTNAME=${BW_HOST:1:-1}
-    echo "hostname: $HOSTNAME"
+    # echo "hostname: $HOSTNAME"
 
     # filter out the LXC switch
     BW_LXC=$(echo "${BW_ITEM}" | jq '.fields[1].value')
     LXC=${BW_LXC:1:-1}
-    echo "LXC: $LXC"
+    # echo "LXC: $LXC"
 
     # run the playbook, passing in the secrets
     ansible-playbook -l "$host" "${ANSIBLE_DIR}/PW_hostname.yml" \
