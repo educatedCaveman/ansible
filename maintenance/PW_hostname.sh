@@ -62,7 +62,7 @@ SESSION_KEY=${SESSION_LINE:20}
 export BW_SESSION=$SESSION_KEY
 
 #handle drake users
-for host in "${#HOSTS[@]}"
+for host in "${HOSTS[@]}"
 do
     echo "starting configuration of $host"
 
@@ -99,6 +99,6 @@ do
 done
 
 # setup LXC containers git
-ansible-playbook "${ANSIBLE_DIR}/LXC_git.yml"
+# ansible-playbook "${ANSIBLE_DIR}/LXC_git.yml"
 
-bw logout
+# bw logout
