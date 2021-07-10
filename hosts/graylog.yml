@@ -132,6 +132,7 @@
         - graylog-enterprise-plugins 
         - graylog-integrations-plugins 
         - graylog-enterprise-integrations-plugins
+      update_cache: yes
 
   # config:  /etc/graylog/server/server.conf
   - name: check for existing graylog server.conf
