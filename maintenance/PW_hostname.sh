@@ -70,10 +70,10 @@ do
     BW_ITEM=$(bw get item "$host")
     echo "BW_ITEM:"
     echo "$BW_ITEM"
-    echo ""
 
     # filter out the password
     BW_PASS=$(echo "${BW_ITEM}" | jq '.login.password')
+    echo "password: $BW_PASS"
     PASSWORD=${BW_PASS:1:-1}
 
     # filter out the hostname
