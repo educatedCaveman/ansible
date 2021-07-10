@@ -78,10 +78,12 @@ do
 
     # filter out the hostname
     BW_HOST=$(echo "${BW_ITEM}" | jq '.fields[0].value')
+    echo "hostname: $BW_HOST"
     HOSTNAME=${BW_HOST:1:-1}
 
     # filter out the LXC switch
     BW_LXC=$(echo "${BW_ITEM}" | jq '.fields[1].value')
+    echo "LXC: $BW_LXC"
     LXC=${BW_LXC:1:-1}
 
     # run the playbook, passing in the secrets
