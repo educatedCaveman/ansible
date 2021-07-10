@@ -85,7 +85,9 @@
       src:  /etc/elasticsearch/elasticsearch.yml
       dest: /etc/elasticsearch/elasticsearch.yml.bkup
       remote_src: yes
-    when: not es_conf_bkup.stat.exists
+    when: 
+      - not es_conf_bkup.stat.exists
+      - es_conf.stat.exists
 
   - name: remove the existing elasticsearch.yml
     file:
