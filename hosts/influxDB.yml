@@ -1,5 +1,5 @@
 - name: configure influxDB
-  hosts:  influxDB
+  hosts:  influxDB_vm
   roles:
     - LXC_role            # base LXC container config
     - git_dotfiles_role   # deploy the dotfiles repo

@@ -1,5 +1,5 @@
 - name: configure Syncthing
-  hosts:  syncthing
+  hosts:  syncthing_vm
   roles:
     - LXC_role            # base LXC container config
     - git_dotfiles_role   # deploy the dotfiles repo
