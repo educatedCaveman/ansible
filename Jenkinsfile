@@ -2,7 +2,7 @@ pipeline {
     agent any 
 
     environment {
-        ANSIBLE_REPO = '/var/lib/jenkins/workspace/ansible'
+        ANSIBLE_REPO = '/var/lib/jenkins/workspace/ansible_master'
     }
 
     //triggering periodically so the code is always present
