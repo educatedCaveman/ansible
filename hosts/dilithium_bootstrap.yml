@@ -1,0 +1,149 @@
+- name: configure dilithium (spare pi)
+  hosts:  dilithium
+  roles:
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - git_ansible_role    # deploy the ansible repo
+    - git_scripts_role    # deploy the scripts repo
+    - linux_role          # base linux configs
+    - drake_role          # drake home directory permissions
+    - nfs_base_role       
+    - nfs_backup_role
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'telegraf_base.conf'
+  tasks:
+
+    # install ansible
+    - name: install ansible
+      apt:
+        name:
+          - ansible
+          - gpg
+          - default-jre
+          - default-jdk
+          - unzip
+        state:  latest
+
+    # inventory file
+    - name: check existing hosts.ini file
+      stat:
+        path: /etc/ansible/hosts.ini
+      register: hosts
+
+    - name: remove existing host file if it isn't a link
+      file:
+        path: /etc/ansible/hosts.ini
+        state:  absent
+      when: 
+        - hosts.stat.islnk is defined
+        - hosts.stat.islnk == False
+
+    - name: link new hosts file
+      file:
+        src:  /home/drake/ansible/hosts.ini
+        dest: /etc/ansible/hosts
+        state:  link
+
+    # config file
+    - name: check existing ansible.cfg file
+      stat:
+        path: /etc/ansible/ansible.cfg
+      register: config
+
+    - name: remove existing ansible.cfg file if it isn't a link
+      file:
+        path: /etc/ansible/ansible.cfg
+        state:  absent
+      when: 
+        - config.stat.islnk is defined
+        - config.stat.islnk == False
+
+    - name: link new ansible.cfg file
+      file:
+        src:  /home/drake/ansible/ansible.cfg
+        dest: /etc/ansible/ansible.cfg
+        state:  link
+
+    # roles
+    - name: check existing ansible.cfg file
+      stat:
+        path: /etc/ansible/ansible.cfg
+      register: roles
+
+    - name: remove existing roles folder/link
+      file:
+        path: /etc/ansible/roles
+        state:  absent
+      when: 
+        - roles.stat.islnk is defined
+        - roles.stat.islnk == False
+
+    - name: link new roles folder
+      file:
+        src:  /home/drake/ansible/roles
+        dest: /etc/ansible/roles
+        state:  link
+
+    # jenkins repo
+    # Jenkins config
+    - name: add Jenkins Key
+      apt_key:
+        url:  https://pkg.jenkins.io/debian/jenkins.io.key
+
+    - name: add Jenkins repo
+      apt_repository:
+        repo: deb http://pkg.jenkins.io/debian binary/
+        update_cache: yes
+        state: present
+        filename: jenkins.list
+
+    - name: Install Jenkins
+      apt:
+        name:
+          - jenkins
+        state:  latest
+
+    - name: enable and restart jenkins
+      systemd:
+        name: jenkins
+        state:  started
+        enabled:  yes
+
+    # initial admin password:
+    - name: Initial admin password
+      debug:
+        msg: 
+          - "to get the initial admin password, run the following:"
+          - cat /var/lib/jenkins/secrets/initialAdminPassword
+
+    - name: Jenkins setup
+      debug:
+        msg:  the ability to restore th jenkins from backup config would go here?
+
+    # Semaphore (Web UI for Ansible)
+    # https://github.com/ansible-semaphore/semaphore/releases/download/v2.7.0/semaphore_2.7.0_linux_amd64.deb
+
+    # bitwarden config
+    - name: check for bitwarden
+      stat:
+        path: /usr/local/sbin/bw
+      register: bw_installed
+
+    - name: install bitwarden
+      get_url:
+        url: https://vault.bitwarden.com/download/?app=cli&platform=linux
+        dest: /tmp/bw.zip
+      when: not bw_installed.stat.exists
+
+    - name: check that downloaded file exists
+      stat:
+        path: /tmp/bw.zip
+      register: bw_zip
+
+    - name: unzip bitwarden
+      unarchive:
+        src:  /tmp/bw.zip
+        dest: /usr/local/sbin/
+        remote_src: yes
+        mode: a+x
+      
