@@ -10,6 +10,7 @@
     - prd_swarm_worker_01
     - plex
     - moria
+    - seedbox
   tasks:
 
     - name: install relevant packages
