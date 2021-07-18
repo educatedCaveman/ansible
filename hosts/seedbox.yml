@@ -24,6 +24,8 @@
     apt:
       name:
         - qbittorrent-nox
+        - parallel
+        - ffmpeg
       state:  latest
 
   # create users
@@ -118,4 +120,12 @@
       name:   qbittorrent-nox
       state:  restarted
       enabled:  yes
+
+  # CRON jobs
+  # music scripts; flac conversion
+  - name: .flac conversion script
+    cron:
+      name: flac_to_ogg
+      user: drake
+      job: "/bin/bash /home/drake/scripts/cron/music_library.sh flac_to_ogg"
 
