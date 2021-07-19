@@ -11,4 +11,5 @@
       - ccze
       - lm-sensors
       - lnav
+      - rename
     state:  present
