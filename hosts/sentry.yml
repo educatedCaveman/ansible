@@ -73,10 +73,6 @@
       src:  /home/drake/dotfiles/displaycameras/displaycameras.conf
       dest: /etc/displaycameras/displaycameras.conf
       state:  link
-    when: 
-      - dotfiles.stat.exists
-      - server_conf.stat.islnk is defined
-      - server_conf.stat.islnk == False
 
   # layout.conf.default
   - name: check for existing layout.conf.default
@@ -99,16 +95,11 @@
       dest: /etc/displaycameras/layout.conf.default
       state:  link
     when: 
-      - dotfiles.stat.exists
-      - layout_conf.stat.islnk is defined
-      - layout_conf.stat.islnk == False
 
   # manually run:
   - name: run displaycameras
     debug:
-      - the initial run must be done manually
-      - sudo ./install.sh
-
-
-
+      msg:
+        - the initial run must be done manually
+        - sudo ./install.sh
 
