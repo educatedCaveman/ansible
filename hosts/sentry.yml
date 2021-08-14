@@ -24,7 +24,7 @@
       path: /tmp/displaycameras.tar.gz
     register: cams_tgz
 
-  - name: unzip bitwarden
+  - name: unzip displaycameras
     unarchive:
       src:  /tmp/displaycameras.tar.gz
       dest: /home/drake/
@@ -34,4 +34,81 @@
     when:
       - not cams_installed.stat.exists
       - cams_tgz.stat.exists
-      
+
+  - name: check if install.sh exists
+    stat:
+      path: /home/drake/displaycameras-0.8.3.3/install.sh
+    register: installer
+
+  - name: prepare install.sh for execution
+    file:
+      path: /home/drake/displaycameras-0.8.3.3/install.sh
+      mode: a+x
+    when:
+      - installer.stat.exists
+
+  # check for dotfiles
+  - name: check if the dotfiles are present
+    stat:
+      path: /home/drake/dotfiles
+    register: dotfiles
+
+  # displaycameras.conf
+  - name: check for existing displaycameras.conf
+    stat:
+      path: /etc/displaycameras/displaycameras.conf
+    register: server_conf
+
+  - name: remove the existing displaycameras.conf
+    file:
+      path: /etc/displaycameras/displaycameras.conf
+      state:  absent
+    when: 
+      - dotfiles.stat.exists
+      - server_conf.stat.islnk is defined
+      - server_conf.stat.islnk == False
+
+  - name: link displaycameras.conf
+    file:
+      src:  /home/drake/dotfiles/displaycameras/displaycameras.conf
+      dest: /etc/displaycameras/displaycameras.conf
+      state:  link
+    when: 
+      - dotfiles.stat.exists
+      - server_conf.stat.islnk is defined
+      - server_conf.stat.islnk == False
+
+  # layout.conf.default
+  - name: check for existing layout.conf.default
+    stat:
+      path: /etc/displaycameras/layout.conf.default
+    register: layout_conf
+
+  - name: remove the existing layout.conf.default
+    file:
+      path: /etc/displaycameras/layout.conf.default
+      state:  absent
+    when: 
+      - dotfiles.stat.exists
+      - layout_conf.stat.islnk is defined
+      - layout_conf.stat.islnk == False
+
+  - name: link layout.conf.default
+    file:
+      src:  /home/drake/dotfiles/displaycameras/layout.conf.default
+      dest: /etc/displaycameras/layout.conf.default
+      state:  link
+    when: 
+      - dotfiles.stat.exists
+      - layout_conf.stat.islnk is defined
+      - layout_conf.stat.islnk == False
+
+  # manually run:
+  - name: run displaycameras
+    debug:
+      - the initial run must be done manually
+      - sudo ./install.sh
+
+
+
+
