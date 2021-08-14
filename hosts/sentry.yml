@@ -10,24 +10,24 @@
 
   - name: check for displaycameras
     stat:
-      path: /usr/bin/displaycameras
+      path:   /usr/bin/displaycameras
     register: cams_installed
 
   - name: retrieve displaycameras 0.8.3.3 (alpha)
     get_url:
-      url: https://github.com/Anonymousdog/displaycameras/archive/refs/tags/0.8.3.3.tar.gz
+      url:  https://github.com/Anonymousdog/displaycameras/archive/refs/tags/0.8.3.3.tar.gz
       dest: /tmp/displaycameras.tar.gz
     when: not cams_installed.stat.exists
 
   - name: check if downloaded file exists
     stat:
-      path: /tmp/displaycameras.tar.gz
+      path:   /tmp/displaycameras.tar.gz
     register: cams_tgz
 
   - name: unzip displaycameras
     unarchive:
-      src:  /tmp/displaycameras.tar.gz
-      dest: /home/drake/
+      src:    /tmp/displaycameras.tar.gz
+      dest:   /home/drake/
       remote_src: yes
       owner:  drake
       group:  drake
@@ -37,7 +37,7 @@
 
   - name: check if install.sh exists
     stat:
-      path: /home/drake/displaycameras-0.8.3.3/install.sh
+      path:   /home/drake/displaycameras-0.8.3.3/install.sh
     register: installer
 
   - name: prepare install.sh for execution
@@ -50,18 +50,18 @@
   # check for dotfiles
   - name: check if the dotfiles are present
     stat:
-      path: /home/drake/dotfiles
+      path:   /home/drake/dotfiles
     register: dotfiles
 
   # displaycameras.conf
   - name: check for existing displaycameras.conf
     stat:
-      path: /etc/displaycameras/displaycameras.conf
+      path:   /etc/displaycameras/displaycameras.conf
     register: server_conf
 
   - name: remove the existing displaycameras.conf
     file:
-      path: /etc/displaycameras/displaycameras.conf
+      path:   /etc/displaycameras/displaycameras.conf
       state:  absent
     when: 
       - dotfiles.stat.exists
@@ -70,19 +70,19 @@
 
   - name: link displaycameras.conf
     file:
-      src:  /home/drake/dotfiles/displaycameras/displaycameras.conf
-      dest: /etc/displaycameras/displaycameras.conf
+      src:    /home/drake/dotfiles/displaycameras/displaycameras.conf
+      dest:   /etc/displaycameras/displaycameras.conf
       state:  link
 
   # layout.conf.default
   - name: check for existing layout.conf.default
     stat:
-      path: /etc/displaycameras/layout.conf.default
+      path:   /etc/displaycameras/layout.conf.default
     register: layout_conf
 
   - name: remove the existing layout.conf.default
     file:
-      path: /etc/displaycameras/layout.conf.default
+      path:   /etc/displaycameras/layout.conf.default
       state:  absent
     when: 
       - dotfiles.stat.exists
@@ -91,10 +91,16 @@
 
   - name: link layout.conf.default
     file:
-      src:  /home/drake/dotfiles/displaycameras/layout.conf.default
-      dest: /etc/displaycameras/layout.conf.default
+      src:    /home/drake/dotfiles/displaycameras/layout.conf.default
+      dest:   /etc/displaycameras/layout.conf.default
       state:  link
     when: 
+
+  - name: restart displaycameras
+    systemd:
+      name:     displaycameras.service
+      state:    restarted
+      enabled:  yes
 
   # manually run:
   - name: run displaycameras
