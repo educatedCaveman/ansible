@@ -6,4 +6,32 @@
     - git_scripts_role    # deploy the scripts repo
     - linux_role          # base linux configs
     - drake_role          # drake home directory permissions
+  tasks:
 
+  - name: check for displaycameras
+    stat:
+      path: /usr/bin/displaycameras
+    register: cams_installed
+
+  - name: retrieve displaycameras 0.8.3.3 (alpha)
+    get_url:
+      url: https://github.com/Anonymousdog/displaycameras/archive/refs/tags/0.8.3.3.tar.gz
+      dest: /tmp/displaycameras.tar.gz
+    when: not cams_installed.stat.exists
+
+  - name: check if downloaded file exists
+    stat:
+      path: /tmp/displaycameras.tar.gz
+    register: cams_tgz
+
+  - name: unzip bitwarden
+    unarchive:
+      src:  /tmp/displaycameras.tar.gz
+      dest: /home/drake/
+      remote_src: yes
+      owner:  drake
+      group:  drake
+    when:
+      - not cams_installed.stat.exists
+      - cams_tgz.stat.exists
+      
