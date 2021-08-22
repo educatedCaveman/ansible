@@ -1,7 +1,7 @@
 # base docker config
-- name: configure Docker Swarm Host (DEV)
+- name: configure Docker Swarm Host (PRD)
   hosts:
-    - lv_426
+    - sevastopol
   roles:
     - VM_role
     - git_dotfiles_role
@@ -69,7 +69,7 @@
     # setup for manual steps
     - name: deploying the custom portianer stack file
       get_url:
-        url:  "https://raw.githubusercontent.com/educatedCaveman/docker-lab/dev_test/scripts/swarm/portainer-agent-stack.yml"
+        url:  "https://raw.githubusercontent.com/educatedCaveman/docker-lab/master/scripts/swarm/portainer-agent-stack.yml"
         dest: /tmp/
 
     - name: setting up portainer

@@ -3,13 +3,13 @@
 # if the first is down, that is something that should be looked into anyway
 # distributing to the rest is handled by glusterFS
 - name: deploy git repo to single PRD Swarm worker
-  hosts:  prd_swarm_worker_01
+  hosts:  sevastopol
   tasks:
 
     - name: deploy master branch to the Swarm worker
       git:
         repo: "https://github.com/educatedCaveman/docker-lab"
-        dest: /mnt/gluster
+        dest: /docker/docker-lab
         version:  master
         force:  yes
 
