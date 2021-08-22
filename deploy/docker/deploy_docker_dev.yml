@@ -3,13 +3,13 @@
 # if the first is down, that is something that should be looked into anyway
 # distributing to the rest is handled by glusterFS
 - name: deploy git repo to single DEV Swarm worker
-  hosts:  dev_swarm_worker_01
+  hosts:  lv_426
   tasks:
 
     - name: deploy dev_test branch to the Swarm worker
       git:
         repo: "https://github.com/educatedCaveman/docker-lab"
-        dest: /mnt/gluster
+        dest: /docker
         version:  dev_test
         force:  yes
 
