@@ -9,7 +9,7 @@
     - name: deploy dev_test branch to the Swarm worker
       git:
         repo: "https://github.com/educatedCaveman/docker-lab"
-        dest: /docker
+        dest: /docker/docker-lab
         version:  dev_test
         force:  yes
 
