@@ -10,7 +10,7 @@
     upgrade:  safe
     
 # make sure we have git installed
-- name: Install QEMU gues agent
+- name: Install QEMU guest agent
   apt:
     name:
       - qemu-guest-agent
