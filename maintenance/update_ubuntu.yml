@@ -28,13 +28,13 @@
     - reboot:
         reboot_timeout: 300
 
-# restart HA hosts one at a time so they don't go down
-- name: rolling restarts, HA Hosts
-  hosts:  HA_hosts
-  serial: 1
-  ignore_unreachable: yes
-  tasks:
+# # restart HA hosts one at a time so they don't go down
+# - name: rolling restarts, HA Hosts
+#   hosts:  HA_hosts
+#   serial: 1
+#   ignore_unreachable: yes
+#   tasks:
 
-    - reboot:
-        reboot_timeout: 300
+#     - reboot:
+#         reboot_timeout: 300
 
