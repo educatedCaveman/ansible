@@ -59,7 +59,7 @@ do
     # filter out the password
     BW_PASS=$(echo "${BW_ITEM}" | jq '.login.password')
     PASSWORD=${BW_PASS:1:-1}
---session vTyrvz1+EGt672G692zn/0hLT/1U2IM+wxNe1aTH/YI6oxBIo/fdVQDtRRqSqevbb1sEheXCA+BbNYc4go4PUg==
+
     # filter out the hostname
     BW_HOST=$(echo "${BW_ITEM}" | jq '.fields[0].value')
     HOSTNAME=${BW_HOST:1:-1}
