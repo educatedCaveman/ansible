@@ -3,14 +3,14 @@
   hosts:
     - lv_426
   roles:
-    - VM_role
-    - git_dotfiles_role
-    - git_scripts_role
-    - VM_netplan_MTU
-    - apt_client_role
-    - linux_role
-    - docker_role
-    - drake_role
+    # - VM_role
+    # - git_dotfiles_role
+    # - git_scripts_role
+    # - VM_netplan_MTU
+    # - apt_client_role
+    # - linux_role
+    # - docker_role
+    # - drake_role
     - duplicati_role
     - role: telegraf_role
       vars:
