@@ -25,6 +25,7 @@
         - default-jre
         - default-jdk
         - unzip
+        - jq          # for bitwarden script
       state:  latest
 
   # Jenkins config
