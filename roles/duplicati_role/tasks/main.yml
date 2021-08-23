@@ -1,0 +1,30 @@
+---
+# check for it being already installed
+- name: check for existing Duplicati installation 
+  command:
+    cmd:  which duplicati
+  register: which_duplicati  
+
+# install prerequisites
+- name: install prerequisites
+  apt:
+    name:
+      - mono
+  when: which_duplicati.rc != 0
+
+# fetch/install the .deb
+- name: install duplicati
+  apt:
+    deb:  https://github.com/duplicati/duplicati/releases/download/v2.0.6.100-2.0.6.100_canary_2021-08-11/duplicati_2.0.6.100-1_all.deb
+  when: which_duplicati.rc != 0
+
+# placeholder for installing configs
+
+
+# start and enable the service
+- name: enable and restart duplicati
+  systemd:
+    name: duplicati
+    state:  restarted
+    enabled:  yes
+
