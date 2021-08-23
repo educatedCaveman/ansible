@@ -17,11 +17,11 @@ HOSTS=( \
     # grafana_vm \
     # minio_vm \
     syncthing_vm \
-    jenkins_vm \
-    lv_426_vm \
+    self \
+    lv_426 \
     # sevastopol \
-    seedbox_vm \
-    singularity_vm \
+    seedbox \
+    singularity \
 )
 
 # check BW_CLIENTID
