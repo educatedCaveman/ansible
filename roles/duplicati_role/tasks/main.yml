@@ -10,6 +10,13 @@
   apt:
     name:
       - mono-devel
+      - gtk-sharp2 
+      - libappindicator0.1-cil 
+      - libappindicator1 
+      - libdbusmenu-glib4 
+      - libdbusmenu-gtk4 
+      - libindicator7 
+      - libmono-2.0-1
   # when: which_duplicati.rc != 0
 
 # fetch/install the .deb
