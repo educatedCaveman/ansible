@@ -61,6 +61,14 @@
         fstype: ext4
         state:  mounted
 
+    # cron jobs:
+    - name: cron backup, daily
+      cron:
+        name:   daily_backup
+        minute: "0"
+        hour:   "0"
+        job:    "/bin/bash /home/drake/scripts/cron/backup_docker_daily.sh"
+
     # folder for portainer
     - name: create the portainer directory
       file:
