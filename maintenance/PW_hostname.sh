@@ -8,18 +8,18 @@ ANSIBLE_DIR='/home/drake/ansible/maintenance'
 
 # hosts for ansible
 HOSTS=( \
-    # apt_cache \
-    # apt_mirror \
-    # nextcloud_vm \
-    # moria \
-    # origami \
-    # influxDB_vm \
-    # grafana_vm \
-    # minio_vm \
+    apt_cache \
+    apt_mirror \
+    nextcloud_vm \
+    moria \
+    origami \
+    influxDB_vm \
+    grafana_vm \
+    minio_vm \
     syncthing_vm \
     self \
     lv_426 \
-    # sevastopol \
+    sevastopol \
     seedbox \
     singularity \
 )

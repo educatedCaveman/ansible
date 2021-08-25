@@ -3,15 +3,16 @@
   hosts:
     - lv_426
   roles:
-    # - VM_role
-    # - git_dotfiles_role
-    # - git_scripts_role
-    # - VM_netplan_MTU
-    # - apt_client_role
-    # - linux_role
-    # - docker_role
-    # - drake_role
-    - duplicati_role
+    - VM_role
+    - git_dotfiles_role
+    - git_scripts_role
+    - VM_netplan_MTU
+    - apt_client_role
+    - linux_role
+    - docker_role
+    - drake_role
+    - nfs_base_role
+    - nfs_backup_role
     - role: telegraf_role
       vars:
         telegraf_config:  'telegraf_base.conf'
