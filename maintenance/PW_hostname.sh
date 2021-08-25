@@ -17,7 +17,7 @@ HOSTS=( \
     grafana_vm \
     minio_vm \
     syncthing_vm \
-    self \
+    jenkins_vm \
     lv_426 \
     sevastopol \
     seedbox \
