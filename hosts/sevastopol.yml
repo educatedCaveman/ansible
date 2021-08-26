@@ -11,6 +11,8 @@
     - linux_role
     - docker_role
     - drake_role
+    - nfs_base_role
+    - nfs_backup_role
     - role: telegraf_role
       vars:
         telegraf_config:  'telegraf_base.conf'
@@ -58,6 +60,22 @@
         path: /docker
         fstype: ext4
         state:  mounted
+
+    # cron jobs:
+    - name: cron backup, daily
+      cron:
+        name:   daily_backup
+        minute: "0"
+        hour:   "0"
+        job:    "/bin/bash /home/drake/scripts/cron/backup_docker_daily.sh"
+
+    - name: cron backup, weekly
+      cron:
+        name:   weekly_backup
+        minute: "0"
+        hour:   "1"
+        day:    "1"
+        job:    "/bin/bash /home/drake/scripts/cron/backup_docker_weekly.sh"
 
     # folder for portainer
     - name: create the portainer directory
