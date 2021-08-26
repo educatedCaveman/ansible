@@ -77,7 +77,7 @@
 
   - name: Mount the Music NFS share if the mount path exists
     mount:
-      src: 192.168.11.2:/mnt/storage_node/Music/iTunes/iTunes Media/Music
+      src: 192.168.11.2:/mnt/storage_node/Music/library
       path: /mnt/mobius/Music
       fstype: nfs 
       opts: rw,nolock,tcp
