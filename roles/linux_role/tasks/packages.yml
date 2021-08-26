@@ -12,4 +12,5 @@
       - lm-sensors
       - lnav
       - rename
+      - pigz
     state:  present

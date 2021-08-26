@@ -69,6 +69,14 @@
         hour:   "0"
         job:    "/bin/bash /home/drake/scripts/cron/backup_docker_daily.sh"
 
+    - name: cron backup, weekly
+      cron:
+        name:   daily_backup
+        minute: "0"
+        hour:   "1"
+        day:    "1"
+        job:    "/bin/bash /home/drake/scripts/cron/backup_docker_weekly.sh"
+
     # folder for portainer
     - name: create the portainer directory
       file:
