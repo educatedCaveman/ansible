@@ -71,7 +71,7 @@
 
     - name: cron backup, weekly
       cron:
-        name:   daily_backup
+        name:   weekly_backup
         minute: "0"
         hour:   "1"
         day:    "1"
