@@ -1,10 +1,11 @@
 ---
 - name: deploy public keys to authorized_keys files
-  hosts: octopi
+  hosts: ubuntu_debian_hosts:!self
   ignore_unreachable: yes
   tasks:
 
-    # theseus key
+  # the keys
+  # TODO: include both jenkins keys?
   - name: Set up multiple authorized keys
     authorized_key:
       user: drake
@@ -13,5 +14,3 @@
     with_file:
       - /home/drake/.ssh/carbon_id_ed25519.pub
       - /home/drake/.ssh/theseus_id_ed25519.pub
-
-    # carbon key
