@@ -9,4 +9,18 @@
     - role: telegraf_role
       vars:
         telegraf_config:  'telegraf_base.conf'
+  tasks:
 
+    - name: deploy the franken-printer configs
+      git:
+        repo: https://github.com/educatedCaveman/klipper.git
+        dest: /home/drake/franken-printer
+        version:  master
+        force:  yes
+
+    - name: deploy the main klipper stuff      
+      git:
+        repo: https://github.com/KevinOConnor/klipper
+        dest: /home/drake/klipper
+        version:  master
+        force:  yes
