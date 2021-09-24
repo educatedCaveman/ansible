@@ -13,14 +13,35 @@
 
     - name: deploy the franken-printer configs
       git:
-        repo: https://github.com/educatedCaveman/klipper.git
-        dest: /home/drake/franken-printer
+        repo:     https://github.com/educatedCaveman/klipper.git
+        dest:     /home/drake/franken-printer
         version:  master
-        force:  yes
+        force:    yes
+
+    - name: link the main printer config
+      file:
+        src:    /home/drake/franken-printer/franken-printer.cfg
+        dest:   /home/pi/printer.cfg
+        state:  link
+        owner:  pi
+        group:  drake
+        mode:   '0664'
+
+    - name: link the configs folder
+      file:
+        src:      /home/drake/franken-printer/configs/
+        dest:     /home/pi/configs
+        state:    link
+        owner:    pi
+        group:    drake
+        mode:     '0664'
+        recurse:  yes
 
     - name: deploy the main klipper stuff      
       git:
-        repo: https://github.com/KevinOConnor/klipper
-        dest: /home/drake/klipper
+        repo:     https://github.com/KevinOConnor/klipper
+        dest:     /home/drake/klipper
         version:  master
-        force:  yes
+        force:    yes
+
+        

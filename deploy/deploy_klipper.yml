@@ -1,0 +1,12 @@
+---
+- name: deploy klipper repo to octopi
+  hosts:  octopi
+  tasks:
+
+    - name: deploy klipper configs repo
+      git:
+        repo:     https://github.com/educatedCaveman/klipper
+        dest:     /home/drake/franken-printer
+        version:  master
+        force:    yes
+
