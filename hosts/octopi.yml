@@ -22,6 +22,9 @@
       copy:
         src:        /home/drake/franken-printer/franken-printer.cfg
         dest:       /home/pi/printer.cfg
+        owner:      pi
+        group:      drake
+        mode:       '0750'
         remote_src: yes
         force:      yes
 
@@ -31,12 +34,15 @@
         state:  directory
         owner:  pi
         group:  drake
-        mode:   '760'
+        mode:   '0750'
 
     - name: copy the configs folder to pi
       copy:
         src:        /home/drake/franken-printer/configs/
         dest:       /home/pi/configs/
+        owner:      pi
+        group:      drake
+        mode:       '0750'
         remote_src: yes
         force:      yes
 
