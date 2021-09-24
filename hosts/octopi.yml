@@ -25,6 +25,14 @@
         remote_src: yes
         force:      yes
 
+    - name: create the configs folder
+      file:
+        path:   /home/pi/configs
+        state:  directory
+        owner:  pi
+        group:  drake
+        mode:   '760'
+
     - name: copy the configs folder to pi
       copy:
         src:        /home/drake/franken-printer/configs/
