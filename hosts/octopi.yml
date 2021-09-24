@@ -22,19 +22,21 @@
       file:
         src:    /home/drake/franken-printer/franken-printer.cfg
         dest:   /home/pi/printer.cfg
-        state:  link
+        # state:  link
         owner:  pi
         group:  drake
         mode:   '0664'
+        state:  link
 
     - name: link the configs folder
       file:
         src:      /home/drake/franken-printer/configs/
         dest:     /home/pi/configs
-        state:    link
+        # state:    link
         owner:    pi
         group:    drake
         mode:     '0664'
+        state:    link
 
     - name: deploy the main klipper stuff      
       git:
