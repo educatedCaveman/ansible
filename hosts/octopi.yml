@@ -35,7 +35,6 @@
         owner:    pi
         group:    drake
         mode:     '0664'
-        recurse:  yes
 
     - name: deploy the main klipper stuff      
       git:
@@ -44,4 +43,3 @@
         version:  master
         force:    yes
 
-        
