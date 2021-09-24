@@ -12,6 +12,7 @@
   tasks:
 
     - name: deploy the franken-printer configs
+      become_user:  drake
       git:
         repo:     https://github.com/educatedCaveman/klipper.git
         dest:     /home/drake/franken-printer
@@ -19,6 +20,7 @@
         force:    yes
 
     - name: link the main printer config
+      become_user:  pi
       file:
         src:    /home/drake/franken-printer/franken-printer.cfg
         dest:   /home/pi/printer.cfg
@@ -29,8 +31,9 @@
         state:  link
 
     - name: link the configs folder
+      become_user:  pi
       file:
-        src:      /home/drake/franken-printer/configs/
+        src:      /home/drake/franken-printer/configs
         dest:     /home/pi/configs
         # state:    link
         owner:    pi
@@ -38,7 +41,8 @@
         mode:     '0664'
         state:    link
 
-    - name: deploy the main klipper stuff      
+    - name: deploy the main klipper stuff  
+      become_user:  drake    
       git:
         repo:     https://github.com/KevinOConnor/klipper
         dest:     /home/drake/klipper
