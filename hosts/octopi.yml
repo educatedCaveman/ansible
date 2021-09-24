@@ -12,37 +12,27 @@
   tasks:
 
     - name: deploy the franken-printer configs
-      become_user:  drake
       git:
         repo:     https://github.com/educatedCaveman/klipper.git
         dest:     /home/drake/franken-printer
         version:  master
         force:    yes
 
-    - name: link the main printer config
-      become_user:  pi
-      file:
-        src:    /home/drake/franken-printer/franken-printer.cfg
-        dest:   /home/pi/printer.cfg
-        # state:  link
-        owner:  pi
-        group:  drake
-        mode:   '0664'
-        state:  link
+    - name: copy the printer config to pi
+      copy:
+        src:        /home/drake/franken-printer/franken-printer.cfg
+        dest:       /home/pi/printer.cfg
+        remote_src: yes
+        force:      yes
 
-    - name: link the configs folder
-      become_user:  pi
-      file:
-        src:      /home/drake/franken-printer/configs
-        dest:     /home/pi/configs
-        # state:    link
-        owner:    pi
-        group:    drake
-        mode:     '0664'
-        state:    link
+    - name: copy the configs folder to pi
+      copy:
+        src:        /home/drake/franken-printer/configs/
+        dest:       /home/pi/configs/
+        remote_src: yes
+        force:      yes
 
-    - name: deploy the main klipper stuff  
-      become_user:  drake    
+    - name: deploy the main klipper stuff 
       git:
         repo:     https://github.com/KevinOConnor/klipper
         dest:     /home/drake/klipper
