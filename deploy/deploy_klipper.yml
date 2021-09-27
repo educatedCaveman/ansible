@@ -44,3 +44,10 @@
         state:  restarted
         enabled:  yes
 
+    - name: restart octoprint.service
+      systemd:
+        name: octoprint.service
+        state:  restarted
+        enabled:  yes
+
+
