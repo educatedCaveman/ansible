@@ -55,8 +55,11 @@
 
     - name: create virtual sd card folder
       file:
-        path: /home/pi/gcode_files
+        path:   /home/pi/gcode_files
         state:  directory
+        owner:  pi
+        group:  drake
+        mode:   '0750'
 
     - name: configure klipper
       debug:
