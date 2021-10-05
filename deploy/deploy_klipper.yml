@@ -64,7 +64,19 @@
       when: 
         - default.stat.islnk is defined
         - default.stat.islnk == False
-      
+
+    # moonraker git
+    - name: deploy moonraker git repo
+      git: 
+        repo: https://github.com/Arksine/moonraker.git
+        dest: /home/pi/moonraker
+
+    # installation/configuration:
+    - name: installation/configuration
+      debug:
+        msg: "see https://moonraker.readthedocs.io/en/latest/installation/ for instructions"
+
+    # TODO: install custom config      
 
     # restart the services
     # klipper
