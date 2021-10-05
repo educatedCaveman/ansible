@@ -51,6 +51,7 @@
     - name: remove the file, if present, and not a link
       file:
         path: /etc/default/klipper
+        state:  absent
       when:
         - default.stat.islnk is defined
         - default.stat.islnk == False
