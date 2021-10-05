@@ -53,6 +53,11 @@
         version:  master
         force:    yes
 
+    - name: create virtual sd card folder
+      file:
+        path: /home/pi/gcode_files
+        state:  directory
+
     - name: configure klipper
       debug:
         msg:  "refer to google for main klipper installation"
