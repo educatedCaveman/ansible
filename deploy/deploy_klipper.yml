@@ -70,6 +70,7 @@
       git: 
         repo: https://github.com/Arksine/moonraker.git
         dest: /home/pi/moonraker
+        force:  yes
 
     #permissions
     - name: moonraker folder permissions
@@ -92,6 +93,7 @@
       git: 
         repo: https://github.com/jordanruthe/KlipperScreen.git
         dest: /home/pi/KlipperScreen
+        force:  yes
 
     #permissions
     - name: KlipperScreen folder permissions
