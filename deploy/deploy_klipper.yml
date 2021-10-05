@@ -43,25 +43,25 @@
     # - klipperscreen
 
     # moonraker klipper config file
-    - name: check for existing defaults file
+    - name: check for existing default file
       stat:
-        path: /etc/defaults/klipper
-      register: defaults
+        path: /etc/default/klipper
+      register: default
 
     - name: remove the file, if present, and not a link
       file:
-        path: /etc/defaults/klipper
+        path: /etc/default/klipper
       when:
-        - defaults.stat.islnk is defined
+        - default.stat.islnk is defined
         - defautls.stat.islnk == False
 
-    - name: link custom klipper defaults file
+    - name: link custom klipper default file
       file:
-        src:  /home/drake/franken-printer/klipper_defaults
-        dest: /etc/defaults/klipper
+        src:  /home/drake/franken-printer/klipper_default
+        dest: /etc/default/klipper
         state:  link
       when: 
-        - defaults.stat.islnk is defined
+        - default.stat.islnk is defined
         - defautls.stat.islnk == False
       
 
