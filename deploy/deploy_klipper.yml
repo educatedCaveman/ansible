@@ -53,7 +53,7 @@
         path: /etc/default/klipper
       when:
         - default.stat.islnk is defined
-        - defautls.stat.islnk == False
+        - default.stat.islnk == False
 
     - name: link custom klipper default file
       file:
@@ -62,7 +62,7 @@
         state:  link
       when: 
         - default.stat.islnk is defined
-        - defautls.stat.islnk == False
+        - default.stat.islnk == False
       
 
     # restart the services
