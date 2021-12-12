@@ -20,12 +20,14 @@
     - dotfiles_dir: '/home/drake/dotfiles/qbittorrent'
   tasks:
 
-  - name: install qbittorrent
+  - name: install qbittorrent and related dependencies
     apt:
       name:
         - qbittorrent-nox
         - parallel
         - ffmpeg
+        - openvpn 
+        - openvpn-systemd-resolved
       state:  latest
 
   # create users
@@ -132,13 +134,13 @@
 
   # ExpressVPN
   # download the .deb
-  - name: download and install ExpressVPN
-    apt:
-      deb:  https://www.expressvpn.works/clients/linux/expressvpn_3.14.0.4-1_amd64.deb
+  # - name: download and install ExpressVPN
+  #   apt:
+  #     deb:  https://www.expressvpn.works/clients/linux/expressvpn_3.14.0.4-1_amd64.deb
 
   # firewall rules:
   # allow ssh in and out
   # allow openvpn port (1195?) in and out
   # block all other access
-  
+
 
