@@ -129,3 +129,16 @@
       user: drake
       job: "/bin/bash /home/drake/scripts/cron/music_library.sh flac_to_ogg"
 
+
+  # ExpressVPN
+  # download the .deb
+  - name: download and install ExpressVPN
+    apt:
+      deb:  https://www.expressvpn.works/clients/linux/expressvpn_3.14.0.4-1_amd64.deb
+
+  # firewall rules:
+  # allow ssh in and out
+  # allow openvpn port (1195?) in and out
+  # block all other access
+  
+
