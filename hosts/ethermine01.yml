@@ -6,7 +6,7 @@
     - VM_role
     - git_dotfiles_role
     - git_scripts_role
-    - VM_netplan_MTU
+    - VM_netplan_MTU_q35
     - apt_client_role
     - linux_role
     - role: telegraf_role
