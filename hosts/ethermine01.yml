@@ -46,7 +46,7 @@
       apt_repository:
         repo:     "deb http://developer.download.nvidia.com/compute/cuda/repos/{{ distribution }}/x86_64 /"
         state:    present
-        filename: cuda.list
+        filename: cuda
 
     # install nvidia packages
     - name: install nvidia packages
@@ -59,12 +59,12 @@
         install_recommends: no
         update_cache: yes
 
-    # disable gdm    
-    - name: GDM service
-      systemd:
-        name: gdm
-        state:  stopped
-        enabled:  no
+    # # disable gdm    
+    # - name: GDM service
+    #   systemd:
+    #     name: gdm
+    #     state:  stopped
+    #     enabled:  no
 
     # T-Rex 
     - name: check for existing T-Rex folder
