@@ -1,0 +1,33 @@
+---
+# tasks file for VM_netplan_MTU
+- name: search for an existing netplan config
+  stat:
+    path: /etc/netplan/01-installer-config.yaml
+  register: netplan
+
+- name: remove the existing 01-installer-config.yaml
+  file:
+    path: /etc/netplan/01-installer-config.yaml
+    state:  absent
+  when: 
+    - netplan.stat.exists
+    - netplan.stat.islnk is defined
+    - netplan.stat.islnk == False
+
+- name: link 01-installer-config.yaml
+  file:
+    src:  /home/drake/dotfiles/netplan/01-VM-installer-config.yaml
+    dest: /etc/netplan/01-installer-config.yaml
+    state:  link
+  when: 
+    - netplan.stat.exists
+    - netplan.stat.islnk is defined
+    - netplan.stat.islnk == False
+
+# - name: reboot to apply changes
+#   reboot:
+#     test_command: uptime
+    
+# - name: apply netplan
+#   shell:
+#     cmd:  netplan apply
