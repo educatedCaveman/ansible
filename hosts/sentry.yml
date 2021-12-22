@@ -105,9 +105,9 @@
   - name: schedule regular reboots
     cron:
       name: bi-monthly reboot
-      minute: 0
-      hour:   1
-      day:    1,15
+      minute: "0"
+      hour:   "1"
+      day:    "1,15"
       job:    /sbin/reboot
 
   # manually run:
