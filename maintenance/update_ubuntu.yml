@@ -21,20 +21,9 @@
 # omit apt_cache, because it times out
 
 - name: rolling restarts, non-HA hosts
-  hosts:  ubuntu_debian_hosts:!octopi:!self:!moria:!HA_hosts:!apt_cache:!apt_mirror
+  hosts:  ubuntu_debian_hosts:!octopi:!self:!moria:!apt_cache:!apt_mirror
   ignore_unreachable: yes
   tasks:
 
     - reboot:
         reboot_timeout: 300
-
-# # restart HA hosts one at a time so they don't go down
-# - name: rolling restarts, HA Hosts
-#   hosts:  HA_hosts
-#   serial: 1
-#   ignore_unreachable: yes
-#   tasks:
-
-#     - reboot:
-#         reboot_timeout: 300
-

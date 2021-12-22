@@ -1,0 +1,142 @@
+---
+- name: configure Ether Mine 01
+  hosts:
+    - ethermine01
+  roles:
+    - VM_role
+    - git_dotfiles_role
+    - git_scripts_role
+    - VM_netplan_MTU
+    - apt_client_role
+    - linux_role
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'telegraf_base.conf'
+  vars:
+    - t_rex_dir:  "/home/drake/t_rex"
+    - t_rex_archive:  "t-rex-0.24.8-linux.tar.gz"
+    - t_rex_release_url:  "https://github.com/trexminer/T-Rex/releases/download/0.24.8/t-rex-0.24.8-linux.tar.gz"    
+    - distribution: "ubuntu2004"
+  tasks:
+
+    # install dependencies:
+    - name: Install Dependencies
+      apt:
+        name:
+          - build-essential 
+          - libglvnd-dev 
+          - pkg-config
+          - python3-pip
+        state:  latest
+
+    # nvidia driver
+    # This is based on this guide:
+    # https://docs.nvidia.com/datacenter/tesla/tesla-installation-notes/index.html
+    - name: retrieving repo files
+      get_url:
+        url:  "https://developer.download.nvidia.com/compute/cuda/repos/{{ distribution }}/x86_64/cuda-{{ distribution }}.pin"
+        dest: /etc/apt/preferences.d/cuda-repository-pin-600
+
+    - name: add repo key
+      apt_key:
+        url:    "https://developer.download.nvidia.com/compute/cuda/repos/{{ distribution }}/x86_64/7fa2af80.pub"
+        state:  present
+
+    - name: add the repository
+      apt_repository:
+        repo:     "deb http://developer.download.nvidia.com/compute/cuda/repos/{{ distribution }}/x86_64 /"
+        state:    present
+        filename: cuda.list
+
+    # install nvidia packages
+    - name: install nvidia packages
+      apt:
+        name:
+          - nvtop
+          - cuda-drivers
+          - nvidia-cuda-toolkit
+        state:  latest
+        install_recommends: no
+        update_cache: yes
+
+    # disable gdm    
+    - name: GDM service
+      systemd:
+        name: gdm
+        state:  stopped
+        enabled:  no
+
+    # T-Rex 
+    - name: check for existing T-Rex folder
+      stat:
+        path: "{{ t_rex_dir }}"
+      register: trex_dir
+
+    - name: create T-Rex folder
+      file:
+        path: "{{ t_rex_dir }}"
+        state:  directory
+      when: not trex_dir.stat.exists
+
+    - name: retrieving T-Rex
+      get_url:
+        url:  "{{ t_rex_release_url }}"
+        dest: "{{ t_rex_dir }}/{{ t_rex_archive }}"
+      when: not trex_dir.stat.exists
+
+    - name: unzip T-Rex
+      unarchive:
+        src:  "{{ t_rex_dir }}/{{ t_rex_archive }}"
+        dest: "{{ t_rex_dir }}"
+        remote_src: yes
+        mode: a+x
+
+    # coolgpus:
+    - name: install CoolGPUs
+      pip:
+        name: coolgpus
+
+    - name: install CoolGPUs service file
+      copy:
+        src:  /home/drake/dotfiles/systemd/coolgpus.service
+        dest: /etc/systemd/system/coolgpus.service
+        remote_src: yes
+
+    - name: enable CoolGPUs service
+      systemd:
+        name: coolgpus
+        state:  restarted
+        enabled:  yes
+
+    # tmux cron
+    - name: setup TMUX autostart check
+      cron:
+        name: tmux_run_check
+        user: drake
+        job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh moria"
+
+# permissions
+- name: Apply the Drake Role
+  hosts:
+    - ethermine01
+  roles:
+    - drake_role
+  tasks:
+
+    - name: reboot for drivers and such
+      reboot:
+
+# manual config
+- name: Manual Config
+  hosts:
+    - ethermine01
+  tasks:  
+
+    - name: T-Rex version
+      debug:
+        msg: 
+          - "the following T-Rex version may be out of date."
+          - "check the following URL for the latest version:"
+          - "https://github.com/trexminer/T-Rex/releases"
+
+    
