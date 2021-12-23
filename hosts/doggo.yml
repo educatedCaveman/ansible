@@ -57,6 +57,7 @@
         src:  "{{ xmrig_dir }}/xmrig"
         dest: "{{ xmrig_install }}"
         remote_src: yes
+        mode: "a+x"
       when: not exe.stat.exists
 
     #regardless, link custom config
@@ -66,72 +67,12 @@
         src:    /home/drake/dotfiles/xmrig/config.json
         path:   "{{ xmrig_install }}/config.json"
 
-
-
-    # # check for archive
-    # - name: check for existing download
-    #   stat:
-    #     path: "/home/drake/{{ xmrig_archive }}"
-    #   register: download
-
-    # # fetch miner
-    # - name: fetch miner
-    #   get_url:
-    #     url:  "{{ xmrig_release }}"
-    #     dest: "/home/drake/{{ xmrig_archive }}"
-    #   when: not download.stat.exists
-
-    # # check for install folder
-    # - name: check for install folder
-    #   stat:
-    #     path: "{{ xmrig_dir }}"
-    #   register: xmrig
-
-    # # create the install folder if it doesn't exist
-    # - name: create the install folder
-    #   file:
-    #     path: "{{ xmrig_dir }}"
-    #     state:  directory
-    #   when: not xmrig.stat.exists
-
-    # #extract miner
-    # - name: extract miner
-    #   unarchive:
-    #     src:        "/home/drake/{{ xmrig_archive }}"
-    #     dest:       "/home/drake/"
-    #     remote_src: yes
-    #   when: xmrig.stat.exists
-
-    # # copy the executable
-    # - name: install the executable
-    #   copy:
-    #     src:  "{{ xmrig_dir_2 }}/xmrig"
-    #     dest: "{{ xmrig_dir }}/xmrig"
-
-    # #install custom config
-    # - name: check the config.json
-    #   stat:
-    #     path: "{{ xmrig_dir }}/config.json"
-    #   register: config
-
-    # - name: remove the config if it isn't a link
-    #   file:
-    #     state:  absent
-    #     path:   "{{ xmrig_dir }}/config.json"
-    #   when: config.stat.islnk == False
-
-    # - name: link the config if the existing wasn't a link
-    #   file:
-    #     state:  link
-    #     src:    /home/drake/dotfiles/xmrig/config.json
-    #     path:   "{{ xmrig_dir }}/config.json"
-
-    # # tmux cron
-    # - name: setup TMUX autostart check
-    #   cron:
-    #     name: tmux_run_check
-    #     user: drake
-    #     job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh doggo"
+    # tmux cron
+    - name: setup TMUX autostart check
+      cron:
+        name: tmux_run_check
+        user: drake
+        job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh doggo"
 
 # permissions
 - name: Apply the Drake Role
@@ -139,18 +80,5 @@
     - doggo
   roles:
     - drake_role
-
-# # manual config
-# - name: Manual Config
-#   hosts:
-#     - doggo
-#   tasks:  
-#     # TODO:
-#     - name: T-Rex version
-#       debug:
-#         msg: 
-#           - "the following T-Rex version may be out of date."
-#           - "check the following URL for the latest version:"
-#           - "https://github.com/trexminer/T-Rex/releases"
 
     
