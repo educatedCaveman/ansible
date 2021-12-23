@@ -22,8 +22,6 @@
   #   - distribution: "ubuntu2004"
   tasks:
 
-    #TODO: check for existing installation
-
     # check for archive
     - name: check for existing download
       stat:
@@ -38,9 +36,8 @@
       when: not download.stat.exists
 
     # check for install folder
-    - name: check for install folder
-      stat:
-        - path: "{{ xmrig_dir }}"
+    - stat:
+      - path: "{{ xmrig_dir }}"
       register: xmrig
 
     # create the install folder if it doesn't exist
