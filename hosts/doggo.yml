@@ -2,25 +2,21 @@
 - name: configure Moria
   hosts:
     - doggo
-  # roles:
-  #   - VM_role
-  #   - git_dotfiles_role
-  #   - git_scripts_role
-  #   - VM_netplan_MTU
-  #   - apt_client_role
-  #   - linux_role
-  #   - role: telegraf_role
-  #     vars:
-  #       telegraf_config:  'telegraf_base.conf'
+  roles:
+    - VM_role
+    - git_dotfiles_role
+    - git_scripts_role
+    - VM_netplan_MTU
+    - apt_client_role
+    - linux_role
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'telegraf_base.conf'
   vars:
     - xmrig_install:  "/home/drake/xmrig"
     - xmrig_dir:      "/home/drake/xmrig-6.16.2"
     - xmrig_archive:  "xmrig-6.16.2-focal-x64.tar.gz"
     - xmrig_release:  "https://github.com/xmrig/xmrig/releases/download/v6.16.2/xmrig-6.16.2-focal-x64.tar.gz"
-  #   - t_rex_dir:  "/home/drake/t_rex"
-  #   - t_rex_archive:  "t-rex-0.20.4-linux.tar.gz"
-  #   - t_rex_release_url:  "https://github.com/trexminer/T-Rex/releases/download/0.20.4/t-rex-0.20.4-linux.tar.gz"
-  #   - distribution: "ubuntu2004"
   tasks:
 
     # if the executable is present, do nothing
@@ -59,6 +55,17 @@
         remote_src: yes
         mode: "a+x"
       when: not exe.stat.exists
+
+    # cleanup:
+    - name: remove archive
+      file:
+        path: "{{ xmrig_archive }}"
+        state:  absent
+
+    - name: remove extract dir
+      file:
+        path: "{{ xmrig_dir }}"
+        state:  absent
 
     #regardless, link custom config
     - name: link the config if the existing wasn't a link
