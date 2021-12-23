@@ -36,8 +36,9 @@
       when: not download.stat.exists
 
     # check for install folder
-    - stat:
-      - path: "{{ xmrig_dir }}"
+    - name: check for install folder
+      stat:
+        path: "{{ xmrig_dir }}"
       register: xmrig
 
     # create the install folder if it doesn't exist
@@ -53,7 +54,7 @@
         src:        "/home/drake/{{ xmrig_archive }}"
         dest:       "{{ xmrig_dir }}"
         remote_src: yes
-      when: xmrig.stat.isdir
+      when: xmrig.stat.exists
 
     #install custom config
     - name: check the config.json
