@@ -37,13 +37,26 @@
         dest: "/home/drake/{{ xmrig_archive }}"
       when: not download.stat.exists
 
+    # check for install folder
+    - name: check for install folder
+      stat:
+        - path: "{{ xmrig_dir }}"
+      register: xmrig
+
+    # create the install folder if it doesn't exist
+    - name: create the install folder
+      file:
+        path: "{{ xmrig_dir }}"
+        state:  directory
+      when: not xmrig.stat.exists
+
     #extract miner
     - name: extract miner
       unarchive:
-        src:       "/home/drake/{{ xmrig_archive }}"
-        dest:       /home/drake/xmrig/
-        creates:    /home/drake/xmrig/  # should prevent this from being run when it already exists
+        src:        "/home/drake/{{ xmrig_archive }}"
+        dest:       "{{ xmrig_dir }}"
         remote_src: yes
+      when: xmrig.stat.isdir
 
     #install custom config
     - name: check the config.json
@@ -55,7 +68,7 @@
       file:
         state:  absent
         path:   "{{ xmrig_dir }}/config.json"
-      when: stat.config.islnk == False
+      when: config.stat.islnk == False
 
     - name: link the config if the existing wasn't a link
       file:
