@@ -35,7 +35,7 @@
       get_url:
         url:  "{{ xmrig_release }}"
         dest: "/home/drake/{{ xmrig_archive }}"
-      when: not download.exists
+      when: download.exists == False
 
     #extract miner
     - name: extract miner
