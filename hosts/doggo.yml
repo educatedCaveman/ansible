@@ -1,0 +1,93 @@
+---
+- name: configure Moria
+  hosts:
+    - doggo
+  roles:
+    - VM_role
+    - git_dotfiles_role
+    - git_scripts_role
+    - VM_netplan_MTU
+    - apt_client_role
+    - linux_role
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'telegraf_base.conf'
+  vars:
+    - xmrig_dir:      "/home/drake/xmrig"
+    - xmrig_archive:  "xmrig-6.16.2-focal-x64.tar.gz"
+    - xmrig_release:  "https://github.com/xmrig/xmrig/releases/download/v6.16.2/xmrig-6.16.2-focal-x64.tar.gz"
+  #   - t_rex_dir:  "/home/drake/t_rex"
+  #   - t_rex_archive:  "t-rex-0.20.4-linux.tar.gz"
+  #   - t_rex_release_url:  "https://github.com/trexminer/T-Rex/releases/download/0.20.4/t-rex-0.20.4-linux.tar.gz"
+  #   - distribution: "ubuntu2004"
+  tasks:
+
+    #TODO: check for existing installation
+
+    # check for archive
+    - name: check for existing download
+      stat:
+        path: "/home/drake/{{ xmrig_archive }}"
+      register: download
+
+    # fetch miner
+    - name: fetch miner
+      get_url:
+        url:  "{{ xmrig_release }}"
+        dest: "/home/drake/{{ xmrig_archive }}"
+      when: not download.exists
+
+    #extract miner
+    - name: extract miner
+      unarchive:
+        src:       "/home/drake/{{ xmrig_archive }}"
+        dest:       /home/drake/xmrig/
+        creates:    /home/drake/xmrig/  # should prevent this from being run when it already exists
+        remote_src: yes
+
+    #install custom config
+    - name: check the config.json
+      stat:
+        path: "{{ xmrig_dir }}/config.json"
+      register: config
+
+    - name: remove the config if it isn't a link
+      file:
+        state:  absent
+        path:   "{{ xmrig_dir }}/config.json"
+      when: stat.config.islnk == False
+
+    - name: link the config if the existing wasn't a link
+      file:
+        state:  link
+        src:    /home/drake/dotfiles/xmrig/config.json
+        path:   "{{ xmrig_dir }}/config.json"
+
+    # # tmux cron
+    # - name: setup TMUX autostart check
+    #   cron:
+    #     name: tmux_run_check
+    #     user: drake
+    #     job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh doggo"
+
+# permissions
+- name: Apply the Drake Role
+  hosts:
+    - doggo
+  roles:
+    - drake_role
+
+# # manual config
+# - name: Manual Config
+#   hosts:
+#     - doggo
+#   tasks:  
+#     # TODO:
+#     - name: T-Rex version
+#       debug:
+#         msg: 
+#           - "the following T-Rex version may be out of date."
+#           - "check the following URL for the latest version:"
+#           - "https://github.com/trexminer/T-Rex/releases"
+
+    

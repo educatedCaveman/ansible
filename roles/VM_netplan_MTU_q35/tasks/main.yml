@@ -2,12 +2,12 @@
 # tasks file for VM_netplan_MTU
 - name: search for an existing netplan config
   stat:
-    path: /etc/netplan/01-installer-config.yaml
+    path: /etc/netplan/00-installer-config.yaml
   register: netplan
 
-- name: remove the existing 01-installer-config.yaml
+- name: remove the existing 00-installer-config.yaml
   file:
-    path: /etc/netplan/01-installer-config.yaml
+    path: /etc/netplan/00-installer-config.yaml
     state:  absent
   when: 
     - netplan.stat.exists
