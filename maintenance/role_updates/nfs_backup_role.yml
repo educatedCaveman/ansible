@@ -2,9 +2,7 @@
 - name: apply/update the NFS Backup role
   hosts:
     - self
-    - swarm_managers
-    - swarm_workers
-    - gitlab_vm
+    - portainer
     - plex
     - singularity
     - influxDB
