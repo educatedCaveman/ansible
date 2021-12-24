@@ -2,8 +2,6 @@
   hosts:  octopi
   roles:
     - git_dotfiles_role   # deploy the dotfiles repo
-    - git_ansible_role    # deploy the ansible repo
-    - git_scripts_role    # deploy the scripts repo
     - linux_role          # base linux configs
     - drake_role          # drake home directory permissions
     - role: telegraf_role

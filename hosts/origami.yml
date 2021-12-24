@@ -5,7 +5,6 @@
   roles:
     - VM_role
     - git_dotfiles_role
-    - git_scripts_role
     - VM_netplan_MTU
     - apt_client_role
     - linux_role
