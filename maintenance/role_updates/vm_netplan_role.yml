@@ -1,8 +1,8 @@
 ---
 - name: apply/update the VM MTU role
   hosts:
-    - ubuntu_debian_VM
+    # - ubuntu_debian_VM
   roles:
-    - VM_netplan_MTU
+    - VM_netplan_MTU_q35
   tasks:
   

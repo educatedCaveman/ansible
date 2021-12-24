@@ -1,0 +1,8 @@
+---
+- name: apply/update the NFS staging role
+  hosts:
+    - seedbox
+  roles:
+    - nfs_staging_role
+  tasks:
+  

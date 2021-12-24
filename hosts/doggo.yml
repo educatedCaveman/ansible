@@ -1,7 +1,8 @@
 ---
-- name: configure Moria
+- name: configure Doggos
   hosts:
-    - doggo
+    - doggo_1
+    - doggo_2
   roles:
     - VM_role
     - git_dotfiles_role

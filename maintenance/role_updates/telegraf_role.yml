@@ -1,0 +1,9 @@
+---
+- name: apply/update the telegraf role
+  hosts:
+    - ubuntu_debian_hosts
+    - tesseract
+  roles:
+    - telegraf_role
+  tasks:
+  
