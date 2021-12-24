@@ -1,20 +1,13 @@
 ---
 - name: apply/update the Scripts role
   hosts:
-    - self
-    - gitlab_vm
+    - ubuntu_debian_hosts:!apt_cache:!influxDB_vm:!grafana_vm:!seedbox
     - tesseract
-    - singularity
-    - swarm_managers
-    - swarm_workers
-    - plex
-    - origami
-    - apt_mirror
-    - dilithium
     - event_horizon
-    - moria
-    - nextcloud_vm
+    - dilithium
   roles:
     - git_scripts_role
   tasks:
+
+  #TODO: handle seedbox
   

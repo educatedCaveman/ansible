@@ -1,7 +1,7 @@
 ---
 - name: apply/update the Dotfiles role
   hosts:
-    - ubuntu_debian_hosts
+    - ubuntu_debian_hosts:!seedbox
     - tesseract
     # - mobius
   roles:

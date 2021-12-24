@@ -123,13 +123,13 @@
       state:  restarted
       enabled:  yes
 
-  # CRON jobs
-  # music scripts; flac conversion
-  - name: .flac conversion script
-    cron:
-      name: flac_to_ogg
-      user: drake
-      job: "/bin/bash /home/drake/scripts/cron/music_library.sh flac_to_ogg"
+  # # CRON jobs
+  # # music scripts; flac conversion
+  # - name: .flac conversion script
+  #   cron:
+  #     name: flac_to_ogg
+  #     user: drake
+  #     job: "/bin/bash /home/drake/scripts/cron/music_library.sh flac_to_ogg"
 
 
   # ExpressVPN
