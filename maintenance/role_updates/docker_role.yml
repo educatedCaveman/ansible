@@ -1,8 +1,7 @@
 ---
 - name: apply/update the Docker role
   hosts:
-    - swarm_managers
-    - swarm_workers
+    - portainer
   roles:
     - docker_role
   tasks:

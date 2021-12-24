@@ -9,7 +9,7 @@
     group: drake
 
 #set ssh directory permissions
-- name: set ssh permissions
+- name: set ssh folder permissions
   file:
     path:     /home/drake/.ssh
     state:    directory
@@ -18,7 +18,7 @@
     mode:     '0700'
 
 #set ssh directory permissions
-- name: set ssh permissions
+- name: set authorized_keys permissions
   file:
     path:     /home/drake/.ssh/authorized_keys
     state:    file
