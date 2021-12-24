@@ -1,7 +1,8 @@
 ---
 - name: apply/update the LXC MTU role
   hosts:
-    - ubuntu_debian_LXC
+    # TODO: fix reason for not doing seedbox
+    - ubuntu_debian_LXC:!seedbox
   roles:
     - LXC_netplan_MTU
   tasks:

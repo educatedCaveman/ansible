@@ -1,7 +1,8 @@
 ---
 - name: apply/update the LXC role
   hosts:
-    - ubuntu_debian_LXC
+    # TODO: fix seedbox reason
+    - ubuntu_debian_LXC:!seedbox
   roles:
     - LXC_role
   tasks:
