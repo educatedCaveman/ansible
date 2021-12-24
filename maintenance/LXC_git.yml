@@ -1,6 +1,6 @@
 ---
 - name: configure LXC ubuntu host to to have git
-  hosts: ubuntu_debian_LXC
+  hosts: ubuntu_debian_LXC:!seedbox
   tasks:
 
     - name: update packages

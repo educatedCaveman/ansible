@@ -22,6 +22,9 @@ HOSTS=( \
     sevastopol \
     seedbox \
     singularity \
+    plex_vm \
+    doggo_1 \
+    doggo_2 \
 )
 
 # check BW_CLIENTID
