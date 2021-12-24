@@ -11,7 +11,7 @@
     - nextcloud_vm
     - octopi
     - minio_vm
-    - syncthin_vm
+    # - syncthing_vm
     - sentry_cam
     - lv_426
     - sevastopol
