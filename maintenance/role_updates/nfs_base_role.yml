@@ -6,7 +6,7 @@
     - plex
     - singularity
     - nextcloud_vm
-    - influxDB
+    - influxDB_vm
   roles:
     - nfs_base_role
   tasks:

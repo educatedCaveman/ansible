@@ -5,7 +5,7 @@
     - portainer
     - plex
     - singularity
-    - influxDB
+    - influxDB_vm
   roles:
     - nfs_backup_role
   tasks:
