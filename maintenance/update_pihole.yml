@@ -4,9 +4,9 @@
   tasks:
 
     - name: update packages
-        apt:
-          name:     '*'
-          state:    latest
+      apt:
+        name:     '*'
+        state:    latest
 
     - name: upgrade packages
       apt:

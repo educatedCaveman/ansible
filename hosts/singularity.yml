@@ -18,7 +18,7 @@
   # pihole-specific dotfiles:
   # note: will use gravity sync to sync the rest
   # dnsmasq (CNAME)
-  - name: check for existin cname.conf
+  - name: check for existing cname.conf
     stat:
       path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
     register: cname_conf
