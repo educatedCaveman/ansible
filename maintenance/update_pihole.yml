@@ -3,7 +3,7 @@
   serial: 1
   tasks:
 
-    - name: update packages
+    - name: update/upgrade packages
       apt:
         update_cache: yes
         upgrade:      yes
@@ -11,7 +11,7 @@
 
     - name: test command
       command:
-        cmd:  ls -lrta /home/drake
+        cmd:  pihole -up
       register: cmd_out
 
     - name: print command output
