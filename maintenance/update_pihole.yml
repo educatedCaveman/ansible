@@ -5,12 +5,9 @@
 
     - name: update packages
       apt:
-        name:     '*'
-        state:    latest
-
-    - name: upgrade packages
-      apt:
-        upgrade:  yes
+        update_cache: yes
+        upgrade:      yes
+        # autoremove:   yes
 
     - name: test command
       command:
@@ -19,4 +16,4 @@
 
     - name: print command output
       debug:
-        var:  cmd_out.stout_lines
+        var:  cmd_out.stdout_lines
