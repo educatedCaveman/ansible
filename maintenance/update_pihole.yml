@@ -1,0 +1,22 @@
+- name: update Pi-Hole
+  hosts:  pihole
+  serial: 1
+  tasks:
+
+    - name: update packages
+        apt:
+          name:     '*'
+          state:    latest
+
+    - name: upgrade packages
+      apt:
+        upgrade:  yes
+
+    - name: test command
+      command:
+        cmd:  ls -lrta /home/drake
+      register: cmd_out
+
+    - name: print command output
+      debug:
+        var:  cmd_out.stout_lines
