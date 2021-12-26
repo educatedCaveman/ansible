@@ -1,7 +1,6 @@
 ---
 - name: apply/update the Linux role
   hosts:
-    # TODO: fix reason for excluding seedbox
     - ubuntu_debian_hosts
     - tesseract
   roles:

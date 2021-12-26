@@ -20,6 +20,5 @@
   roles:
     - git_scripts_role
   tasks:
-
-  #TODO: handle seedbox
+  
   

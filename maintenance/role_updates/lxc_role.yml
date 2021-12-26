@@ -1,7 +1,6 @@
 ---
 - name: apply/update the LXC role
   hosts:
-    # TODO: fix seedbox reason
     # TODO: fix apt_cache reason
     - ubuntu_debian_LXC:!apt_cache
   roles:
