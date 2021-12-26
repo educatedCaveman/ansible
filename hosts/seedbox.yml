@@ -1,7 +1,7 @@
-- name: disable key services
-  hosts:  seedbox
-  roles:
-    - seedbox_stop_services
+# - name: disable key services
+#   hosts:  seedbox
+#   roles:
+#     - seedbox_stop_services
 
 
 - name: configure seedbox
@@ -9,7 +9,6 @@
   roles:
     - LXC_role            # base LXC container config
     - git_dotfiles_role   # deploy the dotfiles repo
-    # - git_scripts_role
     - apt_client_role
     - LXC_netplan_MTU     # use the mtu9000 netplan config
     - linux_role          # base linux configs
@@ -124,11 +123,11 @@
       remote_src: yes
 
   # service restart is tentatively handled by the new roles.
-  # - name: enable and restart the service
-  #   systemd:
-  #     name:   qbittorrent-nox
-  #     state:  restarted
-  #     enabled:  yes
+  - name: enable and restart the service
+    systemd:
+      name:   qbittorrent-nox
+      state:  restarted
+      enabled:  yes
 
   # # CRON jobs
   # # music scripts; flac conversion
