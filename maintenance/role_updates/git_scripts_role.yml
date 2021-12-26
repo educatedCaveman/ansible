@@ -1,7 +1,6 @@
 ---
 - name: apply/update the Scripts role
   hosts:
-    # - ubuntu_debian_hosts:!apt_cache:!influxDB_vm:!grafana_vm:!seedbox
     - singularity
     - plex
     - apt_mirror
@@ -11,7 +10,6 @@
     - nextcloud_vm
     - octopi
     - minio_vm
-    # - syncthing_vm
     - sentry_cam
     - lv_426
     - sevastopol

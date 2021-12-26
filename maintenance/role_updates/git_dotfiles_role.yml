@@ -2,7 +2,7 @@
 - name: apply/update the Dotfiles role
   hosts:
     # TODO: fix reason for excluding seedbox
-    - ubuntu_debian_hosts:!seedbox
+    - ubuntu_debian_hosts
     - tesseract
     # - mobius
   roles:
