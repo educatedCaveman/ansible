@@ -1,163 +1,154 @@
 - name: disable key services
   hosts:  seedbox
+  roles:
+    - seedbox_stop_services
+
+
+- name: configure seedbox
+  hosts:  seedbox
+  roles:
+    - LXC_role            # base LXC container config
+    - git_dotfiles_role   # deploy the dotfiles repo
+    # - git_scripts_role
+    - apt_client_role
+    - LXC_netplan_MTU     # use the mtu9000 netplan config
+    - linux_role          # base linux configs
+    - drake_role          # drake home directory permissions
+    - nfs_base_role       
+    - nfs_video_role
+    - nfs_music_role
+    - nfs_staging_role
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'telegraf_base.conf'
+  vars:
+    - config_dir: '/home/qbittorrent-nox/.config/qBittorrent'
+    - dotfiles_dir: '/home/drake/dotfiles/qbittorrent'
   tasks:
 
-  - name: poll services
-    service_facts:
+  - name: install qbittorrent and related dependencies
+    apt:
+      name:
+        - qbittorrent-nox
+        - parallel
+        - ffmpeg
+        - openvpn 
+        - openvpn-systemd-resolved
+      state:  latest
 
-  - name: test existing
-    debug:
-      msg:  "qbittorrent.service exists!"
-    when: ansible_facts.services['qbittorrent-nox.service'] is defined
+  # create users
+  # qbittorrent-nox
+  # drake: add to qbittorrent group
 
-  # - name: test bad
-  #   debug:
-  #     msg:  "qbittorrent exists!"
-  #   when: "'qbittorrent-nox' in services"
+  - name: create the qbittorrent-nox group
+    group:
+      name:   qbittorrent-nox
+      state:  present
 
-# - name: configure seedbox
-#   hosts:  seedbox
-#   roles:
-#     - LXC_role            # base LXC container config
-#     - git_dotfiles_role   # deploy the dotfiles repo
-#     # - git_scripts_role
-#     - apt_client_role
-#     - LXC_netplan_MTU     # use the mtu9000 netplan config
-#     - linux_role          # base linux configs
-#     - drake_role          # drake home directory permissions
-#     - nfs_base_role       
-#     - nfs_video_role
-#     - nfs_music_role
-#     - nfs_staging_role
-#     - role: telegraf_role
-#       vars:
-#         telegraf_config:  'telegraf_base.conf'
-#   vars:
-#     - config_dir: '/home/qbittorrent-nox/.config/qBittorrent'
-#     - dotfiles_dir: '/home/drake/dotfiles/qbittorrent'
-#   tasks:
+  - name: create the qbittorrent-nox user
+    user:
+      name:   qbittorrent-nox
+      group:  qbittorrent-nox
+      system: yes
+      state:  present
 
-#   - name: install qbittorrent and related dependencies
-#     apt:
-#       name:
-#         - qbittorrent-nox
-#         - parallel
-#         - ffmpeg
-#         - openvpn 
-#         - openvpn-systemd-resolved
-#       state:  latest
+  - name: add drake to the qbittorrent-nox group
+    user:
+      name:   drake
+      groups: qbittorrent-nox
+      append: yes
 
-#   # create users
-#   # qbittorrent-nox
-#   # drake: add to qbittorrent group
+  # qBittorrent configs
+  - name: check for existing qBittorrent.conf
+    stat:
+      path: "{{ config_dir }}/qBittorrent.conf"
+    register: conf_1
 
-#   - name: create the qbittorrent-nox group
-#     group:
-#       name:   qbittorrent-nox
-#       state:  present
+  - name: remove existing qBittorrent.conf
+    file:
+      path:   "{{ config_dir }}/qBittorrent.conf"
+      state:  absent
+    when: 
+      - conf_1.stat.exists
+      - conf_1.stat.islnk is defined
+      - conf_1.stat.islnk == False
 
-#   - name: create the qbittorrent-nox user
-#     user:
-#       name:   qbittorrent-nox
-#       group:  qbittorrent-nox
-#       system: yes
-#       state:  present
+  - name: link new qBittorrent.conf
+    file:
+      src:  "{{ dotfiles_dir }}/qBittorrent.conf"
+      dest: "{{ config_dir }}/qBittorrent.conf"
+      owner:  qbittorrent-nox
+      group:  qbittorrent-nox
+      state:  link
+    when: 
+      - conf_1.stat.exists
+      - conf_1.stat.islnk is defined
+      - conf_1.stat.islnk == False
 
-#   - name: add drake to the qbittorrent-nox group
-#     user:
-#       name:   drake
-#       groups: qbittorrent-nox
-#       append: yes
+  - name: check for existing qBittorrent-data.conf
+    stat:
+      path: "{{ config_dir }}/qBittorrent-data.conf"
+    register: conf_2
 
-#   # qBittorrent configs
-#   - name: check for existing qBittorrent.conf
-#     stat:
-#       path: "{{ config_dir }}/qBittorrent.conf"
-#     register: conf_1
+  - name: remove existing qBittorrent-data.conf
+    file:
+      path:   "{{ config_dir }}/qBittorrent-data.conf"
+      state:  absent
+    when: 
+      - conf_2.stat.exists
+      - conf_2.stat.islnk is defined
+      - conf_2.stat.islnk == False
 
-#   - name: remove existing qBittorrent.conf
-#     file:
-#       path:   "{{ config_dir }}/qBittorrent.conf"
-#       state:  absent
-#     when: 
-#       - conf_1.stat.exists
-#       - conf_1.stat.islnk is defined
-#       - conf_1.stat.islnk == False
+  - name: link new qBittorrent-data.conf
+    file:
+      src:  "{{ dotfiles_dir }}/qBittorrent-data.conf"
+      dest: "{{ config_dir }}/qBittorrent-data.conf"
+      owner:  qbittorrent-nox
+      group:  qbittorrent-nox
+      state:  link
+    when: 
+      - conf_2.stat.exists
+      - conf_2.stat.islnk is defined
+      - conf_2.stat.islnk == False
 
-#   - name: link new qBittorrent.conf
-#     file:
-#       src:  "{{ dotfiles_dir }}/qBittorrent.conf"
-#       dest: "{{ config_dir }}/qBittorrent.conf"
-#       owner:  qbittorrent-nox
-#       group:  qbittorrent-nox
-#       state:  link
-#     when: 
-#       - conf_1.stat.exists
-#       - conf_1.stat.islnk is defined
-#       - conf_1.stat.islnk == False
+  # systemd file
+  - name: remove the service file
+    file:
+      path: /etc/systemd/system/qbittorrent-nox.service
+      state:  absent
 
-#   - name: check for existing qBittorrent-data.conf
-#     stat:
-#       path: "{{ config_dir }}/qBittorrent-data.conf"
-#     register: conf_2
+  - name: copy the service file
+    copy:
+      src:  /home/drake/dotfiles/qbittorrent/qbittorrent-nox.service
+      dest: /etc/systemd/system/qbittorrent-nox.service
+      remote_src: yes
 
-#   - name: remove existing qBittorrent-data.conf
-#     file:
-#       path:   "{{ config_dir }}/qBittorrent-data.conf"
-#       state:  absent
-#     when: 
-#       - conf_2.stat.exists
-#       - conf_2.stat.islnk is defined
-#       - conf_2.stat.islnk == False
+  # service restart is tentatively handled by the new roles.
+  # - name: enable and restart the service
+  #   systemd:
+  #     name:   qbittorrent-nox
+  #     state:  restarted
+  #     enabled:  yes
 
-#   - name: link new qBittorrent-data.conf
-#     file:
-#       src:  "{{ dotfiles_dir }}/qBittorrent-data.conf"
-#       dest: "{{ config_dir }}/qBittorrent-data.conf"
-#       owner:  qbittorrent-nox
-#       group:  qbittorrent-nox
-#       state:  link
-#     when: 
-#       - conf_2.stat.exists
-#       - conf_2.stat.islnk is defined
-#       - conf_2.stat.islnk == False
+  # # CRON jobs
+  # # music scripts; flac conversion
+  # - name: .flac conversion script
+  #   cron:
+  #     name: flac_to_ogg
+  #     user: drake
+  #     job: "/bin/bash /home/drake/scripts/cron/music_library.sh flac_to_ogg"
 
-#   # systemd file
-#   - name: remove the service file
-#     file:
-#       path: /etc/systemd/system/qbittorrent-nox.service
-#       state:  absent
+  # TODO: install the openvpn config?
 
-#   - name: copy the service file
-#     copy:
-#       src:  /home/drake/dotfiles/qbittorrent/qbittorrent-nox.service
-#       dest: /etc/systemd/system/qbittorrent-nox.service
-#       remote_src: yes
+  # ExpressVPN
+  # download the .deb
+  # - name: download and install ExpressVPN
+  #   apt:
+  #     deb:  https://www.expressvpn.works/clients/linux/expressvpn_3.14.0.4-1_amd64.deb
 
-#   - name: enable and restart the service
-#     systemd:
-#       name:   qbittorrent-nox
-#       state:  restarted
-#       enabled:  yes
-
-#   # # CRON jobs
-#   # # music scripts; flac conversion
-#   # - name: .flac conversion script
-#   #   cron:
-#   #     name: flac_to_ogg
-#   #     user: drake
-#   #     job: "/bin/bash /home/drake/scripts/cron/music_library.sh flac_to_ogg"
-
-
-#   # ExpressVPN
-#   # download the .deb
-#   # - name: download and install ExpressVPN
-#   #   apt:
-#   #     deb:  https://www.expressvpn.works/clients/linux/expressvpn_3.14.0.4-1_amd64.deb
-
-#   # firewall rules:
-#   # allow ssh in and out
-#   # allow openvpn port (1195?) in and out
-#   # block all other access
+  # firewall rules:
+  # allow ssh in and out
+  # allow openvpn port (1195?) in and out
+  # block all other access
 
 
