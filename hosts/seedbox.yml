@@ -8,12 +8,12 @@
   - name: test existing
     debug:
       msg:  "qbittorrent.service exists!"
-    when: "'qbittorrent-nox.service' in services"
+    when: ansible_facts.services['qbittorrent-nox.service'] is defined
 
-  - name: test bad
-    debug:
-      msg:  "qbittorrent exists!"
-    when: "'qbittorrent-nox' in services"
+  # - name: test bad
+  #   debug:
+  #     msg:  "qbittorrent exists!"
+  #   when: "'qbittorrent-nox' in services"
 
 # - name: configure seedbox
 #   hosts:  seedbox
