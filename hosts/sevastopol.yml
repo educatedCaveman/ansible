@@ -9,6 +9,7 @@
     - VM_netplan_MTU
     - apt_client_role
     - linux_role
+    - client_ssh_keys
     - docker_role
     - drake_role
     - nfs_base_role

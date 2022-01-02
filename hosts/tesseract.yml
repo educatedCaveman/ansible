@@ -6,6 +6,7 @@
     - git_dotfiles_role
     - git_scripts_role
     - linux_role
+    - client_ssh_keys
     - drake_role
     - role: telegraf_role
       vars:

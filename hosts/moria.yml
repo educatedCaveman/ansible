@@ -9,6 +9,7 @@
     - VM_netplan_MTU
     - apt_client_role
     - linux_role
+    - client_ssh_keys
     - role: telegraf_role
       vars:
         telegraf_config:  'telegraf_base.conf'

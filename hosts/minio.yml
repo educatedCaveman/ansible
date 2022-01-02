@@ -6,6 +6,7 @@
     - apt_client_role
     - LXC_netplan_MTU     # use the mtu9000 netplan config
     - linux_role          # base linux configs
+    - client_ssh_keys
     - drake_role          # drake home directory permissions
     - nfs_base_role       
     - role: telegraf_role

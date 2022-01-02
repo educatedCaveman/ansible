@@ -5,6 +5,7 @@
     - git_ansible_role    # deploy the ansible repo
     - git_scripts_role    # deploy the scripts repo
     - linux_role          # base linux configs
+    - client_ssh_keys
     - drake_role          # drake home directory permissions
     - role: telegraf_role
       vars:

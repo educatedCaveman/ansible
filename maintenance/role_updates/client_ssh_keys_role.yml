@@ -1,0 +1,8 @@
+---
+- name: apply/update the client SSH keys role
+  hosts:
+    - ubuntu_debian_hosts
+    - tesseract
+  roles:
+    - client_ssh_keys
+  tasks:

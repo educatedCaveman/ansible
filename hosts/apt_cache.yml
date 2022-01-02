@@ -5,6 +5,7 @@
     - git_dotfiles_role   # deploy the dotfiles repo
     - LXC_netplan_MTU     # use the mtu9000 netplan config
     - linux_role          # base linux configs
+    - client_ssh_keys
     - drake_role          # drake home directory permissions
     - role: telegraf_role
       vars:
