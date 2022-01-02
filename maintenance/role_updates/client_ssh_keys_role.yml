@@ -24,7 +24,7 @@
 
 # event_horizon's key:
 - name: handle singularity needing event-horizon's key
-  authorized_key:
+  ansible.posix.authorized_key:
     user:   drake
     state:  present
     key:    '{{ item }}'
