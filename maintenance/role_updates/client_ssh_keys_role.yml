@@ -24,9 +24,14 @@
 
 # event_horizon's key:
 - name: handle singularity needing event-horizon's key
-  ansible.posix.authorized_key:
-    user:   drake
-    state:  present
-    key:    '{{ item }}'
-  with_file:
-    - /home/drake/.ssh/event_horizon_id_rsa.pub
+  hosts:
+    - singularity
+  tasks:
+
+    - name: install event_horizon's public key
+      ansible.posix.authorized_key:
+        user:   drake
+        state:  present
+        key:    '{{ item }}'
+      with_file:
+        - /home/drake/.ssh/event_horizon_id_rsa.pub
