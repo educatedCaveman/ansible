@@ -7,18 +7,12 @@
     - client_ssh_keys
   tasks:
 
- #TODO: use a lookup to put the contents of event_horizon_id_rsa.pub into singularity's authorized_keys file
-
-# 
 - name: handle singularity needing event-horizon's key
   hosts:
     - singularity
   vars:
     public_key: "{{ lookup('file', '/home/drake/.ssh/event_horizon_id_rsa.pub') }}"
   tasks:
-
-    # - debug:
-    #     msg:  "key value is {{ public_key }}"
 
     - name: add event-horizon.srv's public key to authorized_keys
       lineinfile:
