@@ -36,7 +36,7 @@
 
 # root keys:
 - name: install keys for root
-  authorized_keys:
+  authorized_key:
     user:   root
     state:  present
     key:    '{{ item }}'
@@ -49,7 +49,7 @@
 
 # drake keys:
 - name: install keys for drake
-  authorized_keys:
+  authorized_key:
     user:   drake
     state:  present
     key:    '{{ item }}'

@@ -24,7 +24,7 @@
 
 # event_horizon's key:
 - name: handle singularity needing event-horizon's key
-  authorized_keys:
+  authorized_key:
     user:   drake
     state:  present
     key:    '{{ item }}'
