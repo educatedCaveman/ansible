@@ -27,8 +27,8 @@
   copy:
     src:    /home/drake/.ssh/authorized_keys
     dest:   /home/drake/.ssh/authorized_keys
-    owner:  root
-    group:  root
+    owner:  drake
+    group:  drake
     mode:   '0600'
     force:  yes
   when: root_ssh.stat.exists

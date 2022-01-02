@@ -4,9 +4,7 @@
     - ubuntu_debian_hosts
     - tesseract
   roles:
-    - drake_role
     - client_ssh_keys
-    - drake_role
   tasks:
 
  #TODO: use a lookup to put the contents of event_horizon_id_rsa.pub into singularity's authorized_keys file
