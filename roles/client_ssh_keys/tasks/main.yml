@@ -1,0 +1,32 @@
+---
+# tasks file for client_ssh_keys
+
+# copy local authorized_keys to /root/.ssh
+- name: check for root's ssh folder
+  stat:
+    path: /root/.ssh/
+  register: root_ssh
+
+- name: install local authorized_keys to root
+  copy:
+    src:    /home/drake/.ssh/authorized_keys
+    dest:   /root/.ssh/authorized_keys
+    owner:  root
+    group:  root
+    mode:   '0600'
+  when: root_ssh.stat.exists
+
+# copy local authorized_keys to /home/drake/.ssh
+- name: check for drake's ssh folder
+  stat:
+    path: /home/drake/.ssh/
+  register: drake_ssh
+
+- name: install local authorized_keys to drake
+  copy:
+    src:    /home/drake/.ssh/authorized_keys
+    dest:   /home/drake/.ssh/authorized_keys
+    owner:  root
+    group:  root
+    mode:   '0600'
+  when: root_ssh.stat.exists
