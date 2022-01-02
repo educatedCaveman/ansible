@@ -90,4 +90,5 @@
       dest: /usr/local/sbin/
       remote_src: yes
       mode: a+x
+    when: bw_zip.stat.exists
       

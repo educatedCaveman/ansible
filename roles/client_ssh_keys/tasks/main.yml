@@ -14,6 +14,7 @@
     owner:  root
     group:  root
     mode:   '0600'
+    force:  yes
   when: root_ssh.stat.exists
 
 # copy local authorized_keys to /home/drake/.ssh
@@ -29,4 +30,12 @@
     owner:  root
     group:  root
     mode:   '0600'
+    force:  yes
   when: root_ssh.stat.exists
+
+# restart ssh service
+- name: restart sshd
+  systemd:
+    name:     sshd.service
+    state:    restarted
+    enabled:  yes
