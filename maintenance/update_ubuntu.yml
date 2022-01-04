@@ -2,6 +2,7 @@
 - name: upgrade/update ubuntu hosts
   hosts: ubuntu_debian_hosts
   ignore_unreachable: yes
+  ignore_errors:      yes
   tasks:
 
     - name: update packages
@@ -23,6 +24,7 @@
 - name: rolling restarts, non-HA hosts
   hosts:  ubuntu_debian_hosts:!octopi:!self:!moria:!apt_cache:!apt_mirror
   ignore_unreachable: yes
+  ignore_errors:      yes
   tasks:
 
     - reboot:
