@@ -31,6 +31,12 @@ fi
 # 3. reduce to a list of unique playbooks
 GIT_LINES=( $(git -C $GIT_DIR --no-pager log -m -1 --name-only | grep "^roles" | sort -u) )
 
+if [ "${#GIT_LINES[@]}" -eq 0 ]
+then
+    echo "no role playbook modifications detected"
+    exit 0
+fi
+
 for playbook_file in "${GIT_LINES[@]}"
 do
     role_name=$(echo ${playbook_file} | cut -d '/' -f2)
