@@ -17,8 +17,14 @@ pipeline {
                 sh 'ansible-playbook ${ANSIBLE_REPO}/deploy/deploy_ansible.yml --extra-vars jenkins_ansible=${ANSIBLE_REPO}'
             }
         }
-
+        // update the roles
+        // the script handles skipping execution for the cron trigger
+        stage('execute role update playbooks') {
+            steps {
+                echo 'checking the last commit for changes to an ansible role, and running the update playbooks, if applicable'
+                sh 'bash ${ANSIBLE_REPO}/maintenance/ansible_role_updates.sh ${ANSIBLE_REPO}'
+            }
+        }
     }
-
 }
 
