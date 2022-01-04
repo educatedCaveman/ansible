@@ -11,23 +11,27 @@
     - doggos
     - nextcloud
     - portainer
+  ignore_unreachable: yes
   tasks:
 
     - name: install relevant packages
       apt:
         name:
           - python3-pip
+      ignore_unreachable: yes
 
     - name: create the scripts/ directory
       file:
         path: /home/drake/scripts
         state:  directory
         recurse:  yes
+      ignore_unreachable: yes
 
     - name: make sure directory exists
       stat:
         path: /home/drake/scripts
       register: scripts_dir
+      ignore_unreachable: yes
 
     - name: deploy scripts repo
       git:
@@ -36,6 +40,7 @@
         version:  master
         force:  yes
       when: scripts_dir.stat.exists
+      ignore_unreachable: yes
 
     # copy over .zsh_secrets
     - name: copy .zsh_secrets
@@ -45,6 +50,7 @@
         owner:  drake
         group:  drake
         mode: '0644'
+      ignore_unreachable: yes
 
     - name: set permissions on directory
       file:
@@ -53,3 +59,4 @@
         recurse:  yes
         owner:  drake
         group:  drake
+      ignore_unreachable: yes
