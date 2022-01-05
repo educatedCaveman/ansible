@@ -193,11 +193,11 @@
       path: /opt/Radarr/
     register: radarr_install
 
-  # - name: retrieve install archive
-  #   get_url:
-  #     url:  'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
-  #     dest: /tmp/
-  #   when: not radarr_install.stat.exists
+  - name: create install directory
+    file:
+      path:   /opt/Radarr/
+      state:  directory
+    when: not radarr_install.stat.exists
 
   - name: retrieve and extract archive
     unarchive:
@@ -206,13 +206,14 @@
       remote_src: yes
     when: not radarr_install.stat.exists
 
-  - name: install Radarr
+  - name: install Radarr and set permissions
     copy:
       src:    /tmp/Radarr/
       dest:   /opt/Radarr/
       mode:   u=rw
       owner:  radarr
       group:  radarr
+      remote_src: yes
     when: not radarr_install.stat.exists
 
   #* Lidarr
