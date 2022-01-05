@@ -146,6 +146,7 @@
     apt_key:
       id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
       keyserver:  keyserver.ubuntu.com
+      state:      present
 
   - name: add Mono repo
     apt_repository:
@@ -161,6 +162,8 @@
     apt_key:
       # id: 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8
       id: A236C58F409091A18ACA53CBEBFF6B99D9B78493
+      keyserver:  keyserver.ubuntu.com
+      state:      present
 
   - name: add Sonarr repo
     apt_repository:
