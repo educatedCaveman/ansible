@@ -24,10 +24,10 @@
     apt:
       name:
         - qbittorrent-nox
-        - parallel
-        - ffmpeg
         - openvpn 
         - openvpn-systemd-resolved
+        - gnupg
+        - ca-certificates
       state:  latest
 
   # create users
@@ -140,4 +140,44 @@
 
   # TODO: install/configure Sonarr, Radarr, Lidarr, Jacket, etc.?
   # if i were to use docker containers, i wouldn't have the ability to have the firewall VPN check
+
+  # Sonarr
+  - name: add the Mono APT key
+    apt_key:
+      id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+
+  - name: add Mono repo
+    apt_repository:
+      repo: deb https://download.mono-project.com/repo/ubuntu stable-focal main
+
+  - name: install Mono
+    apt:
+      name:   mono-devel
+      state:  latest
+      update_cache: yes
+
+  - name: add the Sonarr APT key
+    apt_key:
+      # id: 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8
+      id: A236C58F409091A18ACA53CBEBFF6B99D9B78493
+
+  - name: add Sonarr repo
+    apt_repository:
+      repo: deb http://apt.sonarr.tv/ master main
+
+  - name: install Sonar (nzbdrone)
+    apt:
+      name:   nzbdrone
+      state:  latest
+      update_cache: yes
+
+
+  # Radarr
+  
+
+  # Lidarr
+  
+
+  # Jacket
+  
 

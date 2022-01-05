@@ -1,8 +1,6 @@
 ---
 - name: configure Doggos
-  hosts:
-    - doggo_1
-    - doggo_2
+  hosts: doggos
   roles:
     - VM_role
     - git_dotfiles_role
