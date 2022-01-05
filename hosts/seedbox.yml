@@ -40,8 +40,8 @@
         - libchromaprint-tools
         
         # jacket
-        - libicu65
-        - libssl1.1
+        # - libicu65
+        # - libssl1.1
 
       state:  latest
 
@@ -54,10 +54,11 @@
       system_user: "{{ item }}"
     loop:
       - qbittorrent-nox
+      - media
       - sonarr
       - radarr
       - lidarr
-      - media
+      - jackett
 
   # add the users to the media group
   # drake might be redundant
@@ -74,6 +75,7 @@
       - sonarr
       - radarr
       - lidarr
+      - jackett
 
 
   # #* qBittorrent configs
