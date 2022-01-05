@@ -19,6 +19,7 @@
           - ansible
           - ipmitool
         state:  latest
+        upgrade:  yes
 
     # inventory file
     - name: check existing hosts.ini file
@@ -80,12 +81,12 @@
         dest: /etc/ansible/roles
         state:  link
 
-    # r720 fan control
-    # - name: set up r720 fan control
-    #   cron:
-    #     name: r720_fan_control
-    #     user: drake
-    #     job:  "/bin/bash /home/drake/scripts/cron/r720_fan_control.sh"    
+    # r720 fan control, every minute
+    - name: set up r720 fan control
+      cron:
+        name: r720_fan_control
+        user: drake
+        job:  "/bin/bash /home/drake/scripts/cron/r720_fan_control.sh"    
 
     # jenkins repo
     - debug:
