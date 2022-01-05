@@ -180,6 +180,8 @@
   - name: create /var/lib/radarr
     file:
       path:   /var/lib/radarr
+      owner:  radarr
+      group:  radarr
       state:  directory
 
   - name: check for existing Radarr install
@@ -191,6 +193,8 @@
     file:
       path:   /opt/Radarr/
       state:  directory
+      owner:  radarr
+      group:  radarr
     when: not radarr_install.stat.exists
 
   - name: retrieve and extract Radarr archive
@@ -264,7 +268,6 @@
 
   #* Jacket
   # https://github.com/Jackett/Jackett
-  # https://github.com/Jackett/Jackett/releases/download/v0.20.244/Jackett.Binaries.LinuxAMDx64.tar.gz
   - name: retrieve and extract Jackett archive
     unarchive:
       src:    https://github.com/Jackett/Jackett/releases/download/v0.20.244/Jackett.Binaries.LinuxAMDx64.tar.gz
@@ -287,6 +290,18 @@
       - radarr
       - lidarr
       # - jacket
+
+  # handle jacket service
+  - name: check for jackett.service
+    stat: 
+      path: /etc/systemd/system/jackett.service
+    register: jackett_service
+
+  - name: restart jackett.service
+    systemd:
+      name:     jackett.service
+      state:    restarted
+      enabled:  yes
 
 
   #* Manual steps
