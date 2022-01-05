@@ -19,7 +19,6 @@
           - ansible
           - ipmitool
         state:  latest
-        upgrade:  yes
 
     # inventory file
     - name: check existing hosts.ini file
