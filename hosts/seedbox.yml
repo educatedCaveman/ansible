@@ -59,8 +59,14 @@
   #   vars:
   #     system_user: "radarr"
 
+  # create the media group
+  - name: create the media group
+    group:
+      name:   media
+      state:  present
+
   # app users & groups
-  - name: "create the {{ item }} system users and grops"
+  - name: "create the app system users"
     user:
       name:   "{{ item }}"
       groups:
@@ -83,6 +89,7 @@
         - sonarr
         - radarr
         - lidarr
+        - media
       append: yes
 
   #* create media group and add users
