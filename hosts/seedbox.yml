@@ -148,75 +148,75 @@
   # TODO: install/configure Sonarr, Radarr, Lidarr, Jacket, etc.?
   # if i were to use docker containers, i wouldn't have the ability to have the firewall VPN check
 
-  #* Sonarr
-  - name: add the Mono APT key
-    apt_key:
-      id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-      keyserver:  keyserver.ubuntu.com
-      state:      present
+  # #* Sonarr
+  # - name: add the Mono APT key
+  #   apt_key:
+  #     id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+  #     keyserver:  keyserver.ubuntu.com
+  #     state:      present
 
-  - name: add Mono repo
-    apt_repository:
-      repo: deb https://download.mono-project.com/repo/ubuntu stable-focal main
+  # - name: add Mono repo
+  #   apt_repository:
+  #     repo: deb https://download.mono-project.com/repo/ubuntu stable-focal main
 
-  - name: install Mono
-    apt:
-      name:   mono-devel
-      state:  latest
-      update_cache: yes
+  # - name: install Mono
+  #   apt:
+  #     name:   mono-devel
+  #     state:  latest
+  #     update_cache: yes
 
-  - name: add the Sonarr APT key
-    apt_key:
-      # id: 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8
-      id: A236C58F409091A18ACA53CBEBFF6B99D9B78493
-      keyserver:  keyserver.ubuntu.com
-      state:      present
+  # - name: add the Sonarr APT key
+  #   apt_key:
+  #     # id: 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8
+  #     id: A236C58F409091A18ACA53CBEBFF6B99D9B78493
+  #     keyserver:  keyserver.ubuntu.com
+  #     state:      present
 
-  - name: add Sonarr repo
-    apt_repository:
-      repo: deb http://apt.sonarr.tv/ master main
+  # - name: add Sonarr repo
+  #   apt_repository:
+  #     repo: deb http://apt.sonarr.tv/ master main
 
-  - name: install Sonar (nzbdrone)
-    apt:
-      name:   nzbdrone
-      state:  latest
-      update_cache: yes
+  # - name: install Sonar (nzbdrone)
+  #   apt:
+  #     name:   nzbdrone
+  #     state:  latest
+  #     update_cache: yes
 
-  #* Radarr
-  # this was derived from the "Hands on Install" here:
-  # https://wiki.servarr.com/radarr/installation#linux
-  - name: create /var/lib/radarr
-    file:
-      path:   /var/lib/radarr
-      state:  directory
+  # #* Radarr
+  # # this was derived from the "Hands on Install" here:
+  # # https://wiki.servarr.com/radarr/installation#linux
+  # - name: create /var/lib/radarr
+  #   file:
+  #     path:   /var/lib/radarr
+  #     state:  directory
 
-  - name: check for existing install
-    stat:
-      path: /opt/Radarr/
-    register: radarr_install
+  # - name: check for existing install
+  #   stat:
+  #     path: /opt/Radarr/
+  #   register: radarr_install
 
-  - name: create install directory
-    file:
-      path:   /opt/Radarr/
-      state:  directory
-    when: not radarr_install.stat.exists
+  # - name: create install directory
+  #   file:
+  #     path:   /opt/Radarr/
+  #     state:  directory
+  #   when: not radarr_install.stat.exists
 
-  - name: retrieve and extract archive
-    unarchive:
-      src:  'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
-      dest: /tmp/
-      remote_src: yes
-    when: not radarr_install.stat.exists
+  # - name: retrieve and extract archive
+  #   unarchive:
+  #     src:  'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
+  #     dest: /tmp/
+  #     remote_src: yes
+  #   when: not radarr_install.stat.exists
 
-  - name: install Radarr and set permissions
-    copy:
-      src:    /tmp/Radarr/
-      dest:   /opt/Radarr/
-      mode:   u=rw
-      owner:  radarr
-      group:  radarr
-      remote_src: yes
-    when: not radarr_install.stat.exists
+  # - name: install Radarr and set permissions
+  #   copy:
+  #     src:    /tmp/Radarr/
+  #     dest:   /opt/Radarr/
+  #     mode:   u=rw
+  #     owner:  radarr
+  #     group:  radarr
+  #     remote_src: yes
+  #   when: not radarr_install.stat.exists
 
   #* Lidarr
   # this was derived from the "Hands on Install" here:
@@ -224,6 +224,8 @@
   - name: create /var/lib/lidarr
     file:
       path:   /var/lib/lidarr
+      owner:  lidarr
+      group:  lidarr
       state:  directory
 
   - name: check for existing install
@@ -234,6 +236,8 @@
   - name: create install directory
     file:
       path:   /opt/Lidarr/
+      owner:  lidarr
+      group:  lidarr
       state:  directory
     when: not lidarr_install.stat.exists
 
@@ -259,11 +263,9 @@
   # https://github.com/Jackett/Jackett/releases/download/v0.20.244/Jackett.Binaries.LinuxAMDx64.tar.gz
   - name: retrieve and extract archive
     unarchive:
-      src:  'http://lidarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
+      src:  https://github.com/Jackett/Jackett/releases/download/v0.20.244/Jackett.Binaries.LinuxAMDx64.tar.gz
       dest: /home/jackett
-      remote_src: yes
-    when: not lidarr_install.stat.exists
-  
+      remote_src: yes  
 
   #* install service files, and restart services  
   - name: install the service files and restart the services
