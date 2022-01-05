@@ -144,7 +144,8 @@
   # Sonarr
   - name: add the Mono APT key
     apt_key:
-      id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+      id:   3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+      url:  https://download.mono-project.com/repo/ubuntu/
 
   - name: add Mono repo
     apt_repository:
