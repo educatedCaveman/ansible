@@ -20,15 +20,26 @@
     - dotfiles_dir: '/home/drake/dotfiles/qbittorrent'
   tasks:
 
-  # - name: install qbittorrent and related dependencies
-  #   apt:
-  #     name:
-  #       - qbittorrent-nox
-  #       - openvpn 
-  #       - openvpn-systemd-resolved
-  #       - gnupg
-  #       - ca-certificates
-  #     state:  latest
+  - name: install qbittorrent and related dependencies
+    apt:
+      name:
+        - qbittorrent-nox
+        - openvpn 
+        - openvpn-systemd-resolved
+        
+        # sonarr
+        - gnupg
+        - ca-certificates
+
+        # radarr
+        - curl
+        - mediainfo
+        - sqlite3
+
+        # lidarr
+        # jacket
+
+      state:  latest
 
   #* create users and groups
   # base system users and groups
@@ -114,26 +125,6 @@
   #     - conf_2.stat.islnk is defined
   #     - conf_2.stat.islnk == False
 
-  # #* systemd file
-  # - name: remove the service file
-  #   file:
-  #     path: /etc/systemd/system/qbittorrent-nox.service
-  #     state:  absent
-
-  # - name: copy the service file
-  #   copy:
-  #     src:  /home/drake/dotfiles/qbittorrent/qbittorrent-nox.service
-  #     dest: /etc/systemd/system/qbittorrent-nox.service
-  #     remote_src: yes
-
-  # # service restart is tentatively handled by the new roles.
-  # - name: enable and restart the service
-  #   systemd:
-  #     name:   qbittorrent-nox
-  #     state:  restarted
-  #     enabled:  yes
-
-
   # TODO: install the openvpn config?
 
   #* ExpressVPN
@@ -185,11 +176,35 @@
       state:  latest
       update_cache: yes
 
-  # systemD file
-
 
   #* Radarr
-  
+  # /var/lib/radarr is created and radarr user has read/write permissions
+  # wget --content-disposition 'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
+  # tar -xvzf Radarr*.linux*.tar.gz
+  # move Radarr to /opt/ (is a directory)
+  # make sure radarr owns /opt/Radarr/  (chown radarr:radarr -R /opt/Radarr)
+  - name: create /var/lib/radarr
+    file:
+      path:   /var/lib/radarr
+      state:  directory
+
+  - name: check for existing install
+    stat:
+      path: /opt/Radarr/
+    register: radarr_install
+
+  # - name: retrieve install archive
+  #   get_url:
+  #     url:  'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
+  #     dest: /tmp/
+  #   when: not radarr_install.stat.exists
+
+  - name: retrieve and extract archive
+    unarchive:
+      src:  'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
+      dest: /tmp/
+      remote_src: yes
+
 
   #* Lidarr
   
