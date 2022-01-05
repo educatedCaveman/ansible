@@ -17,6 +17,7 @@
       apt:
         name:
           - ansible
+          - ipmitool
         state:  latest
 
     # inventory file
@@ -78,6 +79,13 @@
         src:  /home/drake/ansible/roles
         dest: /etc/ansible/roles
         state:  link
+
+    # r720 fan control
+    # - name: set up r720 fan control
+    #   cron:
+    #     name: r720_fan_control
+    #     user: drake
+    #     job:  "/bin/bash /home/drake/scripts/cron/r720_fan_control.sh"    
 
     # jenkins repo
     - debug:
