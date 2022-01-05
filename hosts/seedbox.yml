@@ -38,6 +38,33 @@
   #   vars:
   #     system_user: "qbittorrent-nox"
 
+  # create the media group
+  # - name: create the media group
+  #   group:
+  #     name:   media
+  #     state:  present
+
+  - name: create the system users
+    include_role:
+      name: create_system_user_role
+    vars:
+      system_user: "{{ item }}"
+    loop:
+      - qbittorrent-nox
+      - sonarr
+      - radarr
+      - lidarr
+      - media
+
+  - name: add the users to the media group
+    user:
+      name: "{{ item }}"
+      groups:
+        - media
+        - "{{ item }}"
+      append: yes
+    
+
   # # sonarr
   # - name: create the sonarr system user
   #   include_role:
@@ -59,38 +86,25 @@
   #   vars:
   #     system_user: "radarr"
 
-  # create the media group
-  - name: create the media group
-    group:
-      name:   media
-      state:  present
+    
 
-  # app users & groups
-  - name: "create the app system users"
-    user:
-      name:   "{{ item }}"
-      groups:
-        - "{{ item }}"
-        - media
-      state:  present
-      system: yes
-      append: yes
-    loop:
-      - qbittorrent-nox
-      - sonarr
-      - radarr
-      - lidarr
+  # # app users & groups
+  # - name: "create the app system users"
+  #   user:
+  #     name:   "{{ item }}"
+  #     groups:
+  #       - "{{ item }}"
+  #       - media
+  #     state:  present
+  #     system: yes
+  #     append: yes
+  #   loop:
+  #     - qbittorrent-nox
+  #     - sonarr
+  #     - radarr
+  #     - lidarr
 
-  - name: make drake a member of all the groups
-    user:
-      name: drake
-      groups:
-        - qbittorrent-nox
-        - sonarr
-        - radarr
-        - lidarr
-        - media
-      append: yes
+
 
   #* create media group and add users
   # - name: create the media group
