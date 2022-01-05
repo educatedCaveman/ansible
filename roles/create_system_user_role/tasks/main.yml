@@ -1,0 +1,19 @@
+---
+# tasks file for create_system_user_role
+  - name: "create the {{ system_user }} group"
+    group:
+      name:   "{{ system_user }}"
+      state:  present
+
+  - name: create the {{ system_user }} user
+    user:
+      name:   "{{ system_user }}"
+      group:  "{{ system_user }}"
+      system: yes
+      state:  present
+
+  - name: "add drake to the {{ system_user }} group"
+    user:
+      name:   drake
+      groups: "{{ system_user }}"
+      append: yes

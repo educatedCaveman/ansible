@@ -30,10 +30,23 @@
   #       - ca-certificates
   #     state:  latest
 
-  # # create users
-  # # qbittorrent-nox
-  # # drake: add to qbittorrent group
+  #* create users and groups
+  # qbittorrent-nox
+  - name: create the qbittorrent-nox system user
+    include_role:
+      name: create_system_user_role
+    vars:
+      system_user: "qbittorrent-nox"
 
+  # # sonarr
+  # - name: create the qbittorrent-nox system user
+  #   include_role:
+  #     name: create_system_user_role
+  #   vars:
+  #     system_user: "sonarr"
+
+
+  # # qbittorrent-nox
   # - name: create the qbittorrent-nox group
   #   group:
   #     name:   qbittorrent-nox
@@ -51,6 +64,7 @@
   #     name:   drake
   #     groups: qbittorrent-nox
   #     append: yes
+
 
   # # qBittorrent configs
   # - name: check for existing qBittorrent.conf
@@ -141,7 +155,7 @@
   # TODO: install/configure Sonarr, Radarr, Lidarr, Jacket, etc.?
   # if i were to use docker containers, i wouldn't have the ability to have the firewall VPN check
 
-  # Sonarr
+  #* Sonarr
   - name: add the Mono APT key
     apt_key:
       id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
@@ -175,13 +189,12 @@
       state:  latest
       update_cache: yes
 
-
-  # Radarr
+  #* Radarr
   
 
-  # Lidarr
+  #* Lidarr
   
 
-  # Jacket
+  #* Jacket
   
 
