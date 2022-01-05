@@ -204,7 +204,16 @@
       src:  'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
       dest: /tmp/
       remote_src: yes
+    when: not radarr_install.stat.exists
 
+  - name: install Radarr
+    copy:
+      src:    /tmp/Radarr/
+      dest:   /opt/Radarr/
+      mode:   u=rw
+      owner:  radarr
+      group:  radarr
+    when: not radarr_install.stat.exists
 
   #* Lidarr
   
