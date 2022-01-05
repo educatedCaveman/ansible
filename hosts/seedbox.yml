@@ -38,12 +38,26 @@
     vars:
       system_user: "qbittorrent-nox"
 
-  # # sonarr
-  # - name: create the qbittorrent-nox system user
-  #   include_role:
-  #     name: create_system_user_role
-  #   vars:
-  #     system_user: "sonarr"
+  # sonarr
+  - name: create the sonarr system user
+    include_role:
+      name: create_system_user_role
+    vars:
+      system_user: "sonarr"
+
+  # lidarr
+  - name: create the lidarr system user
+    include_role:
+      name: create_system_user_role
+    vars:
+      system_user: "lidarr"
+
+  # radarr
+  - name: create the radarr system user
+    include_role:
+      name: create_system_user_role
+    vars:
+      system_user: "radarr"
 
 
   # # qbittorrent-nox
