@@ -1,128 +1,128 @@
 - name: configure seedbox
   hosts:  seedbox
-  roles:
-    - LXC_role            # base LXC container config
-    - git_dotfiles_role   # deploy the dotfiles repo
-    - apt_client_role
-    - LXC_netplan_MTU     # use the mtu9000 netplan config
-    - linux_role          # base linux configs
-    - client_ssh_keys
-    - drake_role          # drake home directory permissions
-    - nfs_base_role       
-    - nfs_video_role
-    - nfs_music_role
-    - nfs_staging_role
-    - role: telegraf_role
-      vars:
-        telegraf_config:  'telegraf_base.conf'
+  # roles:
+  #   - LXC_role            # base LXC container config
+  #   - git_dotfiles_role   # deploy the dotfiles repo
+  #   - apt_client_role
+  #   - LXC_netplan_MTU     # use the mtu9000 netplan config
+  #   - linux_role          # base linux configs
+  #   - client_ssh_keys
+  #   - drake_role          # drake home directory permissions
+  #   - nfs_base_role       
+  #   - nfs_video_role
+  #   - nfs_music_role
+  #   - nfs_staging_role
+  #   - role: telegraf_role
+  #     vars:
+  #       telegraf_config:  'telegraf_base.conf'
   vars:
     - config_dir: '/home/qbittorrent-nox/.config/qBittorrent'
     - dotfiles_dir: '/home/drake/dotfiles/qbittorrent'
   tasks:
 
-  - name: install qbittorrent and related dependencies
-    apt:
-      name:
-        - qbittorrent-nox
-        - openvpn 
-        - openvpn-systemd-resolved
-        - gnupg
-        - ca-certificates
-      state:  latest
+  # - name: install qbittorrent and related dependencies
+  #   apt:
+  #     name:
+  #       - qbittorrent-nox
+  #       - openvpn 
+  #       - openvpn-systemd-resolved
+  #       - gnupg
+  #       - ca-certificates
+  #     state:  latest
 
-  # create users
-  # qbittorrent-nox
-  # drake: add to qbittorrent group
+  # # create users
+  # # qbittorrent-nox
+  # # drake: add to qbittorrent group
 
-  - name: create the qbittorrent-nox group
-    group:
-      name:   qbittorrent-nox
-      state:  present
+  # - name: create the qbittorrent-nox group
+  #   group:
+  #     name:   qbittorrent-nox
+  #     state:  present
 
-  - name: create the qbittorrent-nox user
-    user:
-      name:   qbittorrent-nox
-      group:  qbittorrent-nox
-      system: yes
-      state:  present
+  # - name: create the qbittorrent-nox user
+  #   user:
+  #     name:   qbittorrent-nox
+  #     group:  qbittorrent-nox
+  #     system: yes
+  #     state:  present
 
-  - name: add drake to the qbittorrent-nox group
-    user:
-      name:   drake
-      groups: qbittorrent-nox
-      append: yes
+  # - name: add drake to the qbittorrent-nox group
+  #   user:
+  #     name:   drake
+  #     groups: qbittorrent-nox
+  #     append: yes
 
-  # qBittorrent configs
-  - name: check for existing qBittorrent.conf
-    stat:
-      path: "{{ config_dir }}/qBittorrent.conf"
-    register: conf_1
+  # # qBittorrent configs
+  # - name: check for existing qBittorrent.conf
+  #   stat:
+  #     path: "{{ config_dir }}/qBittorrent.conf"
+  #   register: conf_1
 
-  - name: remove existing qBittorrent.conf
-    file:
-      path:   "{{ config_dir }}/qBittorrent.conf"
-      state:  absent
-    when: 
-      - conf_1.stat.exists
-      - conf_1.stat.islnk is defined
-      - conf_1.stat.islnk == False
+  # - name: remove existing qBittorrent.conf
+  #   file:
+  #     path:   "{{ config_dir }}/qBittorrent.conf"
+  #     state:  absent
+  #   when: 
+  #     - conf_1.stat.exists
+  #     - conf_1.stat.islnk is defined
+  #     - conf_1.stat.islnk == False
 
-  - name: link new qBittorrent.conf
-    file:
-      src:  "{{ dotfiles_dir }}/qBittorrent.conf"
-      dest: "{{ config_dir }}/qBittorrent.conf"
-      owner:  qbittorrent-nox
-      group:  qbittorrent-nox
-      state:  link
-    when: 
-      - conf_1.stat.exists
-      - conf_1.stat.islnk is defined
-      - conf_1.stat.islnk == False
+  # - name: link new qBittorrent.conf
+  #   file:
+  #     src:  "{{ dotfiles_dir }}/qBittorrent.conf"
+  #     dest: "{{ config_dir }}/qBittorrent.conf"
+  #     owner:  qbittorrent-nox
+  #     group:  qbittorrent-nox
+  #     state:  link
+  #   when: 
+  #     - conf_1.stat.exists
+  #     - conf_1.stat.islnk is defined
+  #     - conf_1.stat.islnk == False
 
-  - name: check for existing qBittorrent-data.conf
-    stat:
-      path: "{{ config_dir }}/qBittorrent-data.conf"
-    register: conf_2
+  # - name: check for existing qBittorrent-data.conf
+  #   stat:
+  #     path: "{{ config_dir }}/qBittorrent-data.conf"
+  #   register: conf_2
 
-  - name: remove existing qBittorrent-data.conf
-    file:
-      path:   "{{ config_dir }}/qBittorrent-data.conf"
-      state:  absent
-    when: 
-      - conf_2.stat.exists
-      - conf_2.stat.islnk is defined
-      - conf_2.stat.islnk == False
+  # - name: remove existing qBittorrent-data.conf
+  #   file:
+  #     path:   "{{ config_dir }}/qBittorrent-data.conf"
+  #     state:  absent
+  #   when: 
+  #     - conf_2.stat.exists
+  #     - conf_2.stat.islnk is defined
+  #     - conf_2.stat.islnk == False
 
-  - name: link new qBittorrent-data.conf
-    file:
-      src:  "{{ dotfiles_dir }}/qBittorrent-data.conf"
-      dest: "{{ config_dir }}/qBittorrent-data.conf"
-      owner:  qbittorrent-nox
-      group:  qbittorrent-nox
-      state:  link
-    when: 
-      - conf_2.stat.exists
-      - conf_2.stat.islnk is defined
-      - conf_2.stat.islnk == False
+  # - name: link new qBittorrent-data.conf
+  #   file:
+  #     src:  "{{ dotfiles_dir }}/qBittorrent-data.conf"
+  #     dest: "{{ config_dir }}/qBittorrent-data.conf"
+  #     owner:  qbittorrent-nox
+  #     group:  qbittorrent-nox
+  #     state:  link
+  #   when: 
+  #     - conf_2.stat.exists
+  #     - conf_2.stat.islnk is defined
+  #     - conf_2.stat.islnk == False
 
-  # systemd file
-  - name: remove the service file
-    file:
-      path: /etc/systemd/system/qbittorrent-nox.service
-      state:  absent
+  # # systemd file
+  # - name: remove the service file
+  #   file:
+  #     path: /etc/systemd/system/qbittorrent-nox.service
+  #     state:  absent
 
-  - name: copy the service file
-    copy:
-      src:  /home/drake/dotfiles/qbittorrent/qbittorrent-nox.service
-      dest: /etc/systemd/system/qbittorrent-nox.service
-      remote_src: yes
+  # - name: copy the service file
+  #   copy:
+  #     src:  /home/drake/dotfiles/qbittorrent/qbittorrent-nox.service
+  #     dest: /etc/systemd/system/qbittorrent-nox.service
+  #     remote_src: yes
 
-  # service restart is tentatively handled by the new roles.
-  - name: enable and restart the service
-    systemd:
-      name:   qbittorrent-nox
-      state:  restarted
-      enabled:  yes
+  # # service restart is tentatively handled by the new roles.
+  # - name: enable and restart the service
+  #   systemd:
+  #     name:   qbittorrent-nox
+  #     state:  restarted
+  #     enabled:  yes
 
   # TODO: install the openvpn config?
 
@@ -144,8 +144,8 @@
   # Sonarr
   - name: add the Mono APT key
     apt_key:
-      id:   3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-      url:  https://download.mono-project.com/repo/ubuntu/dists/stable-focal/
+      id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+      keyserver:  keyserver.ubuntu.com
 
   - name: add Mono repo
     apt_repository:
