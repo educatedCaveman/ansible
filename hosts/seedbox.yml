@@ -1,20 +1,20 @@
 - name: configure seedbox
   hosts:  seedbox
-  # roles:
-  #   - LXC_role            # base LXC container config
-  #   - git_dotfiles_role   # deploy the dotfiles repo
-  #   - apt_client_role
-  #   - LXC_netplan_MTU     # use the mtu9000 netplan config
-  #   - linux_role          # base linux configs
-  #   - client_ssh_keys
-  #   - drake_role          # drake home directory permissions
-  #   - nfs_base_role       
-  #   - nfs_video_role
-  #   - nfs_music_role
-  #   - nfs_staging_role
-  #   - role: telegraf_role
-  #     vars:
-  #       telegraf_config:  'telegraf_base.conf'
+  roles:
+    - LXC_role            # base LXC container config
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - apt_client_role
+    - LXC_netplan_MTU     # use the mtu9000 netplan config
+    - linux_role          # base linux configs
+    - client_ssh_keys
+    - drake_role          # drake home directory permissions
+    - nfs_base_role       
+    - nfs_video_role
+    - nfs_music_role
+    - nfs_staging_role
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'telegraf_base.conf'
   vars:
     - config_dir: '/home/qbittorrent-nox/.config/qBittorrent'
     - dotfiles_dir: '/home/drake/dotfiles/qbittorrent'
@@ -25,25 +25,16 @@
       name:
         - qbittorrent-nox
         - openvpn 
-        - openvpn-systemd-resolved
-        
-        # sonarr
+        - openvpn-systemd-resolved  
         - gnupg
         - ca-certificates
-
-        # radarr/lidar
         - curl
         - mediainfo
         - sqlite3
-
-        # lidarr
         - libchromaprint-tools
         
-        # jacket
-        # - libicu65
-        # - libssl1.1
-
       state:  latest
+
 
   #* create users and groups
   # base system users and groups
@@ -78,61 +69,61 @@
       - jackett
 
 
-  # #* qBittorrent configs
-  # - name: check for existing qBittorrent.conf
-  #   stat:
-  #     path: "{{ config_dir }}/qBittorrent.conf"
-  #   register: conf_1
+  #* qBittorrent configs
+  - name: check for existing qBittorrent.conf
+    stat:
+      path: "{{ config_dir }}/qBittorrent.conf"
+    register: conf_1
 
-  # - name: remove existing qBittorrent.conf
-  #   file:
-  #     path:   "{{ config_dir }}/qBittorrent.conf"
-  #     state:  absent
-  #   when: 
-  #     - conf_1.stat.exists
-  #     - conf_1.stat.islnk is defined
-  #     - conf_1.stat.islnk == False
+  - name: remove existing qBittorrent.conf
+    file:
+      path:   "{{ config_dir }}/qBittorrent.conf"
+      state:  absent
+    when: 
+      - conf_1.stat.exists
+      - conf_1.stat.islnk is defined
+      - conf_1.stat.islnk == False
 
-  # - name: link new qBittorrent.conf
-  #   file:
-  #     src:  "{{ dotfiles_dir }}/qBittorrent.conf"
-  #     dest: "{{ config_dir }}/qBittorrent.conf"
-  #     owner:  qbittorrent-nox
-  #     group:  qbittorrent-nox
-  #     state:  link
-  #   when: 
-  #     - conf_1.stat.exists
-  #     - conf_1.stat.islnk is defined
-  #     - conf_1.stat.islnk == False
+  - name: link new qBittorrent.conf
+    file:
+      src:  "{{ dotfiles_dir }}/qBittorrent.conf"
+      dest: "{{ config_dir }}/qBittorrent.conf"
+      owner:  qbittorrent-nox
+      group:  qbittorrent-nox
+      state:  link
+    when: 
+      - conf_1.stat.exists
+      - conf_1.stat.islnk is defined
+      - conf_1.stat.islnk == False
 
-  # - name: check for existing qBittorrent-data.conf
-  #   stat:
-  #     path: "{{ config_dir }}/qBittorrent-data.conf"
-  #   register: conf_2
+  - name: check for existing qBittorrent-data.conf
+    stat:
+      path: "{{ config_dir }}/qBittorrent-data.conf"
+    register: conf_2
 
-  # - name: remove existing qBittorrent-data.conf
-  #   file:
-  #     path:   "{{ config_dir }}/qBittorrent-data.conf"
-  #     state:  absent
-  #   when: 
-  #     - conf_2.stat.exists
-  #     - conf_2.stat.islnk is defined
-  #     - conf_2.stat.islnk == False
+  - name: remove existing qBittorrent-data.conf
+    file:
+      path:   "{{ config_dir }}/qBittorrent-data.conf"
+      state:  absent
+    when: 
+      - conf_2.stat.exists
+      - conf_2.stat.islnk is defined
+      - conf_2.stat.islnk == False
 
-  # - name: link new qBittorrent-data.conf
-  #   file:
-  #     src:  "{{ dotfiles_dir }}/qBittorrent-data.conf"
-  #     dest: "{{ config_dir }}/qBittorrent-data.conf"
-  #     owner:  qbittorrent-nox
-  #     group:  qbittorrent-nox
-  #     state:  link
-  #   when: 
-  #     - conf_2.stat.exists
-  #     - conf_2.stat.islnk is defined
-  #     - conf_2.stat.islnk == False
+  - name: link new qBittorrent-data.conf
+    file:
+      src:  "{{ dotfiles_dir }}/qBittorrent-data.conf"
+      dest: "{{ config_dir }}/qBittorrent-data.conf"
+      owner:  qbittorrent-nox
+      group:  qbittorrent-nox
+      state:  link
+    when: 
+      - conf_2.stat.exists
+      - conf_2.stat.islnk is defined
+      - conf_2.stat.islnk == False
+
 
   # TODO: install the openvpn config?
-
   #* ExpressVPN
   # download the .deb
   # - name: download and install ExpressVPN
@@ -148,75 +139,82 @@
   # TODO: install/configure Sonarr, Radarr, Lidarr, Jacket, etc.?
   # if i were to use docker containers, i wouldn't have the ability to have the firewall VPN check
 
-  # #* Sonarr
-  # - name: add the Mono APT key
-  #   apt_key:
-  #     id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-  #     keyserver:  keyserver.ubuntu.com
-  #     state:      present
+  #* Sonarr
+  - name: add the Mono APT key
+    apt_key:
+      id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+      keyserver:  keyserver.ubuntu.com
+      state:      present
 
-  # - name: add Mono repo
-  #   apt_repository:
-  #     repo: deb https://download.mono-project.com/repo/ubuntu stable-focal main
+  - name: add Mono repo
+    apt_repository:
+      repo: deb https://download.mono-project.com/repo/ubuntu stable-focal main
 
-  # - name: install Mono
-  #   apt:
-  #     name:   mono-devel
-  #     state:  latest
-  #     update_cache: yes
+  - name: install Mono
+    apt:
+      name:   mono-devel
+      state:  latest
+      update_cache: yes
 
-  # - name: add the Sonarr APT key
-  #   apt_key:
-  #     # id: 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8
-  #     id: A236C58F409091A18ACA53CBEBFF6B99D9B78493
-  #     keyserver:  keyserver.ubuntu.com
-  #     state:      present
+  - name: add the Sonarr APT key
+    apt_key:
+      # id: 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8
+      id: A236C58F409091A18ACA53CBEBFF6B99D9B78493
+      keyserver:  keyserver.ubuntu.com
+      state:      present
 
-  # - name: add Sonarr repo
-  #   apt_repository:
-  #     repo: deb http://apt.sonarr.tv/ master main
+  - name: add Sonarr repo
+    apt_repository:
+      repo: deb http://apt.sonarr.tv/ master main
 
-  # - name: install Sonar (nzbdrone)
-  #   apt:
-  #     name:   nzbdrone
-  #     state:  latest
-  #     update_cache: yes
+  - name: install Sonar (nzbdrone)
+    apt:
+      name:   nzbdrone
+      state:  latest
+      update_cache: yes
 
-  # #* Radarr
-  # # this was derived from the "Hands on Install" here:
-  # # https://wiki.servarr.com/radarr/installation#linux
-  # - name: create /var/lib/radarr
-  #   file:
-  #     path:   /var/lib/radarr
-  #     state:  directory
 
-  # - name: check for existing install
-  #   stat:
-  #     path: /opt/Radarr/
-  #   register: radarr_install
+  #* Radarr
+  # this was derived from the "Hands on Install" here:
+  # https://wiki.servarr.com/radarr/installation#linux
+  - name: create /var/lib/radarr
+    file:
+      path:   /var/lib/radarr
+      state:  directory
 
-  # - name: create install directory
-  #   file:
-  #     path:   /opt/Radarr/
-  #     state:  directory
-  #   when: not radarr_install.stat.exists
+  - name: check for existing install
+    stat:
+      path: /opt/Radarr/
+    register: radarr_install
 
-  # - name: retrieve and extract archive
-  #   unarchive:
-  #     src:  'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
-  #     dest: /tmp/
-  #     remote_src: yes
-  #   when: not radarr_install.stat.exists
+  - name: create install directory
+    file:
+      path:   /opt/Radarr/
+      state:  directory
+    when: not radarr_install.stat.exists
 
-  # - name: install Radarr and set permissions
-  #   copy:
-  #     src:    /tmp/Radarr/
-  #     dest:   /opt/Radarr/
-  #     mode:   u=rw
-  #     owner:  radarr
-  #     group:  radarr
-  #     remote_src: yes
-  #   when: not radarr_install.stat.exists
+  - name: retrieve and extract archive
+    unarchive:
+      src:  'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
+      dest: /tmp/
+      remote_src: yes
+    when: not radarr_install.stat.exists
+
+  - name: install Radarr and set permissions
+    copy:
+      src:    /tmp/Radarr/
+      dest:   /opt/Radarr/
+      owner:  radarr
+      group:  radarr
+      remote_src: yes
+    when: not radarr_install.stat.exists
+
+  - name: set permissions on executable
+    file:
+      path: /opt/Radarr/Radarr
+      mode: u+x
+    when: not radarr_install.stat.exists 
+
 
   #* Lidarr
   # this was derived from the "Hands on Install" here:
@@ -248,24 +246,32 @@
       remote_src: yes
     when: not lidarr_install.stat.exists
 
-  - name: install Lidarr and set permissions
+  - name: install Lidarr and set user/group
     copy:
       src:    /tmp/Lidarr/
       dest:   /opt/Lidarr/
-      # mode:   u=rw
       owner:  lidarr
       group:  lidarr
       remote_src: yes
     when: not lidarr_install.stat.exists  
+
+  - name: set permissions on executable
+    file:
+      path: /opt/Lidarr/Lidarr
+      mode: u+x
+    when: not lidarr_install.stat.exists 
+
 
   #* Jacket
   # https://github.com/Jackett/Jackett
   # https://github.com/Jackett/Jackett/releases/download/v0.20.244/Jackett.Binaries.LinuxAMDx64.tar.gz
   - name: retrieve and extract archive
     unarchive:
-      src:  https://github.com/Jackett/Jackett/releases/download/v0.20.244/Jackett.Binaries.LinuxAMDx64.tar.gz
-      dest: /home/jackett
+      src:    https://github.com/Jackett/Jackett/releases/download/v0.20.244/Jackett.Binaries.LinuxAMDx64.tar.gz
+      dest:   /home/jackett
+      owner:  group
       remote_src: yes  
+      
 
   #* install service files, and restart services  
   - name: install the service files and restart the services
@@ -280,3 +286,11 @@
       - radarr
       - lidarr
       # - jacket
+
+
+  #* Manual steps
+  - name: manual steps to be take on install
+    debug:
+      msg:
+        - run the following command from /home/jackett
+        - sudo ./install_service_systemd.sh
