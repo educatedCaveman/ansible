@@ -138,3 +138,6 @@
   # block all other access
 
 
+  # TODO: install/configure Sonarr, Radarr, Lidarr, Jacket, etc.?
+  # if i were to use docker containers, i wouldn't have the ability to have the firewall VPN check
+
