@@ -1,0 +1,19 @@
+---
+# tasks file for install_service_file_role
+
+- name: "remove the {{ service_name }} service file, if it exists"
+  file:
+    path: "/etc/systemd/system/{{ service_name }}.service"
+    state:  absent
+
+- name: "install the {{ service_name }} service file"
+  copy:
+    src:  "{{ service_file_loc }}/{{ service_name }}.service"
+    dest: "/etc/systemd/system/{{ service_name }}.service"
+    remote_src: yes
+
+- name: "enable and restart the {{ service_name }}.service"
+  systemd:
+    name:   "{{ service_name }}"
+    state:  restarted
+    enabled:  yes

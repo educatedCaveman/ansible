@@ -61,7 +61,7 @@
       - lidarr
 
 
-  # # qBittorrent configs
+  # #* qBittorrent configs
   # - name: check for existing qBittorrent.conf
   #   stat:
   #     path: "{{ config_dir }}/qBittorrent.conf"
@@ -114,7 +114,7 @@
   #     - conf_2.stat.islnk is defined
   #     - conf_2.stat.islnk == False
 
-  # # systemd file
+  # #* systemd file
   # - name: remove the service file
   #   file:
   #     path: /etc/systemd/system/qbittorrent-nox.service
@@ -133,9 +133,10 @@
   #     state:  restarted
   #     enabled:  yes
 
+
   # TODO: install the openvpn config?
 
-  # ExpressVPN
+  #* ExpressVPN
   # download the .deb
   # - name: download and install ExpressVPN
   #   apt:
@@ -184,6 +185,9 @@
       state:  latest
       update_cache: yes
 
+  # systemD file
+
+
   #* Radarr
   
 
@@ -193,3 +197,13 @@
   #* Jacket
   
 
+  #* install service files, and restart services  
+  - name: install the service files and restart the services
+    include_role:
+      name: install_service_file_role
+    vars:
+      service_name: "{{ item }}"
+      service_file_loc: "/home/drake/dotfiles/qbittorrent"
+    loop:
+      - qbittorrent-nox
+      - sonarr
