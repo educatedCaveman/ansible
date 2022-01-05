@@ -31,13 +31,17 @@
         - gnupg
         - ca-certificates
 
-        # radarr
+        # radarr/lidar
         - curl
         - mediainfo
         - sqlite3
 
         # lidarr
+        - libchromaprint-tools
+        
         # jacket
+        - libicu65
+        - libssl1.1
 
       state:  latest
 
@@ -242,13 +246,21 @@
     copy:
       src:    /tmp/Lidarr/
       dest:   /opt/Lidarr/
-      mode:   u=rw
+      # mode:   u=rw
       owner:  lidarr
       group:  lidarr
       remote_src: yes
     when: not lidarr_install.stat.exists  
 
   #* Jacket
+  # https://github.com/Jackett/Jackett
+  # https://github.com/Jackett/Jackett/releases/download/v0.20.244/Jackett.Binaries.LinuxAMDx64.tar.gz
+  - name: retrieve and extract archive
+    unarchive:
+      src:  'http://lidarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
+      dest: /home/jackett
+      remote_src: yes
+    when: not lidarr_install.stat.exists
   
 
   #* install service files, and restart services  
