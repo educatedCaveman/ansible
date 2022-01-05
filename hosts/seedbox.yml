@@ -176,13 +176,9 @@
       state:  latest
       update_cache: yes
 
-
   #* Radarr
-  # /var/lib/radarr is created and radarr user has read/write permissions
-  # wget --content-disposition 'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
-  # tar -xvzf Radarr*.linux*.tar.gz
-  # move Radarr to /opt/ (is a directory)
-  # make sure radarr owns /opt/Radarr/  (chown radarr:radarr -R /opt/Radarr)
+  # this was derived from the "Hands on Install" here:
+  # https://wiki.servarr.com/radarr/installation#linux
   - name: create /var/lib/radarr
     file:
       path:   /var/lib/radarr
@@ -217,7 +213,40 @@
     when: not radarr_install.stat.exists
 
   #* Lidarr
-  
+  # this was derived from the "Hands on Install" here:
+  # https://wiki.servarr.com/lidarr/installation#Debian.2FUbuntu
+  - name: create /var/lib/lidarr
+    file:
+      path:   /var/lib/lidarr
+      state:  directory
+
+  - name: check for existing install
+    stat:
+      path: /opt/Lidarr/
+    register: lidarr_install
+
+  - name: create install directory
+    file:
+      path:   /opt/Lidarr/
+      state:  directory
+    when: not lidarr_install.stat.exists
+
+  - name: retrieve and extract archive
+    unarchive:
+      src:  'http://lidarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
+      dest: /tmp/
+      remote_src: yes
+    when: not lidarr_install.stat.exists
+
+  - name: install Lidarr and set permissions
+    copy:
+      src:    /tmp/Lidarr/
+      dest:   /opt/Lidarr/
+      mode:   u=rw
+      owner:  lidarr
+      group:  lidarr
+      remote_src: yes
+    when: not lidarr_install.stat.exists  
 
   #* Jacket
   
@@ -232,3 +261,6 @@
     loop:
       - qbittorrent-nox
       - sonarr
+      - radarr
+      - lidarr
+      # - jacket
