@@ -182,18 +182,18 @@
       path:   /var/lib/radarr
       state:  directory
 
-  - name: check for existing install
+  - name: check for existing Radarr install
     stat:
       path: /opt/Radarr/
     register: radarr_install
 
-  - name: create install directory
+  - name: create Radarr install directory
     file:
       path:   /opt/Radarr/
       state:  directory
     when: not radarr_install.stat.exists
 
-  - name: retrieve and extract archive
+  - name: retrieve and extract Radarr archive
     unarchive:
       src:  'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
       dest: /tmp/
@@ -209,7 +209,7 @@
       remote_src: yes
     when: not radarr_install.stat.exists
 
-  - name: set permissions on executable
+  - name: set permissions on Radarr executable
     file:
       path: /opt/Radarr/Radarr
       mode: u+x
@@ -226,12 +226,12 @@
       group:  lidarr
       state:  directory
 
-  - name: check for existing install
+  - name: check for existing Lidarr install
     stat:
       path: /opt/Lidarr/
     register: lidarr_install
 
-  - name: create install directory
+  - name: create Lidarr install directory
     file:
       path:   /opt/Lidarr/
       owner:  lidarr
@@ -239,7 +239,7 @@
       state:  directory
     when: not lidarr_install.stat.exists
 
-  - name: retrieve and extract archive
+  - name: retrieve and extract Lidarr archive
     unarchive:
       src:  'http://lidarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
       dest: /tmp/
@@ -255,7 +255,7 @@
       remote_src: yes
     when: not lidarr_install.stat.exists  
 
-  - name: set permissions on executable
+  - name: set permissions on Lidarr executable
     file:
       path: /opt/Lidarr/Lidarr
       mode: u+x
@@ -265,13 +265,14 @@
   #* Jacket
   # https://github.com/Jackett/Jackett
   # https://github.com/Jackett/Jackett/releases/download/v0.20.244/Jackett.Binaries.LinuxAMDx64.tar.gz
-  - name: retrieve and extract archive
+  - name: retrieve and extract Jackett archive
     unarchive:
       src:    https://github.com/Jackett/Jackett/releases/download/v0.20.244/Jackett.Binaries.LinuxAMDx64.tar.gz
       dest:   /home/jackett
-      owner:  group
+      owner:  jackett
+      group:  jackett
       remote_src: yes  
-      
+
 
   #* install service files, and restart services  
   - name: install the service files and restart the services
