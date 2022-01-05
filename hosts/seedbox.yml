@@ -32,33 +32,76 @@
 
   #* create users and groups
   # qbittorrent-nox
-  - name: create the qbittorrent-nox system user
-    include_role:
-      name: create_system_user_role
-    vars:
-      system_user: "qbittorrent-nox"
+  # - name: create the qbittorrent-nox system user
+  #   include_role:
+  #     name: create_system_user_role
+  #   vars:
+  #     system_user: "qbittorrent-nox"
 
-  # sonarr
-  - name: create the sonarr system user
-    include_role:
-      name: create_system_user_role
-    vars:
-      system_user: "sonarr"
+  # # sonarr
+  # - name: create the sonarr system user
+  #   include_role:
+  #     name: create_system_user_role
+  #   vars:
+  #     system_user: "sonarr"  
 
-  # lidarr
-  - name: create the lidarr system user
-    include_role:
-      name: create_system_user_role
-    vars:
-      system_user: "lidarr"
+  # # lidarr
+  # - name: create the lidarr system user
+  #   include_role:
+  #     name: create_system_user_role
+  #   vars:
+  #     system_user: "lidarr"
 
-  # radarr
-  - name: create the radarr system user
-    include_role:
-      name: create_system_user_role
-    vars:
-      system_user: "radarr"
+  # # radarr
+  # - name: create the radarr system user
+  #   include_role:
+  #     name: create_system_user_role
+  #   vars:
+  #     system_user: "radarr"
 
+  # app users & groups
+  - name: "create the {{ item }} system users and grops"
+    user:
+      name:   "{{ item }}"
+      groups:
+        - "{{ item }}"
+        - media
+      state:  present
+      system: yes
+      append: yes
+    loop:
+      - qbittorrent-nox
+      - sonarr
+      - radarr
+      - lidarr
+
+  - name: make drake a member of all the groups
+    user:
+      name: drake
+      groups:
+        - qbittorrent-nox
+        - sonarr
+        - radarr
+        - lidarr
+      append: yes
+
+  #* create media group and add users
+  # - name: create the media group
+  #   user:
+  #     name:   media
+  #     state:  present
+
+  # - name: add users to the media group
+  #   user:
+  #     name: "{{ item }}"
+  #     groups: media
+  #     append: yes
+  #   loop:
+  #     - drake
+  #     - qbittorrent-nox
+  #     - sonarr
+  #     - radarr
+  #     - lidarr
 
   # # qbittorrent-nox
   # - name: create the qbittorrent-nox group
