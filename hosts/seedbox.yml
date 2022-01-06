@@ -136,9 +136,6 @@
   # block all other access
 
 
-  # TODO: install/configure Sonarr, Radarr, Lidarr, Jacket, etc.?
-  # if i were to use docker containers, i wouldn't have the ability to have the firewall VPN check
-
   #* Sonarr
   - name: add the Mono APT key
     apt_key:
@@ -275,6 +272,9 @@
       owner:  jackett
       group:  jackett
       remote_src: yes  
+
+
+  #TODO: Bonarr?
 
 
   #* install service files, and restart services  
