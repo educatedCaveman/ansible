@@ -36,6 +36,13 @@
         
       state:  latest
 
+  - name: install required python packages
+    pip:
+      name:
+        - requests
+        - discord
+      state:  latest
+
 
   #* create users and groups
   # base system users and groups
