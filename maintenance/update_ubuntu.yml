@@ -1,6 +1,7 @@
 ---
 - name: upgrade/update ubuntu hosts
-  hosts: ubuntu_debian_hosts
+  # exclude plex while the newer releases are broken
+  hosts: ubuntu_debian_hosts:!plex
   ignore_unreachable: yes
   ignore_errors:      yes
   tasks:

@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         ANSIBLE_REPO = '/var/lib/jenkins/workspace/ansible_master'
+        WEBHOOK = credentials('JENKINS_DISCORD')
     }
 
     //triggering periodically so the code is always present
@@ -24,6 +25,17 @@ pipeline {
                 echo 'checking the last commit for changes to an ansible role, and running the update playbooks, if applicable'
                 sh 'bash ${ANSIBLE_REPO}/maintenance/ansible_role_updates.sh ${ANSIBLE_REPO}'
             }
+        }
+    }
+    post {
+        always {
+            discordSend \
+                description: "${JOB_NAME} - build #${BUILD_NUMBER}", \
+                // footer: "Footer Text", \
+                // link: env.BUILD_URL, \
+                result: currentBuild.currentResult, \
+                // title: JOB_NAME, \
+                webhookURL: "${WEBHOOK}"
         }
     }
 }
