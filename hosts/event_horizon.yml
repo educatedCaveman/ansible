@@ -1,6 +1,11 @@
 - name: configure event_horizon
   hosts:  event_horizon
   roles:
+    # TODO: create drake user, and add to sudo
+    # requires root's authorized_keys file be set up
+    # TODO: remove pi user?
+    # TODO: pre-prerequisites:
+    # git, Rsync, SQLite3
     - git_dotfiles_role   # deploy the dotfiles repo
     - git_scripts_role    # deploy the scripts repo
     - linux_role          # base linux configs
@@ -10,6 +15,7 @@
         telegraf_config:  'pihole_telegraf.conf'
   tasks:
 
+    # TODO: gravity sync check?
     - name: setup TMUX autostart check
       cron:
         name: tmux_run_check
@@ -18,6 +24,8 @@
   
     - debug:
         msg:  "configuration of pihole must be done manually"
+        msg:  "https://docs.pi-hole.net/main/basic-install/"
 
     - debug:
         msg:  "configuration of gravity-sync must be done manually"
+        msg:  "https://github.com/vmstan/gravity-sync"

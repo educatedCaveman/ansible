@@ -1,0 +1,51 @@
+---
+- name: configure Plex
+  hosts:  plex
+  roles:
+    - LXC_role            # base LXC container config
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - git_scripts_role
+    - apt_client_role
+    - LXC_netplan_MTU     # use the mtu9000 netplan config
+    - linux_role          # base linux configs
+    - client_ssh_keys
+    - drake_role          # drake home directory permissions
+    - nfs_base_role       
+    - nfs_backup_role
+    - nfs_pics_role
+    - nfs_pr0n_role
+    - nfs_hegre_role
+    - nfs_video_role
+    - nfs_music_role
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'telegraf_base.conf'
+  tasks:
+
+# sudo apt install apt-transport-https
+# wget -O - https://repo.jellyfin.org/jellyfin_team.gpg.key | sudo apt-key add -
+# echo "deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/$( awk -F'=' '/^ID=/{ print $NF }' /etc/os-release ) $( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release ) main" | sudo tee /etc/apt/sources.list.d/jellyfin.list
+# sudo apt update
+# sudo apt install jellyfin
+
+  - name: install Jellyfin pre-requisites
+    apt:
+      name:
+      - apt-transport-https
+      state:  latest
+
+  - name: add Jellyfin apt key
+    apt_key:
+      url:    https://repo.jellyfin.org/jellyfin_team.gpg.key
+      state:  present
+
+  - name: add Jellyfin repo
+    apt_repository:
+      repo:     "deb [arch=amd64] https://repo.jellyfin.org/ubuntu focal main"
+      state:    present
+      filename: /etc/apt/sources.list.d/jellyfin.list
+
+  - name: update apt cache
+    apt:
+      name: jellyfin
+      update_cache: yes
