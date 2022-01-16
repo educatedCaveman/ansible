@@ -1,6 +1,6 @@
 ---
-- name: configure Plex
-  hosts:  plex
+- name: configure Jellyfin
+  hosts:  jellyfin
   roles:
     - LXC_role            # base LXC container config
     - git_dotfiles_role   # deploy the dotfiles repo
