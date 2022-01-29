@@ -33,6 +33,9 @@
         - mediainfo
         - sqlite3
         - libchromaprint-tools
+        - python3-dev 
+        - python3-pip 
+        - python3-distutils
         
       state:  latest
 
@@ -57,6 +60,7 @@
       - sonarr
       - radarr
       - lidarr
+      - bazarr
       - jackett
 
   # add the users to the media group
@@ -74,6 +78,7 @@
       - sonarr
       - radarr
       - lidarr
+      - bazarr
       - jackett
 
 
@@ -282,6 +287,61 @@
       remote_src: yes  
 
 
+  # Bazarr (subtitles)
+  # dowload this zip:
+  # https://github.com/morpheus65535/bazarr/releases/latest/download/bazarr.zip
+  # install to /opt/bazarr/? (yes, lowercase?)
+  # create it first, and set permissions
+  # run this command:  python3 -m pip install -r requirements.txt
+  #run with bazarr.py
+  - name: create /var/lib/bazarr
+    file:
+      path:   /var/lib/bazarr
+      owner:  bazarr
+      group:  bazarr
+      state:  directory
+
+  - name: check for existing bazarr install
+    stat:
+      path: /opt/bazarr/
+    register: bazarr_install
+
+  - name: create bazarr install directory
+    file:
+      path:   /opt/bazarr/
+      owner:  bazarr
+      group:  bazarr
+      state:  directory
+    when: not bazarr_install.stat.exists
+
+  - name: retrieve and extract bazarr archive
+    unarchive:
+      src:  'https://github.com/morpheus65535/bazarr/releases/latest/download/bazarr.zip'
+      dest: /tmp/
+      remote_src: yes
+    when: not bazarr_install.stat.exists
+
+  - name: install bazarr and set user/group
+    copy:
+      src:    /tmp/bazarr/
+      dest:   /opt/bazarr/
+      owner:  bazarr
+      group:  bazarr
+      remote_src: yes
+    when: not bazarr_install.stat.exists  
+
+  # - name: set permissions on bazarr executable
+  #   file:
+  #     path: /opt/bazarr/bazarr
+  #     mode: u+x
+  #   when: not bazarr_install.stat.exists 
+  - name: install bazarr from requirements.txt
+    pip:
+      chdir:        /opt/bazarr/
+      requirements: /opt/bazarr/requirements.txt
+    when: not bazarr_install.stat.exists  
+
+
   #TODO: Bonarr?
 
 
@@ -298,6 +358,7 @@
       - radarr
       - lidarr
       # - jacket
+      - bazarr
 
   # handle jacket service
   - name: check for jackett.service
