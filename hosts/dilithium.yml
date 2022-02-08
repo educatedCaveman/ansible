@@ -18,6 +18,7 @@
         name:
           - ansible
           - ipmitool
+          - nodejs
         state:  latest
 
     # inventory file
@@ -85,7 +86,11 @@
       cron:
         name: r720_fan_control
         user: drake
-        job:  "/bin/bash /home/drake/scripts/cron/r720_fan_control.sh"    
+        job:  "/bin/bash /home/drake/scripts/cron/r720_fan_control.sh"  
+
+    # TODO: reboot?
+
+    # TODO: uptime-kuma  
 
     # jenkins repo
     - debug:

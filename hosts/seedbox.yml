@@ -288,13 +288,8 @@
       remote_src: yes  
 
 
-  # Bazarr (subtitles)
-  # dowload this zip:
-  # https://github.com/morpheus65535/bazarr/releases/latest/download/bazarr.zip
-  # install to /opt/bazarr/? (yes, lowercase?)
-  # create it first, and set permissions
-  # run this command:  python3 -m pip install -r requirements.txt
-  #run with bazarr.py
+  #* Bazarr (subtitles)
+  # https://wiki.bazarr.media/Getting-Started/Installation/Linux/linux/
   - name: create /var/lib/bazarr
     file:
       path:   /var/lib/bazarr
@@ -336,8 +331,7 @@
     when: not bazarr_install.stat.exists  
 
 
-  #TODO: Bonarr?
-
+  #TODO: Mylar3
 
   #* install service files, and restart services  
   - name: install the service files and restart the services
