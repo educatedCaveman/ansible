@@ -1,0 +1,48 @@
+---
+# Only deploy once to the manager and worker groups
+# if the first is down, that is something that should be looked into anyway
+# distributing to the rest is handled by glusterFS
+- name: deploy git repo to single DEV Swarm worker
+  hosts:  lv_426
+  tasks:
+
+    - name: deploy dev_test branch to the Swarm worker
+      git:
+        repo: "https://github.com/educatedCaveman/{{ repo }}"
+        dest: "/docker/docker-compose/{{ repo }}"
+        version:  dev_test
+        force:  yes
+
+- name: deploy docker code to DEV portainer instance
+  # only need to deploy once
+  hosts: 
+    - self
+    - dilithium
+  tasks:
+    
+    - name: create the dev_code/docker-compose directory
+      file:
+        path: "/home/drake/docker_compose_dev/{{ repo }}"
+        state:  directory
+        recurse:  yes
+
+    - name: make sure directory exists
+      stat:
+        path: "/home/drake/docker_compose_dev/{{ repo }}"
+      register: dev_code
+
+    - name: deploy dev_test branch
+      git:  
+        repo: "https://github.com/educatedCaveman/{{ repo }}"
+        dest: "/home/drake/docker_compose_dev/{{ repo }}"
+        version:  dev_test
+        force:  yes
+      when: dev_code.stat.exists
+
+    - name: set permissions on directory
+      file:
+        path: "/home/drake/docker_compose_dev/{{ repo }}"
+        state:  directory
+        recurse:  yes
+        owner:  drake
+        group:  drake

@@ -19,6 +19,7 @@
           - ansible
           - ipmitool
           - nodejs
+          - httpie
         state:  latest
 
     # inventory file

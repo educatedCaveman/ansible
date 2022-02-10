@@ -2,11 +2,11 @@
 - name: configure Ansible/Jenkins
   hosts:  self
   roles:
-    - LXC_role            # base LXC container config
+    - VM_role            # base LXC container config
     - git_dotfiles_role   # deploy the dotfiles repo
     - git_scripts_role    # needed for things outside this playbook
     - apt_client_role
-    - LXC_netplan_MTU     # use the mtu9000 netplan config
+    - VM_netplan_MTU     # use the mtu9000 netplan config
     - linux_role          # base linux configs
     - client_ssh_keys
     - drake_role          # drake home directory permissions
@@ -27,6 +27,7 @@
         - default-jdk
         - unzip
         - jq          # for bitwarden script
+        - httpie
       state:  latest
 
   # Jenkins config

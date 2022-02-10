@@ -313,18 +313,16 @@
   - name: retrieve and extract bazarr archive
     unarchive:
       src:  'https://github.com/morpheus65535/bazarr/releases/latest/download/bazarr.zip'
-      dest: /tmp/
+      dest: /opt/bazarr/
       remote_src: yes
     when: not bazarr_install.stat.exists
 
-  - name: install bazarr and set user/group
-    copy:
-      src:    /tmp/bazarr/
-      dest:   /opt/bazarr/
-      owner:  bazarr
-      group:  bazarr
-      remote_src: yes
-    when: not bazarr_install.stat.exists  
+  - name: set permissions
+    file:
+      path:     /opt/bazarr/
+      owner:    bazarr
+      group:    bazarr
+      recurse:  yes
 
   - name: install bazarr from requirements.txt
     pip:
