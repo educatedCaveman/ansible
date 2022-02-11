@@ -2,7 +2,7 @@
 - name: deploy dotfiles 
   hosts:  
     #TODO: correct reason for these excemptions
-    - linux:!origami:!octopi
+    - linux:!octopi
     - tesseract
   ignore_unreachable: true
   gather_facts: false

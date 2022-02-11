@@ -12,7 +12,6 @@ HOSTS=( \
     apt_mirror \
     nextcloud_vm \
     moria \
-    origami \
     influxDB_vm \
     grafana_vm \
     minio_vm \
@@ -23,8 +22,6 @@ HOSTS=( \
     seedbox \
     singularity \
     plex_vm \
-    doggo_1 \
-    doggo_2 \
 )
 
 # check BW_CLIENTID

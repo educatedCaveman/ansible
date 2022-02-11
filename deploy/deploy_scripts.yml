@@ -8,7 +8,6 @@
     - moria
     - seedbox
     - apt_mirror
-    - doggos
     - nextcloud
     - portainer
   ignore_unreachable: yes
