@@ -17,7 +17,7 @@
       when: docker_env == "dev"
 
     - name: install loki docker plugin
-      docker_plugin:
+      community.docker.docker_plugin:
         name: grafana/loki-docker-driver:latest
         state:  present    
         plugin_options:
