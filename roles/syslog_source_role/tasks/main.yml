@@ -25,7 +25,6 @@
     src:  /home/drake/dotfiles/syslog-ng.conf.client
     dest: /etc/syslog-ng/syslog-ng.conf
     state:  link
-    remote_src: yes
 
 # restart the service
 - name: enable and restart syslog-ng
