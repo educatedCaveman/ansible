@@ -7,8 +7,7 @@
 ANSIBLE_DIR='/home/drake/ansible/maintenance'
 
 # hosts for ansible
-HOSTS=( \
-    apt_cache \
+HOSTS=(apt_cache \
     apt_mirror \
     nextcloud_vm \
     moria \
