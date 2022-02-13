@@ -10,8 +10,9 @@
     - name: change dev folder permissions
       file:
         path: /docker/docker-compose/grafana_apps/grafana
-        owner:  472
-        group:  0
+        owner:  "472"
+        # really we want the GUID=0, which is root
+        group:  root
         mode:   '0755'
       when: docker_env == "dev"
 
