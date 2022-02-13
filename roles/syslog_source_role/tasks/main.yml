@@ -14,7 +14,7 @@
 
 - name: remove config if it isn't a link
   file:
-    src:  /etc/syslog-ng/syslog-ng.conf
+    path:   /etc/syslog-ng/syslog-ng.conf
     state:  absent
   when:
     - syslog_conf.stat.islnk is defined
