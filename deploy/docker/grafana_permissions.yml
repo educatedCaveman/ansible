@@ -1,0 +1,28 @@
+---
+# set permissions for the grafana docker-compose folder
+- name: change grafana folder permissions (DEV)
+  hosts: lv_426
+  tasks:
+
+    - name: change dev folder permissions
+      file:
+        path: /docker/docker-compose/grafana_apps/grafana
+        owner:  grafana
+        group:  grafana
+        # mode:   '0777'
+      when: "{{ env }}" == "dev"
+
+# set permissions for the grafana docker-compose folder
+- name: change grafana folder permissions (PRD)
+  hosts: sevastopol
+  tasks:
+
+    - name: change dev folder permissions
+      file:
+        path: /docker/docker-compose/grafana_apps/grafana
+        owner:  grafana
+        group:  grafana
+        # mode:   '0777'
+      when: "{{ env }}" == "prd"
+
+
