@@ -110,3 +110,10 @@
         msg:
           - "to install/start portainer, run the following:" 
           - docker stack deploy -c /tmp/portainer-agent-stack.yml portainer
+
+    # https://docs.technotim.live/posts/grafana-loki/
+    - name: install docker plugins
+      debug:
+        msg:
+          - "for grafana loki, the following command must be run manually:"
+          - docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
