@@ -16,6 +16,15 @@
         recurse:  yes
       when: docker_env == "dev"
 
+    - name: install loki docker plugin
+      docker_plugin:
+        name: grafana/loki-docker-driver:latest
+        state:  present    
+        plugin_options:
+          alias: "loki"
+          grant-all-permissions: yes
+
+
 # set permissions for the grafana docker-compose folder
 - name: change grafana folder permissions (PRD)
   hosts: sevastopol
