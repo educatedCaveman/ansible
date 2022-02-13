@@ -1,4 +1,7 @@
 ---
+# grafana folder permissions documented here:
+# https://grafana.com/docs/grafana/latest/installation/docker/#migrate-to-v51-or-later
+
 # set permissions for the grafana docker-compose folder
 - name: change grafana folder permissions (DEV)
   hosts: lv_426
@@ -7,7 +10,9 @@
     - name: change dev folder permissions
       file:
         path: /docker/docker-compose/grafana_apps/grafana
-        mode:   '0777'
+        owner:  472
+        group:  0
+        mode:   '0755'
       when: docker_env == "dev"
 
 # set permissions for the grafana docker-compose folder
