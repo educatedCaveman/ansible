@@ -21,8 +21,8 @@
         name: grafana/loki-docker-driver:latest
         state:  present    
         plugin_options:
-          alias: "loki"
-          grant-all-permissions: yes
+          - alias: "loki"
+          - grant-all-permissions: yes
 
 
 # set permissions for the grafana docker-compose folder
