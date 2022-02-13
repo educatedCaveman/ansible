@@ -1,0 +1,35 @@
+---
+# install syslog-ng
+- name: install syslog-ng
+  apt:
+    name:
+      - syslog-ng
+    state:  present
+
+# link config
+- name: check for existing config
+  stat:
+    path: /etc/syslog-ng/syslog-ng.conf
+  register: syslog_conf
+
+- name: remove config if it isn't a link
+  file:
+    src:  /etc/syslog-ng/syslog-ng.conf
+    state:  absent
+  when:
+    - syslog_conf.stat.islnk is defined
+    - syslog_conf.stat.islnk == False
+
+- name: link the config
+  file:
+    src:  /home/drake/dotfiles/syslog-ng.conf.client
+    dest: /etc/syslog-ng/syslog-ng.conf
+    state:  link
+    remote_src: yes
+
+# restart the service
+- name: enable and restart syslog-ng
+  systemd:
+    name: syslog-ng@default.service
+    state:  restarted
+    enabled:  yes

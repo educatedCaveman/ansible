@@ -1,0 +1,10 @@
+---
+- name: apply/update the syslog source role
+  hosts:
+    - ubuntu_debian_hosts
+    - tesseract
+    # - mobius
+    # - holodeck
+  roles:
+    - syslog_source_role
+  tasks:
