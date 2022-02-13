@@ -30,6 +30,6 @@
 # restart the service
 - name: enable and restart syslog-ng
   systemd:
-    name: syslog-ng@default.service
+    name: syslog-ng.service
     state:  restarted
     enabled:  yes
