@@ -2,7 +2,7 @@
 - name: apply/update the LXC role
   hosts:
     # TODO: fix apt_cache reason
-    - ubuntu_debian_LXC
+    - ubuntu_debian_LXC:!apt_cache
   roles:
     - LXC_role
   tasks:
