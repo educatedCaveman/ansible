@@ -42,72 +42,72 @@
     # - moonraker
     # - klipperscreen
 
-    # moonraker klipper config file
-    - name: check for existing default file
-      stat:
-        path: /etc/default/klipper
-      register: default
+    # # moonraker klipper config file
+    # - name: check for existing default file
+    #   stat:
+    #     path: /etc/default/klipper
+    #   register: default
 
-    - name: remove the file, if present, and not a link
-      file:
-        path: /etc/default/klipper
-        state:  absent
-      when:
-        - default.stat.islnk is defined
-        - default.stat.islnk == False
+    # - name: remove the file, if present, and not a link
+    #   file:
+    #     path: /etc/default/klipper
+    #     state:  absent
+    #   when:
+    #     - default.stat.islnk is defined
+    #     - default.stat.islnk == False
 
-    - name: link custom klipper default file
-      file:
-        src:  /home/drake/franken-printer/klipper_default
-        dest: /etc/default/klipper
-        state:  link
-      when: 
-        - default.stat.islnk is defined
-        - default.stat.islnk == False
+    # - name: link custom klipper default file
+    #   file:
+    #     src:  /home/drake/franken-printer/klipper_default
+    #     dest: /etc/default/klipper
+    #     state:  link
+    #   when: 
+    #     - default.stat.islnk is defined
+    #     - default.stat.islnk == False
 
-    # moonraker git
-    - name: deploy moonraker git repo
-      git: 
-        repo: https://github.com/Arksine/moonraker.git
-        dest: /home/pi/moonraker
-        force:  yes
+    # # moonraker git
+    # - name: deploy moonraker git repo
+    #   git: 
+    #     repo: https://github.com/Arksine/moonraker.git
+    #     dest: /home/pi/moonraker
+    #     force:  yes
 
-    #permissions
-    - name: moonraker folder permissions
-      file:
-        path:     /home/pi/moonraker
-        owner:    pi
-        group:    drake
-        mode:     '0750'
-        recurse:  yes
+    # #permissions
+    # - name: moonraker folder permissions
+    #   file:
+    #     path:     /home/pi/moonraker
+    #     owner:    pi
+    #     group:    drake
+    #     mode:     '0750'
+    #     recurse:  yes
 
-    # installation/configuration:
-    - name: installation/configuration
-      debug:
-        msg: "see https://moonraker.readthedocs.io/en/latest/installation/ for instructions"
+    # # installation/configuration:
+    # - name: installation/configuration
+    #   debug:
+    #     msg: "see https://moonraker.readthedocs.io/en/latest/installation/ for instructions"
 
-    # TODO: install custom config      
+    # # TODO: install custom config      
 
-    # klipperscreen git
-    - name: deploy klipperscreen git repo
-      git: 
-        repo: https://github.com/jordanruthe/KlipperScreen.git
-        dest: /home/pi/KlipperScreen
-        force:  yes
+    # # klipperscreen git
+    # - name: deploy klipperscreen git repo
+    #   git: 
+    #     repo: https://github.com/jordanruthe/KlipperScreen.git
+    #     dest: /home/pi/KlipperScreen
+    #     force:  yes
 
-    #permissions
-    - name: KlipperScreen folder permissions
-      file:
-        path:     /home/pi/KlipperScreen
-        owner:    pi
-        group:    drake
-        mode:     '0750'
-        recurse:  yes    
+    # #permissions
+    # - name: KlipperScreen folder permissions
+    #   file:
+    #     path:     /home/pi/KlipperScreen
+    #     owner:    pi
+    #     group:    drake
+    #     mode:     '0750'
+    #     recurse:  yes    
 
-    # installation/configuration:
-    - name: installation/configuration
-      debug:
-        msg: "see https://klipperscreen.readthedocs.io/en/latest/Installation/ for instructions"
+    # # installation/configuration:
+    # - name: installation/configuration
+    #   debug:
+    #     msg: "see https://klipperscreen.readthedocs.io/en/latest/Installation/ for instructions"
 
     # restart the services
     # klipper
