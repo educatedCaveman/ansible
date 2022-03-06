@@ -88,7 +88,7 @@
     # install custom docker daemon.json
     - name: install custom daemon.json
       file:
-        src:    /home/drake/dotfiles/docker/daemon_dev.json
+        src:    /home/drake/dotfiles/docker/daemon_prd.json
         dest:   /etc/docker/daemon.json
         state:  link
 
