@@ -13,11 +13,4 @@
       - lnav
       - rename
       - pigz
-      # - btop
     state:  present
-
-- name: snap packages
-  snap:
-    name:
-      - btop
-      
