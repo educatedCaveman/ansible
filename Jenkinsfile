@@ -23,7 +23,7 @@ pipeline {
         stage('execute role update playbooks') {
             steps {
                 echo 'checking the last commit for changes to an ansible role, and running the update playbooks, if applicable'
-                // sh 'bash ${ANSIBLE_REPO}/maintenance/ansible_role_updates.sh ${ANSIBLE_REPO}'
+                sh 'bash ${ANSIBLE_REPO}/maintenance/ansible_role_updates.sh ${ANSIBLE_REPO}'
             }
         }
     }

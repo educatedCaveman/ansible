@@ -13,4 +13,5 @@
       - lnav
       - rename
       - pigz
+      - btop
     state:  present
