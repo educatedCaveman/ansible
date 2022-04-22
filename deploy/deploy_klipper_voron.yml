@@ -1,0 +1,64 @@
+---
+- name: deploy klipper repo to octopi
+  hosts:  voron
+  tasks:
+
+    - name: deploy klipper configs to pi user
+      git:
+        repo:     https://github.com/educatedCaveman/klipper
+        dest:     /home/pi/hu3bert
+        version:  voron
+        force:    yes
+
+    - name: set permissions
+      file:
+        path:   /home/pi/hu3bert
+        owner:  pi
+        group:  drake
+        mode:   '0750'
+
+    - name: link the configs to drake user
+      file:
+        path:   /home/drake/hu3bert
+        src:    /home/pi/hu3bert
+        state:  link
+        owner:  drake
+        group:  drake
+
+
+    # # restart the services
+    # # klipper
+    # - name: restart klipper.service
+    #   systemd:
+    #     name: klipper.service
+    #     state:  restarted
+    #     enabled:  yes
+
+    # # octoprint
+    # - name: restart octoprint.service
+    #   systemd:
+    #     name: octoprint.service
+    #     state:  restarted
+    #     enabled:  yes
+
+    # # moonraker?
+    # - name: restart moonraker.service
+    #   systemd:
+    #     name: moonraker.service
+    #     state:  restarted
+    #     enabled:  yes
+
+    # restart the services
+    - name: restart all the relevant services
+      systemd:
+        name:     "{{ item }}.service"
+        state:    restarted
+        enabled:  yes
+      # loop:
+      #   - klipper
+      #   - octoprint
+      #   - moonraker
+      #   - mainsail
+      #   - klipperscreen
+
+# TODO: deploy the KIAUH script

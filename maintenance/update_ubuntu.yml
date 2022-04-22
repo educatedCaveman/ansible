@@ -23,7 +23,7 @@
 # omit apt_cache, because it times out
 
 - name: rolling restarts, non-HA hosts
-  hosts:  ubuntu_debian_hosts:!octopi:!self:!moria:!apt_cache:!apt_mirror
+  hosts:  ubuntu_debian_hosts:!octopi:!self:!moria:!apt_cache:!apt_mirror:!voron
   ignore_unreachable: yes
   ignore_errors:      yes
   tasks:

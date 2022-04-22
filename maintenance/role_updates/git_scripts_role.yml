@@ -15,6 +15,7 @@
     - tesseract
     - event_horizon
     - dilithium
+    - voron
   roles:
     - git_scripts_role
   tasks:
