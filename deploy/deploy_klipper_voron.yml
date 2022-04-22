@@ -54,7 +54,7 @@
         name:     "{{ item }}.service"
         state:    restarted
         enabled:  yes
-      # loop:
+      loop:
       #   - klipper
         - octoprint
       #   - moonraker
