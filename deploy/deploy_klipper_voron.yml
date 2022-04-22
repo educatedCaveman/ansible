@@ -23,6 +23,11 @@
         src:    /home/pi/hu3bert
         state:  link
 
+    - name: create link for klipper printer.cfg
+      file:
+        path:   /home/pi/hu3bert/printer.cfg
+        src:    /home/pi/hu3bert/hu3bert.cfg
+        state:  link
 
     # # restart the services
     # # klipper
