@@ -66,6 +66,26 @@
         group:  drake
         mode:   '0750'
 
+    - name: set pi home directory permissions
+      file:
+        path:     /home/pi/
+        owner:    pi
+        group:    drake
+        recurse:  yes
+
+    - name: create drake's link to pi
+      file:
+        path:   /home/drake/pi/
+        state:  link
+        src:    /home/pi/
+
+    - name: set drake home directory permissions
+      file:
+        path:     /home/drake/
+        owner:    drake
+        group:    drake
+        recurse:  yes
+
     - name: configure klipper and the rest of the things
       debug:
         msg:  "refer to https://github.com/th33xitus/KIAUH"
