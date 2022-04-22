@@ -56,7 +56,7 @@
     - name: deploy KIAUH
       git:
         repo:   https://github.com/th33xitus/kiauh.git
-        dest:   /home/pi/
+        dest:   /home/pi/kiauh
 
     - name: create virtual sd card folder
       file:
