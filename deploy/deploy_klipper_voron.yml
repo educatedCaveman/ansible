@@ -22,8 +22,6 @@
         path:   /home/drake/hu3bert
         src:    /home/pi/hu3bert
         state:  link
-        owner:  drake
-        group:  drake
 
 
     # # restart the services
