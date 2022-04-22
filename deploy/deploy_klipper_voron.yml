@@ -56,7 +56,7 @@
         enabled:  yes
       # loop:
       #   - klipper
-      #   - octoprint
+        - octoprint
       #   - moonraker
       #   - mainsail
       #   - klipperscreen
