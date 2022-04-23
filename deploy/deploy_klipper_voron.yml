@@ -58,7 +58,7 @@
         state:    restarted
         enabled:  yes
       loop:
-      #   - klipper
+        - klipper
         - octoprint
       #   - moonraker
       #   - mainsail
