@@ -35,16 +35,25 @@
       debug:
         msg:  "refer to https://github.com/th33xitus/KIAUH"
 
-    - name: klipper auto z calibration macro
-      git:
-        repo: https://github.com/protoloft/klipper_z_calibration.git
-        dest: /home/pi/klipper_z_calibration
+    # - name: klipper auto z calibration macro
+    #   git:
+    #     repo: https://github.com/protoloft/klipper_z_calibration.git
+    #     dest: /home/pi/klipper_z_calibration
 
-    - name: copy python file
+    # - name: copy python file
+    #   copy:
+    #     src:    /home/pi/klipper_z_calibration/z_calibration.py
+    #     dest:   /home/pi/klipper/klippy/extras/z_calibration.py
+    #     owner:  pi
+    #     group:  drake
+    #     mode:   '0750'
+    #     remote_src: yes
+
+    - name: moonraker secrets
       copy:
-        src:    /home/pi/klipper_z_calibration/z_calibration.py
-        dest:   /home/pi/klipper/klippy/extras/z_calibration.py
+        src:    /home/drake/.moonraker_secrets.ini
+        dest:   /home/pi/.moonraker_secrets.ini
         owner:  pi
         group:  drake
         mode:   '0750'
-        remote_src: yes
+
