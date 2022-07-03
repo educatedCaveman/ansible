@@ -11,10 +11,7 @@ HOSTS=( \
     apt_cache \
     apt_mirror \
     nextcloud_vm \
-    moria \
     influxDB_vm \
-    grafana_vm \
-    minio_vm \
     syncthing_vm \
     jenkins_vm \
     lv_426 \

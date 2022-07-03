@@ -7,8 +7,6 @@
     - self
     - moria
     - nextcloud_vm
-    - octopi
-    - minio_vm
     - sentry_cam
     - lv_426
     - sevastopol

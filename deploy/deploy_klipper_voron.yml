@@ -1,5 +1,5 @@
 ---
-- name: deploy klipper repo to octopi
+- name: deploy klipper repo to voron
   hosts:  voron
   tasks:
 
