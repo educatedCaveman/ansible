@@ -153,6 +153,11 @@
 
 
   #* Sonarr
+
+  - name: add the MediaInfo repo
+    apt:
+      deb:  https://mediaarea.net/repo/deb/repo-mediaarea_1.0-20_all.deb
+
   - name: add the Mono APT key
     apt_key:
       id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
@@ -171,14 +176,14 @@
 
   - name: add the Sonarr APT key
     apt_key:
-      # id: 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8
-      id: A236C58F409091A18ACA53CBEBFF6B99D9B78493
+      id: 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8
+      # id: A236C58F409091A18ACA53CBEBFF6B99D9B78493
       keyserver:  keyserver.ubuntu.com
       state:      present
 
   - name: add Sonarr repo
     apt_repository:
-      repo: deb http://apt.sonarr.tv/ master main
+      repo: deb http://apt.sonarr.tv/ focal main
 
   - name: install Sonar (nzbdrone)
     apt:
