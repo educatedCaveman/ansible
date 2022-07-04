@@ -14,8 +14,8 @@
 
 # disable netdata (temp fix)
 # systemd restart and enable netdata
-- name: enable and restart netdata
-  systemd:
-    name: netdata
-    state:  stopped
-    enabled:  no
+# - name: enable and restart netdata
+#   systemd:
+#     name: netdata
+#     state:  stopped
+#     enabled:  no

@@ -183,7 +183,7 @@
 
   - name: add Sonarr repo
     apt_repository:
-      repo: deb http://apt.sonarr.tv/ focal main
+      repo: deb https://apt.sonarr.tv/ubuntu focal main
 
   - name: install Sonar (nzbdrone)
     apt:
