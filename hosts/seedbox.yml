@@ -62,7 +62,8 @@
       - radarr
       - lidarr
       - bazarr
-      - jackett
+      # - jackett
+      - prowlarr
 
   # add the users to the media group
   # drake might be redundant
@@ -80,7 +81,8 @@
       - radarr
       - lidarr
       - bazarr
-      - jackett
+      # - jackett
+      - prowlarr
 
 
   #* qBittorrent configs
@@ -277,15 +279,15 @@
     when: not lidarr_install.stat.exists 
 
 
-  #* Jacket
-  # https://github.com/Jackett/Jackett
-  - name: retrieve and extract Jackett archive
-    unarchive:
-      src:    https://github.com/Jackett/Jackett/releases/download/v0.20.244/Jackett.Binaries.LinuxAMDx64.tar.gz
-      dest:   /home/jackett
-      owner:  jackett
-      group:  jackett
-      remote_src: yes  
+  # #* Jacket
+  # # https://github.com/Jackett/Jackett
+  # - name: retrieve and extract Jackett archive
+  #   unarchive:
+  #     src:    https://github.com/Jackett/Jackett/releases/download/v0.20.244/Jackett.Binaries.LinuxAMDx64.tar.gz
+  #     dest:   /home/jackett
+  #     owner:  jackett
+  #     group:  jackett
+  #     remote_src: yes  
 
 
   #* Bazarr (subtitles)
@@ -331,6 +333,52 @@
     when: not bazarr_install.stat.exists  
 
 
+  #* Prowlarr
+  # this was derived from the "Hands on Install" here:
+  # https://wiki.servarr.com/radarr/installation#linux
+  - name: create /var/lib/prowlarr
+    file:
+      path:   /var/lib/prowlarr
+      owner:  prowlarr
+      group:  prowlarr
+      state:  directory
+
+  - name: check for existing Prowlarr install
+    stat:
+      path: /opt/Prowlarr/
+    register: prowlarr_install
+
+  - name: create Prowlarr install directory
+    file:
+      path:   /opt/Prowlarr/
+      state:  directory
+      owner:  prowlarr
+      group:  prowlarr
+    when: not prowlarr_install.stat.exists
+
+  - name: retrieve and extract Prowlarr archive
+    unarchive:
+      src:  'http://prowlarr.servarr.com/v1/update/develop/updatefile?os=linux&runtime=netcore&arch=x64'
+      dest: /tmp/
+      remote_src: yes
+    when: not prowlarr_install.stat.exists
+
+  - name: install Prowlarr and set permissions
+    copy:
+      src:    /tmp/Prowlarr/
+      dest:   /opt/Prowlarr/
+      owner:  prowlarr
+      group:  prowlarr
+      remote_src: yes
+    when: not prowlarr_install.stat.exists
+
+  - name: set permissions on Prowlarr executable
+    file:
+      path: /opt/Prowlarr/Prowlarr
+      mode: u+x
+    when: not prowlarr_install.stat.exists 
+
+
   #TODO: Mylar3
 
   #* install service files, and restart services  
@@ -348,22 +396,22 @@
       # - jacket
       - bazarr
 
-  # handle jacket service
-  - name: check for jackett.service
-    stat: 
-      path: /etc/systemd/system/jackett.service
-    register: jackett_service
+  # # handle jacket service
+  # - name: check for jackett.service
+  #   stat: 
+  #     path: /etc/systemd/system/jackett.service
+  #   register: jackett_service
 
-  - name: restart jackett.service
-    systemd:
-      name:     jackett.service
-      state:    restarted
-      enabled:  yes
+  # - name: restart jackett.service
+  #   systemd:
+  #     name:     jackett.service
+  #     state:    restarted
+  #     enabled:  yes
 
 
-  #* Manual steps
-  - name: manual steps to be take on install
-    debug:
-      msg:
-        - run the following command from /home/jackett
-        - sudo ./install_service_systemd.sh
+  # #* Manual steps
+  # - name: manual steps to be take on install
+  #   debug:
+  #     msg:
+  #       - run the following command from /home/jackett
+  #       - sudo ./install_service_systemd.sh
