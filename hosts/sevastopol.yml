@@ -14,6 +14,7 @@
     - drake_role
     - nfs_base_role
     - nfs_backup_role
+    - nfs_music_role
     - role: telegraf_role
       vars:
         telegraf_config:  'telegraf_base.conf'
