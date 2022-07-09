@@ -29,7 +29,6 @@
           - tree
           - curl
           - sqlite3
-          # - netdata
           - python3
           - python3-pip
           - ansible
@@ -209,39 +208,6 @@
         owner:  drake
         group:  drake
         mode: '0644'
-
-    # # link netdata dotfiles
-    # # netdata.conf
-    # - name: remove the existing netdata.conf
-    #   file:
-    #     path: /etc/netdata/netdata.conf
-    #     state:  absent
-
-    # - name: link netdata.conf
-    #   file:
-    #     src:  /home/drake/dotfiles/netdata/netdata.conf
-    #     dest: /etc/netdata/netdata.conf
-    #     state:  link
-
-    # # health_alarm_notify.conf
-    # # no longer set to send slack notifications, but doesnt hurt to keep this in place
-    # - name: remove the existing health_alarm_notify.conf
-    #   file:
-    #     path: /etc/netdata/health_alarm_notify.conf
-    #     state:  absent
-
-    # - name: link health_alarm_notify.conf
-    #   file:
-    #     src:  /home/drake/dotfiles/netdata/health_alarm_notify.conf
-    #     dest: /etc/netdata/health_alarm_notify.conf
-    #     state:  link
-
-    # # systemd restart and enable netdata
-    # - name: enable and restart netdata
-    #   systemd:
-    #     name: netdata
-    #     state:  restarted
-    #     enabled:  yes
 
 - name: Install 'qemu-guest-agent' on VMs only (not LXC containers)
   hosts: ubuntu_debian_VM

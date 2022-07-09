@@ -19,11 +19,6 @@
 - name: Configure NeoVim
   import_tasks: neovim.yml
 
-# TODO: figure out if the instal location is the same
-# # Netdata
-# - name: Configure Netdata
-#   import_tasks: netdata.yml
-
 # dotfiles role
 - name: Deploy the dotfiles git repository
   git:

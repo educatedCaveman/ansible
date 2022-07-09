@@ -18,6 +18,7 @@
     - nfs_music_role
     - nfs_video_role
     - nfs_staging_role
+    - netdata_role
     - role: telegraf_role
       vars:
         telegraf_config:  'telegraf_base.conf'

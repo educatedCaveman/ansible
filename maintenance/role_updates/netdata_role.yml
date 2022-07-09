@@ -1,0 +1,28 @@
+---
+- name: apply/update the Netdata role
+  hosts:
+    - ubuntu_debian_VM
+    - tesseract
+  roles:
+    - netdata_role
+  tasks:
+
+- name: remove netdata from the LXC hosts
+  hosts:
+    - ubuntu_debian_LXC
+  tasks:
+
+    - name: remove Netdata
+      apt:
+        name: 
+          - netdata
+        state:  absent
+        purge:  yes
+
+    - name: clean up files
+      file:
+        path: "{{ item }}"
+        state:  absent
+      loop:
+        - "/etc/netdata/netdata.conf"
+        - "/etc/netdata/health_alarm_notify.conf"
