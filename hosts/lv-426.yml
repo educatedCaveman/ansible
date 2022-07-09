@@ -81,6 +81,16 @@
         day:    "1"
         job:    "/bin/bash /home/drake/scripts/cron/backup_docker_weekly.sh"
 
+    - name: YTDL file sync
+      cron:
+        name:   ytdl_file_sync
+        job:    "/bin/bash /docker/docker-compose/ytdl/sync_to_NFS.sh"
+
+    - name: YTDL file cleanup
+      cron:
+        name:   ytdl_file_cleanup
+        job:    "/bin/bash /docker/docker-compose/ytdl/folder_cleanup.sh"
+
     # folder for portainer
     - name: create the portainer directory
       file:
