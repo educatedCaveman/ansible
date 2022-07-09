@@ -88,6 +88,8 @@
 
     - name: YTDL file cleanup
       cron:
+        # run at the top of the hour
+        minute: "0"
         name:   ytdl_file_cleanup
         job:    "/bin/bash /docker/docker-compose/ytdl/folder_cleanup.sh"
 
