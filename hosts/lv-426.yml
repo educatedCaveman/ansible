@@ -4,6 +4,7 @@
     - lv_426
   roles:
     - VM_role
+    - git_config_role
     - git_dotfiles_role
     - git_scripts_role
     - VM_netplan_MTU
@@ -89,9 +90,10 @@
     - name: YTDL file cleanup
       cron:
         # run at the top of the hour
-        minute: "0"
-        name:   ytdl_file_cleanup
-        job:    "/bin/bash /docker/docker-compose/ytdl/folder_cleanup.sh"
+        minute:   "0"
+        disabled: yes
+        name:     ytdl_file_cleanup
+        job:      "/bin/bash /docker/docker-compose/ytdl/folder_cleanup.sh"
 
     # folder for portainer
     - name: create the portainer directory
