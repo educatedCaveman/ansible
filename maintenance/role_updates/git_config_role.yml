@@ -3,5 +3,5 @@
   hosts:
     - ubuntu_debian_hosts
   roles:
-    - git_dotfiles_role
+    - git_config_role
   tasks:
