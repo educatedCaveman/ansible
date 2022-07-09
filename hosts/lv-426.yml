@@ -87,14 +87,6 @@
         name:   ytdl_file_sync
         job:    "/bin/bash /docker/docker-compose/ytdl/sync_to_NFS.sh"
 
-    - name: YTDL file cleanup
-      cron:
-        # run at the top of the hour
-        minute:   "0"
-        disabled: yes
-        name:     ytdl_file_cleanup
-        job:      "/bin/bash /docker/docker-compose/ytdl/folder_cleanup.sh"
-
     # folder for portainer
     - name: create the portainer directory
       file:
