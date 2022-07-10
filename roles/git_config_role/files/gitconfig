@@ -24,6 +24,7 @@ directory = /docker/docker-compose/watchtower
 directory = /docker/docker-compose/vscode
 directory = /docker/docker-compose/uptime-kuma
 directory = /docker/docker-compose/tautulli
+directory = /docker/docker-compose/syncthing
 #docker compose, DEV
 directory = /home/drake/docker_compose_dev/homer
 directory = /home/drake/docker_compose_dev/grafana_apps
@@ -38,6 +39,7 @@ directory = /home/drake/docker_compose_dev/watchtower
 directory = /home/drake/docker_compose_dev/vscode
 directory = /home/drake/docker_compose_dev/uptime-kuma
 directory = /home/drake/docker_compose_dev/tautulli
+directory = /home/drake/docker_compose_dev/syncthing
 #ocker compose, PRD
 directory = /home/drake/docker_compose_prd/homer
 directory = /home/drake/docker_compose_prd/grafana_apps
@@ -52,3 +54,4 @@ directory = /home/drake/docker_compose_prd/watchtower
 directory = /home/drake/docker_compose_prd/vscode
 directory = /home/drake/docker_compose_prd/uptime-kuma
 directory = /home/drake/docker_compose_prd/tautulli
+directory = /home/drake/docker_compose_prd/syncthing
