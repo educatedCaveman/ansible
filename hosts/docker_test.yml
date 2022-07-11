@@ -1,0 +1,14 @@
+# base docker config
+- name: configure docker test
+  hosts:
+    - lv_426
+  roles:
+    - VM_role
+    - git_config_role
+    - git_dotfiles_role
+    - git_scripts_role
+    - VM_netplan_MTU
+    - linux_role
+    - client_ssh_keys
+    - docker_role
+    - drake_role
