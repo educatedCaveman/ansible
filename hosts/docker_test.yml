@@ -1,7 +1,7 @@
 # base docker config
 - name: configure docker test
   hosts:
-    - lv_426
+    - docker_test
   roles:
     - VM_role
     - git_config_role
