@@ -28,6 +28,7 @@
         - unzip
         - jq          # for bitwarden script
         - httpie
+        - git-crypt
       state:  latest
 
   # Jenkins config
