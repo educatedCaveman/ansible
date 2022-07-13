@@ -17,5 +17,5 @@
         force:  yes
 
     - name: unlock the specified repo
-      command:  "/usr/bin/git-crypt unlock {{ cryptpath }}/{{ repo }}.gpg"
+      command:  /usr/bin/git-crypt unlock {{ cryptpath|quote }}/{{ repo|quote }}.gpg
         chdir:  "{{ docker_base_path }}/{{ repo }}/"
