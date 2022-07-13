@@ -1,21 +1,25 @@
 ---
 - name: configure Ansible/Jenkins
+  hosts: all
   vars:
-    - cryptpath: /home/drake/.git-crypt/
-    - docker_base_path: /docker/docker-compose
+    - src_crypt:   "/home/drake/.git-crypt/{{ repo }}"
+    - dest_crypt:  "/home/drake/.git-crypt"
+    - key_file:    "{{ dest_crypt }}/{{ repo }}.gpg"
+    - docker_path: "/docker/docker-compose/{{ repo }}"
   tasks:
 
     - name: ensure the .git-crypt directpry exists
       file:
-        path:   "{{ cryptpath }}"
-        state:  directory
+        path:     "{{ dest_crypt }}"
+        state:    directory
 
     - name: deploy the gpg keys
       copy:
-        src:    "{{ cryptpath }}/{{ repo }}.gpg"
-        path:   "{{ cryptpath }}/{{ repo }}.gpg"
+        src:    "{{ src_crypt }}/{{ repo }}.gpg"
+        dest:   "{{ key_file }}"
         force:  yes
 
     - name: unlock the specified repo
-      command:  /usr/bin/git-crypt unlock {{ cryptpath|quote }}/{{ repo|quote }}.gpg
-        chdir:  "{{ docker_base_path }}/{{ repo }}/"
+      command:  /usr/bin/git-crypt unlock {{ key_file|quote }}
+      args:
+        chdir:  "{{ docker_path }}"
