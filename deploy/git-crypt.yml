@@ -1,6 +1,6 @@
 ---
 - name: configure Ansible/Jenkins
-  hosts: all
+  hosts: self
   vars:
     - src_crypt:   "/home/drake/.git-crypt/{{ repo }}"
     - dest_crypt:  "/home/drake/.git-crypt"
