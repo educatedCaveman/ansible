@@ -13,4 +13,6 @@
       - lnav
       - rename
       - pigz
+      - git-crypt
+      - gpg
     state:  present
