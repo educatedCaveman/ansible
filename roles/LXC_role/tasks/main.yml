@@ -11,11 +11,3 @@
 # copy authorized_keys file from root to drake
 - name: copy authorized_keys
   import_tasks: authorized_keys.yml
-
-# disable netdata (temp fix)
-# systemd restart and enable netdata
-# - name: enable and restart netdata
-#   systemd:
-#     name: netdata
-#     state:  stopped
-#     enabled:  no

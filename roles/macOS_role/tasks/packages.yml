@@ -6,7 +6,6 @@
       - tmux
       - neofetch
       - python
-      - netdata
       - tmuxinator
     state:  latest
     update_homebrew:  yes

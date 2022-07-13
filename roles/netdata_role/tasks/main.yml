@@ -1,10 +1,12 @@
+---
+# tasks file for netdata_role
 # check for dotfiles
 - name: check if the dotfiles are present
   stat:
     path: /home/drake/dotfiles
   register: dotfiles
 
-# install ZSH
+# install Netdata
 - name: install Netdata
   apt:
     name: 

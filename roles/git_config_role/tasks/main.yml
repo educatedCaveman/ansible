@@ -1,0 +1,7 @@
+---
+# copy the /etc/gitconfig file from jenkins to the host
+- name: copy safe gitconfig
+  copy:
+    src:    gitconfig
+    dest:   /etc/gitconfig
+    force:  yes

@@ -62,7 +62,6 @@
       - radarr
       - lidarr
       - bazarr
-      # - jackett
       - prowlarr
 
   # add the users to the media group
@@ -81,7 +80,6 @@
       - radarr
       - lidarr
       - bazarr
-      # - jackett
       - prowlarr
 
 
@@ -154,10 +152,6 @@
 
   #* Sonarr
 
-  - name: add the MediaInfo repo
-    apt:
-      deb:  https://mediaarea.net/repo/deb/repo-mediaarea_1.0-20_all.deb
-
   - name: add the Mono APT key
     apt_key:
       id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
@@ -185,9 +179,10 @@
     apt_repository:
       repo: deb https://apt.sonarr.tv/ubuntu focal main
 
-  - name: install Sonar (nzbdrone)
+  - name: install Sonarr
     apt:
-      name:   nzbdrone
+      # name:   nzbdrone
+      name:   sonarr
       state:  latest
       update_cache: yes
 
@@ -282,17 +277,6 @@
       path: /opt/Lidarr/Lidarr
       mode: u+x
     when: not lidarr_install.stat.exists 
-
-
-  # #* Jacket
-  # # https://github.com/Jackett/Jackett
-  # - name: retrieve and extract Jackett archive
-  #   unarchive:
-  #     src:    https://github.com/Jackett/Jackett/releases/download/v0.20.244/Jackett.Binaries.LinuxAMDx64.tar.gz
-  #     dest:   /home/jackett
-  #     owner:  jackett
-  #     group:  jackett
-  #     remote_src: yes  
 
 
   #* Bazarr (subtitles)
@@ -395,7 +379,7 @@
       service_file_loc: "/home/drake/dotfiles/qbittorrent"
     loop:
       - qbittorrent-nox
-      - sonarr
+      # - sonarr
       - radarr
       - lidarr
       # - jacket
@@ -413,6 +397,11 @@
   #     state:    restarted
   #     enabled:  yes
 
+  - name: restart sonarr.service
+    systemd:
+      name:     sonarr.service
+      state:    restarted
+      enabled:  yes
 
   # #* Manual steps
   # - name: manual steps to be take on install

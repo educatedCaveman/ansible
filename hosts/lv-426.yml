@@ -4,6 +4,7 @@
     - lv_426
   roles:
     - VM_role
+    - git_config_role
     - git_dotfiles_role
     - git_scripts_role
     - VM_netplan_MTU
@@ -17,6 +18,9 @@
     - nfs_music_role
     - nfs_video_role
     - nfs_staging_role
+    - nfs_docs_role
+    - nfs_pics_role
+    - netdata_role
     - role: telegraf_role
       vars:
         telegraf_config:  'telegraf_base.conf'
@@ -80,6 +84,11 @@
         hour:   "1"
         day:    "1"
         job:    "/bin/bash /home/drake/scripts/cron/backup_docker_weekly.sh"
+
+    - name: YTDL file sync
+      cron:
+        name:   ytdl_file_sync
+        job:    "/bin/bash /docker/docker-compose/ytdl/sync_to_NFS.sh"
 
     # folder for portainer
     - name: create the portainer directory
