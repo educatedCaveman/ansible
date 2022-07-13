@@ -1,6 +1,5 @@
 ---
 - name: configure Ansible/Jenkins
-  hosts:  TBD
   vars:
     - cryptpath: /home/drake/.git-crypt/
     - docker_base_path: /docker/docker-compose
