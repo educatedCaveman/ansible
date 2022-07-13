@@ -6,10 +6,15 @@
     - docker_base_path: /docker/docker-compose
   tasks:
 
+    - name: ensure the .git-crypt directpry exists
+      file:
+        path:   "{{ cryptpath }}"
+        state:  directory
+
     - name: deploy the gpg keys
       copy:
-        src:    "{{ cryptpath }}"
-        path:   "{{ cryptpath }}"
+        src:    "{{ cryptpath }}/{{ repo }}.gpg"
+        path:   "{{ cryptpath }}/{{ repo }}.gpg"
         force:  yes
 
     - name: unlock the specified repo
