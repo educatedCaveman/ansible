@@ -10,9 +10,22 @@
     upgrade:  safe
     
 # make sure we have git installed
-- name: Install QEMU guest agent
+- name: Install base packages
   apt:
     name:
       - qemu-guest-agent
       - git
     state:  present
+
+# expand the disk
+- name: Read device information (/dev/sda)
+  community.general.parted: device=/dev/sda unit=MiB
+  register: sda_info
+
+- name: Extend the partition
+  community.general.parted:
+    device: /dev/sda
+    number: "{{ sda_info.partitions | length }}"
+    part_end: "100%"
+    resize: true
+    state: present
