@@ -64,3 +64,4 @@
         project_src:    "{{ docker_path }}"
         remove_orphans: yes
         restarted:      yes
+        state:          present

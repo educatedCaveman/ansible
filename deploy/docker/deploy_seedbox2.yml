@@ -1,0 +1,10 @@
+- name: deploy seedbox stack
+  hosts:  seedbox2
+  tasks:
+    # start docker stack
+    - name: deploy seedbox stack
+      docker_compose:
+        project_src:    "{{ docker_path }}"
+        remove_orphans: yes
+        restarted:      yes
+        state:          present

@@ -15,4 +15,5 @@
       - pigz
       - git-crypt
       - gpg
+      - net-tools
     state:  present
