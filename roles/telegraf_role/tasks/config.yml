@@ -6,29 +6,11 @@
     path: /home/drake/dotfiles
   register: dotfiles
 
-# check for an existsing config
-- name: check for existing telegraf.conf
-  stat:
-    path: /etc/telegraf/telegraf.conf
-  register: telegraf
-
-# if not a link, remove
-- name: remove the existing telegraf.conf
-  file:
-    path: /etc/telegraf/telegraf.conf
-    state:  absent
+# if dotfiles are present, overwrite the existing config
+- name: install telegraf.conf
+  copy:
+    src:    "/home/drake/dotfiles/telegraf/{{ telegraf_config }}"
+    dest:   /etc/telegraf/telegraf.conf
+    force:  yes
   when: 
     - dotfiles.stat.exists
-    - telegraf.stat.islnk is defined
-    - telegraf.stat.islnk == False
-
-# if not a link, link correct one, using variable passed into the role
-- name: link telegraf.conf
-  file:
-    src:  "/home/drake/dotfiles/telegraf/{{ telegraf_config }}"
-    dest: /etc/telegraf/telegraf.conf
-    state:  link
-  when: 
-    - dotfiles.stat.exists
-    - telegraf.stat.islnk is defined
-    - telegraf.stat.islnk == False
