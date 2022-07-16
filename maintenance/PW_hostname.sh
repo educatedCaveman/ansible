@@ -16,8 +16,8 @@ HOSTS=( \
     jenkins_vm \
     lv_426 \
     sevastopol_vm \
-    seedbox_vm \
-    seedbox2_vm \
+    seedbox \
+    seedbox2 \
     singularity \
     plex_vm \
 )
