@@ -9,8 +9,9 @@
 # if dotfiles are present, overwrite the existing config
 - name: install telegraf.conf
   copy:
-    src:    "/home/drake/dotfiles/telegraf/{{ telegraf_config }}"
-    dest:   /etc/telegraf/telegraf.conf
-    force:  yes
+    src:        "/home/drake/dotfiles/telegraf/{{ telegraf_config }}"
+    dest:       /etc/telegraf/telegraf.conf
+    force:      yes
+    remote_src: yes
   when: 
     - dotfiles.stat.exists
