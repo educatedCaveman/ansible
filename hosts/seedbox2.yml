@@ -58,3 +58,9 @@
       args:
         chdir:  "{{ docker_path }}"
     
+    # start docker stack
+    - name: deploy seedbox stack
+      docker_compose:
+        project_src:    "{{ docker_path }}"
+        remove_orphans: yes
+        restarted:      yes
