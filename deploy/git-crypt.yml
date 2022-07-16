@@ -5,7 +5,7 @@
     - src_crypt:   "/home/drake/.git-crypt/{{ repo }}"
     - dest_crypt:  "/home/drake/.git-crypt"
     - key_file:    "{{ dest_crypt }}/{{ repo }}.gpg"
-    - docker_path: "/docker/docker-compose/{{ repo }}"
+    - docker_path: "/home/drake/{{ repo }}"
   tasks:
 
     - name: ensure the .git-crypt directpry exists
