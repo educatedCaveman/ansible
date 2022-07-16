@@ -31,14 +31,6 @@
       args:
         chdir:  "{{ docker_path }}"
 
-    # # start docker stack
-    # - name: deploy seedbox stack
-    #   docker_compose:
-    #     project_src:    "{{ docker_path }}"
-    #     remove_orphans: yes
-    #     restarted:      yes
-    #     state:          present
-
     # command to restart the docker stack
     - name: dockre-compose up
       command: /usr/bin/docker-compose up -d --force-recreate --remove-orphans
