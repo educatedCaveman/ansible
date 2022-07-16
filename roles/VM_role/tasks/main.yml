@@ -25,7 +25,7 @@
 - name: Extend the partition
   community.general.parted:
     device: /dev/vda3
-    number: "{{ vda3_info.partitions | length }}"
+    number: 3
     part_end: "100%"
     resize: true
     state: present
