@@ -23,7 +23,7 @@
     - src_crypt:   "/home/drake/.git-crypt/{{ repo }}"
     - dest_crypt:  "/home/drake/.git-crypt"
     - key_file:    "{{ dest_crypt }}/{{ repo }}.gpg"
-    - docker_path: "/docker/docker-compose/{{ repo }}"
+    - docker_path: "/home/drake/{{ repo }}"
   tasks:
 
     # deploy the repo, and unlock it
@@ -32,6 +32,15 @@
         repo: 'https://github.com/educatedCaveman/privateer'
         dest: /home/drake/privateer
         force:  yes
+
+    # # fix directory permissions
+    # - name:
+    #   file:
+    #     path: /home/drake/privateer
+    #     state: directory
+    #     recurse: yes
+    #     owner: drake
+    #     group: drake
 
     - name: ensure the .git-crypt directpry exists
       file:

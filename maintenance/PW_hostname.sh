@@ -17,6 +17,7 @@ HOSTS=( \
     lv_426 \
     sevastopol_vm \
     seedbox_vm \
+    seedbox2_vm \
     singularity \
     plex_vm \
 )
