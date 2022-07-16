@@ -18,14 +18,21 @@
     state:  present
 
 # expand the disk
-- name: Read device information (/dev/vda3)
-  community.general.parted: device=/dev/vda3 unit=MiB
-  register: vda3_info
+- name: expand partition
+  filesystem:
+    fstype:   ext4
+    dev:      /dev/vda3
+    resizefs: yes
 
-- name: Extend the partition
-  community.general.parted:
-    device: /dev/vda3
-    number: 3
-    part_end: "100%"
-    resize: true
-    state: present
+
+# - name: Read device information (/dev/vda3)
+#   community.general.parted: device=/dev/vda3 unit=MiB
+#   register: vda3_info
+
+# - name: Extend the partition
+#   community.general.parted:
+#     device: /dev/vda3
+#     number: 3
+#     part_end: "100%"
+#     resize: true
+#     state: present
