@@ -1,5 +1,5 @@
 - name: configure seedbox
-  hosts:  seedbox
+  hosts:  seedbox2
   roles:
     - VM_role
     - git_dotfiles_role
