@@ -9,6 +9,7 @@ directory = /home/drake/Jenkins
 directory = /home/drake/.oh-my-zsh
 directory = /home/drake/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 directory = /home/drake/.config/nvim/bundle/Vundle.vim
+directory = /home/drake/privateer
 
 #docker compose
 directory = /docker/docker-compose/homer
