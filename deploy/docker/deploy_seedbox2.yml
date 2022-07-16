@@ -1,6 +1,36 @@
 - name: deploy seedbox stack
   hosts:  seedbox2
+  vars:
+    - repo:        "privateer"
+    - src_crypt:   "/home/drake/.git-crypt/{{ repo }}"
+    - dest_crypt:  "/home/drake/.git-crypt"
+    - key_file:    "{{ dest_crypt }}/{{ repo }}.gpg"
+    - docker_path: "/home/drake/{{ repo }}"
   tasks:
+
+    # deploy the repo, and unlock it
+    - name:
+      git:
+        repo: 'https://github.com/educatedCaveman/privateer'
+        dest: /home/drake/privateer
+        force:  yes
+
+    - name: ensure the .git-crypt directpry exists
+      file:
+        path:     "{{ dest_crypt }}"
+        state:    directory
+
+    - name: deploy the gpg keys
+      copy:
+        src:    "{{ src_crypt }}/{{ repo }}.gpg"
+        dest:   "{{ key_file }}"
+        force:  yes
+
+    - name: unlock the specified repo
+      command:  /usr/bin/git-crypt unlock {{ key_file|quote }}
+      args:
+        chdir:  "{{ docker_path }}"
+
     # start docker stack
     - name: deploy seedbox stack
       docker_compose:
