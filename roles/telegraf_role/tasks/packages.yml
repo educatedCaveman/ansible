@@ -13,7 +13,7 @@
 # add the repo
 - name: add the influxDB repository
   apt_repository:
-    repo:   "deb https://repos.influxdata.com/ubuntu {{ ansible_facts['ansible_lsb']['codename'] }} stable"
+    repo:   "deb https://repos.influxdata.com/ubuntu {{ hostvars[inventory_hostname][distribution_release] }} stable"
     state:  present
     update_cache: yes
 
