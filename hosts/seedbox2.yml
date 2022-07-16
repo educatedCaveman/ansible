@@ -2,6 +2,7 @@
   hosts:  seedbox2
   roles:
     - VM_role
+    - git_config_role
     - git_dotfiles_role
     - VM_netplan_MTU
     - apt_client_role
