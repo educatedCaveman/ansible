@@ -151,7 +151,7 @@
 
 
   # cleanup the *arrs
-  - name: cleanup the *arrs: /var/lib/
+  - name: cleanup the *arrs /var/lib/
     file:
       path:   "/var/lib/{{ item }}"
       state:  absent
@@ -162,7 +162,7 @@
       - bazarr
       - prowlarr
 
-  - name: cleanup the *arrs: /opt
+  - name: cleanup the *arrs /opt
     file:
       path:   "/opt/{{ item }}"
       state:  absent
