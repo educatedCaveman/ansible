@@ -12,7 +12,6 @@ HOSTS=( \
     apt_mirror \
     nextcloud_vm \
     influxDB_vm \
-    syncthing_vm \
     jenkins_vm \
     lv_426 \
     sevastopol_vm \
