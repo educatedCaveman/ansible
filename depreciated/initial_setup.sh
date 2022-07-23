@@ -51,14 +51,10 @@ LOGINS=( \
     "Homelab\ssh/docker_swarm" \
     "Homelab\ssh/gitlab.vm" \
     "Homelab\ssh/oxygen.vm" \
-    "Homelab\ssh/apt-cache.vm" \
-    "Homelab\ssh/apt-mirror.vm" \
 )
 LXC_LOGINS=( \
     "Homelab\ssh/swarm-api-lb.lab" \
     "Homelab\ssh/swarm-api-lb.vm" \
-    "Homelab\ssh/apt-cache.vm" \
-    "Homelab\ssh/apt-mirror.vm" \
 )
 
 HOSTNAMES=( \
@@ -80,8 +76,6 @@ HOSTNAMES=( \
     "sevastopol-worker-04" \
     "gitlab" \
     "oxygen" \
-    "apt-cache" \
-    "apt-mirror" \
 )
 
 #handle drake users

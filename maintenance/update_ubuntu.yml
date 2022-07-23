@@ -19,10 +19,9 @@
 # omit self, because it is what runs the job
 # omit moria, because it often has issues being restarted
 # - fuckyounvidia.jpg
-# omit apt_cache, because it times out
 
 - name: rolling restarts, non-HA hosts
-  hosts:  ubuntu_debian_hosts:!self:!moria:!apt_cache:!apt_mirror:!voron
+  hosts:  ubuntu_debian_hosts:!self:!moria:!voron
   ignore_unreachable: yes
   ignore_errors:      yes
   tasks:

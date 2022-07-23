@@ -7,7 +7,6 @@
     - plex
     - moria
     - seedbox
-    - apt_mirror
     - nextcloud
     - portainer
   ignore_unreachable: yes

@@ -1,7 +1,7 @@
 ---
 - name: apply/update the APT Client role
   hosts:
-    - ubuntu_debian_hosts:!apt_cache:!apt_mirror
+    - ubuntu_debian_hosts
   roles:
     - apt_client_role
   tasks:

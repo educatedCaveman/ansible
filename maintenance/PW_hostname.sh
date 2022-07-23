@@ -8,8 +8,6 @@ ANSIBLE_DIR='/home/drake/ansible/maintenance'
 
 # hosts for ansible
 HOSTS=( \
-    apt_cache \
-    apt_mirror \
     nextcloud_vm \
     influxDB_vm \
     jenkins_vm \
