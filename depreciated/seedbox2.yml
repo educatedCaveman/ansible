@@ -10,9 +10,9 @@
     - drake_role
     - nfs_base_role
     - netdata_role
-    - role: telegraf_role
-      vars:
-        telegraf_config:  'telegraf_base.conf'
+    # - role: telegraf_role
+    #   vars:
+    #     telegraf_config:  'telegraf_base.conf'
   tasks:
 
   # - name:
