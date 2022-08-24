@@ -1,9 +1,17 @@
 ---
-- name: apply/update the telegraf role
+- name: apply/update the telegraf role (except singularity)
   hosts:
-    - ubuntu_debian_hosts
+    - ubuntu_debian_hosts:!singularity
     - tesseract
   roles:
-    - telegraf_role
-  tasks:
-  
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'telegraf_base.conf'
+
+- name: apply/update the telegraf role (singularity only)
+  hosts:
+    - singularity
+  roles:
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'pihole_telegraf.conf'

@@ -58,11 +58,11 @@
     loop:
       - qbittorrent-nox
       - media
-      - sonarr
-      - radarr
-      - lidarr
-      - bazarr
-      - prowlarr
+      # - sonarr
+      # - radarr
+      # - lidarr
+      # - bazarr
+      # - prowlarr
 
   # add the users to the media group
   # drake might be redundant
@@ -76,11 +76,11 @@
     loop:
       - drake
       - qbittorrent-nox
-      - sonarr
-      - radarr
-      - lidarr
-      - bazarr
-      - prowlarr
+      # - sonarr
+      # - radarr
+      # - lidarr
+      # - bazarr
+      # - prowlarr
 
 
   #* qBittorrent configs
@@ -150,262 +150,32 @@
   # block all other access
 
 
-  #* Sonarr
-
-  - name: add the Mono APT key
-    apt_key:
-      id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-      keyserver:  keyserver.ubuntu.com
-      state:      present
-
-  - name: add Mono repo
-    apt_repository:
-      repo: deb https://download.mono-project.com/repo/ubuntu stable-focal main
-
-  - name: install Mono
-    apt:
-      name:   mono-devel
-      state:  latest
-      update_cache: yes
-
-  - name: add the Sonarr APT key
-    apt_key:
-      id: 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8
-      # id: A236C58F409091A18ACA53CBEBFF6B99D9B78493
-      keyserver:  keyserver.ubuntu.com
-      state:      present
-
-  - name: add Sonarr repo
-    apt_repository:
-      repo: deb https://apt.sonarr.tv/ubuntu focal main
-
-  - name: install Sonarr
-    apt:
-      # name:   nzbdrone
-      name:   sonarr
-      state:  latest
-      update_cache: yes
-
-
-  #* Radarr
-  # this was derived from the "Hands on Install" here:
-  # https://wiki.servarr.com/radarr/installation#linux
-  - name: create /var/lib/radarr
+  # cleanup the *arrs
+  - name: cleanup the *arrs /var/lib/
     file:
-      path:   /var/lib/radarr
-      owner:  radarr
-      group:  radarr
-      state:  directory
-
-  - name: check for existing Radarr install
-    stat:
-      path: /opt/Radarr/
-    register: radarr_install
-
-  - name: create Radarr install directory
-    file:
-      path:   /opt/Radarr/
-      state:  directory
-      owner:  radarr
-      group:  radarr
-    when: not radarr_install.stat.exists
-
-  - name: retrieve and extract Radarr archive
-    unarchive:
-      src:  'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
-      dest: /tmp/
-      remote_src: yes
-    when: not radarr_install.stat.exists
-
-  - name: install Radarr and set permissions
-    copy:
-      src:    /tmp/Radarr/
-      dest:   /opt/Radarr/
-      owner:  radarr
-      group:  radarr
-      remote_src: yes
-    when: not radarr_install.stat.exists
-
-  - name: set permissions on Radarr executable
-    file:
-      path: /opt/Radarr/Radarr
-      mode: u+x
-    when: not radarr_install.stat.exists 
-
-
-  #* Lidarr
-  # this was derived from the "Hands on Install" here:
-  # https://wiki.servarr.com/lidarr/installation#Debian.2FUbuntu
-  - name: create /var/lib/lidarr
-    file:
-      path:   /var/lib/lidarr
-      owner:  lidarr
-      group:  lidarr
-      state:  directory
-
-  - name: check for existing Lidarr install
-    stat:
-      path: /opt/Lidarr/
-    register: lidarr_install
-
-  - name: create Lidarr install directory
-    file:
-      path:   /opt/Lidarr/
-      owner:  lidarr
-      group:  lidarr
-      state:  directory
-    when: not lidarr_install.stat.exists
-
-  - name: retrieve and extract Lidarr archive
-    unarchive:
-      src:  'http://lidarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
-      dest: /tmp/
-      remote_src: yes
-    when: not lidarr_install.stat.exists
-
-  - name: install Lidarr and set user/group
-    copy:
-      src:    /tmp/Lidarr/
-      dest:   /opt/Lidarr/
-      owner:  lidarr
-      group:  lidarr
-      remote_src: yes
-    when: not lidarr_install.stat.exists  
-
-  - name: set permissions on Lidarr executable
-    file:
-      path: /opt/Lidarr/Lidarr
-      mode: u+x
-    when: not lidarr_install.stat.exists 
-
-
-  #* Bazarr (subtitles)
-  # https://wiki.bazarr.media/Getting-Started/Installation/Linux/linux/
-  - name: create /var/lib/bazarr
-    file:
-      path:   /var/lib/bazarr
-      owner:  bazarr
-      group:  bazarr
-      state:  directory
-
-  - name: check for existing bazarr install
-    stat:
-      path: /opt/bazarr/
-    register: bazarr_install
-
-  - name: create bazarr install directory
-    file:
-      path:   /opt/bazarr/
-      owner:  bazarr
-      group:  bazarr
-      state:  directory
-    when: not bazarr_install.stat.exists
-
-  - name: retrieve and extract bazarr archive
-    unarchive:
-      src:  'https://github.com/morpheus65535/bazarr/releases/latest/download/bazarr.zip'
-      dest: /opt/bazarr/
-      remote_src: yes
-    when: not bazarr_install.stat.exists
-
-  - name: set permissions
-    file:
-      path:     /opt/bazarr/
-      owner:    bazarr
-      group:    bazarr
-      recurse:  yes
-
-  - name: install bazarr from requirements.txt
-    pip:
-      chdir:        /opt/bazarr/
-      requirements: /opt/bazarr/requirements.txt
-    when: not bazarr_install.stat.exists  
-
-
-  #* Prowlarr
-  # this was derived from the "Hands on Install" here:
-  # https://wiki.servarr.com/radarr/installation#linux
-  - name: create /var/lib/prowlarr
-    file:
-      path:   /var/lib/prowlarr
-      owner:  prowlarr
-      group:  prowlarr
-      state:  directory
-
-  - name: check for existing Prowlarr install
-    stat:
-      path: /opt/Prowlarr/
-    register: prowlarr_install
-
-  - name: create Prowlarr install directory
-    file:
-      path:   /opt/Prowlarr/
-      state:  directory
-      owner:  prowlarr
-      group:  prowlarr
-    when: not prowlarr_install.stat.exists
-
-  - name: retrieve and extract Prowlarr archive
-    unarchive:
-      src:  'http://prowlarr.servarr.com/v1/update/develop/updatefile?os=linux&runtime=netcore&arch=x64'
-      dest: /tmp/
-      remote_src: yes
-    when: not prowlarr_install.stat.exists
-
-  - name: install Prowlarr and set permissions
-    copy:
-      src:    /tmp/Prowlarr/
-      dest:   /opt/Prowlarr/
-      owner:  prowlarr
-      group:  prowlarr
-      remote_src: yes
-    when: not prowlarr_install.stat.exists
-
-  - name: set permissions on Prowlarr executable
-    file:
-      path: /opt/Prowlarr/Prowlarr
-      mode: u+x
-    when: not prowlarr_install.stat.exists 
-
-
-  #TODO: Mylar3
-
-  #* install service files, and restart services  
-  - name: install the service files and restart the services
-    include_role:
-      name: install_service_file_role
-    vars:
-      service_name: "{{ item }}"
-      service_file_loc: "/home/drake/dotfiles/qbittorrent"
+      path:   "/var/lib/{{ item }}"
+      state:  absent
     loop:
-      - qbittorrent-nox
-      # - sonarr
+      - sonarr
       - radarr
       - lidarr
-      # - jacket
       - bazarr
+      - prowlarr
 
-  # # handle jacket service
-  # - name: check for jackett.service
-  #   stat: 
-  #     path: /etc/systemd/system/jackett.service
-  #   register: jackett_service
+  - name: cleanup the *arrs /opt
+    file:
+      path:   "/opt/{{ item }}"
+      state:  absent
+    loop:
+      - Sonarr
+      - Radarr
+      - Lidarr
+      - Bazarr
+      - Prowlarr
 
-  # - name: restart jackett.service
-  #   systemd:
-  #     name:     jackett.service
-  #     state:    restarted
-  #     enabled:  yes
 
   - name: restart sonarr.service
     systemd:
       name:     sonarr.service
-      state:    restarted
-      enabled:  yes
-
-  # #* Manual steps
-  # - name: manual steps to be take on install
-  #   debug:
-  #     msg:
-  #       - run the following command from /home/jackett
-  #       - sudo ./install_service_systemd.sh
+      state:    stopped
+      enabled:  no

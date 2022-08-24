@@ -1,0 +1,21 @@
+---
+# tasks file for nfs_comics_role
+- name: check for the mount directory before mounting
+  stat: 
+    path: /mnt/mobius/Comics
+  register: comics_dir
+
+- name: create the mount directory
+  file:
+    path:     /mnt/mobius/Comics
+    state:    directory
+    recurse:  yes
+  when: not comics_dir.stat.exists
+
+- name: Mount the Comics NFS share if the mount path exists
+  mount:
+    src:    192.168.11.2:/mnt/storage_node/Comics
+    path:   /mnt/mobius/Comics
+    fstype: nfs 
+    opts:   rw,nolock,tcp
+    state:  mounted

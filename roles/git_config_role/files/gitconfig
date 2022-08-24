@@ -9,6 +9,7 @@ directory = /home/drake/Jenkins
 directory = /home/drake/.oh-my-zsh
 directory = /home/drake/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 directory = /home/drake/.config/nvim/bundle/Vundle.vim
+directory = /home/drake/privateer
 
 #docker compose
 directory = /docker/docker-compose/homer
@@ -25,6 +26,9 @@ directory = /docker/docker-compose/vscode
 directory = /docker/docker-compose/uptime-kuma
 directory = /docker/docker-compose/tautulli
 directory = /docker/docker-compose/syncthing
+directory = /docker/docker-compose/privateer
+directory = /docker/docker-compose/apt-cache
+directory = /docker/docker-compose/influxdb
 #docker compose, DEV
 directory = /home/drake/docker_compose_dev/homer
 directory = /home/drake/docker_compose_dev/grafana_apps
@@ -40,6 +44,9 @@ directory = /home/drake/docker_compose_dev/vscode
 directory = /home/drake/docker_compose_dev/uptime-kuma
 directory = /home/drake/docker_compose_dev/tautulli
 directory = /home/drake/docker_compose_dev/syncthing
+directory = /home/drake/docker_compose_dev/privateer
+directory = /home/drake/docker_compose_dev/apt-cache
+directory = /home/drake/docker_compose_dev/influxdb
 #ocker compose, PRD
 directory = /home/drake/docker_compose_prd/homer
 directory = /home/drake/docker_compose_prd/grafana_apps
@@ -55,3 +62,6 @@ directory = /home/drake/docker_compose_prd/vscode
 directory = /home/drake/docker_compose_prd/uptime-kuma
 directory = /home/drake/docker_compose_prd/tautulli
 directory = /home/drake/docker_compose_prd/syncthing
+directory = /home/drake/docker_compose_prd/privateer
+directory = /home/drake/docker_compose_prd/apt-cache
+directory = /home/drake/docker_compose_prd/influxdb

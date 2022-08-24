@@ -3,7 +3,6 @@
   hosts:
     - singularity
     - plex
-    - apt_mirror
     - self
     - moria
     - nextcloud_vm

@@ -2,6 +2,7 @@
   hosts:  seedbox2
   roles:
     - VM_role
+    - git_config_role
     - git_dotfiles_role
     - VM_netplan_MTU
     - apt_client_role
@@ -9,10 +10,62 @@
     - client_ssh_keys
     - drake_role
     - nfs_base_role
+    - nfs_music_role
+    - nfs_video_role
+    - nfs_staging_role
     - netdata_role
+<<<<<<< HEAD:depreciated/seedbox2.yml
     # - role: telegraf_role
     #   vars:
     #     telegraf_config:  'telegraf_base.conf'
+=======
+    - role: telegraf_role
+      vars:
+        telegraf_config:  'telegraf_base.conf'
+    - docker_role
+  vars:
+    - repo:        "privateer"
+    - src_crypt:   "/home/drake/.git-crypt/{{ repo }}"
+    - dest_crypt:  "/home/drake/.git-crypt"
+    - key_file:    "{{ dest_crypt }}/{{ repo }}.gpg"
+    - docker_path: "/home/drake/{{ repo }}"
+>>>>>>> 0fb42439f4cba2344b084b16ad693869e3fa6a90:hosts/seedbox2.yml
   tasks:
 
-  # - name:
+    # deploy the repo, and unlock it
+    - name:
+      git:
+        repo: 'https://github.com/educatedCaveman/privateer'
+        dest: /home/drake/privateer
+        force:  yes
+
+    # # fix directory permissions
+    # - name:
+    #   file:
+    #     path: /home/drake/privateer
+    #     state: directory
+    #     recurse: yes
+    #     owner: drake
+    #     group: drake
+
+    - name: ensure the .git-crypt directpry exists
+      file:
+        path:     "{{ dest_crypt }}"
+        state:    directory
+
+    - name: deploy the gpg keys
+      copy:
+        src:    "{{ src_crypt }}/{{ repo }}.gpg"
+        dest:   "{{ key_file }}"
+        force:  yes
+
+    - name: unlock the specified repo
+      command:  /usr/bin/git-crypt unlock {{ key_file|quote }}
+      args:
+        chdir:  "{{ docker_path }}"
+
+    # command to restart the docker stack
+    - name: dockre-compose up
+      command: /usr/bin/docker-compose up -d --force-recreate --remove-orphans
+      args:
+        chdir:  "{{ docker_path }}"

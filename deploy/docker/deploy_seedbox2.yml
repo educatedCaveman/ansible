@@ -1,12 +1,19 @@
----
-- name: configure Ansible/Jenkins
-  hosts: all
+- name: deploy seedbox stack
+  hosts:  seedbox2
   vars:
+    - repo:        "privateer"
     - src_crypt:   "/home/drake/.git-crypt/{{ repo }}"
     - dest_crypt:  "/home/drake/.git-crypt"
     - key_file:    "{{ dest_crypt }}/{{ repo }}.gpg"
-    - docker_path: "/docker/docker-compose/{{ repo }}"
+    - docker_path: "/home/drake/{{ repo }}"
   tasks:
+
+    # deploy the repo, and unlock it
+    - name:
+      git:
+        repo: 'https://github.com/educatedCaveman/privateer'
+        dest: /home/drake/privateer
+        force:  yes
 
     - name: ensure the .git-crypt directpry exists
       file:
@@ -21,5 +28,11 @@
 
     - name: unlock the specified repo
       command:  /usr/bin/git-crypt unlock {{ key_file|quote }}
+      args:
+        chdir:  "{{ docker_path }}"
+
+    # command to restart the docker stack
+    - name: dockre-compose up
+      command: /usr/bin/docker-compose up -d --force-recreate --remove-orphans
       args:
         chdir:  "{{ docker_path }}"
