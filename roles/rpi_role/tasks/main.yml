@@ -1,2 +1,10 @@
 ---
 # tasks file for rpi_role
+
+# dotfiles
+- name: install dotfiles for pi user
+  import_tasks: dotfiles.yml
+
+# ZSH
+- name: Configure ZSH for pi user
+  import_tasks: zsh.yml
