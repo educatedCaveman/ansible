@@ -15,8 +15,8 @@
       debug:
         msg:  "test"
 
-    # # adapted from: https://magpi.raspberrypi.com/articles/pi-zero-w-smart-usb-flash-drive
-    # # create a file for the USB data to live
+    # adapted from: https://magpi.raspberrypi.com/articles/pi-zero-w-smart-usb-flash-drive
+    # create a file for the USB data to live
     # - name: create the USB container file
     #   filesize:
     #     path:       /piusb.bin
@@ -25,13 +25,17 @@
     #     size:       16GB
     #     source:     /dev/zero
     #     blocksize:  1M
+    - name: create the USB container file
+      command: dd bs=1M if=/dev/zero of=/piusb.bin count=16384
+      args:
+        creates:  /piusb.bin
 
-    # - name: create the filesystem for the usb file
-    #   filesystem:
-    #     dev:    /piusb.bin
-    #     fstype: vfat
-    #     #TODO: not sure how this will work
-    #     opts:   "-F 32 -I"
+    - name: create the filesystem for the usb file
+      filesystem:
+        dev:    /piusb.bin
+        fstype: vfat
+        #TODO: not sure how this will work
+        opts:   "-F 32 -I"
 
     # # mount the file
     # # - test it
