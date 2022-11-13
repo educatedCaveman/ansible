@@ -11,17 +11,15 @@
         telegraf_config:  'telegraf_base.conf'
   tasks:
 
-    
     # adapted from: https://magpi.raspberrypi.com/articles/pi-zero-w-smart-usb-flash-drive
-
     # create a file for the USB data to live
     - name: create the USB container file
       filesize:
-        path:   /piusb.bin
-        owner:  root
-        group:  root
-        size:   16GB
-        source: /dev/zero
+        path:       /piusb.bin
+        owner:      root
+        group:      root
+        size:       16GB
+        source:     /dev/zero
         blocksize:  1M
 
     - name: create the filesystem for the usb file
