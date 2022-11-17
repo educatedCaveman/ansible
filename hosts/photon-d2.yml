@@ -24,8 +24,8 @@
     #     boot:   yes #mounted on boot
     #     fstype: vfat
 
-    adapted from: https://magpi.raspberrypi.com/articles/pi-zero-w-smart-usb-flash-drive
-    create a file for the USB data to live
+    # adapted from: https://magpi.raspberrypi.com/articles/pi-zero-w-smart-usb-flash-drive
+    # create a file for the USB data to live
     - name: create the USB container file
       community.general.filesize:
         path:       /piusb.bin
