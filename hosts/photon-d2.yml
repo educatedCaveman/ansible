@@ -60,8 +60,16 @@
         fstype: vfat
         opts:   users,umask=000
 
-    # # mass storage mode
-    # # setup remote access method
-    # #   guide uses samba. I think i might try sftp
-    # # USB reconnect
-    # # - create a service file
+    # mass storage mode
+    # sudo modprobe g_mass_storage file=/piusb.bin stall=0 ro=1
+    - name: Enable Mass Storage Mode
+      community.general.modprobe:
+        name: g_mass_storage
+        state: present
+        params: 'file=/piusb.bin stall=0 ro=1'
+
+
+    # setup remote access method
+    #   guide uses samba. I think i might try sftp
+    # USB reconnect
+    # - create a service file
