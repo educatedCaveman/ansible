@@ -1,5 +1,5 @@
-- name: configure lil debbie
-  hosts:  lil_debbie
+- name: configure photon-D2
+  hosts:  photon_d2
   roles:
     - git_dotfiles_role   # deploy the dotfiles repo
     - linux_role          # base linux configs
