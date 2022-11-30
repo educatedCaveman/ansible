@@ -68,6 +68,19 @@
         state: present
         params: 'file=/piusb.bin stall=0 ro=1'
 
+    # load kernel modules
+    # https://www.geekering.com/categories/embedded-sytems/raspberry-pi/bruno-silva/raspberry-pi-zero-wireless-smart-usb-flash-drive-samba-server/
+    
+    # TODO: /boot/config.txt
+    # append: dtoverlay=dwc2
+
+    # TODO: /etc/modules
+    # append: dwc2
+
+    # TODO: automate clreating the modprobe file?
+    # https://wiki.archlinux.org/title/Kernel_module
+    # so as to not manually run the modprobe command
+
 
     # setup remote access method
     #   guide uses samba. I think i might try sftp
