@@ -16,4 +16,5 @@
       - qemu-guest-agent
       - git
       - parted
+      - cron
     state:  present
