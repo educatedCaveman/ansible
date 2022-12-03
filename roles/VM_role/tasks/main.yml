@@ -15,4 +15,5 @@
     name:
       - qemu-guest-agent
       - git
+      - parted
     state:  present
