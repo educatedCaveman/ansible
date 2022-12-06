@@ -1,8 +1,0 @@
----
-- name: apply/update the NFS Comics role
-  hosts:
-    - seedbox2
-  roles:
-    - nfs_comics_role
-  tasks:
-  
