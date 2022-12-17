@@ -29,6 +29,7 @@ directory = /docker/docker-compose/syncthing
 directory = /docker/docker-compose/privateer
 directory = /docker/docker-compose/apt-cache
 directory = /docker/docker-compose/influxdb
+directory = /docker/docker-compose/gatus
 #docker compose, DEV
 directory = /home/drake/docker_compose_dev/homer
 directory = /home/drake/docker_compose_dev/grafana_apps
@@ -47,6 +48,7 @@ directory = /home/drake/docker_compose_dev/syncthing
 directory = /home/drake/docker_compose_dev/privateer
 directory = /home/drake/docker_compose_dev/apt-cache
 directory = /home/drake/docker_compose_dev/influxdb
+directory = /home/drake/docker_compose_dev/gatus
 #ocker compose, PRD
 directory = /home/drake/docker_compose_prd/homer
 directory = /home/drake/docker_compose_prd/grafana_apps
@@ -65,3 +67,4 @@ directory = /home/drake/docker_compose_prd/syncthing
 directory = /home/drake/docker_compose_prd/privateer
 directory = /home/drake/docker_compose_prd/apt-cache
 directory = /home/drake/docker_compose_prd/influxdb
+directory = /home/drake/docker_compose_prd/gatus
