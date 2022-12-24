@@ -140,5 +140,4 @@
     community.general.snap:
       name:
         - tautulli
-    when: PMS_install.stat.executable
-    
+    when: PMS_install.stat.exists
