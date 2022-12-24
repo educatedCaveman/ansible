@@ -11,9 +11,6 @@
     - drake_role          # drake home directory permissions
     - nfs_base_role       
     - nfs_backup_role
-    - role: telegraf_role
-      vars:
-        telegraf_config:  'pihole_telegraf.conf'
   tasks:
 
   # pihole-specific dotfiles:

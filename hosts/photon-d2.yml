@@ -6,9 +6,6 @@
   #   - client_ssh_keys
   #   - drake_role          # drake home directory permissions
   #   # - rpi_role
-  #   - role: telegraf_role
-  #     vars:
-  #       telegraf_config:  'telegraf_base.conf'
   tasks:
 
     # - name: create USB folder

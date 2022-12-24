@@ -13,9 +13,6 @@
     - nfs_video_role
     - nfs_music_role
     - nfs_staging_role
-    - role: telegraf_role
-      vars:
-        telegraf_config:  'telegraf_base.conf'
   vars:
     - config_dir: '/home/qbittorrent-nox/.config/qBittorrent'
     - dotfiles_dir: '/home/drake/dotfiles/qbittorrent'

@@ -10,9 +10,6 @@
     - git_scripts_role    # deploy the scripts repo
     - linux_role          # base linux configs
     - drake_role          # drake home directory permissions
-    - role: telegraf_role
-      vars:
-        telegraf_config:  'pihole_telegraf.conf'
   tasks:
 
     # TODO: gravity sync check?

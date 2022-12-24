@@ -13,9 +13,6 @@
     - nfs_docs_role
     - nfs_pics_role
     - nfs_music_role
-    - role: telegraf_role
-      vars:
-        telegraf_config:  'telegraf_base.conf'
   tasks:
 
   # create syncthing group
