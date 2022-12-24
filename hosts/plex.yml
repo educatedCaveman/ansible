@@ -130,3 +130,15 @@
         - "link for additional details:"
         - 
         - https://support.plex.tv/articles/201370363-move-an-install-to-another-system/
+
+  - name: Check for existing plex install
+    stat:
+      path: "/usr/lib/plexmediaserver/Plex Media Server"
+    register: PMS_install
+
+  - name: install Tautulli for stats and other goodies
+    community.general.snap:
+      name:
+        - tautulli
+    when: PMS_install.stat.executable
+    
