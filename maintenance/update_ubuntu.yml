@@ -1,7 +1,7 @@
 ---
 - name: upgrade/update ubuntu hosts
   # exclude plex while the newer releases are broken
-  hosts: ubuntu_debian_hosts:!moria
+  hosts: ubuntu_debian_hosts
   ignore_unreachable: yes
   ignore_errors:      yes
   tasks:
@@ -17,11 +17,9 @@
 
 # rolling restarts
 # omit self, because it is what runs the job
-# omit moria, because it often has issues being restarted
-# - fuckyounvidia.jpg
 
 - name: rolling restarts, non-HA hosts
-  hosts:  ubuntu_debian_hosts:!self:!moria:!voron
+  hosts:  ubuntu_debian_hosts:!self:!voron
   ignore_unreachable: yes
   ignore_errors:      yes
   tasks:
