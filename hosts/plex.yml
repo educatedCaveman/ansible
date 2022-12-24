@@ -136,8 +136,21 @@
       path: "/usr/lib/plexmediaserver/Plex Media Server"
     register: PMS_install
 
+  - name: Check for existing Snap install
+    stat:
+      path: "/usr/lib/snapd/snapd"
+    register: snap_install
+
+  - name: install Snapd
+    apt:
+      name:
+        - snapd
+      state: latest
+    when: not snap_install.stat.exists
+
   - name: install Tautulli for stats and other goodies
     community.general.snap:
       name:
         - tautulli
+      state: enabled
     when: PMS_install.stat.exists
