@@ -17,7 +17,6 @@
           - ipmitool
           - nodejs
           - httpie
-          - 
         state:  latest
 
     # inventory file
@@ -98,6 +97,7 @@
           - software-properties-common
           - python3-pip
           - fuse-overlayfs
+        state: latest
 
     - name: install pip packages
       pip:
