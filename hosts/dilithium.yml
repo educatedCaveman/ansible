@@ -10,13 +10,14 @@
   tasks:
 
     # install ansible
-    - name: install ansible
+    - name: install ansible, docker
       apt:
         name:
           - ansible
           - ipmitool
           - nodejs
           - httpie
+          - 
         state:  latest
 
     # inventory file
@@ -86,9 +87,53 @@
         user: drake
         job:  "/bin/bash /home/drake/scripts/cron/r720_fan_control.sh"  
 
-    # TODO: reboot?
+    # TODO: gatus, requires docker
+    - name: install gatus apt pre-requisites
+      apt:
+        name: 
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg-agent
+          - software-properties-common
+          - python3-pip
+          - fuse-overlayfs
 
-    # TODO: uptime-kuma  
+    - name: install pip packages
+      pip:
+        name: docker
+
+    - name: Add Docker GPG apt Key (raspbian)
+      apt_key:
+        url: https://download.docker.com/linux/raspbian/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: "deb https://download.docker.com/linux/raspbian {{ ansible_distribution_release }} stable"
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt: 
+        name: 
+          - docker-ce 
+          - docker-ce-cli 
+          - containerd.io
+          - docker-compose
+        state: latest
+
+    - name: add drake to the docker group
+      user:
+        name: drake
+        group:  docker
+        append: yes
+
+    - name: start and enable docker
+      systemd:
+        name: docker
+        state:  restarted
+        enabled:  yes
+
 
     # jenkins repo
     - debug:
