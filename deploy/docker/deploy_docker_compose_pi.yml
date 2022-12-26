@@ -6,7 +6,7 @@
   hosts:  dilithium
   tasks:
 
-    - name: deploy master branch to the Swarm worker
+    - name: deploy code
       git:
         repo: "https://github.com/educatedCaveman/{{ repo }}"
         dest: "/docker/docker-compose/{{ repo }}"
