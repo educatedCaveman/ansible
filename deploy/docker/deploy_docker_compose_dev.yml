@@ -13,6 +13,17 @@
         version:  dev_test
         force:  yes
 
+    - name: set permissions on directory
+      file:
+        path:   "/docker/docker-compose/{{ repo }}"
+        state:  directory
+        recurse:  yes
+        owner:  drake
+        group:  drake
+      when: repo == item
+      loop:
+        - "diskover"
+
 - name: deploy docker code to DEV portainer instance
   # only need to deploy once
   hosts: 
