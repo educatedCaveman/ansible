@@ -13,16 +13,27 @@
         version:  dev_test
         force:  yes
 
-    - name: set permissions on directory
+    - name: diskover repo permissions
       file:
-        path:   "/docker/docker-compose/{{ repo }}"
-        state:  directory
+        path:     "/docker/docker-compose/{{ repo }}"
+        state:    directory
         recurse:  yes
-        owner:  drake
-        group:  drake
+        owner:    drake
+        group:    drake
       when: repo == item
       loop:
-        - "diskover"
+        - diskover
+
+    - name: diskover sysctl value
+      ansible.posix.sysctl:
+        name:       vm.max_map_count
+        value:      '262144'
+        sysctl_set: yes
+        state:      present
+        reload:     yes
+      when: repo == item
+      loop:
+        - diskover
 
 - name: deploy docker code to DEV portainer instance
   # only need to deploy once
