@@ -102,6 +102,11 @@
       path: /mnt/mobius/Backup/pihole
       state:  directory
 
+  # python dependencies for the scripts
+  - name: install pip packages
+    pip:
+      name: tabulate
+
   # CRON
   - name: setup pihole backup script
     cron:
