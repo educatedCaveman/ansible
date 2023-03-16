@@ -9,9 +9,6 @@
     - apt_client_role
     - linux_role
     - client_ssh_keys
-    - role: telegraf_role
-      vars:
-        telegraf_config:  'telegraf_base.conf'
   vars:
     - xmrig_install:  "/home/drake/xmrig"
     - xmrig_dir:      "/home/drake/xmrig-6.16.2"

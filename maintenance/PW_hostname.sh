@@ -9,12 +9,10 @@ ANSIBLE_DIR='/home/drake/ansible/maintenance'
 # hosts for ansible
 HOSTS=( \
     nextcloud_vm \
-    influxDB_vm \
     jenkins_vm \
     lv_426 \
     sevastopol_vm \
-    seedbox \
-    seedbox2 \
+    seedbox_vm \
     singularity \
     plex_vm \
 )

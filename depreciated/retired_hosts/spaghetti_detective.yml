@@ -11,9 +11,6 @@
     - linux_role
     - docker_role
     - drake_role
-    - role: telegraf_role
-      vars:
-        telegraf_config:  'telegraf_base.conf'
   tasks:
 
   # this is based on https://github.com/TheSpaghettiDetective/TheSpaghettiDetective

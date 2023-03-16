@@ -13,9 +13,7 @@
     - nfs_base_role       
     - nfs_backup_role
     - netdata_role
-    - role: telegraf_role
-      vars:
-        telegraf_config:  'telegraf_base.conf'
+    - docker_role       # for building docker images
   tasks:
 
   - name: Install main packages
@@ -94,4 +92,10 @@
       remote_src: yes
       mode: a+x
     when: bw_zip.stat.exists
+
+  - name: add jenkins to the docker group
+    user:
+      name: jenkins
+      group:  docker
+      append: yes
       

@@ -9,9 +9,6 @@
     - VM_netplan_MTU_q35
     - apt_client_role
     - linux_role
-    - role: telegraf_role
-      vars:
-        telegraf_config:  'telegraf_base.conf'
   vars:
     - t_rex_dir:  "/home/drake/t_rex"
     - t_rex_archive:  "t-rex-0.24.8-linux.tar.gz"

@@ -60,7 +60,7 @@
       loop:
         - klipper
         # - octoprint
-        # - moonraker
+        - moonraker
       #   - mainsail
       #   - klipperscreen
 

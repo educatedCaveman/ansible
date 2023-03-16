@@ -2,7 +2,7 @@
 - name: apply/update the Docker role
   hosts:
     - portainer
-    - seedbox2
+    - self
   roles:
     - docker_role
   tasks:
