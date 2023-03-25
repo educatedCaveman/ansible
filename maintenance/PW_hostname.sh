@@ -11,8 +11,8 @@ HOSTS=( \
     nextcloud_vm \
     jenkins_vm \
     lv_426 \
-    sevastopol_vm \
-    seedbox_vm \
+    sevastopol \
+    seedbox \
     singularity \
     plex_vm \
 )
