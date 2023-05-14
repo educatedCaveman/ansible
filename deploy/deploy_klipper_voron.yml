@@ -63,7 +63,12 @@
         - moonraker
       #   - mainsail
       #   - klipperscreen
+        - crowsnest
 
 # TODO: deploy the KIAUH script
 
 # TODO: handle new moonraker config locations?
+# link /home/pi/.moonraker_secrets.ini to /printer_data/moonraker.secrets
+# link /home/pi/hu3bert/ to /home/pi/printer_data/config
+# link /home/pi/hu3bert/klipper_default to /etc/default/klipper         (may not need this)
+# line /home/pi/hu3bert/hu3bert.cfg to /home/pi/hu3bert/printer.cfg
