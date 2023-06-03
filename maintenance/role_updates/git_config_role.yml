@@ -2,6 +2,7 @@
 - name: apply/update the Git Config role
   hosts:
     - ubuntu_debian_hosts
+    - tesseract
   roles:
     - git_config_role
   tasks:
