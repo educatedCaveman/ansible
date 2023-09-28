@@ -1,0 +1,22 @@
+---
+# tasks file for nfs_obsidian_role
+- name: check for the mount directory before mounting
+  stat: 
+    path: /mnt/mobius/Obsidian
+  register: obsidian_dir
+  
+- name: create the mount directory
+  file:
+    path:     /mnt/mobius/Obsidian
+    state:    directory
+    recurse:  yes
+  when: not obsidian_dir.stat.exists
+
+- name: Mount the Obsidian NFS share if the mount path exists
+  mount:
+    src: 192.168.11.2:/mnt/storage_node/Obsidian
+    path: /mnt/mobius/Obsidian
+    fstype: nfs 
+    opts: rw,nolock,tcp
+    state: mounted
+  

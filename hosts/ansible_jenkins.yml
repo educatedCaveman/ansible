@@ -99,3 +99,15 @@
       group:  docker
       append: yes
       
+  # Syncthing
+  - name: Install Syncthing
+    apt:
+      name:
+        - syncthing
+      state:  latest
+
+  - name: enable and restart Syncthing
+    systemd:
+      name: syncthing
+      state:  restarted
+      enabled:  yes
