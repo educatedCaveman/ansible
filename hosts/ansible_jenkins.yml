@@ -104,10 +104,10 @@
     apt:
       name:
         - syncthing
-      state:  latest
+      state:  missing
 
   - name: enable and restart Syncthing
     systemd:
-      name: syncthing
-      state:  restarted
-      enabled:  yes
+      name: syncthing@drake
+      state:  stopped
+      enabled:  no

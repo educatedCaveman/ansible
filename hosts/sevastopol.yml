@@ -20,7 +20,6 @@
     - nfs_docs_role
     - nfs_pics_role
     - nfs_staging_role
-    - nfs_obsidian_role
     - netdata_role
   tasks:
 
