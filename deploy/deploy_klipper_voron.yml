@@ -29,6 +29,12 @@
         src:    /home/drake/hu3bert/hu3bert.cfg
         state:  link
 
+    - name: create real link for klipper printer.cfg
+      file:
+        path:   /home/drake/printer_data/config/printer.cfg
+        src:    /home/drake/hu3bert/hu3bert.cfg
+        state:  link
+
     # restart the services
     - name: restart all the relevant services
       systemd:
