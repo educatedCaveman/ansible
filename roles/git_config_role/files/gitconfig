@@ -10,7 +10,7 @@ directory = /home/drake/.oh-my-zsh
 directory = /home/drake/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 directory = /home/drake/.config/nvim/bundle/Vundle.vim
 directory = /home/drake/privateer
-directory = /home/pi/hu3bert
+directory = /home/drake/hu3bert
 directory = /home/drake/kiauh
 
 #docker compose
