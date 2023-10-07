@@ -6,34 +6,32 @@
     - name: deploy klipper configs to drake user
       git:
         repo:     https://github.com/educatedCaveman/klipper
-        dest:     /home/drake/hu3bert
+        # dest:     /home/drake/hu3bert
+        dest:     /home/drake/printer_data/config
         version:  voron
         force:    yes
 
     - name: set permissions
       file:
-        path:   /home/drake/hu3bert
+        # path:   /home/drake/hu3bert
+        path:   /home/drake/printer_data/config
         owner:  drake
         group:  drake
         mode:   '0750'
 
-    # - name: link the configs to drake user
-    #   file:
-    #     path:   /home/drake/hu3bert
-    #     src:    /home/drake/hu3bert
-    #     state:  link
-
+    # TODO: remove this unlink after its unlinked
     - name: create link for klipper printer.cfg
       file:
         path:   /home/drake/hu3bert/printer.cfg
         src:    /home/drake/hu3bert/hu3bert.cfg
-        state:  link
+        state:  absent
 
+    # TODO: remove this unlink after its unlinked
     - name: create real link for klipper printer.cfg
       file:
         path:   /home/drake/printer_data/config/printer.cfg
         src:    /home/drake/hu3bert/hu3bert.cfg
-        state:  link
+        state:  absent
 
     # restart the services
     - name: restart all the relevant services
