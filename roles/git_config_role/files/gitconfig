@@ -12,6 +12,7 @@ directory = /home/drake/.config/nvim/bundle/Vundle.vim
 directory = /home/drake/privateer
 directory = /home/drake/hu3bert
 directory = /home/drake/kiauh
+directory = /home/drake/printer_data/config
 
 #docker compose
 directory = /docker/docker-compose/homer
