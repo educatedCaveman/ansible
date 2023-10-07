@@ -5,29 +5,21 @@
     - linux_role          # base linux configs
     - client_ssh_keys
     - drake_role          # drake home directory permissions
-    - rpi_role
   tasks:
 
     # Klipper Installation and Update Helper
     - name: deploy KIAUH
       git:
         repo:   https://github.com/th33xitus/kiauh.git
-        dest:   /home/pi/kiauh
+        dest:   /home/drake/kiauh
 
     - name: create virtual sd card folder
       file:
-        path:   /home/pi/gcode_files
+        path:   /home/drake/gcode_files
         state:  directory
-        owner:  pi
+        owner:  drake
         group:  drake
         mode:   '0750'
-
-    - name: set pi home directory permissions
-      file:
-        path:     /home/pi/
-        owner:    pi
-        group:    drake
-        recurse:  yes
 
     - name: configure klipper and the rest of the things
       debug:
@@ -50,8 +42,8 @@
     - name: moonraker secrets
       copy:
         src:    /home/drake/.moonraker_secrets.ini
-        dest:   /home/pi/.moonraker_secrets.ini
-        owner:  pi
+        dest:   /home/drake/.moonraker_secrets.ini
+        owner:  drake
         group:  drake
         mode:   '0750'
 
