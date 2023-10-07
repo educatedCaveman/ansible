@@ -14,7 +14,7 @@
     - name: deploy klipper_z_calibration
       git:
         repo:     https://github.com/protoloft/klipper_z_calibration.git
-        dest:     /home/drake/
+        dest:     /home/drake/klipper_z_calibration
         update:   no
 
     - name: set permissions
