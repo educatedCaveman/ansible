@@ -10,6 +10,13 @@
         version:  voron
         force:    yes
 
+    # the updating is handled by moonraker
+    - name: deploy klipper_z_calibration
+      git:
+        repo:     https://github.com/protoloft/klipper_z_calibration.git
+        dest:     /home/drake/
+        update:   no
+
     - name: set permissions
       file:
         path:   /home/drake/printer_data/config
