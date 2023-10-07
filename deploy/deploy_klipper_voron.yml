@@ -6,13 +6,13 @@
     - name: deploy klipper configs to pi user
       git:
         repo:     https://github.com/educatedCaveman/klipper
-        dest:     /home/pi/hu3bert
+        dest:     /home/drake/hu3bert
         version:  voron
         force:    yes
 
     - name: set permissions
       file:
-        path:   /home/pi/hu3bert
+        path:   /home/drake/hu3bert
         owner:  pi
         group:  drake
         mode:   '0750'
@@ -20,13 +20,13 @@
     - name: link the configs to drake user
       file:
         path:   /home/drake/hu3bert
-        src:    /home/pi/hu3bert
+        src:    /home/drake/hu3bert
         state:  link
 
     - name: create link for klipper printer.cfg
       file:
-        path:   /home/pi/hu3bert/printer.cfg
-        src:    /home/pi/hu3bert/hu3bert.cfg
+        path:   /home/drake/hu3bert/printer.cfg
+        src:    /home/drake/hu3bert/hu3bert.cfg
         state:  link
 
     # # restart the services
@@ -68,7 +68,7 @@
 # TODO: deploy the KIAUH script
 
 # TODO: handle new moonraker config locations?
-# link /home/pi/.moonraker_secrets.ini to /printer_data/moonraker.secrets
-# link /home/pi/hu3bert/ to /home/pi/printer_data/config
-# link /home/pi/hu3bert/klipper_default to /etc/default/klipper         (may not need this)
-# line /home/pi/hu3bert/hu3bert.cfg to /home/pi/hu3bert/printer.cfg
+# link /home/drake/.moonraker_secrets.ini to /printer_data/moonraker.secrets
+# link /home/drake/hu3bert/ to /home/drake/printer_data/config
+# link /home/drake/hu3bert/klipper_default to /etc/default/klipper         (may not need this)
+# line /home/drake/hu3bert/hu3bert.cfg to /home/drake/hu3bert/printer.cfg
