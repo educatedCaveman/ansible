@@ -17,3 +17,9 @@
       - gpg
       - net-tools
     state:  present
+
+- name: remove packages
+  apt:
+    name:  
+      - telegraf
+    state:  absent
