@@ -42,7 +42,7 @@
     - name: moonraker secrets
       copy:
         src:    /home/drake/.moonraker_secrets.ini
-        dest:   /home/drake/printer_data/moonraker_secrets.ini
+        dest:   /home/drake/printer_data/moonraker.secrets
         owner:  drake
         group:  drake
         mode:   '0750'
