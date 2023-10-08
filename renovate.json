@@ -3,7 +3,9 @@
   "extends": [
     "config:base"
   ],
-  "fileMatch": [
-    "(^|/)tasks/[^/]+\\.ya?ml$"
-  ]  
+  "ansible": {
+    "fileMatch": [
+      "(^|/)tasks/[^/]+\\.ya?ml$"
+    ] 
+  } 
 }
