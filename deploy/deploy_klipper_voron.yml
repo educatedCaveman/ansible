@@ -10,6 +10,13 @@
         version:  voron
         force:    yes
 
+    - name: set permissions
+      file:
+        path:   /home/drake/printer_data/config
+        owner:  drake
+        group:  drake
+        mode:   '0750'
+
     # the updating is handled by moonraker
     - name: deploy klipper_z_calibration
       git:
@@ -17,9 +24,10 @@
         dest:     /home/drake/klipper_z_calibration
         update:   no
 
+    
     - name: set permissions
       file:
-        path:   /home/drake/printer_data/config
+        path:   /home/drake/klipper_z_calibration
         owner:  drake
         group:  drake
         mode:   '0750'

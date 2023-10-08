@@ -28,6 +28,7 @@ directory = /docker/docker-compose/privateer
 directory = /docker/docker-compose/apt-cache
 directory = /docker/docker-compose/gatus
 directory = /docker/docker-compose/diskover
+directory = /docker/docker-compose/tautulli
 #docker compose, DEV
 directory = /home/drake/docker_compose_dev/homer
 directory = /home/drake/docker_compose_dev/grafana_apps
@@ -42,6 +43,7 @@ directory = /home/drake/docker_compose_dev/privateer
 directory = /home/drake/docker_compose_dev/apt-cache
 directory = /home/drake/docker_compose_dev/gatus
 directory = /home/drake/docker_compose_dev/diskover
+directory = /home/drake/docker_compose_dev/tautulli
 #ocker compose, PRD
 directory = /home/drake/docker_compose_prd/homer
 directory = /home/drake/docker_compose_prd/grafana_apps
@@ -56,3 +58,4 @@ directory = /home/drake/docker_compose_prd/privateer
 directory = /home/drake/docker_compose_prd/apt-cache
 directory = /home/drake/docker_compose_prd/gatus
 directory = /home/drake/docker_compose_prd/diskover
+directory = /home/drake/docker_compose_prd/tautulli
