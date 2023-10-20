@@ -13,6 +13,7 @@ directory = /home/drake/privateer
 directory = /home/drake/hu3bert
 directory = /home/drake/kiauh
 directory = /home/drake/printer_data/config
+directory = /home/drake/unifi-net-app
 
 #docker compose
 directory = /docker/docker-compose/homer
@@ -29,6 +30,7 @@ directory = /docker/docker-compose/apt-cache
 directory = /docker/docker-compose/gatus
 directory = /docker/docker-compose/diskover
 directory = /docker/docker-compose/tautulli
+directory = /docker/docker-compose/unifi-net-app
 #docker compose, DEV
 directory = /home/drake/docker_compose_dev/homer
 directory = /home/drake/docker_compose_dev/grafana_apps
@@ -59,3 +61,4 @@ directory = /home/drake/docker_compose_prd/apt-cache
 directory = /home/drake/docker_compose_prd/gatus
 directory = /home/drake/docker_compose_prd/diskover
 directory = /home/drake/docker_compose_prd/tautulli
+directory = /docker/docker-compose/unifi-net-app
