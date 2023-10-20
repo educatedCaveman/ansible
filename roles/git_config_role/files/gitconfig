@@ -61,4 +61,4 @@ directory = /home/drake/docker_compose_prd/apt-cache
 directory = /home/drake/docker_compose_prd/gatus
 directory = /home/drake/docker_compose_prd/diskover
 directory = /home/drake/docker_compose_prd/tautulli
-directory = /docker/docker-compose/unifi-net-app
+directory = /home/drake/docker_compose_prd/unifi-net-app
