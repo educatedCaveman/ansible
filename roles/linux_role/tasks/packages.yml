@@ -16,6 +16,7 @@
       - git-crypt
       - gpg
       - net-tools
+      - sudo
     state:  present
 
 - name: remove packages
