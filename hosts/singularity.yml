@@ -5,13 +5,19 @@
     - git_dotfiles_role   # deploy the dotfiles repo
     - git_scripts_role
     - apt_client_role
-    - LXC_netplan_MTU     # use the mtu9000 netplan config
+    # - LXC_netplan_MTU     # use the mtu9000 netplan config
     - linux_role          # base linux configs
     # - client_ssh_keys
     - drake_role          # drake home directory permissions
     - nfs_base_role       
     - nfs_backup_role
   tasks:
+
+  # check if pihole is already installed
+  - name: check for existing pi-hole install
+    stat:
+      path: /etc/pihole
+    register: pihole_install
 
   # pihole-specific dotfiles:
   # note: will use gravity sync to sync the rest
@@ -20,6 +26,10 @@
     stat:
       path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
     register: cname_conf
+    when:
+      - pihole_install.exists
+      - pihole_install.isdir is defined
+      - pihole_install.isdir == True
 
   - name: remove existing cname.conf
     file:
@@ -47,6 +57,10 @@
     stat:
       path: /etc/pihole/custom.list
     register: cust_list
+    when:
+      - pihole_install.exists
+      - pihole_install.isdir is defined
+      - pihole_install.isdir == True
 
   - name: remove existing custom.list
     file:
@@ -74,6 +88,10 @@
     stat:
       path: /etc/pihole/pihole-FTL.conf
     register: ftl_conf
+    when:
+      - pihole_install.exists
+      - pihole_install.isdir is defined
+      - pihole_install.isdir == True
 
   - name: remove existing pihole-FTL.conf
     file:
@@ -124,6 +142,10 @@
   # Pi-Hole
   - debug:
       msg:  "configuration of pihole must be done manually"
+    when:
+      - pihole_install.exists == False
 
   - debug:
       msg:  "configuration of gravity-sync must be done manually"
+    when:
+      - pihole_install.exists == False
