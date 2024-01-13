@@ -1,24 +1,24 @@
 - name: configure singularity
   hosts:  singularity
   roles:
-    - LXC_role            # base LXC container config
-    - git_config_role
-    - git_dotfiles_role   # deploy the dotfiles repo
-    - git_scripts_role
-    # - apt_client_role
-    # - LXC_netplan_MTU     # use the mtu9000 netplan config
-    - linux_role          # base linux configs
-    # - client_ssh_keys
-    - drake_role          # drake home directory permissions
-    - nfs_base_role       
-    - nfs_backup_role
+    # - LXC_role            # base LXC container config
+    # - git_config_role
+    # - git_dotfiles_role   # deploy the dotfiles repo
+    # - git_scripts_role
+    # # - apt_client_role
+    # # - LXC_netplan_MTU     # use the mtu9000 netplan config
+    # - linux_role          # base linux configs
+    # # - client_ssh_keys
+    # - drake_role          # drake home directory permissions
+    # - nfs_base_role       
+    # - nfs_backup_role
   tasks:
 
-  # check if pihole is already installed
-  - name: check for existing pi-hole install
-    stat:
-      path: /etc/pihole
-    register: pihole_install
+  # # check if pihole is already installed
+  # - name: check for existing pi-hole install
+  #   stat:
+  #     path: /etc/pihole
+  #   register: pihole_install
 
   # pihole-specific dotfiles:
   # note: will use gravity sync to sync the rest
@@ -27,19 +27,19 @@
     stat:
       path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
     register: cname_conf
-    when:
-      - pihole_install.stat.exists
-      - pihole_install.stat.isdir is defined
-      - pihole_install.stat.isdir == True
+    # when:
+    #   - pihole_install.stat.exists
+    #   - pihole_install.stat.isdir is defined
+    #   - pihole_install.stat.isdir == True
 
   - name: remove existing cname.conf
     file:
       path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
       state:  absent
     when: 
-      - pihole_install.stat.exists
-      - pihole_install.stat.isdir is defined
-      - pihole_install.stat.isdir == True
+      # - pihole_install.stat.exists
+      # - pihole_install.stat.isdir is defined
+      # - pihole_install.stat.isdir == True
       - cname_conf.stat.exists
       - cname_conf.stat.islnk is defined
       - cname_conf.stat.islnk == False
@@ -52,9 +52,9 @@
       group:  root
       state:  link
     when: 
-      - pihole_install.stat.exists
-      - pihole_install.stat.isdir is defined
-      - pihole_install.stat.isdir == True
+      # - pihole_install.stat.exists
+      # - pihole_install.stat.isdir is defined
+      # - pihole_install.stat.isdir == True
       - cname_conf.stat.exists
       - cname_conf.stat.islnk is defined
       - cname_conf.stat.islnk == False
@@ -64,19 +64,19 @@
     stat:
       path: /etc/pihole/custom.list
     register: cust_list
-    when:
-      - pihole_install.stat.exists
-      - pihole_install.stat.isdir is defined
-      - pihole_install.stat.isdir == True
+    # when:
+    #   - pihole_install.stat.exists
+    #   - pihole_install.stat.isdir is defined
+    #   - pihole_install.stat.isdir == True
 
   - name: remove existing custom.list
     file:
       path: /etc/pihole/custom.list
       state:  absent
     when: 
-      - pihole_install.stat.exists
-      - pihole_install.stat.isdir is defined
-      - pihole_install.stat.isdir == True
+      # - pihole_install.stat.exists
+      # - pihole_install.stat.isdir is defined
+      # - pihole_install.stat.isdir == True
       - cust_list.stat.exists
       - cust_list.stat.islnk is defined
       - cust_list.stat.islnk == False
@@ -89,9 +89,9 @@
       group:  root
       state:  link
     when: 
-      - pihole_install.stat.exists
-      - pihole_install.stat.isdir is defined
-      - pihole_install.stat.isdir == True
+      # - pihole_install.stat.exists
+      # - pihole_install.stat.isdir is defined
+      # - pihole_install.stat.isdir == True
       - cust_list.stat.exists
       - cust_list.stat.islnk is defined
       - cust_list.stat.islnk == False
@@ -101,19 +101,19 @@
     stat:
       path: /etc/pihole/pihole-FTL.conf
     register: ftl_conf
-    when:
-      - pihole_install.stat.exists
-      - pihole_install.stat.isdir is defined
-      - pihole_install.stat.isdir == True
+    # when:
+    #   - pihole_install.stat.exists
+    #   - pihole_install.stat.isdir is defined
+    #   - pihole_install.stat.isdir == True
 
   - name: remove existing pihole-FTL.conf
     file:
       path: /etc/pihole/pihole-FTL.conf
       state:  absent
     when: 
-      - pihole_install.stat.exists
-      - pihole_install.stat.isdir is defined
-      - pihole_install.stat.isdir == True
+      # - pihole_install.stat.exists
+      # - pihole_install.stat.isdir is defined
+      # - pihole_install.stat.isdir == True
       - ftl_conf.stat.exists
       - ftl_conf.stat.islnk is defined
       - ftl_conf.stat.islnk == False
@@ -126,9 +126,9 @@
       group:  root
       state:  link
     when:
-      - pihole_install.stat.exists
-      - pihole_install.stat.isdir is defined
-      - pihole_install.stat.isdir == True
+      # - pihole_install.stat.exists
+      # - pihole_install.stat.isdir is defined
+      # - pihole_install.stat.isdir == True
       - ftl_conf.stat.exists
       - ftl_conf.stat.islnk is defined
       - ftl_conf.stat.islnk == False
@@ -139,16 +139,16 @@
       path: /mnt/mobius/Backup/pihole
       state:  directory
 
-  # install pip3
-  - name: install pip
-    apt:
-      name: python3-pip
-      state:  present
+  # # install pip3
+  # - name: install pip
+  #   apt:
+  #     name: python3-pip
+  #     state:  present
 
-  # python dependencies for the scripts
-  - name: install pip packages
-    pip:
-      name: tabulate
+  # # python dependencies for the scripts
+  # - name: install pip packages
+  #   pip:
+  #     name: tabulate
 
   # CRON
   - name: setup pihole backup script
