@@ -1,6 +1,6 @@
 ---
 - name: configure Template
-  hosts:  template
+  hosts:  lxc_template
   roles:
     - LXC_role            # base LXC container config
     - apt_client_role
