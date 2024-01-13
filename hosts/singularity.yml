@@ -139,6 +139,13 @@
       path: /mnt/mobius/Backup/pihole
       state:  directory
 
+  # install pip3
+  - name: install pip
+    apt:
+      name:
+        - python3-pip
+    state:  present
+
   # python dependencies for the scripts
   - name: install pip packages
     pip:
