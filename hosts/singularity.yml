@@ -28,9 +28,9 @@
       path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
     register: cname_conf
     when:
-      - pihole_install.exists
-      - pihole_install.isdir is defined
-      - pihole_install.isdir == True
+      - pihole_install.stat.exists
+      - pihole_install.stat.isdir is defined
+      - pihole_install.stat.isdir == True
 
   - name: remove existing cname.conf
     file:
@@ -59,9 +59,9 @@
       path: /etc/pihole/custom.list
     register: cust_list
     when:
-      - pihole_install.exists
-      - pihole_install.isdir is defined
-      - pihole_install.isdir == True
+      - pihole_install.stat.exists
+      - pihole_install.stat.isdir is defined
+      - pihole_install.stat.isdir == True
 
   - name: remove existing custom.list
     file:
@@ -90,9 +90,9 @@
       path: /etc/pihole/pihole-FTL.conf
     register: ftl_conf
     when:
-      - pihole_install.exists
-      - pihole_install.isdir is defined
-      - pihole_install.isdir == True
+      - pihole_install.stat.exists
+      - pihole_install.stat.isdir is defined
+      - pihole_install.stat.isdir == True
 
   - name: remove existing pihole-FTL.conf
     file:
@@ -143,13 +143,10 @@
   # Pi-Hole
   - debug:
       msg:  "configuration of pihole must be done manually"
-      msg:  "run the installation command,"
-      msg:  "restore from backup"
-      msg:  "update manual settings"
     when:
-      - pihole_install.exists == False
+      - pihole_install.stat.exists == False
 
   - debug:
       msg:  "configuration of gravity-sync must be done manually"
     when:
-      - pihole_install.exists == False
+      - pihole_install.stat.exists == False
