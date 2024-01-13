@@ -37,6 +37,9 @@
       path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
       state:  absent
     when: 
+      - pihole_install.stat.exists
+      - pihole_install.stat.isdir is defined
+      - pihole_install.stat.isdir == True
       - cname_conf.stat.exists
       - cname_conf.stat.islnk is defined
       - cname_conf.stat.islnk == False
@@ -49,6 +52,9 @@
       group:  root
       state:  link
     when: 
+      - pihole_install.stat.exists
+      - pihole_install.stat.isdir is defined
+      - pihole_install.stat.isdir == True
       - cname_conf.stat.exists
       - cname_conf.stat.islnk is defined
       - cname_conf.stat.islnk == False
@@ -68,6 +74,9 @@
       path: /etc/pihole/custom.list
       state:  absent
     when: 
+      - pihole_install.stat.exists
+      - pihole_install.stat.isdir is defined
+      - pihole_install.stat.isdir == True
       - cust_list.stat.exists
       - cust_list.stat.islnk is defined
       - cust_list.stat.islnk == False
@@ -80,6 +89,9 @@
       group:  root
       state:  link
     when: 
+      - pihole_install.stat.exists
+      - pihole_install.stat.isdir is defined
+      - pihole_install.stat.isdir == True
       - cust_list.stat.exists
       - cust_list.stat.islnk is defined
       - cust_list.stat.islnk == False
@@ -99,6 +111,9 @@
       path: /etc/pihole/pihole-FTL.conf
       state:  absent
     when: 
+      - pihole_install.stat.exists
+      - pihole_install.stat.isdir is defined
+      - pihole_install.stat.isdir == True
       - ftl_conf.stat.exists
       - ftl_conf.stat.islnk is defined
       - ftl_conf.stat.islnk == False
@@ -111,6 +126,9 @@
       group:  root
       state:  link
     when:
+      - pihole_install.stat.exists
+      - pihole_install.stat.isdir is defined
+      - pihole_install.stat.isdir == True
       - ftl_conf.stat.exists
       - ftl_conf.stat.islnk is defined
       - ftl_conf.stat.islnk == False
