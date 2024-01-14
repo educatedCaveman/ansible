@@ -3,6 +3,7 @@
   hosts:  jellyfin
   roles:
     - LXC_role            # base LXC container config
+    - git_config_role
     - git_dotfiles_role   # deploy the dotfiles repo
     - git_scripts_role
     # - apt_client_role
