@@ -64,7 +64,7 @@
 - name: add drake to the docker group
   user:
     name: drake
-    group:  docker
+    groups:  docker
     append: yes
 
 - name: start and enable docker

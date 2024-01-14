@@ -7,8 +7,8 @@
     - git_config_role
     - git_dotfiles_role
     - git_scripts_role
-    - VM_netplan_MTU
-    - apt_client_role
+    # - VM_netplan_MTU
+    # - apt_client_role
     - linux_role
     - client_ssh_keys
     - docker_role
@@ -20,7 +20,7 @@
     - nfs_docs_role
     - nfs_pics_role
     - nfs_staging_role
-    - netdata_role
+    # - netdata_role
   tasks:
 
     - name: initiate the swarm (single node)
@@ -30,12 +30,12 @@
     # need to format the drive
     - name: check the partitions
       community.general.parted:
-        device: /dev/vdb
+        device: /dev/sda
         unit: MiB
 
     - name: create partition
       community.general.parted:
-        device: /dev/vdb
+        device: /dev/sda
         number: 1
         label:  gpt
         state:  present
@@ -44,7 +44,7 @@
       community.general.filesystem:
         fstype: ext4
         state:  present
-        device: /dev/vdb1
+        device: /dev/sda1
 
     # create the mount directory, if needed:
     - name: check if the directory exists
@@ -61,7 +61,7 @@
 
     - name: mount the drive
       mount:
-        src:  /dev/vdb1
+        src:  /dev/sda1
         path: /docker
         fstype: ext4
         state:  mounted
@@ -94,12 +94,12 @@
         state:  directory
         recurse:  no
 
-    # install custom docker daemon.json
-    - name: install custom daemon.json
-      file:
-        src:    /home/drake/dotfiles/docker/daemon_prd.json
-        dest:   /etc/docker/daemon.json
-        state:  link
+    # # install custom docker daemon.json
+    # - name: install custom daemon.json
+    #   file:
+    #     src:    /home/drake/dotfiles/docker/daemon_prd.json
+    #     dest:   /etc/docker/daemon.json
+    #     state:  link
 
     # restart docker
     - name: restart docker.service
@@ -120,9 +120,9 @@
           - "to install/start portainer, run the following:" 
           - docker stack deploy -c /tmp/portainer-agent-stack.yml portainer
 
-    # https://docs.technotim.live/posts/grafana-loki/
-    - name: install docker plugins
-      debug:
-        msg:
-          - "for grafana loki, the following command must be run manually:"
-          - docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
+    # # https://docs.technotim.live/posts/grafana-loki/
+    # - name: install docker plugins
+    #   debug:
+    #     msg:
+    #       - "for grafana loki, the following command must be run manually:"
+    #       - docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
