@@ -1,17 +1,17 @@
 - name: configure singularity
   hosts:  singularity
   roles:
-    # - LXC_role            # base LXC container config
-    # - git_config_role
-    # - git_dotfiles_role   # deploy the dotfiles repo
-    # - git_scripts_role
-    # # - apt_client_role
-    # # - LXC_netplan_MTU     # use the mtu9000 netplan config
-    # - linux_role          # base linux configs
-    # # - client_ssh_keys
-    # - drake_role          # drake home directory permissions
-    # - nfs_base_role       
-    # - nfs_backup_role
+    - LXC_role            # base LXC container config
+    - git_config_role
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - git_scripts_role
+    # - apt_client_role
+    # - LXC_netplan_MTU     # use the mtu9000 netplan config
+    - linux_role          # base linux configs
+    # - client_ssh_keys
+    - drake_role          # drake home directory permissions
+    - nfs_base_role       
+    - nfs_backup_role
   tasks:
 
   # # check if pihole is already installed
@@ -167,10 +167,10 @@
   # Pi-Hole
   - debug:
       msg:  "configuration of pihole must be done manually"
-    when:
-      - pihole_install.stat.exists == False
+    # when:
+    #   - pihole_install.stat.exists == False
 
   - debug:
       msg:  "configuration of gravity-sync must be done manually"
-    when:
-      - pihole_install.stat.exists == False
+    # when:
+    #   - pihole_install.stat.exists == False
