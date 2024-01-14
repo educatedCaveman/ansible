@@ -7,8 +7,8 @@
     - git_config_role
     - git_dotfiles_role
     - git_scripts_role
-    - VM_netplan_MTU
-    - apt_client_role
+    # - VM_netplan_MTU
+    # - apt_client_role
     - linux_role
     - client_ssh_keys
     - docker_role
@@ -20,7 +20,7 @@
     - nfs_staging_role
     - nfs_docs_role
     - nfs_pics_role
-    - netdata_role
+    # - netdata_role
   tasks:
 
     - name: initiate the swarm (single node)
@@ -30,12 +30,12 @@
     # need to format the drive
     - name: check the partitions
       community.general.parted:
-        device: /dev/vdb
+        device: /dev/sda
         unit: MiB
 
     - name: create partition
       community.general.parted:
-        device: /dev/vdb
+        device: /dev/sda
         number: 1
         label:  gpt
         state:  present
@@ -44,7 +44,7 @@
       community.general.filesystem:
         fstype: ext4
         state:  present
-        device: /dev/vdb1
+        device: /dev/sda1
 
     # create the mount directory, if needed:
     - name: check if the directory exists
@@ -61,31 +61,31 @@
 
     - name: mount the drive
       mount:
-        src:  /dev/vdb1
+        src:  /dev/sda1
         path: /docker
         fstype: ext4
         state:  mounted
 
-    # cron jobs:
-    - name: cron backup, daily
-      cron:
-        name:   daily_backup
-        minute: "0"
-        hour:   "0"
-        job:    "/bin/bash /home/drake/scripts/cron/backup_docker_daily.sh"
+    # # cron jobs: disabled for first run
+    # - name: cron backup, daily
+    #   cron:
+    #     name:   daily_backup
+    #     minute: "0"
+    #     hour:   "0"
+    #     job:    "/bin/bash /home/drake/scripts/cron/backup_docker_daily.sh"
 
-    - name: cron backup, weekly
-      cron:
-        name:   weekly_backup
-        minute: "0"
-        hour:   "1"
-        day:    "1"
-        job:    "/bin/bash /home/drake/scripts/cron/backup_docker_weekly.sh"
+    # - name: cron backup, weekly
+    #   cron:
+    #     name:   weekly_backup
+    #     minute: "0"
+    #     hour:   "1"
+    #     day:    "1"
+    #     job:    "/bin/bash /home/drake/scripts/cron/backup_docker_weekly.sh"
 
-    - name: YTDL file sync
-      cron:
-        name:   ytdl_file_sync
-        job:    "/bin/bash /docker/docker-compose/ytdl/sync_to_NFS.sh"
+    # - name: YTDL file sync
+    #   cron:
+    #     name:   ytdl_file_sync
+    #     job:    "/bin/bash /docker/docker-compose/ytdl/sync_to_NFS.sh"
 
     # folder for portainer
     - name: create the portainer directory
