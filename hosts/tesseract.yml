@@ -185,3 +185,9 @@
     debug:
       msg: run ez_proxmox_mail_configurator.sh, after preparing an app password for gmail
     when: not email.stat.exists
+
+  # # docker related:
+  # - name: install packages for docker
+  #   apt:
+  #     name: fuse-overlayfs    
+  #   state:  present
