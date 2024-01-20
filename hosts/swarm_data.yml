@@ -54,4 +54,4 @@
       systemd:
         name:     nfs-kernel-server.service
         state:    restarted
-        enalbed:  true
+        enabled:  true
