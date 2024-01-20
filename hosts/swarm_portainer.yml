@@ -1,0 +1,29 @@
+# base docker config
+- name: configure Portainer Host
+  hosts:
+    - swarm_portainer
+  roles:
+    - LXC_role
+    - git_config_role
+    - git_dotfiles_role
+    - git_scripts_role
+    - linux_role
+    - drake_role
+    - docker_role
+    - nfs_base_role
+    - nfs_backup_role
+  tasks:
+
+    # TODO: make portainer role, use the files to deploy the portainer compose file
+
+    # # setup for manual steps
+    # - name: deploying the custom portianer stack file
+    #   get_url:
+    #     url:  "https://raw.githubusercontent.com/educatedCaveman/docker-lab/dev_test/scripts/swarm/portainer-agent-stack.yml"
+    #     dest: /tmp/
+
+    # - name: setting up portainer
+    #   debug:
+    #     msg:
+    #       - "to install/start portainer, run the following:" 
+    #       - docker stack deploy -c /tmp/portainer-agent-stack.yml portainer

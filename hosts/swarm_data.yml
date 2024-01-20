@@ -26,6 +26,16 @@
         owner:    nobody
         group:    nogroup
       loop:
+        - /mnt/docker/DEV
+        - /mnt/docker/PRD
+ 
+    # cleanup
+    - name: cleanup NFS dirs
+      file:
+        path:     "{{ item }}"
+        recurse:  yes
+        state:    absent
+      loop:
         - /mnt/docker/DEV/portainer
         - /mnt/docker/DEV/compose
         - /mnt/docker/PRD/portainer
