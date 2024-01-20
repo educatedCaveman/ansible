@@ -78,7 +78,7 @@
 # Swarm data
 - name: add swarm data mount
   hosts: swarm_dev_workers
-  takss:
+  tasks:
 
     - name: create mount path
       file:
