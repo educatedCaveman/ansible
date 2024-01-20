@@ -9,6 +9,7 @@
     - linux_role
     - drake_role
     - docker_role
+    - nfs_base_role
   tasks:
 
 - name: let the workers have NFS data
@@ -73,3 +74,22 @@
         state: join
         join_token:   "{{ hostvars['SWARM_INFO']['worker_token'] }}"
         remote_addrs: "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
+
+# Swarm data
+- name: add swarm data mount
+  hosts: swarm_dev_workers
+  takss:
+
+    - name: create mount path
+      file:
+        path:     /docker
+        state:    directory
+        recurse:  yes
+
+    - name: mount the share
+      mount:
+        src:    192.168.12.30:/mnt/docker/DEV/
+        path:   /docker
+        fstype: nfs
+        opts:   rw,nolock,tcp
+        state:  mounted
