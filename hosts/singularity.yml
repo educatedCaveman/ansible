@@ -14,6 +14,12 @@
     - nfs_backup_role
   tasks:
 
+  - name: install pihole dependencies
+    apt:
+      name:
+        - sqlite3        
+      state:  latest
+
   # # check if pihole is already installed
   # - name: check for existing pi-hole install
   #   stat:
