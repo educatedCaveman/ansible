@@ -1,0 +1,7 @@
+---
+# copy the portainer compose file from jenkins to the host
+- name: copy custom portainer compose file
+  copy:
+    src:    portainer-agent-stack.yml
+    dest:   /tmp/portainer-agent-stack.yml
+    force:  yes
