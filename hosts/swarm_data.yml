@@ -33,7 +33,6 @@
     - name: cleanup NFS dirs
       file:
         path:     "{{ item }}"
-        recurse:  yes
         state:    absent
       loop:
         - /mnt/docker/DEV/portainer
