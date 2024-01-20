@@ -52,6 +52,6 @@
 
     - name: restart NFS server process
       systemd:
-        name:   nfs-kernel-server
-        state:  restarted
-        enalbed:  yes
+        name:     nfs-kernel-server.service
+        state:    restarted
+        enalbed:  true
