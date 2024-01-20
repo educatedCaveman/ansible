@@ -1,0 +1,23 @@
+# configure Docker Swarm Cluster (PRD)
+- name: configure Docker Swarm Cluster (PRD)
+  hosts:
+    - prd_swarm
+  roles:
+    - LXC_role
+    - git_config_role
+    - git_dotfiles_role
+    - linux_role
+    - drake_role
+    - docker_role
+  tasks:
+
+- name: let the workers have NFS data
+  hosts:
+    - swarm_prd_workers
+  tasks:
+
+    - name: install required packages
+      apt:
+        name:
+          - nfs-common
+        state:  latest

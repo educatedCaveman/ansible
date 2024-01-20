@@ -1,0 +1,10 @@
+---
+- name: Swarm Data
+  import_playbook: swarm_data.yml
+
+- name: DEV swarm cluster
+  import_playbook: swarm_dev.yml
+
+- name: PRD swarm cluster
+  import_playbook: swarm_prd.yml
+

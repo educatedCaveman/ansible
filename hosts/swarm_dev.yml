@@ -14,5 +14,62 @@
 - name: let the workers have NFS data
   hosts:
     - swarm_dev_workers
-  roles:
-    - nfs_base_role
+  tasks:
+
+    - name: install required packages
+      apt:
+        name:
+          - nfs-common
+        state:  latest
+
+# create the Swarm:
+- name: initiate the swarm
+  hosts:  swarm_dev_mgr_01
+  gather_facts: yes
+  tasks:
+
+    - name: initiate the swarm, gather tokens
+      community.docker.docker_swarm:
+        state: present
+      register: swarm
+
+    - name: register dummy manager host
+      add_host:
+        name: "SWARM_INFO"
+        manager_endpoint: "{{ inventory_hostname }}:2377"
+        manager_token:    "{{ swarm.swarm_facts.JoinTokens.Manager }}"
+        worker_token:     "{{ swarm.swarm_facts.JoinTokens.Worker }}"
+
+    - name: show manager token
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['manager_token'] }}"
+
+    - name: show worker token
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['worker_token'] }}"
+
+    - name: show manager IP/hostname and port
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
+
+# Add Swarm Manager Nodes
+- name: Add Manager Nodes
+  hosts:  swarm_dev_managers:!swarm_dev_mgr_01
+  tasks:
+
+    - name: Add Manager Nodes
+      community.docker.docker_swarm:
+        state: join
+        join_token:   "{{ hostvars['SWARM_INFO']['manager_token'] }}"
+        remote_addrs: "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
+
+# Add Swarm Worker Nodes
+- name: Add Worker Nodes
+  hosts:  swarm_dev_workers
+  tasks:
+
+    - name: Add Worker Nodes
+      community.docker.docker_swarm:
+        state: join
+        join_token:   "{{ hostvars['SWARM_INFO']['worker_token'] }}"
+        remote_addrs: "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
