@@ -8,6 +8,8 @@
     - git_dotfiles_role
     - linux_role
     - drake_role
+    - nfs_base_role
+    - nfs_backup_role
   tasks:
 
     - name: install packages
