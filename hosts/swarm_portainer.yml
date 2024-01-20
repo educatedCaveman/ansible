@@ -15,6 +15,10 @@
     - swarm_portainer_role
   tasks:
 
+    - name: initiate the swarm (single node)
+      community.docker.docker_swarm:
+        state: present
+
     - name: setting up portainer
       debug:
         msg:
