@@ -1,0 +1,57 @@
+# configure Docker Swarm Data host
+- name: configure Docker Swarm Data Host
+  hosts:
+    - swarm_data
+  roles:
+    - LXC_role
+    - git_config_role
+    - git_dotfiles_role
+    - linux_role
+    - drake_role
+  tasks:
+
+    - name: install packages
+      apt:
+        name:
+          - nfs-kernel-server
+        state:  latest
+
+    - name: create NFS dirs
+      file:
+        path:     "{{ item }}"
+        recurse:  yes
+        state:    directory
+        owner:    nobody
+        group:    nogroup
+      loop:
+        - /mnt/docker/DEV/portainer
+        - /mnt/docker/DEV/compose
+        - /mnt/docker/PRD/portainer
+        - /mnt/docker/PRD/compose
+
+    - name: check for existing /etc/exports file
+      stat:
+        path: /etc/exports
+      register: exports
+
+    - name: remove existing NFS config file
+      file:
+        path:   /etc/exports
+        state:  absent
+      when:
+        - exports.stat.exists
+        - exports.stat.islnk == False
+
+    - name: install NFS config file
+      file:
+        src:    /home/drake/dotfiles/swarm/nfs_exports
+        dest:   /etc/exports
+        owner:  root
+        group:  root
+        state:  link
+
+    - name: restart NFS server process
+      systemd:
+        name:   nfs-kernel-server
+        state:  restarted
+        enalbed:  yes

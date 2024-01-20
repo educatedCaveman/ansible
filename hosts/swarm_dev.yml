@@ -10,3 +10,9 @@
     - drake_role
     - docker_role
   tasks:
+
+- name: let the workers have NFS data
+  hosts:
+    - swarm_dev_workers
+  roles:
+    - nfs_base_role
