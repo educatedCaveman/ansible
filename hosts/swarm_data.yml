@@ -10,6 +10,7 @@
     - drake_role
     - nfs_base_role
     - nfs_backup_role
+    - swarm_nfs_role
   tasks:
 
     - name: install packages
@@ -28,30 +29,25 @@
       loop:
         - /mnt/docker/DEV
         - /mnt/docker/PRD
+        - /mnt/docker/portainer
  
-    - name: check for existing /etc/exports file
+    - name: check for /etc/exports file
       stat:
         path: /etc/exports
       register: exports
 
-    - name: remove existing NFS config file
+    # cleanup
+    - name: remove existing NFS config file link
       file:
         path:   /etc/exports
         state:  absent
       when:
         - exports.stat.exists
-        - exports.stat.islnk == False
-
-    - name: install NFS config file
-      file:
-        src:    /home/drake/dotfiles/swarm/nfs_exports
-        dest:   /etc/exports
-        owner:  root
-        group:  root
-        state:  link
+        - exports.stat.islnk == True
 
     - name: restart NFS server process
       systemd:
         name:     nfs-kernel-server.service
         state:    restarted
         enabled:  true
+      when: exports.stat.exists

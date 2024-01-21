@@ -1,0 +1,7 @@
+---
+# copy the NFS exports file from jenkins to the host
+- name: copy custom exports file
+  copy:
+    src:    etc_exports
+    dest:   /etc/exports
+    force:  yes
