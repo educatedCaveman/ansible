@@ -15,18 +15,18 @@ HOSTS=( \
     seedbox \
     singularity \
     plex_vm \
-    portainer_vm \
-    swarm_data_vm \
-    apis_lb_vm \
-    vespae_lb_vm \
-    apis_01_vm \
-    apis_02_vm \
-    apis_03_vm \
-    apis_04_vm \
-    apis_05_vm \
-    vespae_01_vm \
-    vespae_02_vm \
-    vespae_03_vm \
+    swarm_portainer \
+    swarm_data \
+    apis_LB \
+    vespae_LB \
+    apis_1 \
+    apis_2 \
+    apis_3 \
+    apis_4 \
+    apis_5 \
+    vespae_1 \
+    vespae_2 \
+    vespae_3 \
 )
 
 # check BW_CLIENTID
