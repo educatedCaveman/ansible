@@ -37,7 +37,7 @@
 
 - name: install Docker GPG key
   ansible.builtin.command:
-    cmd:      gpg --dearmor -o /etc/apt/keyrings/docker.gpg < /tmp/docker.gpg
+    cmd:      gpg --dearmor /tmp/docker.gpg -o /etc/apt/keyrings/docker.gpg 
     creates:  /etc/apt/keyrings/docker.gpg
 
 - name: check for existing Docker repo list
