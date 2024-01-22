@@ -4,12 +4,13 @@
 /mnt/docker/portainer 192.168.12.31(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
 
 # compose, PRD
-/mnt/docker/PRD 192.168.12.50(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
-/mnt/docker/PRD 192.168.12.51(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
-/mnt/docker/PRD 192.168.12.52(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
-/mnt/docker/PRD 192.168.12.53(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
+/mnt/docker/PRD 192.168.12.41(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
+/mnt/docker/PRD 192.168.12.42(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
+/mnt/docker/PRD 192.168.12.43(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
+/mnt/docker/PRD 192.168.12.44(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
+/mnt/docker/PRD 192.168.12.45(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
 
 # compose, DEV
-/mnt/docker/DEV 192.168.12.70(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
-/mnt/docker/DEV 192.168.12.71(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
-/mnt/docker/DEV 192.168.12.72(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
+/mnt/docker/DEV 192.168.12.51(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
+/mnt/docker/DEV 192.168.12.52(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
+/mnt/docker/DEV 192.168.12.53(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534)
