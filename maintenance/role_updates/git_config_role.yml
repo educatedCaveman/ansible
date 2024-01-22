@@ -3,6 +3,7 @@
   hosts:
     - ubuntu_debian_hosts
     - tesseract
+    - swarm_data
   roles:
     - git_config_role
   tasks:
