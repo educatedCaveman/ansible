@@ -10,11 +10,23 @@ ANSIBLE_DIR='/home/drake/ansible/maintenance'
 HOSTS=( \
     nextcloud_vm \
     jenkins_vm \
-    lv_426 \
-    sevastopol \
+    # lv_426 \
+    # sevastopol \
     seedbox \
     singularity \
     plex_vm \
+    portainer_vm \
+    swarm_data_vm \
+    apis_lb_vm \
+    vespae_lb_vm \
+    apis_01_vm \
+    apis_02_vm \
+    apis_03_vm \
+    apis_04_vm \
+    apis_05_vm \
+    vespae_01_vm \
+    vespae_02_vm \
+    vespae_03_vm \
 )
 
 # check BW_CLIENTID
