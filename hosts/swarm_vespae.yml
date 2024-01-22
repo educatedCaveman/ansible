@@ -3,6 +3,7 @@
   hosts:
     - dev_swarm
   roles: 
+    - VM_role
     - git_config_role
     - git_dotfiles_role
     - linux_role
