@@ -3,12 +3,83 @@
   hosts:
     - dev_swarm
   roles: 
-    # - VM_role
-    # - git_config_role
-    # - git_dotfiles_role
-    # - linux_role
-    # - client_ssh_keys
-    # - drake_role
+    - VM_role
+    - git_config_role
+    - git_dotfiles_role
+    - linux_role
+    - client_ssh_keys
+    - drake_role
     - docker_role
     - nfs_base_role
   tasks:
+
+# create the Swarm:
+- name: initiate the swarm
+  hosts:  vespae_1
+  gather_facts: yes
+  tasks:
+
+    - name: initiate the swarm, gather tokens
+      community.docker.docker_swarm:
+        state: present
+      register: swarm
+
+    - name: register dummy manager host
+      add_host:
+        name: "SWARM_INFO"
+        manager_endpoint: "{{ inventory_hostname }}:2377"
+        manager_token:    "{{ swarm.swarm_facts.JoinTokens.Manager }}"
+        worker_token:     "{{ swarm.swarm_facts.JoinTokens.Worker }}"
+
+    - name: show manager token
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['manager_token'] }}"
+
+    - name: show worker token
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['worker_token'] }}"
+
+    - name: show manager IP/hostname and port
+      debug:
+        msg:  "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
+
+# Add Swarm Manager Nodes
+- name: Add Manager Nodes
+  hosts:  dev_swarm:!vespae_1
+  tasks:
+
+    - name: Add Manager Nodes
+      community.docker.docker_swarm:
+        state: join
+        join_token:   "{{ hostvars['SWARM_INFO']['manager_token'] }}"
+        remote_addrs: "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
+
+# Add Swarm Worker Nodes
+- name: Add Worker Nodes
+  hosts:  dev_swarm
+  tasks:
+
+    - name: Add Worker Nodes
+      community.docker.docker_swarm:
+        state: join
+        join_token:   "{{ hostvars['SWARM_INFO']['worker_token'] }}"
+        remote_addrs: "{{ hostvars['SWARM_INFO']['manager_endpoint'] }}"
+
+# Swarm data
+- name: add swarm data mount
+  hosts: dev_swarm
+  tasks:
+
+    - name: create mount path
+      file:
+        path:     /docker
+        state:    directory
+        recurse:  yes
+
+    - name: mount the share
+      mount:
+        src:    192.168.12.30:/mnt/docker/DEV/
+        path:   /docker
+        fstype: nfs
+        opts:   rw,nolock,tcp
+        state:  mounted
