@@ -83,3 +83,23 @@
         fstype: nfs
         opts:   rw,nolock,tcp
         state:  mounted
+
+- name: configure Docker Swarm Cluster (DEV) load-balancer
+  hosts:
+    - vespae_LB
+  roles: 
+    - LXC_role
+    - git_config_role
+    - git_dotfiles_role
+    - linux_role
+    - client_ssh_keys
+    - drake_role
+  tasks:
+
+    - name: install Nginx
+      apt:
+        name: nginx
+        state: latest
+
+    # - name: install custom config
+    #   copy:
