@@ -1,0 +1,43 @@
+# configure Docker Swarm Data host
+- name: Deploy dev code
+  hosts:
+    - swarm_data
+  roles:
+  tasks:
+
+    - name: deploy repo to the datastore
+      git:
+        repo:     "https://github.com/educatedCaveman/swarm_lab"
+        dest:     /mnt/docker/DEV
+        # version:  dev_test
+        version:  master
+        force:    yes
+
+# NGINX
+- name: Deploy dev code
+  hosts:
+    - vespae_LB
+  tasks:
+
+    - name: install (potentially) updated nginx config
+      copy:
+        # src:    /var/lib/jenkins/workspace/swarm_lab_dev_test
+        src:    /var/lib/jenkins/workspace/swarm_lab_master
+        dest:   /etc/nginx/sites-available
+        owner:  root
+        group:  root
+        mode:   '0644'
+
+    - name: enable config
+      file:
+        src:    /etc/nginx/sites-available/nginx_vespae.conf
+        dest:   /etc/nginx/sites-enabled/nginx_vespae.conf
+        state:  link
+
+    - name: restart nginx
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: yes
+
+

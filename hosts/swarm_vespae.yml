@@ -103,3 +103,5 @@
 
     # - name: install custom config
     #   copy:
+    # put config in /etc/nginx/sites-available
+    # link to /etc/nginx/sites-enabled
