@@ -15,6 +15,7 @@ directory = /home/drake/kiauh
 directory = /home/drake/printer_data/config
 directory = /home/drake/unifi-net-app
 directory = /home/drake/jellyfin
+directory = /home/drake/swarm_lab
 
 #docker compose
 directory = /docker/docker-compose/homer
@@ -33,6 +34,7 @@ directory = /docker/docker-compose/diskover
 directory = /docker/docker-compose/tautulli
 directory = /docker/docker-compose/unifi-net-app
 directory = /docker/docker-compose/jellyfin
+directory = /docker/docker-compose/swarm_lab
 #docker compose, DEV
 directory = /home/drake/docker_compose_dev/homer
 directory = /home/drake/docker_compose_dev/grafana_apps
@@ -49,6 +51,7 @@ directory = /home/drake/docker_compose_dev/gatus
 directory = /home/drake/docker_compose_dev/diskover
 directory = /home/drake/docker_compose_dev/tautulli
 directory = /home/drake/docker_compose_dev/jellyfin
+directory = /home/drake/docker_compose_dev/swarm_lab
 #ocker compose, PRD
 directory = /home/drake/docker_compose_prd/homer
 directory = /home/drake/docker_compose_prd/grafana_apps
@@ -66,3 +69,4 @@ directory = /home/drake/docker_compose_prd/diskover
 directory = /home/drake/docker_compose_prd/tautulli
 directory = /home/drake/docker_compose_prd/unifi-net-app
 directory = /home/drake/docker_compose_prd/jellyfin
+directory = /home/drake/docker_compose_prd/swarm_lab
