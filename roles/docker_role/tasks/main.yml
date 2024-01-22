@@ -46,11 +46,17 @@
     path: /etc/apt/sources.list.d/docker.list
   register: docker_list
 
-- name: Add Docker Repository
-  ansible.builtin.apt_repository:
-    repo:     "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable"
-    filename: docker
-    state:    present
+# - name: Add Docker Repository
+#   ansible.builtin.apt_repository:
+#     repo:     "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable"
+#     filename: docker
+#     state:    present
+#   when: docker_list.stat.exists == False
+
+- name: install repo list
+  copy:
+    src:  docker.list
+    dest: /etc/apt/sources.list.d/docker.list
   when: docker_list.stat.exists == False
 
 - name: Update apt and install docker-ce
