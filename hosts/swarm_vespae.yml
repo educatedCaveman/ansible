@@ -1,0 +1,13 @@
+# configure Docker Swarm Cluster (DEV)
+- name: configure Docker Swarm Cluster (DEV)
+  hosts:
+    - dev_swarm
+  roles:
+    - VM_role
+    - git_config_role
+    - git_dotfiles_role
+    - linux_role
+    - drake_role
+    - docker_role
+    - nfs_base_role
+  tasks:
