@@ -24,20 +24,33 @@
     mode:   '0755'
     state:  directory
 
-- name: Add Docker GPG apt Key
-  # ansible.builtin.apt_key:
-  #   url:    https://download.docker.com/linux/ubuntu/gpg
-  #   file:   /etc/apt/keyrings/docker.gpg
-  #   state:  present
+- name: check for existing Docker GPG key
+  stat:
+    path: /etc/apt/keyrings/docker.gpg
+  register: docker_gpg
+
+- name: download Docker GPG key
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: /tmp/docker.gpg
+  when: docker_gpg.stat.exists == False
+
+- name: install Docker GPG key
   ansible.builtin.command:
-    cmd:      curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    cmd:      gpg --dearmor -o /etc/apt/keyrings/docker.gpg
     creates:  /etc/apt/keyrings/docker.gpg
+
+- name: check for existing Docker repo list
+  stat:
+    path: /etc/apt/sources.list.d/docker.list
+  register: docker_list
 
 - name: Add Docker Repository
   ansible.builtin.apt_repository:
     repo:   "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable"
     file:   docker
     state:  present
+  when: docker_list.stat.exists == False
 
 - name: Update apt and install docker-ce
   apt: 
