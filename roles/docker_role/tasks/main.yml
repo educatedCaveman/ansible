@@ -32,13 +32,14 @@
 - name: download Docker GPG key
   ansible.builtin.get_url:
     url: https://download.docker.com/linux/debian/gpg
-    dest: /tmp/docker.gpg
+    # dest: /tmp/docker.gpg
+    dest: /etc/apt/keyrings/docker.gpg
   when: docker_gpg.stat.exists == False
 
-- name: install Docker GPG key
-  ansible.builtin.command:
-    cmd:      gpg --dearmor /tmp/docker.gpg -o /etc/apt/keyrings/docker.gpg 
-    creates:  /etc/apt/keyrings/docker.gpg
+# - name: install Docker GPG key
+#   ansible.builtin.command:
+#     cmd:      gpg --dearmor /tmp/docker.gpg -o /etc/apt/keyrings/docker.gpg 
+#     creates:  /etc/apt/keyrings/docker.gpg
 
 - name: check for existing Docker repo list
   stat:
