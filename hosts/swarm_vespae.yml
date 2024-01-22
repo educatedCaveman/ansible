@@ -2,8 +2,7 @@
 - name: configure Docker Swarm Cluster (DEV)
   hosts:
     - dev_swarm
-  roles:
-    - VM_role
+  roles: 
     - git_config_role
     - git_dotfiles_role
     - linux_role
