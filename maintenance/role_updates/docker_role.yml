@@ -2,7 +2,7 @@
 - name: apply/update the Docker role
   hosts:
     - portainer
-    - self
+    # - self
   roles:
     - docker_role
   tasks:
