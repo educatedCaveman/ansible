@@ -98,7 +98,9 @@
 
     - name: install Nginx
       apt:
-        name: nginx
+        name: 
+          - nginx
+          - libnginx-mod-stream
         state: latest
 
     # - name: install custom config
