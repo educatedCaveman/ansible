@@ -26,15 +26,15 @@
 
 - name: check for existing Docker GPG key
   stat:
-    path: /etc/apt/keyrings/docker.gpg
-  register: docker_gpg
+    path: /etc/apt/keyrings/docker.asc
+  register: docker_asc
 
 - name: download Docker GPG key
   ansible.builtin.get_url:
     url: https://download.docker.com/linux/debian/gpg
     # dest: /tmp/docker.gpg
-    dest: /etc/apt/keyrings/docker.gpg
-  when: docker_gpg.stat.exists == False
+    dest: /etc/apt/keyrings/docker.asc
+  when: docker_asc.stat.exists == False
 
 - name: check for existing Docker repo list
   stat:
