@@ -70,3 +70,7 @@ directory = /home/drake/docker_compose_prd/tautulli
 directory = /home/drake/docker_compose_prd/unifi-net-app
 directory = /home/drake/docker_compose_prd/jellyfin
 directory = /home/drake/docker_compose_prd/swarm_lab
+
+# Swarm
+directory = /mnt/docker/DEV/swarm_lab
+directory = /mnt/docker/PRD/swarm_lab
