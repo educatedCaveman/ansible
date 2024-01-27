@@ -1,7 +1,7 @@
-# configure Docker Swarm Cluster (DEV)
-- name: configure Docker Swarm Cluster (DEV)
+# configure Docker Swarm Cluster (PRD)
+- name: configure Docker Swarm Cluster (PRD)
   hosts:
-    - dev_swarm
+    - prd_swarm
   roles: 
     - VM_role
     - git_config_role
@@ -15,7 +15,7 @@
 
 # create the Swarm:
 - name: initiate the swarm
-  hosts:  vespae_1
+  hosts:  apis_1
   gather_facts: yes
   tasks:
 
@@ -45,7 +45,7 @@
 
 # Add Swarm Manager Nodes
 - name: Add Manager Nodes
-  hosts:  dev_swarm:!vespae_1
+  hosts:  prd_swarm:!apis_1
   tasks:
 
     - name: Add Manager Nodes
@@ -56,7 +56,7 @@
 
 # Add Swarm Worker Nodes
 - name: Add Worker Nodes
-  hosts:  dev_swarm
+  hosts:  prd_swarm
   tasks:
 
     - name: Add Worker Nodes
@@ -67,7 +67,7 @@
 
 # Swarm data
 - name: add swarm data mount
-  hosts: dev_swarm
+  hosts: prd_swarm
   tasks:
 
     - name: create mount path
@@ -78,15 +78,15 @@
 
     - name: mount the share
       mount:
-        src:    192.168.12.30:/mnt/docker/DEV/
+        src:    192.168.12.30:/mnt/docker/PRD/
         path:   /docker
         fstype: nfs
         opts:   rw,nolock,tcp
         state:  mounted
 
-- name: configure Docker Swarm Cluster (DEV) load-balancer
+- name: configure Docker Swarm Cluster (PRD) load-balancer
   hosts:
-    - vespae_LB
+    - apis_LB
   roles: 
     - LXC_role
     - git_config_role
