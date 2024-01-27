@@ -72,5 +72,5 @@ directory = /home/drake/docker_compose_prd/jellyfin
 directory = /home/drake/docker_compose_prd/swarm_lab
 
 # Swarm
-directory = /mnt/docker/DEV/swarm_lab
-directory = /mnt/docker/PRD/swarm_lab
+directory = /mnt/docker/DEV
+directory = /mnt/docker/PRD
