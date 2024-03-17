@@ -1,0 +1,14 @@
+# configure Docker Swarm Cluster (PRD)
+- name: configure Docker Swarm Cluster (PRD)
+  hosts:
+    - k3s
+  roles: 
+    - VM_role
+    - git_config_role
+    - git_dotfiles_role
+    - linux_role
+    - client_ssh_keys
+    - drake_role
+    # - docker_role
+    # - nfs_base_role
+  tasks:
