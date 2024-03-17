@@ -9,7 +9,7 @@
   apt:
     name: 
       - tmux
-      - tmuxp
+      # - tmuxp
     state:  present
   when: dotfiles.stat.exists
 
