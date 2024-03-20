@@ -12,17 +12,17 @@
   tasks:
 
 
-- name: Configure Manager Nodes
-  hosts:
-    - k3s_managers
-  roles:
-  tasks:
+# - name: Configure Manager Nodes
+#   hosts:
+#     - k3s_managers
+#   roles:
+#   tasks:
 
-- name: Configure Worker Nodes
-  hosts:
-    - k3s_workers
-  roles:
-  tasks:
+# - name: Configure Worker Nodes
+#   hosts:
+#     - k3s_workers
+#   roles:
+#   tasks:
 
 - name: Configure Data Nodes
   hosts:
@@ -31,15 +31,17 @@
   tasks:
 
     # longhorn requires the nfs-common and open-iscsi packages
-    ansible.builtin.apt:
-      name:
-        - nfs-common
-        - open-iscsi
-      state: latest
-      update_cache:  yes
+    - name: longhorn requirements
+      ansible.builtin.apt:
+        name:
+          - nfs-common
+          - open-iscsi
+        state: latest
+        update_cache:  yes
 
     # ensuring open-iscsi is started and enabled (for longhorn)
-    ansible.builtin.systemd_service:
-      name:     open-iscsi
-      enabled:  true
-      state:    started
+    - name: start open-iscsi
+      ansible.builtin.systemd_service:
+        name:     open-iscsi
+        enabled:  true
+        state:    started
