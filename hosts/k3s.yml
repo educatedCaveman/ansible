@@ -9,6 +9,6 @@
     - linux_role
     - client_ssh_keys
     - drake_role
-    # - docker_role
+    - docker_role
     # - nfs_base_role
   tasks:
