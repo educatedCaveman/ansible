@@ -8,6 +8,7 @@
     - git_dotfiles_role
     - linux_role
     - drake_role
+    - docker_role
   tasks:
 
 
