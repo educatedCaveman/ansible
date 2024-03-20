@@ -1,5 +1,5 @@
-# configure Docker Swarm Cluster (PRD)
-- name: configure Docker Swarm Cluster (PRD)
+# configure Kubernetes cluster using k3s
+- name: configure K3S Cluster
   hosts:
     - k3s
   roles: 
