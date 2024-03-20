@@ -7,8 +7,38 @@
     - git_config_role
     - git_dotfiles_role
     - linux_role
-    # - client_ssh_keys
     - drake_role
-    # - docker_role
-    # - nfs_base_role
   tasks:
+
+
+- name: Configure Manager Nodes
+  hosts:
+    - k3s_managers
+  roles:
+  tasks:
+
+- name: Configure Worker Nodes
+  hosts:
+    - k3s_workers
+  roles:
+  tasks:
+
+- name: Configure Data Nodes
+  hosts:
+    - k3s_data
+  roles:
+  tasks:
+
+    # longhorn requires the nfs-common and open-iscsi packages
+    ansible.builtin.apt:
+      name:
+        - nfs-common
+        - open-iscsi
+      state: latest
+      update_cache:  yes
+
+    # ensuring open-iscsi is started and enabled (for longhorn)
+    ansible.builtin.systemd_service:
+      name:     open-iscsi
+      enabled:  true
+      state:    started
