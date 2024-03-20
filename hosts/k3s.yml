@@ -41,7 +41,7 @@
 
     # ensuring open-iscsi is started and enabled (for longhorn)
     - name: start open-iscsi
-      ansible.builtin.systemd_service:
+      ansible.builtin.systemd:
         name:     open-iscsi
         enabled:  true
         state:    started
