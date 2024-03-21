@@ -11,28 +11,28 @@
     - client_ssh_keys
     - drake_role
     - docker_role
-    - nfs_base_role
-    - nfs_backup_role
-    - swarm_portainer_role
+    # - nfs_base_role
+    # - nfs_backup_role
+    # - swarm_portainer_role
   tasks:
 
-    - name: create NFS dir
-      file:
-        path:     "{{ item }}"
-        recurse:  yes
-        state:    directory
-        owner:    nobody
-        group:    nogroup
-      loop:
-        - /portainer
+    # - name: create NFS dir
+    #   file:
+    #     path:     "{{ item }}"
+    #     recurse:  yes
+    #     state:    directory
+    #     owner:    nobody
+    #     group:    nogroup
+    #   loop:
+    #     - /portainer
 
-    - name: Mount the share
-      mount:
-        src:    192.168.12.30:/mnt/docker/portainer
-        path:   /portainer
-        fstype: nfs 
-        opts:   rw,nolock,tcp
-        state:  mounted
+    # - name: Mount the share
+    #   mount:
+    #     src:    192.168.12.30:/mnt/docker/portainer
+    #     path:   /portainer
+    #     fstype: nfs 
+    #     opts:   rw,nolock,tcp
+    #     state:  mounted
 
     - name: initiate the swarm (single node)
       community.docker.docker_swarm:
