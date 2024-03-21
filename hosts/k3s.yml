@@ -11,25 +11,6 @@
     - docker_role
   tasks:
 
-
-# - name: Configure Manager Nodes
-#   hosts:
-#     - k3s_managers
-#   roles:
-#   tasks:
-
-# - name: Configure Worker Nodes
-#   hosts:
-#     - k3s_workers
-#   roles:
-#   tasks:
-
-- name: Configure Data Nodes
-  hosts:
-    - k3s_data
-  roles:
-  tasks:
-
     # longhorn requires the nfs-common and open-iscsi packages
     - name: longhorn requirements
       ansible.builtin.apt:
@@ -45,3 +26,22 @@
         name:     open-iscsi
         enabled:  true
         state:    started
+
+# - name: Configure Manager Nodes
+#   hosts:
+#     - k3s_managers
+#   roles:
+#   tasks:
+
+# - name: Configure Worker Nodes
+#   hosts:
+#     - k3s_workers
+#   roles:
+#   tasks:
+
+# - name: Configure Data Nodes
+#   hosts:
+#     - k3s_data
+#   roles:
+#   tasks:
+
