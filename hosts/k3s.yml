@@ -39,9 +39,49 @@
 #   roles:
 #   tasks:
 
-# - name: Configure Data Nodes
-#   hosts:
-#     - k3s_data
-#   roles:
-#   tasks:
+- name: Configure Data Nodes
+  hosts:
+    - k3s_data
+  roles:
+  vars:
+    - longhorn_path: "/var/lib/longhorn"
+  tasks:
 
+    # need to format the drive
+    - name: check the partitions
+      community.general.parted:
+        device: /dev/sdb
+        unit: MiB
+
+    - name: create partition
+      community.general.parted:
+        device: /dev/sdb
+        number: 1
+        label:  gpt
+        state:  present
+
+    - name: create filesystem
+      community.general.filesystem:
+        fstype: ext4
+        state:  present
+        device: /dev/sdb1
+
+    # create the mount directory, if needed:
+    - name: check if the directory exists
+      stat:
+        path: "{{ longhorn_path }}"
+      register: longhorn_mount
+
+    - name: create the device mount directory
+      file:
+        path: "{{ longhorn_path }}"
+        state:  directory
+        recurse:  yes
+      when: not longhorn_mount.stat.exists
+
+    - name: mount the drive
+      mount:
+        src:  /dev/sdb1
+        path: "{{ longhorn_path }}"
+        fstype: ext4
+        state:  mounted
