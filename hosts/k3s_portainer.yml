@@ -1,7 +1,7 @@
 # base docker config
 - name: configure Portainer Host
   hosts:
-    - swarm_portainer
+    - k3s_portainer
   roles:
     - VM_role
     - git_config_role
