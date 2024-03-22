@@ -85,3 +85,9 @@
         path: "{{ longhorn_path }}"
         fstype: ext4
         state:  mounted
+
+    # set drive permissions
+    - name: set longhorn drive permissions
+      ansible.builtin.file:
+        path: "{{ longhorn_path }}"
+        owner: 999
