@@ -1,0 +1,52 @@
+# configure Docker Swarm Data host
+- name: configure Docker Swarm Data Host
+  hosts:
+    - k3s_data
+  roles:
+    - LXC_role
+    - git_config_role
+    - git_dotfiles_role
+    - linux_role
+    - drake_role
+    - nfs_base_role
+    - nfs_backup_role
+    - k3s_nfs_role
+  tasks:
+
+    - name: install packages
+      apt:
+        name:
+          - nfs-kernel-server
+        state:  latest
+
+    - name: create NFS dirs
+      file:
+        path:     "{{ item }}"
+        recurse:  yes
+        state:    directory
+        owner:    nobody
+        group:    nogroup
+      loop:
+        - /mnt/k3s-data/dev-test
+        - /mnt/k3s-data/production
+ 
+    - name: check for /etc/exports file
+      stat:
+        path: /etc/exports
+      register: exports
+
+    # cleanup
+    - name: remove existing NFS config file link
+      file:
+        path:   /etc/exports
+        state:  absent
+      when:
+        - exports.stat.exists
+        - exports.stat.islnk == True
+
+    - name: restart NFS server process
+      systemd:
+        name:     nfs-kernel-server.service
+        state:    restarted
+        enabled:  true
+      when: exports.stat.exists
