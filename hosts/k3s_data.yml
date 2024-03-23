@@ -65,8 +65,8 @@
         path:     "{{ item }}"
         recurse:  yes
         state:    directory
-        # owner:    nobody
-        # group:    nogroup
+        owner:    nobody
+        group:    nogroup
       loop:
         - /mnt/k3s-data/dev-test
         - /mnt/k3s-data/production

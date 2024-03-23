@@ -1,5 +1,5 @@
 # configure Kubernetes cluster using k3s
-- name: configure K3S Cluster
+- name: configure K3S Cluster Nodes
   hosts:
     - k3s
   roles: 
@@ -11,14 +11,33 @@
     - docker_role
   tasks:
 
-# - name: Configure Manager Nodes
+# - name: Manager-Specific Node Configuration
 #   hosts:
 #     - k3s_managers
 #   roles:
 #   tasks:
 
-# - name: Configure Worker Nodes
-#   hosts:
-#     - k3s_workers
-#   roles:
-#   tasks:
+- name: Worker-Specific Node Configuration
+  hosts:
+    - k3s_workers
+  roles:
+  tasks:
+
+    - name: check for mount dir
+      stat:
+        path: /mnt/k3s-data
+      register: mnt_k3s
+
+    - name: create the dir, if needed
+      file:
+        path:   /mnt/k3s-data
+        state:  directory
+      when: not mnt_k3s.stat.exists
+
+    - name: mount the k3s share
+      mount:
+        src:    192.168.13.252:/mnt/k3s-data
+        path:   /mnt/k3s-data
+        fstype: nfs
+        opts:   rw,nolock,tcp
+        state:  mounted
