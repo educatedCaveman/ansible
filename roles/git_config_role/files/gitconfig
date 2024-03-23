@@ -74,3 +74,7 @@ directory = /home/drake/docker_compose_prd/swarm_lab
 # Swarm
 directory = /mnt/docker/DEV
 directory = /mnt/docker/PRD
+
+# k3s
+directory = /mnt/k3s/dev-test
+directory = /mnt/k3s/production
