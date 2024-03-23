@@ -13,6 +13,47 @@
     - k3s_nfs_role
   tasks:
 
+
+    # need to format the drive
+    - name: check the partitions
+      community.general.parted:
+        device: /dev/sdb
+        unit: MiB
+
+    - name: create partition
+      community.general.parted:
+        device: /dev/sdb
+        number: 1
+        label:  gpt
+        state:  present
+
+    - name: create filesystem
+      community.general.filesystem:
+        fstype: ext4
+        state:  present
+        device: /dev/sdb1
+
+    # create the mount directory, if needed:
+    - name: check if the directory exists
+      stat:
+        path: /mnt/k3s-data
+      register: k3s_mount
+
+    - name: create the device mount directory
+      file:
+        path: /mnt/k3s-data
+        state:  directory
+        recurse:  yes
+      when: not k3s_mount.stat.exists
+
+    - name: mount the drive
+      mount:
+        src:  /dev/sdb1
+        path: /mnt/k3s-data
+        fstype: ext4
+        state:  mounted
+
+    # NFS server setup
     - name: install packages
       apt:
         name:
@@ -24,8 +65,8 @@
         path:     "{{ item }}"
         recurse:  yes
         state:    directory
-        owner:    nobody
-        group:    nogroup
+        # owner:    nobody
+        # group:    nogroup
       loop:
         - /mnt/k3s-data/dev-test
         - /mnt/k3s-data/production

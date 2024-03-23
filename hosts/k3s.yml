@@ -11,22 +11,6 @@
     - docker_role
   tasks:
 
-    # longhorn requires the nfs-common and open-iscsi packages
-    - name: longhorn requirements
-      ansible.builtin.apt:
-        name:
-          - nfs-common
-          - open-iscsi
-        state: absent
-        update_cache:  yes
-
-    # ensuring open-iscsi is started and enabled (for longhorn)
-    - name: start open-iscsi
-      ansible.builtin.systemd:
-        name:     open-iscsi
-        enabled:  false
-        state:    stopped
-
 # - name: Configure Manager Nodes
 #   hosts:
 #     - k3s_managers
