@@ -23,6 +23,12 @@
   roles:
   tasks:
 
+    - name: NFS pre-requisites
+      apt:
+        name:
+          - nfs-common
+        state:  latest
+
     - name: check for mount dir
       stat:
         path: /mnt/k3s-data
