@@ -76,5 +76,5 @@ directory = /mnt/docker/DEV
 directory = /mnt/docker/PRD
 
 # k3s
-directory = /mnt/k3s/dev-test
-directory = /mnt/k3s/production
+directory = /mnt/k3s-data/dev-test
+directory = /mnt/k3s-data/production
