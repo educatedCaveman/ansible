@@ -21,6 +21,10 @@
   hosts:
     - k3s_workers
   roles:
+    - nfs_base_role
+    - nfs_music_role
+    - nfs_video_role
+    - nfs_staging_role
   tasks:
 
     - name: NFS pre-requisites
