@@ -1,0 +1,16 @@
+- name: configure seedbox
+  hosts:  arrs
+  roles:
+    - LXC_role            # base LXC container config
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - git_scripts_role
+    - linux_role          # base linux configs
+    - client_ssh_keys
+    - drake_role          # drake home directory permissions
+    - nfs_base_role       
+    - nfs_video_role
+    - nfs_music_role
+    - nfs_staging_role
+  vars:
+  tasks:
+
