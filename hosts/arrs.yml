@@ -2,8 +2,8 @@
   hosts:  arrs
   roles:
     - LXC_role            # base LXC container config
-    - git_dotfiles_role   # deploy the dotfiles repo
     - git_config_role
+    - git_dotfiles_role   # deploy the dotfiles repo
     - git_scripts_role
     - linux_role          # base linux configs
     - client_ssh_keys
