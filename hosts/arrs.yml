@@ -1,4 +1,4 @@
-- name: configure seedbox
+- name: configure *Arrs
   hosts:  arrs
   roles:
     - LXC_role            # base LXC container config
@@ -9,9 +9,24 @@
     - client_ssh_keys
     - drake_role          # drake home directory permissions
     - nfs_base_role       
-    - nfs_video_role
-    - nfs_music_role
-    - nfs_staging_role
+    # - nfs_video_role
+    # - nfs_music_role
+    # - nfs_staging_role
   vars:
   tasks:
 
+- name: add NFS Video
+  hosts:
+    - radarr
+    - sonarr
+    - bazarr
+  roles: 
+    - nfs_video_role
+  tasks:
+
+- name: add NFS Music
+  hosts:
+    - lidarr
+  roles: 
+    - nfs_music_role
+  tasks:
