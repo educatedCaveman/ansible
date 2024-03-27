@@ -1,5 +1,5 @@
 - name: configure *Arrs
-  hosts:  arrs
+  hosts:  privateer
   roles:
     - LXC_role            # base LXC container config
     - git_config_role
