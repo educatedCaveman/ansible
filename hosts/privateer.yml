@@ -12,5 +12,6 @@
     - nfs_video_role
     - nfs_music_role
     - nfs_staging_role
+    - nfs_pr0n_role
   vars:
   tasks:
