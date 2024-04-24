@@ -10,7 +10,7 @@
 # run cmd:
 # ansible-playbook hosts/carbon.yml -i hosts.ini --key-file "/home/drake/.ssh/carbon_id_ed25519"
 
-- name: Install Key Packages
+- name: Install Useful/QoL Packages
   hosts:  carbon_local
   tasks:
 
@@ -19,7 +19,17 @@
         - tmux
         - htop
         - btop
+        - yt-dlp
+        - neovim
+        - discord
+        - zsh
+        - neofetch
+        - tmux
+        - terminator
       state:  present
+
+  # TODO: AUR packages:
+  # ultra-flat-icons-blue
 
 # # TODO: can't get this to work right now
 # - name: Clone Git Repositories
@@ -43,14 +53,7 @@
       path: /home/drake/github/dotfiles
     register: dotfiles
 
-  # install ZSH
-  - name: install ZSH and related packages
-    pacman:
-      name: 
-        - zsh
-        - neofetch
-      state:  present
-    when: dotfiles.stat.exists
+  # ZSH installed above
 
   # change shell
   - name: change to ZSH
@@ -72,12 +75,19 @@
       path: /home/drake/.oh-my-zsh
     register: oh_my_zsh
 
-  # TODO: remove if not a link already
   # check if .zshrc exists:
   - name: checking for .zshrc
     stat: 
       path: /home/drake/.zshrc
     register: zshrc
+
+  - name: remove existing config
+    file:
+      dest: /home/drake/.zshrc
+      state:  absent
+    when:
+      - zshrc.stat.exists
+      - zshrc.stat.islnk == false
 
   - name: link .zshrc
     file:
@@ -140,13 +150,7 @@
       path: /home/drake/github/dotfiles
     register: dotfiles
 
-  # install ZSH
-  - name: install NeoVim
-    pacman:
-      name: 
-        - neovim
-      state:  present
-    when: dotfiles.stat.exists
+  # Neovim installed above
 
   # create Vundle directory, which also creates the nvim directory
   - name: create NeoVim and Vundle directories
@@ -185,15 +189,115 @@
       - dotfiles.stat.exists
   
 
+# TMUX
+- name: Configure TMUX
+  hosts:  carbon_local
+  tasks:
 
-#   # TMUX
-# - name: Configure ZSH
-#   hosts:  carbon_local
-#   tasks:
+  # check for dotfiles
+  - name: check if the dotfiles are present
+    stat:
+      path: /home/drake/github/dotfiles
+    register: dotfiles
+
+  # Tmux installed above
+
+  # .tmux.conf
+  - name: checking for .tmux.conf
+    stat: 
+      path: /home/drake/.tmux.conf
+    register: tmux
+
+  - name: remove existing .tmux.conf
+    file:
+      path: /home/drake/.tmux.conf
+      state:  absent
+    when:
+      - dotfiles.stat.exists
+      - tmux.stat.islnk is defined
+      - tmux.stat.islnk == False
+
+  - name: link .tmux.conf
+    file:
+      src: /home/drake/github/dotfiles/tmux.conf
+      dest: /home/drake/.tmux.conf
+      state: link
+
+  # tmuxinator configs
+  - name: checking for tmuxp configs
+    stat: 
+      path: /home/drake/.config/tmuxp
+    register: mux
+
+  - name: remove existing tmuxp configs
+    file:
+      path: /home/drake/.tmuxp
+      state:  absent
+    when:
+      - dotfiles.stat.exists
+      - mux.stat.islnk is defined
+      - mux.stat.islnk == False
+
+  - name: link tmuxinator configs
+    file:
+      src: /home/drake/github/dotfiles/tmuxp_configs
+      dest: /home/drake/.tmuxp
+      state: link
+
+  - name: check for wrong config location
+    stat:
+      path: /home/drake/.config/tmuxp
+    register: bad_config
+
+  - name: remove bad config location if it exists
+    file:
+      path: /home/drake/.config/tmuxp
+      state:  absent
+
+
+# Discord (configfile)
+- name: Discord Config
+  hosts: carbon_local
+  tasks:
+
+  # check for dotfiles
+  - name: check if the dotfiles are present
+    stat:
+      path: /home/drake/github/dotfiles
+    register: dotfiles
+
+  # existing config file
+  - name: checking for exsting settings.json
+    stat: 
+      path: /home/drake/.config/discord/settings.json
+    register: discord_settings
+
+  # remove existing file
+  - name: remove existing settings.json
+    file:
+      path: /home/drake/.config/discord/settings.json
+      state:  absent
+    when:
+      - discord_settings.stat.exists
+      - discord_settings.stat.islnk == False
+
+  # link config
+  - name: install special config
+    file:
+      src:    /home/drake/github/dotfiles/discord_settings.json
+      dest:   /home/drake/.config/discord/settings.json
+      state:  link
 
 
 
-#   # NFS
-# - name: Configure ZSH
-#   hosts:  carbon_local
-#   tasks:
+# lastly, fix home directory permissions
+- name: Home Permissions
+  hosts: carbon_local
+  tasks:
+
+  - name: fix home dir permissions
+    file:
+      path:     /home/drake/
+      recurse:  true
+      owner:    drake
+      group:    drake
