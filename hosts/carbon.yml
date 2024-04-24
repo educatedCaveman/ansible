@@ -1,0 +1,199 @@
+---
+
+# goals:
+#   install configs
+#   pull git repos
+# install some key packages
+# NFS mounts
+
+
+# run cmd:
+# ansible-playbook hosts/carbon.yml -i hosts.ini --key-file "/home/drake/.ssh/carbon_id_ed25519"
+
+- name: Install Key Packages
+  hosts:  carbon_local
+  tasks:
+
+  - pacman:
+      name: 
+        - tmux
+        - htop
+        - btop
+      state:  present
+
+# # TODO: can't get this to work right now
+# - name: Clone Git Repositories
+#   hosts:  carbon_local
+#   tasks:
+
+#   - name: Pull Git Repositories
+#     git:
+#       repo: 'git@github.com:educatedCaveman/dotfiles.git'
+#       dest: /home/drake/github/dotfiles
+
+
+# ZSH
+- name: Configure ZSH
+  hosts:  carbon_local
+  tasks:
+  
+  # check for dotfiles
+  - name: check if the dotfiles are present
+    stat:
+      path: /home/drake/github/dotfiles
+    register: dotfiles
+
+  # install ZSH
+  - name: install ZSH and related packages
+    pacman:
+      name: 
+        - zsh
+        - neofetch
+      state:  present
+    when: dotfiles.stat.exists
+
+  # change shell
+  - name: change to ZSH
+    user:
+      name: drake
+      shell: /usr/bin/zsh
+    when: dotfiles.stat.exists
+
+  # clone the repo 
+  - name: cloning  oh-my-zsh
+    git:
+      repo: https://github.com/robbyrussell/oh-my-zsh
+      dest: /home/drake/.oh-my-zsh
+    when: dotfiles.stat.exists
+
+  # check for .oh-my-zsh
+  - name: check if .oh-my-zsh exists
+    stat:
+      path: /home/drake/.oh-my-zsh
+    register: oh_my_zsh
+
+  # TODO: remove if not a link already
+  # check if .zshrc exists:
+  - name: checking for .zshrc
+    stat: 
+      path: /home/drake/.zshrc
+    register: zshrc
+
+  - name: link .zshrc
+    file:
+      src: /home/drake/github/dotfiles/zsh/zshrc
+      dest: /home/drake/.zshrc
+      state: link
+    when: 
+      - not zshrc.stat.exists
+      - oh_my_zsh.stat.exists
+      - dotfiles.stat.exists
+
+  # check if .zsh_aliases exists:
+  - name: checking for .zsh_aliases
+    stat: 
+      path: /home/drake/.zsh_aliases
+    register: zsh_aliases
+
+  - name: link .zsh_aliases
+    file:
+      src: /home/drake/github/dotfiles/zsh/zsh_aliases
+      dest: /home/drake/.zsh_aliases
+      state: link
+    when: 
+      - not zsh_aliases.stat.exists
+      - oh_my_zsh.stat.exists
+      - dotfiles.stat.exists
+
+  # check if .zsh-theme exists:
+  - name: checking for .zsh-theme
+    stat: 
+      path: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
+    register: zsh_theme
+
+  - name: link .zsh-theme
+    file:
+      src: /home/drake/github/dotfiles/zsh/less-fishy.zsh-theme
+      dest: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
+      state: link
+    when: 
+      - not zsh_theme.stat.exists
+      - oh_my_zsh.stat.exists
+      - dotfiles.stat.exists
+
+  # zsh plugin from git:
+  - name: cloning zsh-autosuggestions
+    git:
+      repo: 'https://github.com/zsh-users/zsh-autosuggestions'
+      dest: /home/drake/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+    when: oh_my_zsh.stat.exists
+
+
+# NeoVim
+- name: Configure NeoVim
+  hosts:  carbon_local
+  tasks:
+
+  # check that dotfiles are present
+  - name: checking for dotfiles
+    stat:
+      path: /home/drake/github/dotfiles
+    register: dotfiles
+
+  # install ZSH
+  - name: install NeoVim
+    pacman:
+      name: 
+        - neovim
+      state:  present
+    when: dotfiles.stat.exists
+
+  # create Vundle directory, which also creates the nvim directory
+  - name: create NeoVim and Vundle directories
+    file:
+      path: /home/drake/.config/nvim/bundle
+      state: directory
+      recurse: yes
+    when: dotfiles.stat.exists
+
+  # Vundle
+  - name: verify Vundle directory exists
+    stat:
+      path: /home/drake/.config/nvim/bundle
+    register: bundle
+
+  - name: cloning Vundle
+    git:
+      repo: 'https://github.com/VundleVim/Vundle.vim.git'
+      dest: /home/drake/.config/nvim/bundle/Vundle.vim
+    when: bundle.stat.exists
+
+  #neovim
+  - name: checking for init.vim
+    stat: 
+      path: /home/drake/.config/nvim/init.vim
+    register: nvim
+
+  # link config file to proper config location
+  - name: link init.vim
+    file:
+      src: /home/drake/github/dotfiles/init.vim
+      dest: /home/drake/.config/nvim/init.vim
+      state: link
+    when: 
+      - not nvim.stat.exists
+      - dotfiles.stat.exists
+  
+
+
+#   # TMUX
+# - name: Configure ZSH
+#   hosts:  carbon_local
+#   tasks:
+
+
+
+#   # NFS
+# - name: Configure ZSH
+#   hosts:  carbon_local
+#   tasks:
