@@ -1,12 +1,4 @@
 ---
-
-# goals:
-#   install configs
-#   pull git repos
-# install some key packages
-# NFS mounts
-
-
 # run cmd:
 # ansible-playbook hosts/carbon.yml -i hosts.ini --key-file "/home/drake/.ssh/carbon_id_ed25519"
 
@@ -26,20 +18,69 @@
         - neofetch
         - tmux
         - terminator
+        - nfs-utils
       state:  present
 
   # TODO: AUR packages:
   # ultra-flat-icons-blue
+  # brother-hll2395dw
 
-# # TODO: can't get this to work right now
-# - name: Clone Git Repositories
-#   hosts:  carbon_local
-#   tasks:
+  # TODO: flatpak:
+  # Plex
+  # Plexamp
 
-#   - name: Pull Git Repositories
-#     git:
-#       repo: 'git@github.com:educatedCaveman/dotfiles.git'
-#       dest: /home/drake/github/dotfiles
+
+#TODO: turn each section into a file in a role
+
+# GitHub
+- name: Clone Git Repositories
+  hosts:  carbon_local
+  tasks:
+
+  - name: Pull Git Repositories
+    git:
+      repo: "git@github.com:educatedCaveman/{{ item }}.git"
+      dest: "/home/drake/github/{{ item }}"
+    become: true
+    become_user: drake
+    ignore_errors: true
+    loop:
+    - "dotfiles"
+    - "apt-cache"
+    - "diskover"
+    - "docker-lab"
+    - "documentation"
+    - "dotfiles"
+    - "educatedCaveman.github.io"
+    - "fitbit-app-versa4"
+    - "fitbit-beta-decay"
+    - "fitbit_tinker"
+    - "gatus"
+    - "grafana_apps"
+    - "guacamole"
+    - "handbrake"
+    - "homer"
+    - "hu3bot"
+    - "influxdb"
+    - "iperf"
+    - "jellyfin"
+    - "Jenkins"
+    - "k3s_lab"
+    - "klipper"
+    - "Obsidian"
+    - "ombi"
+    - "plexamp_import_export"
+    - "privateer"
+    - "scripts"
+    - "swarm_lab"
+    - "syncthing"
+    - "tautulli"
+    - "unifi-net-app"
+    - "uptime-kuma"
+    - "vscode"
+    - "watchtower"
+    - "whoogle"
+    - "ytdl"
 
 
 # ZSH
@@ -289,7 +330,6 @@
       state:  link
 
 
-
 # lastly, fix home directory permissions
 - name: Home Permissions
   hosts: carbon_local
@@ -301,3 +341,61 @@
       recurse:  true
       owner:    drake
       group:    drake
+
+
+# NFS
+- name: NFS Shares
+  hosts: carbon_local
+  tasks:
+
+  # create directories
+  - name: create mount points
+    file:
+      path:     "/mnt/mobius/{{ item }}"
+      state:    directory
+      recurse:  true
+    loop:
+      - "Backup"
+      - "Documents"
+      - "Music"
+      - "Pictures"
+      - "pr0n"
+      - "PVE_backup"
+      - "PVE_data"
+      - "staging"
+      - "Video"
+
+  - name: set permissions
+    file:
+      path:   "/mnt/mobius/{{ item }}"
+      state:  directory
+      owner:  nobody
+      group:  nobody
+    loop:
+      - "Backup"
+      - "Documents"
+      - "Music"
+      - "Pictures"
+      - "pr0n"
+      - "PVE_backup"
+      - "PVE_data"
+      - "staging"
+      - "Video"
+
+  - name: Mount the Music NFS share if the mount path exists
+    mount:
+      src:    "192.168.11.2:/mnt/storage_node/{{ item }}"
+      path:   "/mnt/mobius/{{ item }}"
+      fstype: nfs 
+      opts:   rw,nolock,tcp
+      state:  mounted
+    loop:
+      - "Backup"
+      - "Documents"
+      - "Music"
+      - "Pictures"
+      - "pr0n"
+      - "PVE_backup"
+      - "PVE_data"
+      - "staging"
+      - "Video"
