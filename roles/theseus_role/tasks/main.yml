@@ -1,0 +1,28 @@
+---
+# packages
+- name: install packages
+  import_tasks: packages.yml
+
+# GitHub
+- name: clone repos
+  import_tasks: github.yml
+
+# ZSH
+- name: configure ZSH
+  import_tasks: ZSH.yml
+ 
+# NeoVim
+- name: configure NeoVim & Vundle
+  import_tasks: neovim.yml  
+
+# TMUX
+- name: configure TMUX
+  import_tasks: tmux.yml
+
+# Discord (configfile)
+- name: install Discord config
+  import_tasks: discord.yml
+
+# NFS
+- name: mount NFS shares
+  import_tasks: NFS.yml

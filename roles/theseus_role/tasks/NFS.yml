@@ -1,0 +1,52 @@
+---
+# # create directories (don't run repeatedly)
+# - name: create mount points
+#   file:
+#     path:     "/mnt/mobius/{{ item }}"
+#     state:    directory
+#     recurse:  true
+#   loop:
+#     - "Backup"
+#     - "Documents"
+#     - "Music"
+#     - "Pictures"
+#     - "pr0n"
+#     - "PVE_backup"
+#     - "PVE_data"
+#     - "staging"
+#     - "Video"
+
+- name: set permissions
+  file:
+    path:   "/mnt/mobius/{{ item }}"
+    state:  directory
+    owner:  nobody
+    group:  nobody
+  loop:
+    - "Backup"
+    - "Documents"
+    - "Music"
+    - "Pictures"
+    - "pr0n"
+    - "PVE_backup"
+    - "PVE_data"
+    - "staging"
+    - "Video"
+
+- name: Mount the Music NFS share if the mount path exists
+  mount:
+    src:    "192.168.11.2:/mnt/storage_node/{{ item }}"
+    path:   "/mnt/mobius/{{ item }}"
+    fstype: nfs 
+    opts:   rw,nolock,tcp
+    state:  mounted
+  loop:
+    - "Backup"
+    - "Documents"
+    - "Music"
+    - "Pictures"
+    - "pr0n"
+    - "PVE_backup"
+    - "PVE_data"
+    - "staging"
+    - "Video"

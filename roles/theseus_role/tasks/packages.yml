@@ -1,0 +1,23 @@
+---
+- pacman:
+    name: 
+      - tmux
+      - htop
+      - btop
+      - yt-dlp
+      - neovim
+      - discord
+      - zsh
+      - neofetch
+      - tmux
+      - terminator
+      - nfs-utils
+    state:  present
+
+# TODO: AUR packages:
+# ultra-flat-icons-blue
+# brother-hll2395dw
+
+# TODO: flatpak:
+# Plex
+# Plexamp

@@ -1,0 +1,28 @@
+---
+# check for dotfiles
+- name: check if the dotfiles are present
+  stat:
+    path: /home/drake/github/dotfiles
+  register: dotfiles
+
+# existing config file
+- name: checking for exsting settings.json
+  stat: 
+    path: /home/drake/.config/discord/settings.json
+  register: discord_settings
+
+# remove existing file
+- name: remove existing settings.json
+  file:
+    path: /home/drake/.config/discord/settings.json
+    state:  absent
+  when:
+    - discord_settings.stat.exists
+    - discord_settings.stat.islnk == False
+
+# link config
+- name: install special config
+  file:
+    src:    /home/drake/github/dotfiles/discord_settings.json
+    dest:   /home/drake/.config/discord/settings.json
+    state:  link

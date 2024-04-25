@@ -1,0 +1,96 @@
+---
+# check for dotfiles
+- name: check if the dotfiles are present
+  stat:
+    path: /home/drake/github/dotfiles
+  register: dotfiles
+
+# ZSH installed in packages.yml
+
+# change shell
+- name: change to ZSH
+  user:
+    name: drake
+    shell: /usr/bin/zsh
+  when: dotfiles.stat.exists
+
+# clone the repo 
+- name: cloning  oh-my-zsh
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh
+    dest: /home/drake/.oh-my-zsh
+  when: dotfiles.stat.exists
+  become:       true
+  become_user:  drake
+
+# check for .oh-my-zsh
+- name: check if .oh-my-zsh exists
+  stat:
+    path: /home/drake/.oh-my-zsh
+  register: oh_my_zsh
+
+# check if .zshrc exists:
+- name: checking for .zshrc
+  stat: 
+    path: /home/drake/.zshrc
+  register: zshrc
+
+- name: remove existing config
+  file:
+    dest: /home/drake/.zshrc
+    state:  absent
+  when:
+    - zshrc.stat.exists
+    - zshrc.stat.islnk == false
+
+- name: link .zshrc
+  file:
+    src: /home/drake/github/dotfiles/zsh/zshrc
+    dest: /home/drake/.zshrc
+    state: link
+  when: 
+    - not zshrc.stat.exists
+    - oh_my_zsh.stat.exists
+    - dotfiles.stat.exists
+
+# check if .zsh_aliases exists:
+- name: checking for .zsh_aliases
+  stat: 
+    path: /home/drake/.zsh_aliases
+  register: zsh_aliases
+
+- name: link .zsh_aliases
+  file:
+    src: /home/drake/github/dotfiles/zsh/zsh_aliases
+    dest: /home/drake/.zsh_aliases
+    state: link
+  when: 
+    - not zsh_aliases.stat.exists
+    - oh_my_zsh.stat.exists
+    - dotfiles.stat.exists
+
+# check if .zsh-theme exists:
+- name: checking for .zsh-theme
+  stat: 
+    path: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
+  register: zsh_theme
+
+- name: link .zsh-theme
+  file:
+    src: /home/drake/github/dotfiles/zsh/less-fishy.zsh-theme
+    dest: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
+    state: link
+  when: 
+    - not zsh_theme.stat.exists
+    - oh_my_zsh.stat.exists
+    - dotfiles.stat.exists
+
+# zsh plugin from git:
+- name: cloning zsh-autosuggestions
+  git:
+    repo: 'https://github.com/zsh-users/zsh-autosuggestions'
+    dest: /home/drake/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+  when: oh_my_zsh.stat.exists
+  become:       true
+  become_user:  drake
+
