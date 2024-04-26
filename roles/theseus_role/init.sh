@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-GIT_DIR="${HOME}/github"
 HOSTNAME="carbon"
+GIT_DIR="${HOME}/github"
 KEYFILE="${HOME}/.ssh/${HOSTNAME}_id_ed25519"
 KEYFILE_GIT="${HOME}/.ssh/github_id_ed25519"
 SSH_CONFIG="${HOME}/.ssh/config"
@@ -36,7 +36,7 @@ echo "IdentityFile ${KEYFILE_GIT}" > "${SSH_CONFIG}"
 
 sudo systemctl enable --now sshd
 
-#pause to add public key to github account
+# pause to add public key to github account
 echo "ssh public key for GitHub: ${KEYFILE_GIT}"
 read -rp "Press enter after adding the above private key to github account, and\ntesting it with this command: ssh -T git@github.com"
 
@@ -44,15 +44,15 @@ read -rp "Press enter after adding the above private key to github account, and\
 cd "${GIT_DIR}" || exit
 git clone git@github.com:educatedCaveman/ansible.git
 
-# TODO: run the main ansible playbook?
+# run the main ansible playbook?
 cd "${GIT_DIR}/ansible/" || exit
 ansible-playbook hosts/carbon.yml -i hosts.ini --key-file "${HOME}/.ssh/carbon_id_ed25519"
 
-# TODO: post-ansible commands?
-# # restore KDE settings
-# if [ -f "${GIT_DIR}/drake.knsv" ]; then
-#     konsave -i "${HOME}/github/drake.knsv"
-# fi
+# post-ansible commands?
+# restore KDE settings
+if [ -f "${GIT_DIR}/drake.knsv" ]; then
+    konsave -i "${HOME}/github/drake.knsv"
+fi
 
 
 echo "give me a courtesy reboot"
