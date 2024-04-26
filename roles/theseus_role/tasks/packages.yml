@@ -12,12 +12,28 @@
       - tmux
       - terminator
       - nfs-utils
+      - obsidian
+      - bitwarden
+      - superslicer
     state:  present
 
-# TODO: AUR packages:
-# ultra-flat-icons-blue
-# brother-hll2395dw
+# # TODO: AUR packages:
+# # ultra-flat-icons-blue
+# # brother-hll2395dw
+# - ansible.builtin.package:
+#     name: "{{ item }}"
+#     state: present
+#     use: "pamac"
+#   loop:
+#     - "ultra-flat-icons-blue"
 
 # TODO: flatpak:
 # Plex
 # Plexamp
+
+
+# # Python Packages
+# - pip:
+#     name: konsave
+#   # become: true
+#   # become_user:  drake

@@ -1,326 +1,370 @@
----
 - git:
-    repo: "git@github.com:educatedCaveman/dotfiles.git"
-    dest: "/home/drake/github/dotfiles"
+    repo: "git@github.com:educatedCaveman/{{ item }}.git"
+    dest: "/home/drake/github/{{ item }}"
   become: true
-  become_user: drake
+  become_user:  drake
   ignore_errors: true
+  loop:
+    - "dotfiles"
+    - "apt-cache"
+    - "diskover"
+    - "docker-lab"
+    - "documentation"
+    - "dotfiles"
+    - "educatedCaveman.github.io"
+    - "fitbit-app-versa4"
+    - "fitbit-beta-decay"
+    - "fitbit_tinker"
+    - "gatus"
+    - "grafana_apps"
+    - "guacamole"
+    - "handbrake"
+    - "homer"
+    - "hu3bot"
+    - "influxdb"
+    - "iperf"
+    - "jellyfin"
+    - "Jenkins"
+    - "k3s_lab"
+    - "klipper"
+    - "Obsidian"
+    - "ombi"
+    - "plexamp_import_export"
+    - "privateer"
+    - "scripts"
+    - "swarm_lab"
+    - "syncthing"
+    - "tautulli"
+    - "unifi-net-app"
+    - "uptime-kuma"
+    - "vscode"
+    - "watchtower"
+    - "whoogle"
+    - "ytdl"
+
+# ---
+# - git:
+#     repo: "git@github.com:educatedCaveman/dotfiles.git"
+#     dest: "/home/drake/github/dotfiles"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+#   #why can't i loop over these ? :C
+#   # - "dotfiles"
+#   # - "apt-cache"
+#   # - "diskover"
+#   # - "docker-lab"
+#   # - "documentation"
+#   # - "dotfiles"
+#   # - "educatedCaveman.github.io"
+#   # - "fitbit-app-versa4"
+#   # - "fitbit-beta-decay"
+#   # - "fitbit_tinker"
+#   # - "gatus"
+#   # - "grafana_apps"
+#   # - "guacamole"
+#   # - "handbrake"
+#   # - "homer"
+#   # - "hu3bot"
+#   # - "influxdb"
+#   # - "iperf"
+#   # - "jellyfin"
+#   # - "Jenkins"
+#   # - "k3s_lab"
+#   # - "klipper"
+#   # - "Obsidian"
+#   # - "ombi"
+#   # - "plexamp_import_export"
+#   # - "privateer"
+#   # - "scripts"
+#   # - "swarm_lab"
+#   # - "syncthing"
+#   # - "tautulli"
+#   # - "unifi-net-app"
+#   # - "uptime-kuma"
+#   # - "vscode"
+#   # - "watchtower"
+#   # - "whoogle"
+#   # - "ytdl"
+
+# # the ansible repo is deliberately omitted.
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/apt-cache.git"
+#     dest: "/home/drake/github/apt-cache"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/diskover.git"
+#     dest: "/home/drake/github/diskover"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
 
-  #why can't i loop over these ? :C
-  # - "dotfiles"
-  # - "apt-cache"
-  # - "diskover"
-  # - "docker-lab"
-  # - "documentation"
-  # - "dotfiles"
-  # - "educatedCaveman.github.io"
-  # - "fitbit-app-versa4"
-  # - "fitbit-beta-decay"
-  # - "fitbit_tinker"
-  # - "gatus"
-  # - "grafana_apps"
-  # - "guacamole"
-  # - "handbrake"
-  # - "homer"
-  # - "hu3bot"
-  # - "influxdb"
-  # - "iperf"
-  # - "jellyfin"
-  # - "Jenkins"
-  # - "k3s_lab"
-  # - "klipper"
-  # - "Obsidian"
-  # - "ombi"
-  # - "plexamp_import_export"
-  # - "privateer"
-  # - "scripts"
-  # - "swarm_lab"
-  # - "syncthing"
-  # - "tautulli"
-  # - "unifi-net-app"
-  # - "uptime-kuma"
-  # - "vscode"
-  # - "watchtower"
-  # - "whoogle"
-  # - "ytdl"
-
-# the ansible repo is deliberately omitted.
-
-- git:
-    repo: "git@github.com:educatedCaveman/apt-cache.git"
-    dest: "/home/drake/github/apt-cache"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/diskover.git"
-    dest: "/home/drake/github/diskover"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/docker-lab.git"
-    dest: "/home/drake/github/docker-lab"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/documentation.git"
-    dest: "/home/drake/github/documentation"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/dotfiles.git"
-    dest: "/home/drake/github/dotfiles"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/educatedCaveman.github.io.git"
-    dest: "/home/drake/github/educatedCaveman.github.io"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/fitbit-app-versa4.git"
-    dest: "/home/drake/github/fitbit-app-versa4"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/fitbit-beta-decay.git"
-    dest: "/home/drake/github/fitbit-beta-decay"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/docker-lab.git"
+#     dest: "/home/drake/github/docker-lab"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/fitbit_tinker.git"
-    dest: "/home/drake/github/fitbit_tinker"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/documentation.git"
+#     dest: "/home/drake/github/documentation"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/gatus.git"
-    dest: "/home/drake/github/gatus"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/dotfiles.git"
+#     dest: "/home/drake/github/dotfiles"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/grafana_apps.git"
-    dest: "/home/drake/github/grafana_apps"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/educatedCaveman.github.io.git"
+#     dest: "/home/drake/github/educatedCaveman.github.io"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/guacamole.git"
-    dest: "/home/drake/github/guacamole"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/fitbit-app-versa4.git"
+#     dest: "/home/drake/github/fitbit-app-versa4"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/handbrake.git"
-    dest: "/home/drake/github/handbrake"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/fitbit-beta-decay.git"
+#     dest: "/home/drake/github/fitbit-beta-decay"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/homer.git"
-    dest: "/home/drake/github/homer"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/fitbit_tinker.git"
+#     dest: "/home/drake/github/fitbit_tinker"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/hu3bot.git"
-    dest: "/home/drake/github/hu3bot"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/gatus.git"
+#     dest: "/home/drake/github/gatus"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/influxdb.git"
-    dest: "/home/drake/github/influxdb"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/grafana_apps.git"
+#     dest: "/home/drake/github/grafana_apps"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/iperf.git"
-    dest: "/home/drake/github/iperf"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/guacamole.git"
+#     dest: "/home/drake/github/guacamole"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/jellyfin.git"
-    dest: "/home/drake/github/jellyfin"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/handbrake.git"
+#     dest: "/home/drake/github/handbrake"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/Jenkins.git"
-    dest: "/home/drake/github/Jenkins"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/homer.git"
+#     dest: "/home/drake/github/homer"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/k3s_lab.git"
-    dest: "/home/drake/github/k3s_lab"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/hu3bot.git"
+#     dest: "/home/drake/github/hu3bot"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/klipper.git"
-    dest: "/home/drake/github/klipper"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/influxdb.git"
+#     dest: "/home/drake/github/influxdb"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/Obsidian.git"
-    dest: "/home/drake/github/Obsidian"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/iperf.git"
+#     dest: "/home/drake/github/iperf"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
 
 
-- git:
-    repo: "git@github.com:educatedCaveman/ombi.git"
-    dest: "/home/drake/github/ombi"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/plexamp_import_export.git"
-    dest: "/home/drake/github/plexamp_import_export"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/privateer.git"
-    dest: "/home/drake/github/privateer"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/scripts.git"
-    dest: "/home/drake/github/scripts"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/swarm_lab.git"
-    dest: "/home/drake/github/swarm_lab"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/syncthing.git"
-    dest: "/home/drake/github/syncthing"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/tautulli.git"
-    dest: "/home/drake/github/tautulli"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/unifi-net-app.git"
-    dest: "/home/drake/github/unifi-net-app"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/uptime-kuma.git"
-    dest: "/home/drake/github/uptime-kuma"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/vscode.git"
-    dest: "/home/drake/github/vscode"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/watchtower.git"
-    dest: "/home/drake/github/watchtower"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/whoogle.git"
-    dest: "/home/drake/github/whoogle"
-  become: true
-  become_user: drake
-  ignore_errors: true
-
-
-- git:
-    repo: "git@github.com:educatedCaveman/ytdl.git"
-    dest: "/home/drake/github/ytdl"
-  become: true
-  become_user: drake
-  ignore_errors: true
+# - git:
+#     repo: "git@github.com:educatedCaveman/jellyfin.git"
+#     dest: "/home/drake/github/jellyfin"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/Jenkins.git"
+#     dest: "/home/drake/github/Jenkins"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/k3s_lab.git"
+#     dest: "/home/drake/github/k3s_lab"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/klipper.git"
+#     dest: "/home/drake/github/klipper"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/Obsidian.git"
+#     dest: "/home/drake/github/Obsidian"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/ombi.git"
+#     dest: "/home/drake/github/ombi"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/plexamp_import_export.git"
+#     dest: "/home/drake/github/plexamp_import_export"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/privateer.git"
+#     dest: "/home/drake/github/privateer"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/scripts.git"
+#     dest: "/home/drake/github/scripts"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/swarm_lab.git"
+#     dest: "/home/drake/github/swarm_lab"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/syncthing.git"
+#     dest: "/home/drake/github/syncthing"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/tautulli.git"
+#     dest: "/home/drake/github/tautulli"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/unifi-net-app.git"
+#     dest: "/home/drake/github/unifi-net-app"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/uptime-kuma.git"
+#     dest: "/home/drake/github/uptime-kuma"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/vscode.git"
+#     dest: "/home/drake/github/vscode"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/watchtower.git"
+#     dest: "/home/drake/github/watchtower"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/whoogle.git"
+#     dest: "/home/drake/github/whoogle"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true
+
+
+# - git:
+#     repo: "git@github.com:educatedCaveman/ytdl.git"
+#     dest: "/home/drake/github/ytdl"
+#   become: true
+#   become_user: drake
+#   ignore_errors: true

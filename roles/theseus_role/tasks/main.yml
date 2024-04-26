@@ -26,3 +26,16 @@
 # NFS
 - name: mount NFS shares
   import_tasks: NFS.yml
+
+# TODO: pull KDE UI and preference configs
+
+# TODO: syncthing/other data
+
+# final installs:
+- name: Manual software installs
+  debug:
+    msg: 
+      - "run the following command(s):"
+      - "sudo pamac install ultra-flat-icons-blue brother-hll2395dw"
+      - "flatpak install flathub tv.plex.PlexDesktop"
+      - "flatpak install flathub com.plexamp.Plexamp"
