@@ -5,6 +5,14 @@
     path: /home/drake/github/dotfiles
   register: dotfiles
 
+# check for dotfiles
+- name: check if the dotfiles are present
+  file:
+    path: /home/drake/.config/discord
+    state: directory
+  become:       true
+  become_user:  drake
+
 # existing config file
 - name: checking for exsting settings.json
   stat: 
