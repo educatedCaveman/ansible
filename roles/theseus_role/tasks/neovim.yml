@@ -13,6 +13,8 @@
     path: /home/drake/.config/nvim/bundle
     state: directory
     recurse: yes
+  become:       true
+  become_user:  drake
   when: dotfiles.stat.exists
 
 # Vundle
@@ -41,6 +43,8 @@
     src: /home/drake/github/dotfiles/init.vim
     dest: /home/drake/.config/nvim/init.vim
     state: link
+  become:       true
+  become_user:  drake
   when: 
     - not nvim.stat.exists
     - dotfiles.stat.exists

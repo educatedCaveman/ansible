@@ -27,6 +27,8 @@
     src: /home/drake/github/dotfiles/tmux.conf
     dest: /home/drake/.tmux.conf
     state: link
+  become:       true
+  become_user:  drake
 
 # tmuxinator configs
 - name: checking for tmuxp configs
@@ -48,6 +50,8 @@
     src: /home/drake/github/dotfiles/tmuxp_configs
     dest: /home/drake/.tmuxp
     state: link
+  become:       true
+  become_user:  drake
 
 - name: check for wrong config location
   stat:

@@ -48,6 +48,8 @@
     src: /home/drake/github/dotfiles/zsh/zshrc
     dest: /home/drake/.zshrc
     state: link
+  become:       true
+  become_user:  drake
   when: 
     - not zshrc.stat.exists
     - oh_my_zsh.stat.exists
@@ -64,6 +66,8 @@
     src: /home/drake/github/dotfiles/zsh/zsh_aliases
     dest: /home/drake/.zsh_aliases
     state: link
+  become:       true
+  become_user:  drake
   when: 
     - not zsh_aliases.stat.exists
     - oh_my_zsh.stat.exists
@@ -80,6 +84,8 @@
     src: /home/drake/github/dotfiles/zsh/less-fishy.zsh-theme
     dest: /home/drake/.oh-my-zsh/custom/themes/less-fishy.zsh-theme
     state: link
+  become:       true
+  become_user:  drake
   when: 
     - not zsh_theme.stat.exists
     - oh_my_zsh.stat.exists

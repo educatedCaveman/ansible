@@ -26,3 +26,5 @@
     src:    /home/drake/github/dotfiles/discord_settings.json
     dest:   /home/drake/.config/discord/settings.json
     state:  link
+  become:       true
+  become_user:  drake
