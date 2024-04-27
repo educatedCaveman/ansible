@@ -16,6 +16,7 @@ fi
 sudo pamac update --no-confirm
 
 # installs not possible via ansible
+sudo pamac install fakeroot
 sudo pamac install konsave ansible google-chrome vscodium ultra-flat-icons-blue brother-hll2395dw --no-confirm
 flatpak install flathub tv.plex.PlexDesktop
 flatpak install flathub com.plexamp.Plexamp
