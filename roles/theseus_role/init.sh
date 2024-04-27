@@ -16,8 +16,18 @@ fi
 sudo pamac update --no-confirm
 
 # installs not possible via ansible
-sudo pamac install fakeroot --no-confirm
-sudo pamac install konsave ansible google-chrome ultra-flat-icons-blue brother-hll2395dw --no-confirm
+sudo pamac install fakeroot make --no-confirm
+
+function yes_or_no {
+    while true; do
+        read -rp "$* [y/n]: " yn
+        case $yn in
+            [Yy]*) return 0  ;;  
+            [Nn]*) echo "Aborted" ; return  1 ;;
+        esac
+    done
+}
+yes_or_no "have you enabled AUR and FlatPak?" && sudo pamac install konsave ansible google-chrome ultra-flat-icons-blue brother-hll2395dw --no-confirm
 # sudo pamac install konsave ansible google-chrome vscodium ultra-flat-icons-blue brother-hll2395dw --no-confirm
 flatpak install flathub tv.plex.PlexDesktop
 flatpak install flathub com.plexamp.Plexamp
@@ -40,7 +50,8 @@ sudo systemctl enable --now sshd
 
 # pause to add public key to github account
 echo "ssh public key for GitHub: ${KEYFILE_GIT}"
-read -rp "Press enter after adding the above private key to github account, and\ntesting it with this command: ssh -T git@github.com"
+# read -rp "Press enter after adding the above private key to github account, and\ntesting it with this command: ssh -T git@github.com"
+yes_or_no "have you added the key to github, and tested with 'ssh -T git@github.com'?" 
 
 # clone ansible repo
 cd "${GIT_DIR}" || exit
