@@ -1,20 +1,20 @@
 ---
-# # create directories (don't run repeatedly)
-# - name: create mount points
-#   file:
-#     path:     "/mnt/mobius/{{ item }}"
-#     state:    directory
-#     recurse:  true
-#   loop:
-#     - "Backup"
-#     - "Documents"
-#     - "Music"
-#     - "Pictures"
-#     - "pr0n"
-#     - "PVE_backup"
-#     - "PVE_data"
-#     - "staging"
-#     - "Video"
+# create directories (don't run repeatedly)
+- name: create mount points
+  file:
+    path:     "/mnt/mobius/{{ item }}"
+    state:    directory
+    recurse:  true
+  loop:
+    - "Backup"
+    - "Documents"
+    - "Music"
+    - "Pictures"
+    - "pr0n"
+    - "PVE_backup"
+    - "PVE_data"
+    - "staging"
+    - "Video"
 
 - name: set permissions
   file:
