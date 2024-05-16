@@ -27,10 +27,10 @@ function yes_or_no {
         esac
     done
 }
-yes_or_no "have you enabled AUR and FlatPak?" && sudo pamac install konsave ansible google-chrome ultra-flat-icons-blue brother-hll2395dw --no-confirm
+yes_or_no "have you enabled AUR and FlatPak?" && sudo pamac install konsave ansible google-chrome brother-hll2395dw direnv --no-confirm
 # sudo pamac install konsave ansible google-chrome vscodium ultra-flat-icons-blue brother-hll2395dw --no-confirm
 flatpak install flathub tv.plex.PlexDesktop
-flatpak install flathub com.plexamp.Plexamp
+flatpak install flathub com.plexamp.Plexamp 
 
 # SSH Key setup
 # create ssh keys if they don't already exist

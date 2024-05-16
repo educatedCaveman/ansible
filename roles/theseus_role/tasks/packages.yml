@@ -8,11 +8,12 @@
       - neovim
       - discord
       - zsh
-      - neofetch
       - tmux
-      - terminator
       - nfs-utils
       - obsidian
       - bitwarden
       - superslicer
+      - cuetools
+      - fastfetch
+      - tree
     state:  present
