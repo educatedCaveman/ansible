@@ -32,26 +32,26 @@ yes_or_no "have you enabled AUR and FlatPak?" && sudo pamac install konsave ansi
 flatpak install flathub tv.plex.PlexDesktop
 flatpak install flathub com.plexamp.Plexamp 
 
-# SSH Key setup
-# create ssh keys if they don't already exist
-if [ ! -f "${KEYFILE}" ]; then
-    ssh-keygen -t ed25519 -N "" -C "drake_${HOSTNAME}" -f "${KEYFILE}"
-fi
-if [ ! -f "${KEYFILE_GIT}" ]; then
-    ssh-keygen -t ed25519 -N "" -C "github_${HOSTNAME}" -f "${KEYFILE}"
-fi
-eval "$(ssh-agent -s)"
-sudo tee -a /root/.ssh/authorized_keys < "${KEYFILE}"
-echo "# ssh config" > "${SSH_CONFIG}"
-echo "IdentityFile ${KEYFILE}" > "${SSH_CONFIG}"
-echo "IdentityFile ${KEYFILE_GIT}" > "${SSH_CONFIG}"
+# # SSH Key setup
+# # create ssh keys if they don't already exist
+# if [ ! -f "${KEYFILE}" ]; then
+#     ssh-keygen -t ed25519 -N "" -C "drake_${HOSTNAME}" -f "${KEYFILE}"
+# fi
+# if [ ! -f "${KEYFILE_GIT}" ]; then
+#     ssh-keygen -t ed25519 -N "" -C "github_${HOSTNAME}" -f "${KEYFILE}"
+# fi
+# eval "$(ssh-agent -s)"
+# sudo tee -a /root/.ssh/authorized_keys < "${KEYFILE}"
+# echo "# ssh config" > "${SSH_CONFIG}"
+# echo "IdentityFile ${KEYFILE}" > "${SSH_CONFIG}"
+# echo "IdentityFile ${KEYFILE_GIT}" > "${SSH_CONFIG}"
 
-sudo systemctl enable --now sshd
+# sudo systemctl enable --now sshd
 
-# pause to add public key to github account
-echo "ssh public key for GitHub: ${KEYFILE_GIT}"
-# read -rp "Press enter after adding the above private key to github account, and\ntesting it with this command: ssh -T git@github.com"
-yes_or_no "have you added the key to github, and tested with 'ssh -T git@github.com'?" 
+# # pause to add public key to github account
+# echo "ssh public key for GitHub: ${KEYFILE_GIT}"
+# # read -rp "Press enter after adding the above private key to github account, and\ntesting it with this command: ssh -T git@github.com"
+# yes_or_no "have you added the key to github, and tested with 'ssh -T git@github.com'?" 
 
 # clone ansible repo
 cd "${GIT_DIR}" || exit
