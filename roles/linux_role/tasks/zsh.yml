@@ -9,7 +9,7 @@
   apt:
     name: 
       - zsh
-      - fastfetch
+      - neofetch
     state:  present
   when: dotfiles.stat.exists
 
