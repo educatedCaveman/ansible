@@ -8,11 +8,9 @@
     state:  present
     key:    '{{ item }}'
   with_file:
-    # - /home/drake/.ssh/id_ed25519.pub
     - /home/drake/.ssh/jenkins_id_ed25519.pub
     - /home/drake/.ssh/dilithium_id_ed25519.pub
-    - /home/drake/.ssh/carbon_id_ed25519.pub
-    - /home/drake/.ssh/theseus_id_ed25519.pub
+    - /home/drake/.ssh/theseus2_id_ed25519.pub
 
 # drake keys:
 - name: install keys for drake
@@ -21,11 +19,9 @@
     state:  present
     key:    '{{ item }}'
   with_file:
-    # - /home/drake/.ssh/id_ed25519.pub
     - /home/drake/.ssh/jenkins_id_ed25519.pub
     - /home/drake/.ssh/dilithium_id_ed25519.pub
-    - /home/drake/.ssh/carbon_id_ed25519.pub
-    - /home/drake/.ssh/theseus_id_ed25519.pub
+    - /home/drake/.ssh/theseus2_id_ed25519.pub
 
 # restart ssh service
 - name: restart sshd
