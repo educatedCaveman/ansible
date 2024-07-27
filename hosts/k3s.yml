@@ -11,11 +11,42 @@
     - docker_role
   tasks:
 
-# - name: Manager-Specific Node Configuration
-#   hosts:
-#     - k3s_managers
-#   roles:
-#   tasks:
+- name: Manager-Specific Node Configuration
+  hosts:
+    - k3s_managers
+  roles:
+  tasks:
+
+    # curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+    # sudo apt-get install apt-transport-https --yes
+    # echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+    # sudo apt-get update
+    # sudo apt-get install helm
+
+    - name: Download helm key
+      ansible.builtin.get_url:
+        url: https://baltocdn.com/helm/signing.asc
+        dest: /usr/share/keyrings/helm.gpg
+        # dest: /usr/share/keyrings/helm.asc
+        mode: '0440'
+
+    - name: install pre-requisite packages
+      ansible.builtin.apt:
+        name: apt-transport-https
+        state: latest
+
+    - name: Add Helm Repository
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64 signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main
+        state: present
+        filename: helm-stable-debian
+
+    - name: update apt, and install helm
+      ansible.builtin.apt:
+        update_cache: true
+        name: helm
+        state: latest
+
 
 - name: Worker-Specific Node Configuration
   hosts:
