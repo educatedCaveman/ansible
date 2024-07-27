@@ -1,16 +1,24 @@
 ---
-- hosts: localhost
+- hosts: apis_1
   vars:
      helm_chart_url: "https://charts.bitnami.com/bitnami"
   tasks:
+    
+    # add helm repo
     - name: Add helm repo
       kubernetes.core.helm_repository:
         name: bitnami
         repo_url: "{{ helm_chart_url }}"
 
-
+    # install a chart from said repo
     - name: Install Nginx Chart
       kubernetes.core.helm:
         name: nginx-server
         namespace: dev-test
         chart_ref: bitnami/nginx
+
+    # - name: Install Nginx Chart
+    #   kubernetes.core.helm:
+    #     name: nginx-server
+    #     namespace: testing
+    #     chart_ref: bitnami/nginx
