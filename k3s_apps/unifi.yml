@@ -8,7 +8,7 @@
     # add helm repo
     - name: Add helm repo
       kubernetes.core.helm_repository:
-        name: bitnami
+        name: unifi
         repo_url: "{{ helm_chart_url }}"
 
     # install a chart from said repo
