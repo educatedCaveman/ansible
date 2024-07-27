@@ -17,8 +17,15 @@
         namespace: dev-test
         chart_ref: bitnami/nginx
 
-    # - name: Install Nginx Chart
-    #   kubernetes.core.helm:
-    #     name: nginx-server
-    #     namespace: testing
-    #     chart_ref: bitnami/nginx
+    # install chart
+    - name: Install Nginx Chart
+      kubernetes.core.helm:
+        name: nginx-server
+        namespace: dev-test
+        chart_ref: bitnami/nginx
+
+    # get info about installed chart
+    - name: Gather information about nginx-server
+      kubernetes.core.helm_info:
+        name: nginx-server
+        release_namespace: dev-test
