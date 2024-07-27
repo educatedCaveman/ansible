@@ -23,7 +23,8 @@
         name: nginx-server
         namespace: dev-test
         chart_ref: bitnami/nginx
-
+        state: absent
+        
     # get info about installed chart
     - name: Gather information about nginx-server
       kubernetes.core.helm_info:
