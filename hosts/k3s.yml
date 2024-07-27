@@ -1,15 +1,15 @@
-# configure Kubernetes cluster using k3s
-- name: configure K3S Cluster Nodes
-  hosts:
-    - k3s
-  roles: 
-    - VM_role
-    - git_config_role
-    - git_dotfiles_role
-    - linux_role
-    - drake_role
-    - docker_role
-  tasks:
+# # configure Kubernetes cluster using k3s
+# - name: configure K3S Cluster Nodes
+#   hosts:
+#     - k3s
+#   roles: 
+#     - VM_role
+#     - git_config_role
+#     - git_dotfiles_role
+#     - linux_role
+#     - drake_role
+#     - docker_role
+#   tasks:
 
 - name: Manager-Specific Node Configuration
   hosts:
@@ -26,8 +26,8 @@
     - name: Download helm key
       ansible.builtin.get_url:
         url: https://baltocdn.com/helm/signing.asc
-        dest: /usr/share/keyrings/helm.gpg
-        # dest: /usr/share/keyrings/helm.asc
+        # dest: /usr/share/keyrings/helm.gpg
+        dest: /usr/share/keyrings/helm.asc
         mode: '0440'
 
     - name: install pre-requisite packages
@@ -37,7 +37,8 @@
 
     - name: Add Helm Repository
       ansible.builtin.apt_repository:
-        repo: deb [arch=amd64 signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main
+        # repo: deb [arch=amd64 signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main
+        repo: deb [arch=amd64 signed-by=/usr/share/keyrings/helm.asc] https://baltocdn.com/helm/stable/debian/ all main
         state: present
         filename: helm-stable-debian
 
