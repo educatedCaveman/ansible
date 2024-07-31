@@ -28,6 +28,10 @@
         - jq          # for bitwarden script
         - httpie
         - git-crypt
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
       state:  latest
 
   # Jenkins config
@@ -99,15 +103,15 @@
       group:  docker
       append: yes
       
-  # Syncthing
-  - name: Install Syncthing
-    apt:
-      name:
-        - syncthing
-      state:  missing
+  # # Syncthing
+  # - name: Install Syncthing
+  #   apt:
+  #     name:
+  #       - syncthing
+  #     state:  missing
 
-  - name: enable and restart Syncthing
-    systemd:
-      name: syncthing@drake
-      state:  stopped
-      enabled:  no
+  # - name: enable and restart Syncthing
+  #   systemd:
+  #     name: syncthing@drake
+  #     state:  stopped
+  #     enabled:  no
