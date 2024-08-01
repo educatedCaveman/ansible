@@ -1,15 +1,15 @@
-# # configure Kubernetes cluster using k3s
-# - name: configure K3S Cluster Nodes
-#   hosts:
-#     - k3s
-#   roles: 
-#     - VM_role
-#     - git_config_role
-#     - git_dotfiles_role
-#     - linux_role
-#     - drake_role
-#     - docker_role
-#   tasks:
+# configure Kubernetes cluster using k3s
+- name: configure K3S Cluster Nodes
+  hosts:
+    - k3s
+  roles: 
+    - VM_role
+    - git_config_role
+    - git_dotfiles_role
+    - linux_role
+    - drake_role
+    - docker_role
+  tasks:
 
 - name: Manager-Specific Node Configuration
   hosts:
@@ -28,12 +28,6 @@
         remote_src: true
       args:
         creates: /usr/local/bin/helm    
-        
-    # - name: update apt, and install helm
-    #   ansible.builtin.apt:
-    #     update_cache: true
-    #     name: helm
-    #     state: latest
 
 
 - name: Worker-Specific Node Configuration
@@ -44,6 +38,8 @@
     - nfs_music_role
     - nfs_video_role
     - nfs_staging_role
+    - nfs_docs_role
+    - nfs_pics_role
   tasks:
 
     - name: NFS pre-requisites
