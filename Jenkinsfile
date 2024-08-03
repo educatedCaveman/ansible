@@ -2,7 +2,7 @@ pipeline {
     agent any 
 
     environment {
-        ANSIBLE_REPO = '/var/lib/jenkins/workspace/ansible_master'
+        ANSIBLE_REPO = '/var/lib/jenkins/workspace/Ansible_master'
         WEBHOOK = credentials('JENKINS_DISCORD')
     }
 
