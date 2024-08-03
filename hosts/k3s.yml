@@ -11,23 +11,23 @@
     - docker_role
   tasks:
 
-- name: Manager-Specific Node Configuration
-  hosts:
-    - k3s_managers
-  roles:
-  tasks:
+# - name: Manager-Specific Node Configuration
+#   hosts:
+#     - k3s_managers
+#   roles:
+#   tasks:
 
-    - name: Install helm if not exists
-      unarchive:
-        src: https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz
-        dest: /usr/local/bin
-        extra_opts: "--strip-components=1"
-        owner: root
-        group: root
-        mode: 0755
-        remote_src: true
-      args:
-        creates: /usr/local/bin/helm    
+#     - name: Install helm if not exists
+#       unarchive:
+#         src: https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz
+#         dest: /usr/local/bin
+#         extra_opts: "--strip-components=1"
+#         owner: root
+#         group: root
+#         mode: 0755
+#         remote_src: true
+#       args:
+#         creates: /usr/local/bin/helm    
 
 
 - name: Worker-Specific Node Configuration
@@ -42,27 +42,27 @@
     - nfs_pics_role
   tasks:
 
-    - name: NFS pre-requisites
-      apt:
-        name:
-          - nfs-common
-        state:  latest
+    # - name: NFS pre-requisites
+    #   apt:
+    #     name:
+    #       - nfs-common
+    #     state:  latest
 
-    - name: check for mount dir
-      stat:
-        path: /mnt/k3s-data
-      register: mnt_k3s
+    # - name: check for mount dir
+    #   stat:
+    #     path: /mnt/k3s-data
+    #   register: mnt_k3s
 
-    - name: create the dir, if needed
-      file:
-        path:   /mnt/k3s-data
-        state:  directory
-      when: not mnt_k3s.stat.exists
+    # - name: create the dir, if needed
+    #   file:
+    #     path:   /mnt/k3s-data
+    #     state:  directory
+    #   when: not mnt_k3s.stat.exists
 
-    - name: mount the k3s share
-      mount:
-        src:    192.168.13.252:/mnt/k3s-data
-        path:   /mnt/k3s-data
-        fstype: nfs
-        opts:   rw,nolock,tcp
-        state:  mounted
+    # - name: mount the k3s share
+    #   mount:
+    #     src:    192.168.13.252:/mnt/k3s-data
+    #     path:   /mnt/k3s-data
+    #     fstype: nfs
+    #     opts:   rw,nolock,tcp
+    #     state:  mounted
