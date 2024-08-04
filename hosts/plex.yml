@@ -1,5 +1,5 @@
 - name: configure Plex
-  hosts:  plex
+  hosts:  plex_vm
   roles:
     - LXC_role            # base LXC container config
     - git_dotfiles_role   # deploy the dotfiles repo
