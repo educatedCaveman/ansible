@@ -3,12 +3,48 @@
   hosts:  
     - self
     - dilithium
+  vars:
+    users:
+      - name: drake
+        home_dir: /home/drake
+      - name: jenkins
+        home_dir: /var/lib/jenkins
   tasks:
 
     # make sure drake has the copybooks
     - name: create the ansible/ directory
       file:
+        path: /home/{{ item.name }}/ansible
+        state:  directory
+        recurse:  yes
+      loop: users
+
+    - name: make sure directory exists
+      stat:
         path: /home/drake/ansible
+      register: ansible_dir
+
+    - name: deploy ansible repo
+      git:
+        repo: https://github.com/educatedCaveman/ansible
+        dest: /home/drake/ansible
+        version:  master
+        force:  yes
+      when: ansible_dir.stat.exists
+
+    - name: set permissions on directory
+      file:
+        path: /home/drake/ansible
+        state:  directory
+        recurse:  yes
+        owner:  drake
+        group:  drake
+        
+
+    # make sure jenkins has the copybooks
+    - name: create the ansible/ directory
+      file:
+        path: /var/lib/jenkins/ansible
         state:  directory
         recurse:  yes
 
