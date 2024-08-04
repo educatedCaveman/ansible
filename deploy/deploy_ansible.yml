@@ -17,8 +17,7 @@
         path: /home/{{ item.name }}/ansible
         state:  directory
         recurse:  yes
-      loop: 
-        - users
+      loop: "{{ users|flatten(levels=1) }}"
 
     - name: make sure directory exists
       stat:
