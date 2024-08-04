@@ -2,25 +2,24 @@
 - name: configure Ansible/Jenkins
   hosts:  self
   roles:
-    - VM_role            # base LXC container config
-    - git_dotfiles_role   # deploy the dotfiles repo
-    - git_scripts_role    # needed for things outside this playbook
+    - VM_role
+    - git_dotfiles_role
+    - git_scripts_role
     - apt_client_role
-    - VM_netplan_MTU     # use the mtu9000 netplan config
-    - linux_role          # base linux configs
+    - VM_netplan_MTU
+    - linux_role
     - client_ssh_keys
-    - drake_role          # drake home directory permissions
-    - nfs_base_role       
+    - drake_role
+    - nfs_base_role
     - nfs_backup_role
-    - netdata_role
-    - docker_role       # for building docker images
+    # - docker_role
   tasks:
 
   - name: Install main packages
     apt:
       name:
         - ansible
-        # - ansible-galaxy
+        - ansible-galaxy
         - gpg
         - default-jre
         - default-jdk
@@ -34,23 +33,23 @@
         - gnupg
       state:  latest
 
-  # Jenkins config
-  - name: add Jenkins Key
-    apt_key:
-      url:  https://pkg.jenkins.io/debian-stable/jenkins.io.key
+  # # Jenkins config
+  # - name: add Jenkins Key
+  #   apt_key:
+  #     url:  https://pkg.jenkins.io/debian-stable/jenkins.io.key
 
-  - name: add Jenkins repo
-    apt_repository:
-      repo: deb http://pkg.jenkins.io/debian-stable binary/
-      update_cache: yes
-      state: present
-      filename: jenkins.list
+  # - name: add Jenkins repo
+  #   apt_repository:
+  #     repo: deb http://pkg.jenkins.io/debian-stable binary/
+  #     update_cache: yes
+  #     state: present
+  #     filename: jenkins.list
 
-  - name: Install Jenkins
-    apt:
-      name:
-        - jenkins
-      state:  latest
+  # - name: Install Jenkins
+  #   apt:
+  #     name:
+  #       - jenkins
+  #     state:  latest
 
   - name: enable and restart jenkins
     systemd:
@@ -58,19 +57,19 @@
       state:  started
       enabled:  yes
 
-  # initial admin password:
-  - name: Initial admin password
-    debug:
-      msg: 
-        - "to get the initial admin password, run the following:"
-        - cat /var/lib/jenkins/secrets/initialAdminPassword
+  # # initial admin password:
+  # - name: Initial admin password
+  #   debug:
+  #     msg: 
+  #       - "to get the initial admin password, run the following:"
+  #       - cat /var/lib/jenkins/secrets/initialAdminPassword
 
-  - name: Jenkins setup
-    debug:
-      msg:  the ability to restore th jenkins from backup config would go here?
+  # - name: Jenkins setup
+  #   debug:
+  #     msg:  the ability to restore th jenkins from backup config would go here?
 
-  # Semaphore (Web UI for Ansible)
-  # https://github.com/ansible-semaphore/semaphore/releases/download/v2.7.0/semaphore_2.7.0_linux_amd64.deb
+  # # Semaphore (Web UI for Ansible)
+  # # https://github.com/ansible-semaphore/semaphore/releases/download/v2.7.0/semaphore_2.7.0_linux_amd64.deb
 
   # bitwarden config
   - name: check for bitwarden
@@ -97,11 +96,11 @@
       mode: a+x
     when: bw_zip.stat.exists
 
-  - name: add jenkins to the docker group
-    user:
-      name: jenkins
-      group:  docker
-      append: yes
+  # - name: add jenkins to the docker group
+  #   user:
+  #     name: jenkins
+  #     group:  docker
+  #     append: yes
       
   # # Syncthing
   # - name: Install Syncthing
