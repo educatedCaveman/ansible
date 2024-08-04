@@ -7,7 +7,7 @@
     - git_config_role
     - git_dotfiles_role
     - git_scripts_role
-    - VM_netplan_MTU
+    # - VM_netplan_MTU
     - linux_role
     - client_ssh_keys
     - docker_role

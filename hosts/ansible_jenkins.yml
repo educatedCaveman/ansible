@@ -6,7 +6,7 @@
     - git_dotfiles_role
     - git_scripts_role
     # - apt_client_role
-    - VM_netplan_MTU
+    # - VM_netplan_MTU
     - linux_role
     - client_ssh_keys
     - drake_role
