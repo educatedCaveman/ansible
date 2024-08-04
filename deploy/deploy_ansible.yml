@@ -17,7 +17,8 @@
         path: /home/{{ item.name }}/ansible
         state:  directory
         recurse:  yes
-      loop: users
+      loop: 
+        - users
 
     - name: make sure directory exists
       stat:
