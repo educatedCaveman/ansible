@@ -14,7 +14,7 @@
     # make sure drake has the copybooks
     - name: create the ansible/ directory
       file:
-        path: {{ item.home_dir }}/ansible
+        path: "{{ item.home_dir }}/ansible"
         state:  directory
         recurse:  yes
       loop: "{{ users|flatten(levels=1) }}"
@@ -27,17 +27,17 @@
     - name: deploy ansible repo
       git:
         repo: https://github.com/educatedCaveman/ansible
-        dest: {{ item.home_dir }}/ansible
+        dest: "{{ item.home_dir }}/ansible"
         version:  master
         force:  yes
       loop: "{{ users|flatten(levels=1) }}"
 
     - name: set permissions on directory
       file:
-        path: {{ item.home_dir }}/ansible
+        path: "{{ item.home_dir }}/ansible"
         state:  directory
         recurse:  yes
-        owner:  {{ item.name }}
-        group:  {{ item.name }}
+        owner:  "{{ item.name }}"
+        group:  "{{ item.name }}""
       loop: "{{ users|flatten(levels=1) }}"
         
