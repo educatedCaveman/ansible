@@ -42,27 +42,59 @@
     - nfs_pics_role
   tasks:
 
-    # - name: NFS pre-requisites
-    #   apt:
-    #     name:
-    #       - nfs-common
-    #     state:  latest
+- name: Worker-Specific Node Configuration
+  hosts:
+    - k3s_data
+  vars:
+    disks:
+      - device:     /dev/sdb
+        partition:  /dev/sdb1
+        mount_dir:  /mnt/slow
+      - device:     /dev/sdc
+        partition:  /dev/sdc1
+        mount_dir:  /mnt/fast
+  tasks:
 
-    # - name: check for mount dir
+    # need to format the drive
+    - name: check the partitions
+      community.general.parted:
+        device: "{{ item.device }}"
+        unit: MiB
+      loop: "{{ disks|flatten(levels=1) }}"
+
+    - name: create partition
+      community.general.parted:
+        device: "{{ item.device }}"
+        number: 1
+        label:  gpt
+        state:  present
+      loop: "{{ disks|flatten(levels=1) }}"
+
+    - name: create filesystem
+      community.general.filesystem:
+        fstype: ext4
+        state:  present
+        device: "{{ item.partition }}"
+      loop: "{{ disks|flatten(levels=1) }}"
+
+    # # create the mount directory, if needed:
+    # - name: check if the directory exists
     #   stat:
-    #     path: /mnt/k3s-data
-    #   register: mnt_k3s
+    #     path: "{{ item.mount_dir }}"
+    #   loop: "{{ disks|flatten(levels=1) }}"
 
-    # - name: create the dir, if needed
-    #   file:
-    #     path:   /mnt/k3s-data
-    #     state:  directory
-    #   when: not mnt_k3s.stat.exists
+    - name: create the device mount directory
+      file:
+        path: "{{ item.mount_dir }}"
+        state:  directory
+        recurse:  yes
+      loop: "{{ disks|flatten(levels=1) }}"
+      # when: not k3s_mount.stat.exists
 
-    # - name: mount the k3s share
-    #   mount:
-    #     src:    192.168.13.252:/mnt/k3s-data
-    #     path:   /mnt/k3s-data
-    #     fstype: nfs
-    #     opts:   rw,nolock,tcp
-    #     state:  mounted
+    - name: mount the drive
+      mount:
+        src:  "{{ item.partition }}"
+        path: "{{ item.mount_dir }}"
+        fstype: ext4
+        state:  mounted
+      loop: "{{ disks|flatten(levels=1) }}"
