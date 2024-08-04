@@ -19,11 +19,6 @@
         recurse:  yes
       loop: "{{ users|flatten(levels=1) }}"
 
-    # - name: make sure directory exists
-    #   stat:
-    #     path: /home/drake/ansible
-    #   register: ansible_dir
-
     - name: deploy ansible repo
       git:
         repo: https://github.com/educatedCaveman/ansible
