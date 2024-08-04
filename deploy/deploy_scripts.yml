@@ -8,8 +8,8 @@
     - seedbox
     - nextcloud
     # - portainer
-  ignore_unreachable: yes
-  ignore_errors:      yes
+  # ignore_unreachable: yes
+  # ignore_errors:      yes
   tasks:
 
     - name: install relevant packages
