@@ -4,10 +4,10 @@
     - self
     - singularity
     - dilithium
-    - plex
+    - plex_vm
     - seedbox
     - nextcloud
-    - portainer
+    # - portainer
   ignore_unreachable: yes
   ignore_errors:      yes
   tasks:
