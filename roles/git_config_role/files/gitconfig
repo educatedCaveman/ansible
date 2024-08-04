@@ -17,6 +17,24 @@ directory = /home/drake/unifi-net-app
 directory = /home/drake/jellyfin
 directory = /home/drake/swarm_lab
 
+directory = $HOME/dotfiles
+directory = $HOME/scripts
+directory = $HOME/klipper
+directory = $HOME/ansible
+directory = $HOME/documentation
+directory = $HOME/docker-lab
+directory = $HOME/Jenkins
+directory = $HOME/.oh-my-zsh
+directory = $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+directory = $HOME/.config/nvim/bundle/Vundle.vim
+directory = $HOME/privateer
+directory = $HOME/hu3bert
+directory = $HOME/kiauh
+directory = $HOME/printer_data/config
+directory = $HOME/unifi-net-app
+directory = $HOME/jellyfin
+directory = $HOME/swarm_lab
+
 #docker compose
 directory = /docker/docker-compose/homer
 directory = /docker/docker-compose/grafana_apps
