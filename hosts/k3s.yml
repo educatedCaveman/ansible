@@ -49,10 +49,10 @@
     disks:
       - device:     /dev/sdb
         partition:  /dev/sdb1
-        mount_dir:  /mnt/slow
-      - device:     /dev/sdc
-        partition:  /dev/sdc1
-        mount_dir:  /mnt/fast
+        mount_dir:  /var/lib/longhorn
+      # - device:     /dev/sdc
+      #   partition:  /dev/sdc1
+      #   mount_dir:  /mnt/fast
   tasks:
 
     # need to format the drive
