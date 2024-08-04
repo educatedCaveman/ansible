@@ -38,6 +38,6 @@
         state:  directory
         recurse:  yes
         owner:  "{{ item.name }}"
-        group:  "{{ item.name }}""
+        group:  "{{ item.name }}"
       loop: "{{ users|flatten(levels=1) }}"
         
