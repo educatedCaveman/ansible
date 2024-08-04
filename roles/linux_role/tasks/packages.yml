@@ -19,8 +19,8 @@
       - sudo
     state:  present
 
-- name: remove packages
-  apt:
-    name:  
-      - telegraf
-    state:  absent
+# - name: remove packages
+#   apt:
+#     name:  
+#       - telegraf
+#     state:  absent
