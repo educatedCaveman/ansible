@@ -15,7 +15,7 @@ pipeline {
         stage('deploy ansible playbooks') {
             steps {
                 echo 'deploying ansible playbooks to /home/drake/ansible/'
-                sh 'ansible-playbook ${ANSIBLE_REPO}/deploy/deploy_ansible.yml'
+                sh 'ansible-playbook ${ANSIBLE_REPO}/deploy/deploy_ansible.yml -i ${ANSIBLE_REPO}/hosts.ini'
             }
         }
         // update the roles
