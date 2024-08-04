@@ -16,4 +16,5 @@
       - cuetools
       - fastfetch
       - tree
+      - git-crypt
     state:  present
