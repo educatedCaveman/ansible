@@ -19,10 +19,10 @@
     apt:
       name:
         - ansible
-        - ansible-galaxy
+        # - ansible-galaxy
         - gpg
-        - default-jre
-        - default-jdk
+        # - default-jre
+        # - default-jdk
         - unzip
         - jq          # for bitwarden script
         - httpie
