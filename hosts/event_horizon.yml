@@ -19,9 +19,9 @@
         user: drake
         job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh pihole"
   
-    - debug:
-        msg:  "configuration of pihole must be done manually"
-        msg:  "https://docs.pi-hole.net/main/basic-install/"
-        msg:  ""
-        msg:  "configuration of gravity-sync must be done manually"
-        msg:  "https://github.com/vmstan/gravity-sync"
+    # - debug:
+    #     msg:  "configuration of pihole must be done manually"
+    #     msg:  "https://docs.pi-hole.net/main/basic-install/"
+    #     msg:  ""
+    #     msg:  "configuration of gravity-sync must be done manually"
+    #     msg:  "https://github.com/vmstan/gravity-sync"
