@@ -47,8 +47,8 @@
     - k3s_data
   vars:
     disks:
-      - device:     /dev/nvme0
-        partition:  /dev/nvme0n1
+      - device:     /dev/nvme0n1
+        partition:  /dev/nvme0n1p1
         mount_dir:  /var/lib/longhorn
   tasks:
 
