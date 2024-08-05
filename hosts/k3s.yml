@@ -98,3 +98,22 @@
         fstype: ext4
         state:  mounted
       loop: "{{ disks|flatten(levels=1) }}"
+
+    # packages and services for longhorn
+    - name: install longhorn prerequisites
+      apt:
+        name:
+          - open-iscsi
+          - nfs-common
+          - nfs-utils
+        state:  latest
+
+    - name: start and enable services
+      systemd:
+        name:   "{{ item }}.service"
+        state:  started
+        enabled:  yes
+      loop:
+        - open-iscsi
+
+        
