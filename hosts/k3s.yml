@@ -47,12 +47,9 @@
     - k3s_data
   vars:
     disks:
-      - device:     /dev/sdb
-        partition:  /dev/sdb1
+      - device:     /dev/nvme0
+        partition:  /dev/nvme0n1
         mount_dir:  /var/lib/longhorn
-      # - device:     /dev/sdc
-      #   partition:  /dev/sdc1
-      #   mount_dir:  /mnt/fast
   tasks:
 
     # need to format the drive
@@ -77,19 +74,12 @@
         device: "{{ item.partition }}"
       loop: "{{ disks|flatten(levels=1) }}"
 
-    # # create the mount directory, if needed:
-    # - name: check if the directory exists
-    #   stat:
-    #     path: "{{ item.mount_dir }}"
-    #   loop: "{{ disks|flatten(levels=1) }}"
-
     - name: create the device mount directory
       file:
         path: "{{ item.mount_dir }}"
         state:  directory
         recurse:  yes
       loop: "{{ disks|flatten(levels=1) }}"
-      # when: not k3s_mount.stat.exists
 
     - name: mount the drive
       mount:
