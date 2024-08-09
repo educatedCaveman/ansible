@@ -3,33 +3,20 @@
   hosts:  unifi_controller
   roles:
     - VM_role
+    - git_config_role
     - git_dotfiles_role
-    # - VM_netplan_MTU
-    # - apt_client_role
     - linux_role
     - client_ssh_keys
+    - drake_role
+    - docker_role
   tasks:
 
-  - name: install prerequisites
-    apt:
-      name:
-        - ca-certificates 
-        - openjdk-8-jdk
-        - apt-transport-https
+  - name: retrieve unifi-net-app repo
+    git:
+      repo:   'https://github.com/educatedCaveman/unifi-net-app'
+      dest:   /home/drake/unifi
+      force:  yes
 
-  - name: add the unifi repository
-    apt_repository:
-      repo: 'deb https://www.ui.com/downloads/unifi/debian stable ubiquiti'
-      filename: 100-ubnt-unifi
-
-  - name: add the unifi gpg key
-    apt_key:
-      url:  https://dl.ui.com/unifi/unifi-repo.gpg
-
-  - name: update apt cache
-    apt:
-      update_cache: yes
-
-  - name: install unifi
-    apt:
-      name: unifi
+  - name: manually start unifi
+    debug:
+      msg:  run "cd unifi && docker compose up"

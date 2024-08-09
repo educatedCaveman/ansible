@@ -31,7 +31,7 @@
 
 - name: download Docker GPG key
   ansible.builtin.get_url:
-    url: https://download.docker.com/linux/debian/gpg
+    url: https://download.docker.com/linux/ubuntu/gpg
     # dest: /tmp/docker.gpg
     dest: /etc/apt/keyrings/docker.asc
   when: docker_asc.stat.exists == False
@@ -47,7 +47,7 @@
     dest: /etc/apt/sources.list.d/docker.list
   when: 
     - docker_list.stat.exists == False
-    - ansible_distribution_release == "trixie"
+    - ansible_distribution_release == "noble"
 
 - name: Update apt and install docker-ce
   apt: 
