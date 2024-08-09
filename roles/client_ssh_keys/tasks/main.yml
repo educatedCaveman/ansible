@@ -26,6 +26,7 @@
 # restart ssh service
 - name: restart sshd
   systemd:
-    name:     sshd.service
+    # name:     sshd.service
+    name:     ssh.service
     state:    restarted
     enabled:  yes
