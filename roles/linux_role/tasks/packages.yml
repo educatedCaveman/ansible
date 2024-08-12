@@ -17,6 +17,8 @@
       - gpg
       - net-tools
       - sudo
+      - lsb-release
+      - fastfetch
     state:  present
 
 # - name: remove packages
