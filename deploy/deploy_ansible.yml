@@ -3,6 +3,7 @@
   hosts:  
     - self
     - dilithium
+  ignore_unreachable: true
   vars:
     users:
       - name: drake
