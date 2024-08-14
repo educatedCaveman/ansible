@@ -18,7 +18,7 @@
       - net-tools
       - sudo
       - lsb-release
-      - fastfetch
+      - neofetch
     state:  present
 
 # - name: remove packages
