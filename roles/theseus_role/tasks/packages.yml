@@ -17,4 +17,5 @@
       - fastfetch
       - tree
       - git-crypt
+      - kubeseal
     state:  present
