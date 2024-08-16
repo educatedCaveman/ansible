@@ -1,0 +1,24 @@
+---
+# tasks file for nfs_temp_role
+
+- name: check for the mount directory before mounting
+  stat: 
+    path: /mnt/mobius/temp
+  register: temp_dir
+  
+- name: create the mount directory
+  file:
+    path:     /mnt/mobius/temp
+    state:    directory
+    recurse:  yes
+  when: not temp_dir.stat.exists
+  
+- name: Mount the temp NFS share if the mount path exists
+  mount:
+    src: 192.168.11.2:/mnt/storage_node/temp
+    path: /mnt/mobius/temp
+    fstype: nfs 
+    opts: rw,nolock,tcp
+    state: mounted
+  when: temp_dir.stat.exists
+  

@@ -36,7 +36,8 @@
     - nfs_base_role
     - nfs_music_role
     - nfs_video_role
-    - nfs_staging_role
+    # - nfs_staging_role
+    - nfs_temp_role
     - nfs_docs_role
     - nfs_pics_role
   tasks:
