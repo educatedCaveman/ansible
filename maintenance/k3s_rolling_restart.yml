@@ -1,0 +1,33 @@
+---
+- name: k3s safe rolling-restart
+  hosts:  k3s
+  serial: 1
+  tasks:
+
+    # update? (could be all-at-once)
+    # cordon
+    - name: cordon the node
+      kubernetes.core.k8s_drain:
+        state:  cordon
+        name:   {{ ansible_facts['ansible_nodename'] }}
+
+    # drain
+    - name: drain the node
+      kubernetes.core.k8s_drain:
+        state:  drain
+        name:   {{ ansible_facts['ansible_nodename'] }}
+        force:  yes
+
+    # restart, wait
+    - name: reboot the node
+      ansible.builtin.reboot:
+        # default is 600s (10m); 300s should be enough?
+        reboot_timeout: 300
+
+    # uncordon
+    - name: uncordon the node
+      kubernetes.core.k8s_drain:
+        state:  uncordon
+        name:   {{ ansible_facts['ansible_nodename'] }}
+
+    # verify cluster state is satisfactory?
