@@ -41,6 +41,22 @@
     - nfs_pics_role
   tasks:
 
+    # needed for wireguard VPN function of hotio's rflood
+    - name: set the IPv4 sysctl parameter (net.ipv4.conf.all.src_valid_mark=1)
+      ansible.posix.sysctl:
+        name: net.ipv4.conf.all.src_valid_mark
+        value:  '1'
+        reload: true
+        sysctl_set: true
+
+    # optional for wireguard VPN function of hotio's rflood
+    - name: set the IPv6 sysctl parameter (net.ipv6.conf.all.disable_ipv6=1)
+      ansible.posix.sysctl:
+        name: net.ipv6.conf.all.disable_ipv6
+        value:  '1'
+        reload: true
+        sysctl_set: true
+
 - name: Worker-Specific Node Configuration
   hosts:
     - k3s_data
