@@ -12,7 +12,6 @@ HOSTS=( \
     jenkins_vm \
     lv_426 \
     sevastopol \
-    seedbox \
     singularity \
     plex_vm \
     swarm_portainer \
