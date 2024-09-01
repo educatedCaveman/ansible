@@ -1,0 +1,2 @@
+Acquire::HTTP::ProxyAutoDetect "/usr/local/bin/apt-proxy-checker.sh";
+Acquire::HTTPS::Proxy "false"; 

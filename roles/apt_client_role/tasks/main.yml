@@ -1,9 +1,22 @@
 ---
 # tasks file for apt_client_role
-# just link the apt proxy
-- name: link 00aptproxy
+
+# /etc/default/apt-proxy-checker
+- name: install apt-proxy config
   file:
-    src: /home/drake/dotfiles/apt_cache_mirror/00aptproxy
-    dest: /etc/apt/apt.conf.d/00aptproxy
-    state: link
-    
+    src:  apt-proxy-checker
+    dest: /etc/default/apt-proxy-checker
+
+# /usr/local/bin/apt-proxy-checker.sh 
+- name: install apt-proxy-checker.sh
+  file:
+    src:  apt-proxy-checker.sh
+    dest: /usr/local/bin/apt-proxy-checker.sh 
+    mode: 0755
+
+# /etc/apt/apt.conf.d/10apt-cache
+- name: install apt-cache client config
+  file:
+    src:  11-apt-cache
+    dest: /etc/apt/apt.conf.d/10-apt-cache
+
