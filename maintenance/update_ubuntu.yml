@@ -19,7 +19,7 @@
 # omit self, because it is what runs the job
 
 - name: rolling restarts, non-HA hosts
-  hosts:  ubuntu_debian_hosts:!self:!voron
+  hosts:  ubuntu_debian_hosts:!self:!voron:!k3s
   ignore_unreachable: yes
   ignore_errors:      yes
   tasks:
