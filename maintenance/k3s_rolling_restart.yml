@@ -1,23 +1,29 @@
 ---
 - name: k3s safe rolling-restart
-  hosts:  k3s
+  # must be run somewhere which has the kubernetes python package
+  hosts:  self
   serial: 1
+  vars:
+    jenkins_kube_config:  /var/lib/jenkins/.kube/config
   tasks:
 
     # update? (could be all-at-once)
     # cordon
     - name: cordon the node
       kubernetes.core.k8s_drain:
+        kubeconfig: "{{jenkins_kube_config}}"
         state:  cordon
-        name:   {{ ansible_facts['ansible_nodename'] }}
+        name:   "vespae_3"
 
     # drain
     - name: drain the node
       kubernetes.core.k8s_drain:
+        kubeconfig: "{{jenkins_kube_config}}"
         state:  drain
-        name:   {{ ansible_facts['ansible_nodename'] }}
+        name:   "vespae_3"
         force:  yes
 
+    # this won't work...
     # restart, wait
     - name: reboot the node
       ansible.builtin.reboot:
@@ -27,7 +33,8 @@
     # uncordon
     - name: uncordon the node
       kubernetes.core.k8s_drain:
+        kubeconfig: "{{jenkins_kube_config}}"
         state:  uncordon
-        name:   {{ ansible_facts['ansible_nodename'] }}
+        name:   "vespae_3"
 
     # verify cluster state is satisfactory?

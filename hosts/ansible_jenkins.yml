@@ -31,6 +31,7 @@
         - ca-certificates
         - curl
         - gnupg
+        - python3-kubernetes
       state:  latest
 
   # # Jenkins config
