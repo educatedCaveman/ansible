@@ -4,19 +4,19 @@
 # /etc/default/apt-proxy-checker
 - name: install apt-proxy config
   file:
-    src:  apt-proxy-checker
+    path: apt-proxy-checker
     dest: /etc/default/apt-proxy-checker
 
 # /usr/local/bin/apt-proxy-checker.sh 
 - name: install apt-proxy-checker.sh
   file:
-    src:  apt-proxy-checker.sh
+    path: apt-proxy-checker.sh
     dest: /usr/local/bin/apt-proxy-checker.sh 
     mode: 0755
 
 # /etc/apt/apt.conf.d/10apt-cache
 - name: install apt-cache client config
   file:
-    src:  11-apt-cache
+    path: 11-apt-cache
     dest: /etc/apt/apt.conf.d/10-apt-cache
 
