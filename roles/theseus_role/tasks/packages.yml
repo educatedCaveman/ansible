@@ -18,4 +18,5 @@
       - tree
       - git-crypt
       - kubeseal
+      - fluxcd
     state:  present
