@@ -18,5 +18,5 @@
       - tree
       - git-crypt
       - kubeseal
-      - fluxcd
+      - kustomize
     state:  present
