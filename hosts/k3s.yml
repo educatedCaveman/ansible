@@ -36,7 +36,6 @@
     - nfs_base_role
     - nfs_music_role
     - nfs_video_role
-    - nfs_temp_role
     - nfs_docs_role
     - nfs_pics_role
   tasks:
@@ -57,33 +56,33 @@
         reload: true
         sysctl_set: true
 
-- name: Worker-Specific Node Configuration
-  hosts:
-    - k3s_GPU
-  tasks:
+# - name: Worker-Specific Node Configuration
+#   hosts:
+#     - k3s_GPU
+#   tasks:
 
-    # Install NVIDIA Container Toolkit
-    # save gpg key locally
-    - name: get google key, save in /usr/share/keyrings for newer apt deb syntax
-      get_url:
-        url: https://nvidia.github.io/libnvidia-container/gpgkey
-        dest: /usr/share/keyrings/nvidia-container-toolkit-keyring.asc
-        mode: ugo+rw
+#     # Install NVIDIA Container Toolkit
+#     # save gpg key locally
+#     - name: get google key, save in /usr/share/keyrings for newer apt deb syntax
+#       get_url:
+#         url: https://nvidia.github.io/libnvidia-container/gpgkey
+#         dest: /usr/share/keyrings/nvidia-container-toolkit-keyring.asc
+#         mode: ugo+rw
 
-    # add custom apt repo with 'signed-by' referring to gpg key
-    - name: add nvidia container toolkit apt repository
-      apt_repository:
-        repo: "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) /"
-        state: present
-        filename: /etc/apt/sources.list.d/nvidia-container-toolkit.list
-        update_cache: yes
-        mode: 0644
-        validate_certs: no
+#     # add custom apt repo with 'signed-by' referring to gpg key
+#     - name: add nvidia container toolkit apt repository
+#       apt_repository:
+#         repo: "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) /"
+#         state: present
+#         filename: /etc/apt/sources.list.d/nvidia-container-toolkit.list
+#         update_cache: yes
+#         mode: 0644
+#         validate_certs: no
 
-    - name: install the nvidia container toolkit
-      apt:
-        name: 
-          - nvidia-container-toolkit
+#     - name: install the nvidia container toolkit
+#       apt:
+#         name: 
+#           - nvidia-container-toolkit
 
 - name: Worker-Specific Node Configuration
   hosts:
