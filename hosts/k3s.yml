@@ -38,6 +38,7 @@
     - nfs_video_role
     - nfs_docs_role
     - nfs_pics_role
+    - nfs_temp_role
   tasks:
 
     # needed for wireguard VPN function of hotio's rflood
