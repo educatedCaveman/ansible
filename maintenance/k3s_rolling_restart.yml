@@ -1,33 +1,17 @@
 ---
-- name: k3s cluster update and rolling restarts
+- name: k3s cluster update and rolling restarts setup
   hosts: k3s
   # gather_facts: false
   gather_facts: true
-  become: true
-  ignore_unreachable: true
+  ignore_unreachable: false
   ignore_errors: false
-  serial: 1
   tasks:
 
-    - name: install pip3
+    - name: install packages
       apt:
         name: python3-pip
         state: present
 
-    # - name: Install multi python packages
-    #   pip:
-    #     name:
-    #       - openshift
-    #       - pyyaml
-    #     state: present
-    # - name: install python packages
-    #   apt:
-    #     name:
-    #       - python3-openshift
-    #       - python3-pyyaml
-    #     state: present
-
-    ##################################
     # Required to avoid the following bug:
     # https://github.com/ansible/ansible/issues/48352
     - name: Allow release info change
@@ -41,7 +25,17 @@
       apt:
         update_cache: yes
       become: true
-      register: apt
+
+
+- name: k3s cluster update and rolling restarts
+  hosts: k3s
+  # gather_facts: false
+  gather_facts: true
+  become: true
+  ignore_unreachable: true
+  ignore_errors: false
+  serial: 1
+  tasks:
 
     - name: Upgrade all packages to the latest version
       become: true
