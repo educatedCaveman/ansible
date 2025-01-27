@@ -1,3 +1,4 @@
+---
 - name: k3s cluster update and rolling restarts
   hosts: k3s
   gather_facts: false
