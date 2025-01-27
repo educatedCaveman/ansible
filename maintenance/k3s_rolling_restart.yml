@@ -110,10 +110,10 @@
       delegate_to: localhost
       when: nodedrained.changed| default(omit)
 
-    handlers:
-    - name: waiting for reboot
-      local_action: wait_for
-        host="{{ inventory_hostname }}"
-        port=22
-        delay=10
-        timeout=120
+  handlers:
+  - name: waiting for reboot
+    local_action: wait_for
+      host="{{ inventory_hostname }}"
+      port=22
+      delay=10
+      timeout=120
