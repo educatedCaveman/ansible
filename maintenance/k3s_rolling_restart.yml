@@ -1,13 +1,12 @@
 ---
-- name: k3s cluster update and rolling restarts setup
+- name: Setup
   hosts: k3s
-  # gather_facts: false
   gather_facts: true
   ignore_unreachable: false
   ignore_errors: false
   tasks:
 
-    - name: install packages
+    - name: Install packages
       apt:
         name: python3-pip
         state: present
@@ -21,7 +20,7 @@
         create: true
         line: Acquire::AllowReleaseInfoChange::Suite "true";
 
-    - name: Run the equivalent of "apt-get update" as a separate step
+    - name: Update Packages
       apt:
         update_cache: yes
       become: true
@@ -29,8 +28,7 @@
 
 - name: k3s cluster update and rolling restarts
   hosts: k3s
-  # gather_facts: false
-  gather_facts: true
+  gather_facts: false
   become: true
   ignore_unreachable: true
   ignore_errors: false
@@ -77,9 +75,9 @@
         - reboot_file.stat.exists
       register: nodedrained
 
-    - name: Pause for 1 minutes
+    - name: Pause for 2 minutes
       ansible.builtin.pause:
-        minutes: 1
+        minutes: 2
       when: nodedrained.changed
 
     - name: Reboot system if required
