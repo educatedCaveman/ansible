@@ -6,7 +6,7 @@
   ignore_unreachable: true
   ignore_errors: false
   serial: 1
-    tasks:
+  tasks:
 
     - name: install pip3
       apt:
