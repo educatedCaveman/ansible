@@ -12,11 +12,18 @@
       - nfs-utils
       - obsidian
       - bitwarden
-      - superslicer
       - cuetools
       - fastfetch
       - tree
       - git-crypt
       - kubeseal
       - kustomize
+      - k9s
+      - shellcheck
+      - steam
+      - steam-native-runtime
+      - fprintd
+      # - pantheon-geoclue2-agent
+      - syncthing
+      - kubectl
     state:  present

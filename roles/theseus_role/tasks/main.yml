@@ -27,6 +27,18 @@
 - name: mount NFS shares
   import_tasks: NFS.yml
 
+# UDEV Rules
+- name: install UDEV rules
+  import_tasks: udev.yml
+
+# Dynamic Wallpaper
+- name: dynamic wallpaper files
+  import_tasks: wallpaper.yml
+
+# Services
+- name: Start services
+  import_tasks: services.yml
+
 # TODO: pull KDE UI and preference configs
 
 # TODO: syncthing/other data
@@ -36,6 +48,6 @@
   debug:
     msg: 
       - "run the following command(s):"
-      - "sudo pamac install ultra-flat-icons-blue brother-hll2395dw"
+      - "sudo pamac install ultra-flat-icons-blue brother-hll2395dw vscodium superslicer-bin superslicer-profiles-git openlens-bin jellyfin-media-player plasma5-wallpapers-dynamic"
       - "flatpak install flathub tv.plex.PlexDesktop"
       - "flatpak install flathub com.plexamp.Plexamp"

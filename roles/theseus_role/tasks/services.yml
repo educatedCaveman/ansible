@@ -1,0 +1,13 @@
+---
+# start services
+- name: start Syncthing
+  systemd:
+    name:     syncthing@drake.service
+    state:    started
+    enabled:  yes
+
+- name: start Docker
+  systemd:
+    name:     docker.service
+    state:    started
+    enabled:  yes

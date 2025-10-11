@@ -1,0 +1,13 @@
+{
+  "Type": "day-night",
+  "Meta": [
+    {
+      "TimeOfDay": "day",
+      "FileName": "/usr/share/wallpapers/WinXP_auto/contents/images/bliss_5600x2400.jpeg"
+    },
+    {
+      "TimeOfDay": "night",
+      "FileName": "/usr/share/wallpapers/WinXP_auto/contents/images_dark/red_moon_desert_5600x2400.jpeg"
+    }
+  ]
+}

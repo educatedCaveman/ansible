@@ -1,0 +1,7 @@
+---
+# populate the udev rules
+- name: install dynamic wallpaper files
+  copy:
+    src:    "WinXP_auto/"
+    dest:   "/usr/share/wallpapers/WinXP_auto/"
+    force:  yes

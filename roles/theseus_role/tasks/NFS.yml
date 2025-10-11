@@ -1,5 +1,11 @@
 ---
 # create directories (don't run repeatedly)
+- name: check if mount points exist
+  stat:
+    path: /mnt/mobius
+  register: stat_mnt_mobius
+
+
 - name: create mount points
   file:
     path:     "/mnt/mobius/{{ item }}"
@@ -15,6 +21,7 @@
     - "PVE_data"
     - "staging"
     - "Video"
+  when: not stat_mnt_mobius.stat.exists
 
 - name: set permissions
   file:
@@ -32,6 +39,7 @@
     - "PVE_data"
     - "staging"
     - "Video"
+  when: not stat_mnt_mobius.stat.exists
 
 - name: Mount the Music NFS share if the mount path exists
   mount:
@@ -50,3 +58,4 @@
     - "PVE_data"
     - "staging"
     - "Video"
+  when: not stat_mnt_mobius.stat.exists

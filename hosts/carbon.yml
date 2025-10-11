@@ -1,5 +1,5 @@
 - name: Bootstrap P.C.
-  hosts: carbon_local
+  hosts: self
   roles:  
     - theseus_role
   tasks:

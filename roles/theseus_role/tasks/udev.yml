@@ -1,0 +1,11 @@
+---
+# populate the udev rules
+- name: install UDEV rules
+  copy:
+    src:    "{{ item }}"
+    dest:   "/etc/udev/rules.d/{{ item }}"
+    force:  yes
+  loop:
+    - "50-framework-inputmodule.rules"
+    - "51-disable-keyboard-wake.rules"
+    - "99-fitbit-sense.rules"
