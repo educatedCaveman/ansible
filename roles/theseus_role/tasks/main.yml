@@ -42,7 +42,7 @@
 # disks
 - name: Mount extra disk
   mount:
-    path:   /data
+    path:   /mnt/data
     src:    UUID=cc0b8e10-36e4-4d7e-bcb5-4591f65499cc
     fstype: btrfs
     # opts:
