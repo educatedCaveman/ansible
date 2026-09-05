@@ -1,0 +1,106 @@
+# DNS01 - LXC
+- name: configure LXC host(s)
+  hosts:  dns01
+  roles:
+    - LXC_role
+  tasks:
+
+# # DNS02 - Ubuntu VM?
+# - name: configure VM host(s)
+#   hosts:  dns02
+#   roles:
+#     - VM_role
+#   tasks:
+
+# DNS03 & DNS04 - Raspberry Pi - no special setup
+- name: Raspberry Pi dependencies
+  hosts:
+    - dns03
+    - dns04
+  tasks:
+  - name: install dependencies
+    apt:
+      name:
+        - git
+      state:  latest
+
+# common config
+- name: Common Configuration
+  hosts:  technitium
+  roles:
+    - git_config_role
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - git_scripts_role
+    - linux_role          # base linux configs
+    - client_ssh_keys
+    - drake_role          # drake home directory permissions
+    - keepalived_role
+  tasks:
+
+  # - name: install keepalived & dependencies
+  #   apt:
+  #     name:
+  #       - keepalived
+  #     state:  latest
+
+
+# keepalived master
+- name: Master Configuration
+  hosts:  dns01
+  tasks:
+  - name: install primary config file
+    ansible.builtin.include_role:
+      name: keepalived_role
+      tasks_from: dns01.yml
+
+
+# keepalived secondaries
+# # DNS02
+# - name: Secondary Configuration
+#   hosts:  dns02
+#   tasks:
+#   - name: install secondary config file
+#     ansible.builtin.include_role:
+#       name: keepalived_role
+#       tasks_from: dns02.yml
+
+# DNS03
+- name: Tertiary Configuration
+  hosts:  dns03
+  tasks:
+  - name: install tertiary config file
+    ansible.builtin.include_role:
+      name: keepalived_role
+      tasks_from: dns03.yml
+
+# DNS03
+- name: Quaternary Configuration
+  hosts:  dns04
+  tasks:
+  - name: install quaternary config file
+    ansible.builtin.include_role:
+      name: keepalived_role
+      tasks_from: dns04.yml
+
+
+# restart keepalived service
+- name: Start and Enable the service
+  hosts:  technitium
+  tasks:
+  - name: keepalived.service
+    ansible.builtin.systemd_service:
+      name:           keepalived.service
+      enabled:        true
+      state:          restarted
+
+
+# Manual steps
+- name: Install Technitium
+  hosts:  dns01
+  tasks:
+  - name: Install Technitium (manual)
+    ansible.builtin.debug:
+        msg:
+        - "run the following command in each hosts' shell"
+        - "curl -sSL https://download.technitium.com/dns/install.sh | sudo bash"
+        

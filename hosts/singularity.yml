@@ -14,169 +14,169 @@
     - nfs_backup_role
   tasks:
 
-  - name: install pihole dependencies
-    apt:
-      name:
-        - sqlite3        
-      state:  latest
-
-  # # check if pihole is already installed
-  # - name: check for existing pi-hole install
-  #   stat:
-  #     path: /etc/pihole
-  #   register: pihole_install
-
-  # pihole-specific dotfiles:
-  # note: will use gravity sync to sync the rest
-  # dnsmasq (CNAME)
-  - name: check for existing cname.conf
-    stat:
-      path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
-    register: cname_conf
-    # when:
-    #   - pihole_install.stat.exists
-    #   - pihole_install.stat.isdir is defined
-    #   - pihole_install.stat.isdir == True
-
-  - name: remove existing cname.conf
-    file:
-      path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
-      state:  absent
-    when: 
-      # - pihole_install.stat.exists
-      # - pihole_install.stat.isdir is defined
-      # - pihole_install.stat.isdir == True
-      - cname_conf.stat.exists
-      - cname_conf.stat.islnk is defined
-      - cname_conf.stat.islnk == False
-
-  - name: link new cname.conf
-    file:
-      src:  /home/drake/dotfiles/pihole/cname.conf
-      dest: /etc/dnsmasq.d/05-pihole-custom-cname.conf
-      owner:  root
-      group:  root
-      state:  link
-    when: 
-      # - pihole_install.stat.exists
-      # - pihole_install.stat.isdir is defined
-      # - pihole_install.stat.isdir == True
-      - cname_conf.stat.exists
-      - cname_conf.stat.islnk is defined
-      - cname_conf.stat.islnk == False
-
-  # custom.list
-  - name: check for existin custom.list
-    stat:
-      path: /etc/pihole/custom.list
-    register: cust_list
-    # when:
-    #   - pihole_install.stat.exists
-    #   - pihole_install.stat.isdir is defined
-    #   - pihole_install.stat.isdir == True
-
-  - name: remove existing custom.list
-    file:
-      path: /etc/pihole/custom.list
-      state:  absent
-    when: 
-      # - pihole_install.stat.exists
-      # - pihole_install.stat.isdir is defined
-      # - pihole_install.stat.isdir == True
-      - cust_list.stat.exists
-      - cust_list.stat.islnk is defined
-      - cust_list.stat.islnk == False
-
-  - name: link new custom.list
-    file:
-      src:  /home/drake/dotfiles/pihole/custom.list
-      dest: /etc/pihole/custom.list
-      owner:  root
-      group:  root
-      state:  link
-    when: 
-      # - pihole_install.stat.exists
-      # - pihole_install.stat.isdir is defined
-      # - pihole_install.stat.isdir == True
-      - cust_list.stat.exists
-      - cust_list.stat.islnk is defined
-      - cust_list.stat.islnk == False
-  
-  # FTL conf
-  - name: check for existin pihole-FTL.conf
-    stat:
-      path: /etc/pihole/pihole-FTL.conf
-    register: ftl_conf
-    # when:
-    #   - pihole_install.stat.exists
-    #   - pihole_install.stat.isdir is defined
-    #   - pihole_install.stat.isdir == True
-
-  - name: remove existing pihole-FTL.conf
-    file:
-      path: /etc/pihole/pihole-FTL.conf
-      state:  absent
-    when: 
-      # - pihole_install.stat.exists
-      # - pihole_install.stat.isdir is defined
-      # - pihole_install.stat.isdir == True
-      - ftl_conf.stat.exists
-      - ftl_conf.stat.islnk is defined
-      - ftl_conf.stat.islnk == False
-
-  - name: link new pihole-FTL.conf
-    file:
-      src:  /home/drake/dotfiles/pihole/pihole-FTL.conf
-      dest: /etc/pihole/pihole-FTL.conf
-      owner:  root
-      group:  root
-      state:  link
-    when:
-      # - pihole_install.stat.exists
-      # - pihole_install.stat.isdir is defined
-      # - pihole_install.stat.isdir == True
-      - ftl_conf.stat.exists
-      - ftl_conf.stat.islnk is defined
-      - ftl_conf.stat.islnk == False
-
-  # backup directory:
-  - name: create pihole backup folder
-    file:
-      path: /mnt/mobius/Backup/pihole
-      state:  directory
-
-  # # install pip3
-  # - name: install pip
+  # - name: install pihole dependencies
   #   apt:
-  #     name: python3-pip
-  #     state:  present
+  #     name:
+  #       - sqlite3        
+  #     state:  latest
 
-  # # python dependencies for the scripts
-  # - name: install pip packages
-  #   pip:
-  #     name: tabulate
+  # # # check if pihole is already installed
+  # # - name: check for existing pi-hole install
+  # #   stat:
+  # #     path: /etc/pihole
+  # #   register: pihole_install
 
-  # CRON
-  - name: setup pihole backup script
-    cron:
-      name: pihole backup
-      minute: "0"
-      hour: "2"
-      job: "/bin/bash /home/drake/scripts/pihole/pihole_backup.sh"
+  # # pihole-specific dotfiles:
+  # # note: will use gravity sync to sync the rest
+  # # dnsmasq (CNAME)
+  # - name: check for existing cname.conf
+  #   stat:
+  #     path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
+  #   register: cname_conf
+  #   # when:
+  #   #   - pihole_install.stat.exists
+  #   #   - pihole_install.stat.isdir is defined
+  #   #   - pihole_install.stat.isdir == True
 
-  - name: setup TMUX autostart check
-    cron:
-      name: tmux_run_check
-      user: drake
-      job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh pihole"
+  # - name: remove existing cname.conf
+  #   file:
+  #     path: /etc/dnsmasq.d/05-pihole-custom-cname.conf
+  #     state:  absent
+  #   when: 
+  #     # - pihole_install.stat.exists
+  #     # - pihole_install.stat.isdir is defined
+  #     # - pihole_install.stat.isdir == True
+  #     - cname_conf.stat.exists
+  #     - cname_conf.stat.islnk is defined
+  #     - cname_conf.stat.islnk == False
 
-  # Pi-Hole
-  - debug:
-      msg:  "configuration of pihole must be done manually"
-    # when:
-    #   - pihole_install.stat.exists == False
+  # - name: link new cname.conf
+  #   file:
+  #     src:  /home/drake/dotfiles/pihole/cname.conf
+  #     dest: /etc/dnsmasq.d/05-pihole-custom-cname.conf
+  #     owner:  root
+  #     group:  root
+  #     state:  link
+  #   when: 
+  #     # - pihole_install.stat.exists
+  #     # - pihole_install.stat.isdir is defined
+  #     # - pihole_install.stat.isdir == True
+  #     - cname_conf.stat.exists
+  #     - cname_conf.stat.islnk is defined
+  #     - cname_conf.stat.islnk == False
 
-  - debug:
-      msg:  "configuration of gravity-sync must be done manually"
-    # when:
-    #   - pihole_install.stat.exists == False
+  # # custom.list
+  # - name: check for existin custom.list
+  #   stat:
+  #     path: /etc/pihole/custom.list
+  #   register: cust_list
+  #   # when:
+  #   #   - pihole_install.stat.exists
+  #   #   - pihole_install.stat.isdir is defined
+  #   #   - pihole_install.stat.isdir == True
+
+  # - name: remove existing custom.list
+  #   file:
+  #     path: /etc/pihole/custom.list
+  #     state:  absent
+  #   when: 
+  #     # - pihole_install.stat.exists
+  #     # - pihole_install.stat.isdir is defined
+  #     # - pihole_install.stat.isdir == True
+  #     - cust_list.stat.exists
+  #     - cust_list.stat.islnk is defined
+  #     - cust_list.stat.islnk == False
+
+  # - name: link new custom.list
+  #   file:
+  #     src:  /home/drake/dotfiles/pihole/custom.list
+  #     dest: /etc/pihole/custom.list
+  #     owner:  root
+  #     group:  root
+  #     state:  link
+  #   when: 
+  #     # - pihole_install.stat.exists
+  #     # - pihole_install.stat.isdir is defined
+  #     # - pihole_install.stat.isdir == True
+  #     - cust_list.stat.exists
+  #     - cust_list.stat.islnk is defined
+  #     - cust_list.stat.islnk == False
+  
+  # # FTL conf
+  # - name: check for existin pihole-FTL.conf
+  #   stat:
+  #     path: /etc/pihole/pihole-FTL.conf
+  #   register: ftl_conf
+  #   # when:
+  #   #   - pihole_install.stat.exists
+  #   #   - pihole_install.stat.isdir is defined
+  #   #   - pihole_install.stat.isdir == True
+
+  # - name: remove existing pihole-FTL.conf
+  #   file:
+  #     path: /etc/pihole/pihole-FTL.conf
+  #     state:  absent
+  #   when: 
+  #     # - pihole_install.stat.exists
+  #     # - pihole_install.stat.isdir is defined
+  #     # - pihole_install.stat.isdir == True
+  #     - ftl_conf.stat.exists
+  #     - ftl_conf.stat.islnk is defined
+  #     - ftl_conf.stat.islnk == False
+
+  # - name: link new pihole-FTL.conf
+  #   file:
+  #     src:  /home/drake/dotfiles/pihole/pihole-FTL.conf
+  #     dest: /etc/pihole/pihole-FTL.conf
+  #     owner:  root
+  #     group:  root
+  #     state:  link
+  #   when:
+  #     # - pihole_install.stat.exists
+  #     # - pihole_install.stat.isdir is defined
+  #     # - pihole_install.stat.isdir == True
+  #     - ftl_conf.stat.exists
+  #     - ftl_conf.stat.islnk is defined
+  #     - ftl_conf.stat.islnk == False
+
+  # # backup directory:
+  # - name: create pihole backup folder
+  #   file:
+  #     path: /mnt/mobius/Backup/pihole
+  #     state:  directory
+
+  # # # install pip3
+  # # - name: install pip
+  # #   apt:
+  # #     name: python3-pip
+  # #     state:  present
+
+  # # # python dependencies for the scripts
+  # # - name: install pip packages
+  # #   pip:
+  # #     name: tabulate
+
+  # # CRON
+  # - name: setup pihole backup script
+  #   cron:
+  #     name: pihole backup
+  #     minute: "0"
+  #     hour: "2"
+  #     job: "/bin/bash /home/drake/scripts/pihole/pihole_backup.sh"
+
+  # - name: setup TMUX autostart check
+  #   cron:
+  #     name: tmux_run_check
+  #     user: drake
+  #     job: "/bin/bash /home/drake/scripts/cron/tmux_check.sh pihole"
+
+  # # Pi-Hole
+  # - debug:
+  #     msg:  "configuration of pihole must be done manually"
+  #   # when:
+  #   #   - pihole_install.stat.exists == False
+
+  # - debug:
+  #     msg:  "configuration of gravity-sync must be done manually"
+  #   # when:
+  #   #   - pihole_install.stat.exists == False

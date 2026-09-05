@@ -1,0 +1,6 @@
+---
+# DNS01
+- name: install keepalived dns04 conf file
+  ansible.builtin.copy:
+    src:  dns04.conf
+    dest: /etc/keepalived/keepalived.conf

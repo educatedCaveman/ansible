@@ -8,8 +8,6 @@
     state:  present
     key:    '{{ item }}'
   with_file:
-    - /home/drake/.ssh/jenkins_id_ed25519.pub
-    - /home/drake/.ssh/dilithium_id_ed25519.pub
     - /home/drake/.ssh/theseus2_id_ed25519.pub
 
 # drake keys:
@@ -19,14 +17,11 @@
     state:  present
     key:    '{{ item }}'
   with_file:
-    - /home/drake/.ssh/jenkins_id_ed25519.pub
-    - /home/drake/.ssh/dilithium_id_ed25519.pub
     - /home/drake/.ssh/theseus2_id_ed25519.pub
 
 # restart ssh service
 - name: restart sshd
   systemd:
-    # name:     sshd.service
     name:     ssh.service
     state:    restarted
     enabled:  yes
