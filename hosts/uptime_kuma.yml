@@ -1,0 +1,78 @@
+# uptime-kuma
+- name: configure host
+  hosts:  uptime_kuma
+  roles:
+    - VM_role
+    - git_config_role
+    - git_dotfiles_role   # deploy the dotfiles repo
+    - git_scripts_role
+    - linux_role          # base linux configs
+    - client_ssh_keys
+    - drake_role          # drake home directory permissions
+  tasks:
+
+  - name: install docker and dependencies
+    apt:
+      name:
+        - docker.io
+        - docker-compose-v2
+        - util-linux-extra
+      state:  latest
+
+  # restart docker service
+  - name: Start and enable the Docker
+    ansible.builtin.systemd_service:
+      name:           docker
+      enabled:        true
+      state:          restarted
+
+  # add drake to the docker group
+  - name: Add drake to the docker group
+    ansible.builtin.user:
+      name:   drake
+      groups: docker
+      append: true
+
+  # create docker compose file and deploy the stack
+  # first create the required folder structure:
+  - name: create directories for compose stack
+    ansible.builtin.file:
+      path: /home/drake/uptime-kuma/data/
+      state:  directory
+      owner:  drake
+      group:  docker
+      recurse:  true
+
+  # Generate a sudoers drop-in file with multiple lines
+  - name: create docker-compose.yml file
+    ansible.builtin.copy:
+      content: |        
+        services:
+          uptime-kuma:
+            image: louislam/uptime-kuma:2.5.3
+            restart: unless-stopped
+            volumes:
+              - ./data:/app/data
+            ports:
+              - "3001:3001"
+      dest: /home/drake/uptime-kuma/docker-compose.yml
+      owner: drake
+      group: docker
+
+  # run the docker command
+  - name: deploy the stack
+    command:
+      cmd:  docker compose up -d
+      chdir:  /home/drake/uptime-kuma
+
+
+  # # Manual steps
+  # - name: Install Technitium
+  #   hosts:  dns01
+  #   tasks:
+  #   - name: Install Technitium (manual)
+  #     ansible.builtin.debug:
+  #         msg:
+  #         - "run the following command in each hosts' shell"
+  #         - "curl -sSL https://download.technitium.com/dns/install.sh | sudo bash"
+        

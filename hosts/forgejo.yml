@@ -20,8 +20,8 @@
     apt:
       name:
         - ansible
-        # - git       # forgejo requirement
-        # - git-lfs   # forgejo requirement
+        - git       # forgejo requirement
+        - git-lfs   # forgejo requirement
         - curl
         - apt-transport-https
       state:  latest
@@ -58,7 +58,7 @@
 
   - name: Create /etc/forgejo
     ansible.builtin.file:
-      path:   /var/lib/forgejo
+      path:   /etc/forgejo
       state:  directory
       owner:  root  # not a typo
       group:  git
@@ -78,7 +78,7 @@
     ansible.builtin.get_url:
       url: "https://codeberg.org/forgejo/forgejo/releases/download/v{{ forgejo_version }}/forgejo-{{ forgejo_version }}-linux-amd64"
       dest: /usr/local/bin/forgejo
-      mode: '0750'
+      mode: '0755'
     when: not forgejo_bin.stat.exists
 
   # using sqlite, so no DB setup needed, but this is where it would go

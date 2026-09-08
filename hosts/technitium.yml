@@ -1,16 +1,12 @@
-# DNS01 - LXC
+# DNS01 & DNS02 - LXC
 - name: configure LXC host(s)
-  hosts:  dns01
+  hosts:  
+  - dns01
+  - dns02
   roles:
     - LXC_role
   tasks:
 
-# # DNS02 - Ubuntu VM?
-# - name: configure VM host(s)
-#   hosts:  dns02
-#   roles:
-#     - VM_role
-#   tasks:
 
 # DNS03 & DNS04 - Raspberry Pi - no special setup
 - name: Raspberry Pi dependencies
@@ -37,12 +33,6 @@
     - keepalived_role
   tasks:
 
-  # - name: install keepalived & dependencies
-  #   apt:
-  #     name:
-  #       - keepalived
-  #     state:  latest
-
 
 # keepalived master
 - name: Master Configuration
@@ -55,14 +45,14 @@
 
 
 # keepalived secondaries
-# # DNS02
-# - name: Secondary Configuration
-#   hosts:  dns02
-#   tasks:
-#   - name: install secondary config file
-#     ansible.builtin.include_role:
-#       name: keepalived_role
-#       tasks_from: dns02.yml
+# DNS02
+- name: Secondary Configuration
+  hosts:  dns02
+  tasks:
+  - name: install secondary config file
+    ansible.builtin.include_role:
+      name: keepalived_role
+      tasks_from: dns02.yml
 
 # DNS03
 - name: Tertiary Configuration
