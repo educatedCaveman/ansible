@@ -1,0 +1,15 @@
+- name: Update packages
+  apt:
+    name: '*'
+    state: latest
+
+- name: Upgrade packages
+  apt:
+    upgrade:  safe
+    update_cache: yes
+    
+# make sure we have git installed
+- name: Install git
+  apt:
+    name: git
+    state:  present

@@ -1,0 +1,13 @@
+---
+# tasks file for LXC_role
+# install git, as its missing from the base image
+- name: install git
+  import_tasks: install_git.yml
+
+# create drake user
+- name: create drake user
+  import_tasks: create_drake.yml
+
+# copy authorized_keys file from root to drake
+- name: copy authorized_keys
+  import_tasks: authorized_keys.yml

@@ -19,6 +19,7 @@
       - sudo
       - lsb-release
       - fastfetch
+      - direnv
     state:  present
 
 # - name: remove packages

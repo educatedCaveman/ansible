@@ -1,0 +1,17 @@
+- name: Create drake with locked password
+  user:
+    name: drake
+    append: yes
+    groups: 
+      - sudo
+    update_password:  on_create
+    password: "{{ 'password' | password_hash('sha512') }}"
+  register: accounts
+
+- name: Unlock password and set it to empty
+  command: passwd -d drake
+  when: accounts.changed
+
+- name: Expire password
+  command: chage -d 0 drake
+  when: accounts.changed

@@ -1,0 +1,12 @@
+# create .ssh directory
+- name: Ensure .ssh directory exists
+  file:
+    path: /home/drake/.ssh
+    state:  directory
+
+# copy authorized_keys file from root to drake
+- name: Copy authorized_keys
+  copy:
+    src:  /root/.ssh/authorized_keys
+    dest: /home/drake/.ssh/authorized_keys
+    remote_src: yes
