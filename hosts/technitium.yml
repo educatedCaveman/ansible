@@ -1,29 +1,9 @@
 # DNS01 & DNS02 - LXC
 - name: configure LXC host(s)
   hosts:  
-  - dns01
-  - dns02
+  - technitium
   roles:
     - LXC_role
-  tasks:
-
-
-# DNS03 & DNS04 - Raspberry Pi - no special setup
-- name: Raspberry Pi dependencies
-  hosts:
-    - dns03
-    - dns04
-  tasks:
-  - name: install dependencies
-    apt:
-      name:
-        - git
-      state:  latest
-
-# common config
-- name: Common Configuration
-  hosts:  technitium
-  roles:
     - git_config_role
     - git_dotfiles_role   # deploy the dotfiles repo
     - git_scripts_role
@@ -63,7 +43,7 @@
       name: keepalived_role
       tasks_from: dns03.yml
 
-# DNS03
+# DNS04
 - name: Quaternary Configuration
   hosts:  dns04
   tasks:
@@ -71,6 +51,15 @@
     ansible.builtin.include_role:
       name: keepalived_role
       tasks_from: dns04.yml
+
+# # DNS05
+# - name: Quinternary Configuration
+#   hosts:  dns05
+#   tasks:
+#   - name: install quaternary config file
+#     ansible.builtin.include_role:
+#       name: keepalived_role
+#       tasks_from: dns05.yml
 
 
 # restart keepalived service

@@ -2,8 +2,9 @@
 # tasks file for git_scripts_role
 - name: Deploy the scripts git repository
   git:
-    # repo: https://github.com/educatedCaveman/scripts
-    repo: 'https://forgejo.drak3.io/drak3/scripts.git'
+    repo: https://github.com/educatedCaveman/scripts
+    # TODO: figure out why this isn't working
+    # repo: 'https://forgejo.drak3.io/drak3/scripts.git'
     dest: /home/drake/scripts
     version:  master
 

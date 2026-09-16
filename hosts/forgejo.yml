@@ -1,5 +1,5 @@
 ---
-- name: configure Forgejo
+- name: Configure Forgejo
   hosts:  forgejo
   roles:
     - LXC_role
@@ -14,6 +14,7 @@
   vars:
     # vars to indicate maintenance mode, upgrade, or install?
     forgejo_version:  "15.0.7"
+    runner_version: "13.1.0"
   tasks:
 
   - name: Install main packages
@@ -27,25 +28,33 @@
       state:  latest
 
   # general prep
-  - name: Create the git group
+  - name: Create the git & runner groups
     ansible.builtin.group:
-      name: git
+      name: "{{ item }}"
+    loop:
+      - git
+      - runner
 
   - name: Create a git user
     ansible.builtin.user:
-      name:     git
-      groups:   git
+      name:     "{{ item}}"
+      groups:   "{{ item}}"
       system:   true
       shell:    /bin/bash
-      home:     /home/git
-      comment:  'Git Version Control'
+      home:     "/home/{{ item}}"
       password: '!'                   # disabled password
+    loop:
+      - git
+      - runner
 
-  - name: Add drake to the git group
+  - name: Add drake to the git & runner groups
     ansible.builtin.user:
       name:   drake
-      groups: git
+      groups: "{{ item }}"
       append: true
+    loop:
+      - git
+      - runner
 
   # create folders
   - name: Create /var/lib/forgejo
@@ -66,15 +75,16 @@
 
   # this has been built based on these instructions:
   # https://forgejo.org/docs/latest/admin/installation/binary/
+  # https://forgejo.org/docs/latest/admin/actions/installation/binary/#starting-the-runner
 
   # download the binary to /usr/local/bin/forgejo, but only if its not already installed
   # https://codeberg.org/forgejo/forgejo/releases/download/v15.0.7/forgejo-15.0.7-linux-amd64
-  - name: Check for existing installation
+  - name: Check for existing Forgejo installation
     ansible.builtin.stat:
       path: /usr/local/bin/forgejo
     register: forgejo_bin
 
-  - name: Download the binary
+  - name: Download the Forgejo binary
     ansible.builtin.get_url:
       url: "https://codeberg.org/forgejo/forgejo/releases/download/v{{ forgejo_version }}/forgejo-{{ forgejo_version }}-linux-amd64"
       dest: /usr/local/bin/forgejo
@@ -84,18 +94,42 @@
   # using sqlite, so no DB setup needed, but this is where it would go
 
   # start and enable the service
-  - name: Download the SystemD service file
+  - name: Download the forgejo SystemD service file
     ansible.builtin.get_url:
       url:  https://codeberg.org/forgejo/forgejo/raw/branch/forgejo/contrib/systemd/forgejo.service
       dest: /etc/systemd/system/forgejo.service
+    when: not forgejo_bin.stat.exists
 
-  - name: Start and Enable the service
+  - name: Start and Enable Forgejo the service
     ansible.builtin.systemd_service:
       name:           forgejo.service
       enabled:        true
       state:          started
       daemon_reload:  true
 
+  # Runner  - name: Check for existing Forgejo installation
+  - name: Check for existing Forgejo Runner installation
+    ansible.builtin.stat:
+      path: /usr/local/bin/forgejo-runner
+    register: forgejo_runner_bin
 
+  - name: Download the Forgejo Runner binary
+    ansible.builtin.get_url:
+      url: "https://code.forgejo.org/forgejo/runner/releases/download/v{{ runner_version }}/forgejo-runner-{{ runner_version }}-linux-amd64"
+      dest: /usr/local/bin/forgejo-runner
+      mode: '0755'
+    when: not forgejo_runner_bin.stat.exists
 
+  # start and enable the service
+  - name: Download the Forgejo Runner SystemD service file
+    ansible.builtin.get_url:
+      url:  https://code.forgejo.org/forgejo/runner/raw/branch/main/contrib/forgejo-runner.service
+      dest: /etc/systemd/system/forgejo-runner.service
+    when: not forgejo_runner_bin.stat.exists
 
+  - name: Start and enable the Forgejo Runner service
+    ansible.builtin.systemd_service:
+      name:           forgejo.service
+      enabled:        true
+      state:          started
+      daemon_reload:  true
