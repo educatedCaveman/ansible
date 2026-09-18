@@ -1,0 +1,12 @@
+---
+- name: Configure basic elements of Proxmox hosts
+  hosts:
+    - proxmox
+  roles:
+    - proxmox_role
+    - git_dotfiles_role
+    - git_scripts_role
+    - linux_role
+    - client_ssh_keys
+    - drake_role
+  tasks:

@@ -1,5 +1,5 @@
 ---
-# handlers file for LXC_role
+# handlers file for proxmox_role
 # force_change_password
 - name: force_change_password
   command: "chage -d 0 drake"

@@ -1,5 +1,5 @@
 ---
-# tasks file for LXC_role
+# tasks file for proxmox_role
 # install git, as its missing from the base image
 - name: install git
   import_tasks: install_git.yml
