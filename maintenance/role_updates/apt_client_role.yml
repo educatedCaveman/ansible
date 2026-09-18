@@ -1,8 +1,0 @@
----
-- name: apply/update the APT Client role
-  hosts:
-    - ubuntu_debian_hosts
-    # - self
-  roles:
-    - apt_client_role
-  tasks:
