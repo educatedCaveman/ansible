@@ -22,8 +22,6 @@
     ansible.builtin.include_role:
       name: keepalived_role
       tasks_from: dns01.yml
-
-
 # keepalived secondaries
 # DNS02
 - name: Secondary Configuration
@@ -33,7 +31,6 @@
     ansible.builtin.include_role:
       name: keepalived_role
       tasks_from: dns02.yml
-
 # DNS03
 - name: Tertiary Configuration
   hosts:  dns03
@@ -42,7 +39,6 @@
     ansible.builtin.include_role:
       name: keepalived_role
       tasks_from: dns03.yml
-
 # DNS04
 - name: Quaternary Configuration
   hosts:  dns04
@@ -51,7 +47,6 @@
     ansible.builtin.include_role:
       name: keepalived_role
       tasks_from: dns04.yml
-
 # DNS05
 - name: Quinternary Configuration
   hosts:  dns05

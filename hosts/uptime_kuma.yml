@@ -64,15 +64,4 @@
     command:
       cmd:  docker compose up -d
       chdir:  /home/drake/uptime-kuma
-
-
-  # # Manual steps
-  # - name: Install Technitium
-  #   hosts:  dns01
-  #   tasks:
-  #   - name: Install Technitium (manual)
-  #     ansible.builtin.debug:
-  #         msg:
-  #         - "run the following command in each hosts' shell"
-  #         - "curl -sSL https://download.technitium.com/dns/install.sh | sudo bash"
-        
+    
