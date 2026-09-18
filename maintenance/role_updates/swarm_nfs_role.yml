@@ -1,8 +1,0 @@
----
-- name: apply/update the swarm_portainer_role role
-  hosts:
-    - swarm_data
-  roles:
-    - swarm_nfs_role
-  tasks:
-  

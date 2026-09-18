@@ -1,0 +1,7 @@
+- name: Bootstrap P.C.
+  hosts: self
+  roles:  
+    - theseus_role
+  tasks:
+
+# ansible-playbook hosts/carbon.yml -i hosts.ini --key-file "/home/drake/.ssh/theseus_id_ed25519"

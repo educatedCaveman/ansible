@@ -1,5 +1,0 @@
-# check for dotfiles
-- name: check if the dotfiles are present
-  stat:
-    path: /Users/drake/dotfiles
-  register: dotfiles

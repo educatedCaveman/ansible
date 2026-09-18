@@ -8,16 +8,6 @@ ANSIBLE_DIR='/home/drake/ansible/maintenance'
 
 # hosts for ansible
 HOSTS=( \
-    nextcloud_vm \
-    jenkins_vm \
-    lv_426 \
-    sevastopol \
-    singularity \
-    plex_vm \
-    swarm_portainer \
-    swarm_data \
-    apis_LB \
-    vespae_LB \
     apis_1 \
     apis_2 \
     apis_3 \

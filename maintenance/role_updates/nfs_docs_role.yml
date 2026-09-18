@@ -1,12 +1,6 @@
 ---
 - name: apply/update the NFS Docs role
   hosts:
-    # - self
-    # - swarm_managers
-    # - swarm_workers
-    # - gitlab_vm
-    # - plex
-    # - singularity
   roles:
     - nfs_docs_role
   tasks:

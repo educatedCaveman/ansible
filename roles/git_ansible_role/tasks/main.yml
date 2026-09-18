@@ -1,8 +1,0 @@
----
-# tasks file for git_ansible_role
-- name: Deploy the ansible git repository
-  git:
-    # repo: https://github.com/educatedCaveman/ansible
-    repo: ssh://git.drak3.io/drak3/ansible
-    dest: /home/drake/ansible
-    force:  yes
