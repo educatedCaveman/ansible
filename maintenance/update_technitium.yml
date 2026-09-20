@@ -1,0 +1,28 @@
+# DNS01 & DNS02 - LXC
+- name: Update Technitium
+  hosts:  
+  - technitium
+  roles:
+  tasks:
+
+  # wget https://download.technitium.com/dns/DnsServerPortable.tar.gz
+  # sudo tar -zxf DnsServerPortable.tar.gz -C /opt/technitium/dns
+
+    - name: Download updated binary archive
+      ansible.builtin.get_url:
+        url:  https://download.technitium.com/dns/DnsServerPortable.tar.gz
+        dest: /tmp/DnsServerPortable.tar.gz
+
+    - name: Extract binary archive
+      ansible.builtin.unarchive:
+        src:    /tmp/DnsServerPortable.tar.gz
+        dest:   /opt/technitium/dns
+        remote_src: true
+        owner:  dns-server
+        group:  dns-server
+
+    - name: Restart DNS
+      ansible.builtin.systemd:
+        name:     dns.service
+        state:    restarted
+        enabled:  true
