@@ -2,13 +2,7 @@
 - name: configure host
   hosts:  uptime_kuma
   roles:
-    - VM_role
-    - git_config_role
-    - git_dotfiles_role   # deploy the dotfiles repo
-    - git_scripts_role
     - linux_role          # base linux configs
-    - client_ssh_keys
-    - drake_role          # drake home directory permissions
   tasks:
 
   - name: install docker and dependencies

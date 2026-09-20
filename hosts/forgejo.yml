@@ -2,13 +2,7 @@
 - name: Configure Forgejo
   hosts:  forgejo
   roles:
-    - LXC_role
-    - git_config_role
-    - git_dotfiles_role
-    - git_scripts_role
     - linux_role
-    - client_ssh_keys
-    - drake_role
     - nfs_base_role
     - nfs_backup_role
   vars:

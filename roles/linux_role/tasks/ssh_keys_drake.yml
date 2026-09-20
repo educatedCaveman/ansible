@@ -1,0 +1,55 @@
+# install git config file
+- name: push ssh config file (drake)
+  ansible.builtin.copy:
+    src:  config_drake
+    dest:  /home/drake/.ssh/config
+    owner:  drake
+    group:  drake
+    mode:   "0644"
+
+# install key files
+- name: push key files (drake)
+  ansible.builtin.copy:
+    src:  "/home/drake/.ssh/{{ item.keyfile }}"
+    dest:  "/home/drake/.ssh/{{ item.keyfile }}"
+    remote_src: no  #copy from controller
+    owner:  drake
+    group:  drake
+    mode:   "{{ item.mode }}"
+  loop:
+    - {keyfile: "ansible_forgejo_id_ed25519", mode: "0600"}
+    - {keyfile: "ansible_forgejo_id_ed25519.pub", mode: "0644"}
+
+# drake keys:
+- name: authorize key files (drake)
+  ansible.posix.authorized_key:
+    user:   drake
+    state:  present
+    key:    '{{ item }}'
+  with_file:
+    - /home/drake/.ssh/theseus2_id_ed25519.pub
+
+#set ssh directory permissions
+- name: set ssh folder permissions (drake)
+  file:
+    path:     /home/drake/.ssh
+    state:    directory
+    owner:    drake
+    group:    drake
+    mode:     '0700'
+
+#set ssh directory permissions
+- name: set authorized_keys permissions (drake)
+  file:
+    path:     /home/drake/.ssh/authorized_keys
+    state:    file
+    owner:    drake
+    group:    drake
+    mode:     '0600'
+
+# restart ssh service
+- name: restart sshd
+  systemd:
+    name:     ssh.service
+    state:    restarted
+    enabled:  yes

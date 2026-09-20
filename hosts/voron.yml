@@ -1,10 +1,7 @@
 - name: configure voron
   hosts:  voron
   roles:
-    - git_dotfiles_role   # deploy the dotfiles repo
     - linux_role          # base linux configs
-    - client_ssh_keys
-    - drake_role          # drake home directory permissions
   tasks:
 
     # Klipper Installation and Update Helper

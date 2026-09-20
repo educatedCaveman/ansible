@@ -1,0 +1,30 @@
+# VM_LXC_init.yml
+- name: install LXC-specific packages
+  ansible.builtin.apt:
+    name: git
+    state:  present
+  when: 
+    - ansible_facts['pkg_mgr'] == "apt"
+    - ansible_facts['virtualization_role'] == "guest"
+    - ansible_facts['virtualization_type'] == "lxc"
+
+# create drake user
+- name: create drake user (LXC)
+  import_tasks: create_drake.yml
+  when: 
+    - ansible_facts['virtualization_role'] == "guest"
+    - ansible_facts['virtualization_type'] == "lxc"
+
+# VM
+- name: install VM-specific packages
+  ansible.builtin.apt:
+    name: 
+      - qemu-guest-agent
+      - git
+      - parted
+      - cron
+    state:  present
+  when:
+    - ansible_facts['pkg_mgr'] == "apt"
+    - ansible_facts['virtualization_role'] == "guest"
+    - ansible_facts['virtualization_type'] == "kvm"

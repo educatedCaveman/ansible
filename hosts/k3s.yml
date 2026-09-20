@@ -4,12 +4,21 @@
   hosts:
     - k3s
   roles: 
-    - VM_role
-    - git_config_role
-    - git_dotfiles_role
     - linux_role
-    - drake_role
   tasks:
+
+    # sudo /usr/local/bin/k3s crictl rmi --prune
+    - name: Cleanup
+      ansible.builtin.cron:
+        name:   k3s cleanup
+        job:    /usr/local/bin/k3s crictl rmi --prune
+        state:  present
+        # user: root  # not setting the username should default to current user, which is root
+        hour:   "0"
+        minute: "0"   # default
+        # day:    "*"   # default
+        # weekday:  "*" # default
+        # month:  "*"   # default
 
 - name: Manager-Specific Node Configuration
   hosts:

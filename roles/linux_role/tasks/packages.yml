@@ -1,3 +1,17 @@
+# Packages
+- name: Update packages
+  ansible.builtin.apt:
+    name: '*'
+    state: latest
+  when:
+    - ansible_facts['pkg_mgr'] == "apt"
+
+- name: Upgrade packages
+  ansible.builtin.apt:
+    upgrade:  safe
+  when:
+    - ansible_facts['pkg_mgr'] == "apt"
+
 - name: install packages
   apt:
     name:  
@@ -20,10 +34,14 @@
       - lsb-release
       - fastfetch
       - direnv
-    state:  present
+    state:  latest
+  when:
+    - ansible_facts['pkg_mgr'] == "apt"
 
 # - name: remove packages
 #   apt:
 #     name:  
 #       - telegraf
 #     state:  absent
+#   when:
+#     - ansible_facts['pkg_mgr'] == "apt"

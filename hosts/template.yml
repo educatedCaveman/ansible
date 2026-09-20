@@ -2,9 +2,6 @@
 - name: configure Template
   hosts:  lxc_template
   roles:
-    - LXC_role            # base LXC container config
-    - git_dotfiles_role   # deploy the dotfiles repo
     - linux_role          # base linux configs
-    - client_ssh_keys
-    - drake_role          # drake home directory permissions
-
+  tasks:
+  

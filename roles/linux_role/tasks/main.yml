@@ -1,5 +1,27 @@
 ---
 # tasks file for linux_role
+# VM or LXC
+# ensure git installed and drake user exists
+- name: VM or LXC-dependent steps
+  import_tasks: VM_LXC_init.yml
+
+# common packages
+- name: install, update, upgrade common packages
+  import_tasks: VM_LXC_init.yml
+
+# MOTD
+- name: disable MOTD
+  import_tasks: MOTD.yml
+
+# SSH keys
+- name: SSH keys (root)
+  import_tasks: ssh_keys_root.yml
+- name: SSH keys (drake)
+  import_tasks: ssh_keys_drake.yml
+
+# git repos are needed before installing ZSH, neovim, tmux
+- name: Git repos
+  import_tasks: git_repos.yml
 
 # ZSH
 - name: Configure ZSH
@@ -13,16 +35,18 @@
 - name: Configure NeoVim
   import_tasks: neovim.yml
 
-# MOTD
-- name: Configure MOTD
-  import_tasks: MOTD.yml
-
-# Quality of life packages
-- name: Install Quality-of-Life packages
-  import_tasks: packages.yml
-
 # timezone:
 - name: set timezone
   timezone:
     name: America/New_York
+
+# tasks file for drake_role
+- name: set home permissions
+  file:
+    path: /home/drake
+    state: directory
+    recurse: yes
+    owner: drake
+    group: drake
+
     

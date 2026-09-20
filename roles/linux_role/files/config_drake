@@ -1,0 +1,2 @@
+# ssh config
+IdentityFile /home/drake/.ssh/ansible_forgejo_id_ed25519
